@@ -25,11 +25,13 @@ export default function DesprePage() {
           {/* Creator */}
           <Card className="p-6 mb-6 animate-slide-up">
             <div className="flex items-start gap-4">
-              <img
-                src="https://i.imgur.com/UJhfuwT.jpeg"
-                alt="Bălan Andrei Marian"
-                className="w-14 h-14 rounded-full object-cover flex-shrink-0"
-              />
+              <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0">
+                <img
+                  src="https://i.imgur.com/UJhfuwT.jpeg"
+                  alt="Bălan Andrei Marian"
+                  className="w-full h-full object-cover scale-150"
+                />
+              </div>
               <div>
                 <h2
                   className="text-xl font-bold text-[var(--color-text-primary)] mb-1"
