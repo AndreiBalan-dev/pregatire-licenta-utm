@@ -33,3 +33,9 @@ export function formatPercentage(value: number, total: number): number {
 export function generateClientId(): string {
   return crypto.randomUUID();
 }
+
+const codePattern = /[(){}\[\]]|::|->|<<|>>|&&|\|\||==|!=|<=|>=|\bSELECT\b|\bFROM\b|\bWHERE\b|\bINSERT\b|\bUPDATE\b|\bDELETE\b|\bJOIN\b/i;
+
+export function isCodeLike(text: string): boolean {
+  return codePattern.test(text);
+}

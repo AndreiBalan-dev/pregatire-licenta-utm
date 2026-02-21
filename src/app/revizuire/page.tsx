@@ -9,7 +9,7 @@ import { CodeBlock } from "@/components/ui/CodeBlock";
 import { useSession } from "@/hooks/useSession";
 import { getQuestion, allQuestions } from "@/data";
 import { modules } from "@/data/modules";
-import { cn } from "@/lib/utils";
+import { cn, isCodeLike } from "@/lib/utils";
 import type { AnswerKey } from "@/data/types";
 
 type Filter = "wrong" | "correct" | "bookmarked" | "all";
@@ -190,7 +190,8 @@ export default function RevizuirePage() {
                             </span>
                             <span className={cn(
                               isCorrectAnswer ? "text-[var(--color-correct)]" :
-                              isWrongSelection ? "text-[var(--color-wrong)]" : ""
+                              isWrongSelection ? "text-[var(--color-wrong)]" : "",
+                              isCodeLike(question.options[key]) && "font-mono"
                             )}>
                               {question.options[key]}
                             </span>

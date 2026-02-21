@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
+import { cn, isCodeLike } from "@/lib/utils";
 import { CodeBlock } from "@/components/ui/CodeBlock";
 import type { Question, AnswerKey } from "@/data/types";
 
@@ -132,7 +132,8 @@ export function QuestionCard({
                       ? "text-[var(--color-wrong)]"
                       : isSelected
                         ? "text-[var(--color-text-primary)] font-medium"
-                        : "text-[var(--color-text-secondary)]"
+                        : "text-[var(--color-text-secondary)]",
+                  isCodeLike(question.options[key]) && "font-mono text-xs"
                 )}
               >
                 {question.options[key]}
