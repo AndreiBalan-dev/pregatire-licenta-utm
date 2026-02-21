@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     template: "%s | Pregătire Licență UTM",
   },
   description:
-    "Platforma gratuită de pregătire pentru examenul de licență UTM 2026. 665 de exerciții grilă din programare, baze de date, rețele și tehnologii web.",
+    "Platforma gratuita de pregatire pentru examenul de licenta UTM Informatica 2026. 665 grile din programare, baze de date, retele si tehnologii web.",
   keywords: [
     "licență UTM",
     "grile informatică",
@@ -70,13 +70,15 @@ export const metadata: Metadata = {
     siteName: "Pregătire Licență UTM",
     title: "Pregătire Licență UTM | Grile 2026",
     description:
-      "Platforma gratuită de pregătire pentru examenul de licență UTM 2026. 665 de exerciții grilă din programare, baze de date, rețele și tehnologii web.",
+      "Platforma gratuita de pregatire pentru examenul de licenta UTM Informatica 2026. 665 grile din programare, baze de date, retele si tehnologii web.",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pregatire Licenta UTM - 665 grile informatica" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pregătire Licență UTM | Grile 2026",
+    title: "Pregătire Licență UTM | Grile Informatica 2026",
     description:
-      "665 exerciții grilă gratuite pentru licența UTM 2026. Programare, baze de date, rețele, web.",
+      "665 grile gratuite pentru licenta UTM Informatica 2026. Programare, baze de date, retele, web.",
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -91,6 +93,9 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: siteUrl,
+    languages: {
+      "ro": siteUrl,
+    },
   },
   icons: {
     icon: [
@@ -110,23 +115,54 @@ export default function RootLayout({
 }>) {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    name: "Pregătire Licență UTM",
-    description:
-      "Platforma gratuită de pregătire pentru examenul de licență UTM 2026. 665 de exerciții grilă.",
-    url: siteUrl,
-    applicationCategory: "EducationalApplication",
-    operatingSystem: "Web",
-    author: {
-      "@type": "Person",
-      name: "Bălan Andrei Marian",
-    },
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "RON",
-    },
-    inLanguage: "ro",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        name: "Pregătire Licență UTM",
+        description:
+          "Platforma gratuita de pregatire pentru examenul de licenta UTM Informatica 2026. 665 grile din programare, baze de date, retele si tehnologii web.",
+        url: siteUrl,
+        applicationCategory: "EducationalApplication",
+        operatingSystem: "Web",
+        author: {
+          "@type": "Person",
+          name: "Bălan Andrei Marian",
+        },
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "RON",
+        },
+        inLanguage: "ro",
+      },
+      {
+        "@type": "Course",
+        name: "Grile Licenta UTM Informatica 2026",
+        description: "665 exercitii grila pentru pregatirea examenului de licenta la Facultatea de Informatica, UTM.",
+        provider: {
+          "@type": "Organization",
+          name: "UTM Learn",
+          url: siteUrl,
+        },
+        isAccessibleForFree: true,
+        inLanguage: "ro",
+        hasCourseInstance: {
+          "@type": "CourseInstance",
+          courseMode: "online",
+          courseWorkload: "PT10H",
+        },
+        numberOfCredits: 0,
+        educationalLevel: "Bachelor",
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Acasă", item: siteUrl },
+          { "@type": "ListItem", position: 2, name: "Practică", item: `${siteUrl}/practica` },
+          { "@type": "ListItem", position: 3, name: "Rezultate", item: `${siteUrl}/rezultate` },
+        ],
+      },
+    ],
   };
 
   return (

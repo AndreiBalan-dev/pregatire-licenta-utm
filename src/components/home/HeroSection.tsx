@@ -39,7 +39,7 @@ export function HeroSection({ hasExistingSession, totalAnswered, accuracy }: Her
 
           {/* Description */}
           <p className="text-lg text-[var(--color-text-secondary)] mb-10 max-w-xl leading-relaxed animate-fade-in stagger-2">
-            Exerciții grilă din toate disciplinele de examen. Programare, baze de date, rețele și tehnologii web, totul într-un singur loc.
+            665 de grile pentru examenul de licență la Informatică UTM. Programare, baze de date, rețele și tehnologii web - totul într-un singur loc.
           </p>
 
           {/* CTA */}
