@@ -69,6 +69,7 @@ export async function POST(request: NextRequest) {
     }
   } catch (error) {
     console.error("Session count check error:", error instanceof Error ? error.message : "unknown");
+    return NextResponse.json({ error: "Eroare internă." }, { status: 500 });
   }
 
   // Generate unique key

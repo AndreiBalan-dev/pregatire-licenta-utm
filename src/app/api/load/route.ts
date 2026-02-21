@@ -40,7 +40,13 @@ export async function POST(request: NextRequest) {
   // Lookup
   try {
     const result = await db
-      .select()
+      .select({
+        displayName: savedSessions.displayName,
+        sessionData: savedSessions.sessionData,
+        totalAnswered: savedSessions.totalAnswered,
+        totalCorrect: savedSessions.totalCorrect,
+        createdAt: savedSessions.createdAt,
+      })
       .from(savedSessions)
       .where(eq(savedSessions.key, key))
       .limit(1);

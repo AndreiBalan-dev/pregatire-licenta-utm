@@ -1,4 +1,4 @@
-import { createHash, randomBytes } from "crypto";
+import { createHmac, randomBytes } from "crypto";
 
 export function generateSaveKey(): string {
   // 16 bytes = 128 bits of entropy, base64url encoded = 22 chars
@@ -12,7 +12,7 @@ export function hashIp(ip: string): string {
       throw new Error("IP_HASH_SALT environment variable is required in production");
     }
     // Dev fallback only
-    return createHash("sha256").update("dev-salt" + ip).digest("hex");
+    return createHmac("sha256", "dev-salt").update(ip).digest("hex");
   }
-  return createHash("sha256").update(salt + ip).digest("hex");
+  return createHmac("sha256", salt).update(ip).digest("hex");
 }

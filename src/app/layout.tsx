@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     template: "%s | Pregătire Licență UTM",
   },
   description:
-    "Platforma gratuită de pregătire pentru examenul de licență UTM 2026. 652 de exerciții grilă din programare, baze de date, rețele și tehnologii web.",
+    "Platforma gratuită de pregătire pentru examenul de licență UTM 2026. 665 de exerciții grilă din programare, baze de date, rețele și tehnologii web.",
   keywords: [
     "licență UTM",
     "grile informatică",
@@ -68,13 +68,13 @@ export const metadata: Metadata = {
     siteName: "Pregătire Licență UTM",
     title: "Pregătire Licență UTM | Grile 2026",
     description:
-      "Platforma gratuită de pregătire pentru examenul de licență UTM 2026. 652 de exerciții grilă din programare, baze de date, rețele și tehnologii web.",
+      "Platforma gratuită de pregătire pentru examenul de licență UTM 2026. 665 de exerciții grilă din programare, baze de date, rețele și tehnologii web.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Pregătire Licență UTM | Grile 2026",
     description:
-      "652 exerciții grilă gratuite pentru licența UTM 2026. Programare, baze de date, rețele, web.",
+      "665 exerciții grilă gratuite pentru licența UTM 2026. Programare, baze de date, rețele, web.",
   },
   robots: {
     index: true,
@@ -90,6 +90,15 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteUrl,
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({
@@ -102,7 +111,7 @@ export default function RootLayout({
     "@type": "WebApplication",
     name: "Pregătire Licență UTM",
     description:
-      "Platforma gratuită de pregătire pentru examenul de licență UTM 2026. 652 de exerciții grilă.",
+      "Platforma gratuită de pregătire pentru examenul de licență UTM 2026. 665 de exerciții grilă.",
     url: siteUrl,
     applicationCategory: "EducationalApplication",
     operatingSystem: "Web",
@@ -121,11 +130,6 @@ export default function RootLayout({
   return (
     <html lang="ro" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
-        <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/site.webmanifest" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
