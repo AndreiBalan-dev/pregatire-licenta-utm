@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useMemo, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { Header } from "@/components/layout/Header";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Container } from "@/components/layout/Container";
@@ -11,10 +12,22 @@ import { useSession } from "@/hooks/useSession";
 import { modules } from "@/data/modules";
 import { questionsBySubject } from "@/data";
 
-export default function PracticaPage() {
+function PracticaContent() {
   const router = useRouter();
-  const { startPractice, session } = useSession();
+  const searchParams = useSearchParams();
+  const { startPractice, resetSubject, session } = useSession();
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
+
+  // Pre-select subjects from module query param
+  useEffect(() => {
+    const modulParam = searchParams.get("modul");
+    if (modulParam) {
+      const mod = modules.find((m) => m.id === modulParam);
+      if (mod) {
+        setSelectedSubjects(mod.subjects.map((s) => s.id));
+      }
+    }
+  }, [searchParams]);
   const [questionCount, setQuestionCount] = useState<"all" | 10 | 25 | 50>("all");
 
   const totalAvailable = useMemo(() => {
@@ -86,6 +99,7 @@ export default function PracticaPage() {
             onToggleSubject={toggleSubject}
             onSelectAllModule={selectAllModule}
             onDeselectAllModule={deselectAllModule}
+            onResetSubject={resetSubject}
           />
 
           {/* Config bar */}
@@ -130,5 +144,13 @@ export default function PracticaPage() {
       </main>
       <MobileNav />
     </>
+  );
+}
+
+export default function PracticaPage() {
+  return (
+    <Suspense>
+      <PracticaContent />
+    </Suspense>
   );
 }

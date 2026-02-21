@@ -5,6 +5,7 @@
 import fitz
 import re
 import os
+import random
 
 doc = fitz.open("Grile Licenta 2026.pdf")
 
@@ -131,16 +132,34 @@ def parse_questions(text, subject_id, module_id):
         opt_c = opt_match.group(3).strip()
         opt_d = opt_match.group(4).strip()
 
-        # Clean options - remove trailing page numbers, headers, etc.
-        for opt in [opt_a, opt_b, opt_c, opt_d]:
-            pass
-
         # Clean multi-line options to single line (unless code)
         def clean_option(o):
             # Remove trailing noise
-            o = re.sub(r'\n\s*\d+\s*$', '', o)
+            o = re.sub(r'\n\s*\d{1,2}\s*$', '', o)
             o = re.sub(r'\n\s*Răspuns.*$', '', o, flags=re.DOTALL)
             o = re.sub(r'\n\s*Explicație.*$', '', o, flags=re.DOTALL)
+            # Remove page numbers embedded in code (standalone 1-2 digit numbers on their own line)
+            o = re.sub(r'\n\s*(\d{1,2})\s*\n', '\n', o)
+            # Remove inline page numbers that appear between code statements
+            # Pattern: "statement; <page_num> next_statement" -> "statement; next_statement"
+            o = re.sub(r'([;{})\]]) \d{1,2} ([a-zA-Z{(])', r'\1 \2', o)
+            # Also catch "return s; 11 }" -> "return s; }"
+            o = re.sub(r';\s+\d{1,2}\s+}', '; }', o)
+            # Remove page header fragments (e.g., "/ DE CALCULATOARE", "/ PROGRAMĂRII")
+            o = re.sub(r'\s*/\s*DE CALCULATOARE', '', o, flags=re.IGNORECASE)
+            o = re.sub(r'\s*/\s*PROGRAMĂRII', '', o, flags=re.IGNORECASE)
+            o = re.sub(r'\s*/\s*PROGRAMARII', '', o, flags=re.IGNORECASE)
+            for header in subject_map:
+                o = o.replace(header, '')
+                o = o.replace(header.upper(), '')
+            # Remove question text that leaked into option (look for "Ce valori", "Indicați", "În care")
+            o = re.sub(r'\s*Ce valori.*$', '', o, flags=re.DOTALL)
+            o = re.sub(r'\s*Indicați ce se va.*$', '', o, flags=re.DOTALL)
+            o = re.sub(r'\s*În care dintre.*$', '', o, flags=re.DOTALL)
+            o = re.sub(r'\s*Ce operaţii.*$', '', o, flags=re.DOTALL)
+            o = re.sub(r'\s*Ce operații.*$', '', o, flags=re.DOTALL)
+            # Remove stray question markers that leaked (e.g., "a) 124 4" -> "124 4")
+            o = re.sub(r'^[a-d]\)\s+', '', o)
             # If short, join lines
             if len(o) < 200:
                 o = ' '.join(o.split())
@@ -223,15 +242,42 @@ def parse_questions(text, subject_id, module_id):
         # Clean question text
         question_text = re.sub(r'\n{3,}', '\n\n', question_text).strip()
         # Remove stray page numbers from question text
-        question_text = re.sub(r'^\d+\s*\n', '', question_text)
+        question_text = re.sub(r'^\d{1,2}\s*\n', '', question_text)
+        # Remove page numbers embedded in the middle of question text
+        question_text = re.sub(r'\n\s*\d{1,2}\s*\n', '\n', question_text)
+        # Remove inline page numbers in code within question text
+        question_text = re.sub(r'([;{})\]]) \d{1,2} ([a-zA-Z{(])', r'\1 \2', question_text)
+        question_text = re.sub(r';\s+\d{1,2}\s+}', '; }', question_text)
+        # Remove page header fragments
+        question_text = re.sub(r'\s*/\s*DE CALCULATOARE', '', question_text, flags=re.IGNORECASE)
+        for header in subject_map:
+            question_text = question_text.replace(header, '')
+            question_text = question_text.replace(header.upper(), '')
+
+        # Shuffle options so correct answer isn't always 'a'
+        # Use deterministic seed based on subject+question number for reproducibility
+        option_items = [('a', opt_a), ('b', opt_b), ('c', opt_c), ('d', opt_d)]
+        rng = random.Random(f"{subject_id}-{q_num}")
+        rng.shuffle(option_items)
+
+        # Map old letter -> new letter
+        new_letters = ['a', 'b', 'c', 'd']
+        old_to_new = {}
+        new_options = {}
+        for idx, (old_letter, text) in enumerate(option_items):
+            new_letter = new_letters[idx]
+            old_to_new[old_letter] = new_letter
+            new_options[new_letter] = text
+
+        new_correct = old_to_new[correct]
 
         questions.append({
             'num': q_num,
             'text': question_text,
             'code': code if code and len(code) > 5 else None,
             'codeLanguage': code_language if code and len(code) > 5 else None,
-            'options': {'a': opt_a, 'b': opt_b, 'c': opt_c, 'd': opt_d},
-            'correctAnswer': correct,
+            'options': new_options,
+            'correctAnswer': new_correct,
             'subjectId': subject_id,
             'moduleId': module_id,
         })
@@ -282,7 +328,6 @@ subject_to_path = {
     'baze-de-date': ('databases', 'bazeDeDate'),
     'sgbd': ('databases', 'sgbd'),
     'retele-calculatoare': ('networks', 'reteleCalculatoare'),
-    'administrarea-retelelor': ('networks', 'administrareaRetelelor'),
     'criptografie': ('networks', 'criptografie'),
     'tehnologii-web': ('web', 'tehnologiiWeb'),
     'comert-electronic': ('web', 'comertElectronic'),

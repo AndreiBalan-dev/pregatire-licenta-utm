@@ -2,7 +2,7 @@ import type { Question } from "@/data/types";
 
 export const metodeAvansateJava: Question[] = [
   {
-    id: 150,
+    id: 149,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Fie următoarea clasă Java: 
@@ -18,15 +18,15 @@ Stabiliţi care dintre următoarele linii de cod este corectă:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `C ob = new C(1);`,
-      b: `C ob = new C(1,1.0);`,
-      c: `C ob = new C();`,
+      a: `C ob = new C(1,1.0);`,
+      b: `C ob = new C();`,
+      c: `C ob = new C(1);`,
       d: `C ob = new C(1,1.0,true);`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 151,
+    id: 150,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Fie următorul program Java: 
@@ -54,15 +54,15 @@ System.out.println(C.a);
 }`,
     codeLanguage: "c",
     options: {
-      a: `; } } După executarea programului, va fi afişată valoarea: a) 3`,
-      b: `2`,
-      c: `1`,
-      d: `nicio valoare, se obține o eroare la executare.`,
+      a: `2`,
+      b: `nicio valoare, se obține o eroare la executare.`,
+      c: `; } } După executarea programului, va fi afişată valoarea: a) 3`,
+      d: `1`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 152,
+    id: 151,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Fie următorul program Java: 
@@ -91,60 +91,60 @@ System.out.println(ob2.a);
 }`,
     codeLanguage: "c",
     options: {
-      a: `; } } După executarea programului, va fi afişată valoarea: a) 0;`,
-      b: `2;`,
-      c: `1;`,
-      d: `nicio valoare, se obține o eroare la executare.`,
+      a: `1;`,
+      b: `nicio valoare, se obține o eroare la executare.`,
+      c: `; } } După executarea programului, va fi afişată valoarea: a) 0;`,
+      d: `2;`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 153,
+    id: 152,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Un program Test scris în limbajul Java poate fi compilat folosind comanda:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `javac Test`,
-      b: `java Test.java`,
-      c: `javac Test.class`,
+      a: `java Test.java`,
+      b: `javac Test.class`,
+      c: `javac Test`,
       d: `javac Test.java`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 154,
+    id: 153,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Un program Test scris în limbajul Java şi compilat, poate fi rulat folosind comanda:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `javac Test.java`,
-      b: `java Test`,
-      c: `java Test.class`,
-      d: `java Test.java`,
+      a: `java Test`,
+      b: `java Test.java`,
+      c: `javac Test.java`,
+      d: `java Test.class`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 155,
+    id: 154,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `În Java o clasă poate extinde:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `cel mult o interfaţă`,
+      a: `oricâte interfeţe`,
       b: `oricâte clase`,
-      c: `cel mult o clasă`,
-      d: `oricâte interfeţe`,
+      c: `cel mult o interfaţă`,
+      d: `cel mult o clasă`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 156,
+    id: 155,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `În Java o interfaţă poate extinde:`,
@@ -159,22 +159,22 @@ System.out.println(ob2.a);
     correctAnswer: "a",
   },
   {
-    id: 157,
+    id: 156,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `În Java o clasă poate implementa:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `o clasă`,
-      b: `oricâte clase`,
-      c: `o interfaţă`,
-      d: `oricâte interfeţe`,
+      a: `oricâte interfeţe`,
+      b: `o interfaţă`,
+      c: `o clasă`,
+      d: `oricâte clase`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 158,
+    id: 157,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Fie următorul program Java: 
@@ -214,15 +214,15 @@ C ob=new C();
 }`,
     codeLanguage: "c",
     options: {
-      a: `A B C`,
+      a: `C`,
       b: `A`,
       c: `C B A`,
-      d: `C`,
+      d: `A B C`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 159,
+    id: 158,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Fie următorul program Java: 
@@ -277,7 +277,7 @@ System.out.println(b.x+" "+c.x);
     correctAnswer: "a",
   },
   {
-    id: 160,
+    id: 159,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Fie următorul program Java: 
@@ -317,15 +317,15 @@ System.out.println(a.x+" "+b.x);
 }`,
     codeLanguage: "c",
     options: {
-      a: `05`,
-      b: `51`,
-      c: `57`,
-      d: `01`,
+      a: `01`,
+      b: `57`,
+      c: `51`,
+      d: `05`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 161,
+    id: 160,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Fie următorul program Java: 
@@ -368,14 +368,14 @@ a.staticMethod();
     codeLanguage: "c",
     options: {
       a: `programul afișează mesajul Metoda statica`,
-      b: `se obține o eroare la compliare cauzată de faptul ca o metodă statică nu poate fi invocată folosind o referintă`,
-      c: `se obține la executare excepția java.lang.NullPointerException`,
-      d: `nu se poate apela o metoda membră statică pentru un obiect null`,
+      b: `se obține la executare excepția java.lang.NullPointerException`,
+      c: `nu se poate apela o metoda membră statică pentru un obiect null`,
+      d: `se obține o eroare la compliare cauzată de faptul ca o metodă statică nu poate fi invocată folosind o referintă`,
     },
     correctAnswer: "a",
   },
   {
-    id: 162,
+    id: 161,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Următorul program Java  
@@ -401,14 +401,14 @@ Afișează`,
     codeLanguage: "c",
     options: {
       a: `10 20`,
-      b: `30 40`,
-      c: `30 20`,
-      d: `eroare la executare`,
+      b: `eroare la executare`,
+      c: `30 40`,
+      d: `30 20`,
     },
     correctAnswer: "a",
   },
   {
-    id: 163,
+    id: 162,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Care dintre următoarele afirmații este adevărată pentru o metodă Java de tip 
@@ -417,14 +417,14 @@ final?`,
     codeLanguage: undefined,
     options: {
       a: `poate fi și suprascrisă și supraîncărcată`,
-      b: `poate fi suprascrisă, dar nu poate fi supraîncărcată`,
-      c: `nu poate fi nici suprascrisă și nici supraîncărcată`,
-      d: `nu poate fi suprascrisă, dar poate fi supraîncărcată`,
+      b: `nu poate fi nici suprascrisă și nici supraîncărcată`,
+      c: `nu poate fi suprascrisă, dar poate fi supraîncărcată`,
+      d: `poate fi suprascrisă, dar nu poate fi supraîncărcată`,
     },
     correctAnswer: "a",
   },
   {
-    id: 164,
+    id: 163,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Următorul program Java: 
@@ -456,7 +456,9 @@ System.out.println(Arrays.toString(a));
 Afișează`,
     codeLanguage: "c",
     options: {
-      a: `); 
+      a: `[10, 20, 30, 40, 50] [100, 2, 3, 4, 5, 6, 7]`,
+      b: `[10, 20, 30, 40, 50] [100, 2, 3, 4, 5, 6, 7]`,
+      c: `); 
     } 
  
     public static void main(String[] args){ 
@@ -469,14 +471,12 @@ Afișează
  
 a) [10, 200, 30, 40, 50] 
 [1 2, 3, 4, 5, 6, 7]`,
-      b: `[10, 200, 30, 40, 50] [100, 2, 3, 4, 5, 6, 7]`,
-      c: `[10, 20, 30, 40, 50] [100, 2, 3, 4, 5, 6, 7]`,
-      d: `[10, 20, 30, 40, 50] [100, 2, 3, 4, 5, 6, 7]`,
+      d: `[10, 200, 30, 40, 50] [100, 2, 3, 4, 5, 6, 7]`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 165,
+    id: 164,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Considerăm următorul program Java: 
@@ -533,7 +533,9 @@ ob.afisare();
 }`,
     codeLanguage: "c",
     options: {
-      a: `{ a++; b--; f(); }  
+      a: `2 10`,
+      b: `6 6`,
+      c: `{ a++; b--; f(); }  
 } 
  
  
@@ -545,9 +547,6 @@ public class teste_grila
     public static void main(String[] args) 
 
  (JAVA) 
- 
-7 
- 
     { 
  
  
@@ -564,14 +563,12 @@ ob.afisare();
 După executarea programului, pe ecran se va afişa: 
  
 a) 57`,
-      b: `6 6`,
-      c: `2 10`,
       d: `7 5`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 166,
+    id: 165,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Considerăm următorul program Java: 
@@ -596,15 +593,15 @@ System.out.println(C.f()+" "+C.f()+" "+C.f());
 }`,
     codeLanguage: "c",
     options: {
-      a: `1 1 1`,
-      b: `1 2 3`,
-      c: `1 2 6`,
-      d: `0 0 0`,
+      a: `1 2 6`,
+      b: `1 1 1`,
+      c: `0 0 0`,
+      d: `1 2 3`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 167,
+    id: 166,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Considerăm următorul program Java: 
@@ -646,13 +643,13 @@ C.f();C.f();C.f();
     options: {
       a: `0 0 0`,
       b: `1 4 25`,
-      c: `1 -1 1`,
-      d: `2 4 16`,
+      c: `2 4 16`,
+      d: `1 -1 1`,
     },
     correctAnswer: "a",
   },
   {
-    id: 168,
+    id: 167,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Fie următorul program Java: 
@@ -686,14 +683,14 @@ InterruptedException{
     codeLanguage: "c",
     options: {
       a: `10 cifre egale cu 1, 10 cifre egale cu 2 și o cifră egală cu 3, cifrele fiind în orice ordine posibilă`,
-      b: `10 cifre egale cu 1, 10 cifre egale cu 2 și o cifră egală cu 3, dar toate cifrele egale cu 2 se vor afla înaintea cifrei 3`,
+      b: `10 cifre egale cu 1, urmate de 10 cifre egale cu 2 și la sfârșit o cifră egală cu 3`,
       c: `10 cifre egale cu 1, 10 cifre egale cu 2 și o cifră egală cu 3, dar toate cifrele egale cu 1 sau 2 se vor afla înaintea cifrei 3`,
-      d: `10 cifre egale cu 1, urmate de 10 cifre egale cu 2 și la sfârșit o cifră egală cu 3`,
+      d: `10 cifre egale cu 1, 10 cifre egale cu 2 și o cifră egală cu 3, dar toate cifrele egale cu 2 se vor afla înaintea cifrei 3`,
     },
     correctAnswer: "a",
   },
   {
-    id: 169,
+    id: 168,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Considerăm următorul program Java: 
@@ -733,45 +730,45 @@ public class Test {
 }`,
     codeLanguage: "c",
     options: {
-      a: `Matei Dan`,
-      b: `Dan Dan`,
+      a: `Alex Dan`,
+      b: `Matei Dan`,
       c: `Matei Alex`,
-      d: `Alex Dan`,
+      d: `Dan Dan`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 170,
+    id: 169,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `O subclasă Java a unei clase abstracte poate fi instanţiată numai dacă:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `se foloseşte cuvantul cheie abstract;`,
+      a: `se foloseşte moştenirea multiplă;`,
       b: `suprascrie fiecare metodă declarată abstractă în superclasa sa şi furnizeaza implementări pentru toate acestea;`,
-      c: `se foloseşte moştenirea multiplă;`,
+      c: `se foloseşte cuvantul cheie abstract;`,
       d: `subclasă abstractă nu poate fi instanţiată.`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 171,
+    id: 170,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: ``,
     code: `Care este rolul declaraţiilor import într-o sursă Java?`,
     codeLanguage: "python",
     options: {
-      a: `Permite referireaclaselorfărăutilizareade prefixe;`,
-      b: `Permite importul imaginilor folosite;`,
-      c: `Elimină necesitatea declarării variabilelor;`,
-      d: `Elimină apelurile directe ale funcţiilor fără clase.`,
+      a: `Elimină necesitatea declarării variabilelor;`,
+      b: `Permite referireaclaselorfărăutilizareade prefixe;`,
+      c: `Elimină apelurile directe ale funcţiilor fără clase.`,
+      d: `Permite importul imaginilor folosite;`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 172,
+    id: 171,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Considerăm următorul program Java: 
@@ -812,15 +809,15 @@ public class Test{
 }`,
     codeLanguage: "c",
     options: {
-      a: `2 12 30`,
-      b: `3 -1 30`,
-      c: `3 7 11`,
-      d: `2 7 11`,
+      a: `2 7 11`,
+      b: `3 7 11`,
+      c: `3 -1 30`,
+      d: `2 12 30`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 173,
+    id: 172,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Ce se afisează dacă se execută următorul cod Java:  
@@ -832,30 +829,30 @@ if( s.equals( "Computer" ) )`,
                System.out.println( "Equal B" );`,
     codeLanguage: "java",
     options: {
-      a: `Eroare la complilare, deoarece operatorul == nu se poate aplica pentru tipul String`,
-      b: `Se afisează mesajul “Equal A”`,
-      c: `Se afisează mesajul “Equal B”`,
-      d: `Se afişează ambele mesaje, “Equal A” , repsectiv “Equal B”`,
+      a: `Se afişează ambele mesaje, “Equal A” , repsectiv “Equal B”`,
+      b: `Se afisează mesajul “Equal B”`,
+      c: `Se afisează mesajul “Equal A”`,
+      d: `Eroare la complilare, deoarece operatorul == nu se poate aplica pentru tipul String`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 174,
+    id: 173,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `În Java, metoda clone() a clasei Object`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `Creeaza un obiect nou al clasei folosind constructorul implicit`,
+      a: `Testează dacă obiectul specificat este o clonă a obiectului current`,
       b: `Creeaza şi returnează o copie a obiectului curent (JAVA)`,
       c: `Returneaza codul asociat constructorului implicit`,
-      d: `Testează dacă obiectul specificat este o clonă a obiectului current`,
+      d: `Creeaza un obiect nou al clasei folosind constructorul implicit`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 175,
+    id: 174,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Fie următorul program Java:  
@@ -869,15 +866,15 @@ System.out.println("a = " + a + ", b = " + b + ", c = " +
 c);}}`,
     codeLanguage: "c",
     options: {
-      a: `a = 2, b = 4, c = 20`,
-      b: `a = 2, b = 5, c = 20`,
+      a: `a = 2, b = 5, c = 20`,
+      b: `a = 3, b = 6, c = 30`,
       c: `a = 2, b = 5, c = 25`,
-      d: `a = 3, b = 6, c = 30`,
+      d: `a = 2, b = 4, c = 20`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 176,
+    id: 175,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Considerăm următorul program Java:  
@@ -896,14 +893,14 @@ System.out.println(suma);
     codeLanguage: "c",
     options: {
       a: `; } } După executarea programului, pe ecran se va afişa: a) -7`,
-      b: `0`,
+      b: `-13`,
       c: `-11 (JAVA)`,
-      d: `-13`,
+      d: `0`,
     },
     correctAnswer: "a",
   },
   {
-    id: 177,
+    id: 176,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Secvenţa uramatoare Java: 
@@ -917,15 +914,15 @@ public static void main(String args[]){
 }}`,
     codeLanguage: "c",
     options: {
-      a: `Eroare la compliare pentru ca nu se specifica numarul de elemente ale tabloului atom`,
-      b: `6`,
-      c: `7`,
-      d: `8`,
+      a: `8`,
+      b: `7`,
+      c: `6`,
+      d: `Eroare la compliare pentru ca nu se specifica numarul de elemente ale tabloului atom`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 178,
+    id: 177,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Secvenţa uramatoare Java: 
@@ -939,15 +936,15 @@ public static void main(String args[]){
 }}`,
     codeLanguage: "c",
     options: {
-      a: `Eroare la compliare pentru ca nu se specifica numarul de elemente ale tabloului atom`,
+      a: `10`,
       b: `6`,
-      c: `10`,
-      d: `9`,
+      c: `9`,
+      d: `Eroare la compliare pentru ca nu se specifica numarul de elemente ale tabloului atom`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 179,
+    id: 178,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Ce se va afişa la execuţia urmatorului program Java? 
@@ -963,15 +960,15 @@ System.out.print(x);
 }`,
     codeLanguage: "c",
     options: {
-      a: `Va aparea eroare la compilare deoarece valoarea variabilei x nu se mai poatemodifica;`,
-      b: `La execuţie se va afişa: 2.3f 6.7f;`,
-      c: `La execuţie se va afişa: 2.3f 2.3f;`,
-      d: `La execuţie se va afişa: 2.3 6.7;`,
+      a: `La execuţie se va afişa: 2.3f 6.7f;`,
+      b: `La execuţie se va afişa: 2.3f 2.3f;`,
+      c: `La execuţie se va afişa: 2.3 6.7;`,
+      d: `Va aparea eroare la compilare deoarece valoarea variabilei x nu se mai poatemodifica;`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 180,
+    id: 179,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Urmatorul program Java: 
@@ -1002,30 +999,30 @@ System.out.print(obiect.getX_C2() + " ");
 System.out.println(obiect.getX_C1());}}`,
     codeLanguage: "c",
     options: {
-      a: `Programul este corect şi va afişa la execuţie 5 4;`,
-      b: `Programul este correct şi va afişa la execuţie 4.0 4;`,
-      c: `Va aparea eroare la compilare deoarece în clasa C2 s-a suprascris gresit atributul x din clasa C1;`,
-      d: `Va aparea eroare la compilare deoarece metoda suprascrisă f() din clasa C2 intoarce un tip diferit de void;`,
+      a: `Programul este correct şi va afişa la execuţie 4.0 4;`,
+      b: `Programul este corect şi va afişa la execuţie 5 4;`,
+      c: `Va aparea eroare la compilare deoarece metoda suprascrisă f() din clasa C2 intoarce un tip diferit de void;`,
+      d: `Va aparea eroare la compilare deoarece în clasa C2 s-a suprascris gresit atributul x din clasa C1;`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 181,
+    id: 180,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `O subclasă Java a unei clase abstracte poate fi instanţiată numai dacă:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `Se foloseşte cuvantul cheie abstract;`,
-      b: `Suprascrie fiecare metodă declarată abstractă în superclasa sa, şi furnizeaza implementari pentru toate acestea;`,
+      a: `Suprascrie fiecare metodă declarată abstractă în superclasa sa, şi furnizeaza implementari pentru toate acestea;`,
+      b: `Se foloseşte cuvantul cheie abstract;`,
       c: `Se foloseşte moştenirea multiplă;`,
       d: `O subclasă abstractă nu poate fi instanţiată;`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 182,
+    id: 181,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Urmatorul program Java: 
@@ -1056,30 +1053,30 @@ System.out.print(obiect.getX_C2() + " ");
 System.out.println(obiect.getX_C1());}}`,
     codeLanguage: "c",
     options: {
-      a: `Programul este corect şi va afişa la execuţie 5.0 4;`,
-      b: `Programul este correct şi va afişa la execuţie 4.0 4;`,
-      c: `Va aparea eroare la compilare deoarece în clasa C2 s-a suprascris gresit atributul x din clasa C1;`,
-      d: `Programul este correct şi va afişa la execuţie 5.0 5;`,
+      a: `Va aparea eroare la compilare deoarece în clasa C2 s-a suprascris gresit atributul x din clasa C1;`,
+      b: `Programul este correct şi va afişa la execuţie 5.0 5;`,
+      c: `Programul este correct şi va afişa la execuţie 4.0 4;`,
+      d: `Programul este corect şi va afişa la execuţie 5.0 4;`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 183,
+    id: 182,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Tipurile referința în Java sunt:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `tabloul, clasa, interfața`,
-      b: `clasa, interfata`,
-      c: `int, flout, double, char, String`,
-      d: `String si null`,
+      a: `clasa, interfata`,
+      b: `String si null`,
+      c: `tabloul, clasa, interfața`,
+      d: `int, flout, double, char, String`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 184,
+    id: 183,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Secvența următoare:  
@@ -1095,15 +1092,15 @@ Afișează:`,
 }`,
     codeLanguage: "c",
     options: {
-      a: `EXAMEN`,
-      b: `Examen`,
-      c: `eXamen`,
-      d: `Examen`,
+      a: `Examen`,
+      b: `EXAMEN`,
+      c: `Examen`,
+      d: `eXamen`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 185,
+    id: 184,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Secvența urătoare Java: 
@@ -1117,15 +1114,15 @@ System.out.println(sir2.toUpperCase());    }
 }`,
     codeLanguage: "c",
     options: {
-      a: `ogramare`,
+      a: `Java (JAVA)`,
       b: `rama`,
-      c: `RAMA`,
-      d: `Java (JAVA)`,
+      c: `ogramare`,
+      d: `RAMA`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 186,
+    id: 185,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Secvența urătoare Java: 
@@ -1143,15 +1140,15 @@ System.out.println(numar);}
 }`,
     codeLanguage: "c",
     options: {
-      a: `16`,
-      b: `32`,
-      c: `8`,
+      a: `32`,
+      b: `8`,
+      c: `16`,
       d: `3`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 187,
+    id: 186,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Secveţa uramatoare Java: 
@@ -1165,45 +1162,45 @@ public static void main(String args[]){
 }}`,
     codeLanguage: "c",
     options: {
-      a: `Eroare la compliare pentru ca nu se specifica numarul de elemente ale tabloului atom`,
+      a: `5`,
       b: `2`,
       c: `6`,
-      d: `5`,
+      d: `Eroare la compliare pentru ca nu se specifica numarul de elemente ale tabloului atom`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 188,
+    id: 187,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `O clasă Java declarată final`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `clasa nu poate fi instanțiată`,
-      b: `orice cod exterior are acces la codul clasei`,
+      a: `orice cod exterior are acces la codul clasei`,
+      b: `clasa nu poate fi instanțiată`,
       c: `implementează o interfață`,
       d: `nu poate avea subclase`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 189,
+    id: 188,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Compoziția în limbajul Java reprezintă`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `relație de tip IS-A`,
-      b: `relație de tip Can Do`,
-      c: `relație de tip HAS-A.`,
-      d: `Niciorelație (JAVA)`,
+      a: `Niciorelație (JAVA)`,
+      b: `relație de tip HAS-A.`,
+      c: `relație de tip Can Do`,
+      d: `relație de tip IS-A`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 190,
+    id: 189,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Fie următorul program Java: 
@@ -1228,7 +1225,9 @@ b[i];
 }`,
     codeLanguage: "c",
     options: {
-      a: `{ 
+      a: `14`,
+      b: `15`,
+      c: `{ 
         a[0] = -a[0]; 
         a = new int[a.length]; 
         a[0] = 1; 
@@ -1249,14 +1248,12 @@ b[i];
 După executarea programului, va fi afişată valoarea: 
  
 a) 30`,
-      b: `14`,
-      c: `28`,
-      d: `15`,
+      d: `28`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 191,
+    id: 190,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Considerăm următorul program Java: 
@@ -1282,22 +1279,19 @@ public class Test{
     codeLanguage: "c",
     options: {
       a: `3 3`,
-      b: `3 4`,
-      c: `2 2`,
-      d: `3 2`,
+      b: `3 2`,
+      c: `3 4`,
+      d: `2 2`,
     },
     correctAnswer: "a",
   },
   {
-    id: 192,
+    id: 191,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Considerăm următorul program Java: 
 
  (JAVA) 
- 
-17 
- 
 După executarea programului, va fi afişată valoarea:`,
     code: `class C1{ 
     int x = 1; 
@@ -1315,15 +1309,15 @@ public class Test{
 }`,
     codeLanguage: "c",
     options: {
-      a: `3`,
+      a: `5`,
       b: `6`,
-      c: `5`,
-      d: `4`,
+      c: `4`,
+      d: `3`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 193,
+    id: 192,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `După executarea secvenței de cod  Java 
@@ -1336,15 +1330,15 @@ if (s.equals(t)) System.out.print("C");
 else System.out.print("D");`,
     codeLanguage: "python",
     options: {
-      a: `AD`,
+      a: `AC`,
       b: `BC`,
-      c: `AC`,
-      d: `BD`,
+      c: `BD`,
+      d: `AD`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 194,
+    id: 193,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Fie următorul program Java: 
@@ -1373,15 +1367,15 @@ public class Test{
 }`,
     codeLanguage: "c",
     options: {
-      a: `6`,
-      b: `3`,
-      c: `4`,
-      d: `Eroare la rulare (excepție NullPointerException netratată)`,
+      a: `Eroare la rulare (excepție NullPointerException netratată)`,
+      b: `4`,
+      c: `3`,
+      d: `6`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 195,
+    id: 194,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Precizați care dintre urmaătoarele afirmații sunt adevărate: 
@@ -1393,15 +1387,15 @@ IV. mai multe clase pot implementa aceeași interfață`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `I, II, IV`,
+      a: `I, II, III, IV`,
       b: `I, III, IV`,
       c: `II, III, IV`,
-      d: `I, II, III, IV`,
+      d: `I, II, IV`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 196,
+    id: 195,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Fie următorul program Java: 
@@ -1426,30 +1420,30 @@ public class Test {
 }`,
     codeLanguage: "c",
     options: {
-      a: `AACD`,
-      b: `ACCD`,
-      c: `AACB`,
-      d: `ACDC`,
+      a: `ACDC`,
+      b: `AACB`,
+      c: `ACCD`,
+      d: `AACD`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 197,
+    id: 196,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Un fir de executare în Java se poate defini:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `printr-o instanță a clasei Runnable`,
-      b: `printr-o instanță a clasei Object`,
-      c: `printr-o instanță a clasei Thread`,
-      d: `printr-o instanță a clasei Clone`,
+      a: `printr-o instanță a clasei Object`,
+      b: `printr-o instanță a clasei Runnable`,
+      c: `printr-o instanță a clasei Clone`,
+      d: `printr-o instanță a clasei Thread`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 198,
+    id: 197,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Ce se va afișa dupa executarea următorului program Java: 
@@ -1481,7 +1475,7 @@ public class Test {
     correctAnswer: "a",
   },
   {
-    id: 199,
+    id: 198,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Ce se va afișa dupa executarea următorului program Java: 
@@ -1499,15 +1493,15 @@ public class Test {
 }`,
     codeLanguage: "c",
     options: {
-      a: `{null=null, a=null, b=JavaSE, c=Python}`,
-      b: `{a=null, b=JavaSE, c=Python}`,
-      c: `{null=PHP, a=null, b=JavaSE, c=Python}`,
+      a: `{a=null, b=JavaSE, c=Python}`,
+      b: `{null=PHP, a=null, b=JavaSE, c=Python}`,
+      c: `{null=null, a=null, b=JavaSE, c=Python}`,
       d: `Exepție la executare de tip NullPointerException`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 200,
+    id: 199,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Fie secvența următoare de cod (presupunem că în clasa Persoana sunt 
@@ -1526,15 +1520,15 @@ Ce va produce secvența de cod dată?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `șirul de caractere obținut prin concatenarea listei sortate a salariilor mai mari decât 2000 ale persoanelor ale căror nume începe cu B`,
-      b: `șirul de caractere obținut prin concatenarea listei sortate a numelor persoanelor care încep cu B și cu salarii mai mari decât 2000`,
-      c: `lungimea șirului de caractere produs prin concatenarea numelor persoanelor care încep cu B și cu salarii mai mari decât 2000`,
-      d: `lista formată din persoanele ale căror nume care încep cu B și au salarii mai mari decât 2000`,
+      a: `șirul de caractere obținut prin concatenarea listei sortate a numelor persoanelor care încep cu B și cu salarii mai mari decât 2000`,
+      b: `șirul de caractere obținut prin concatenarea listei sortate a salariilor mai mari decât 2000 ale persoanelor ale căror nume începe cu B`,
+      c: `lista formată din persoanele ale căror nume care încep cu B și au salarii mai mari decât 2000`,
+      d: `lungimea șirului de caractere produs prin concatenarea numelor persoanelor care încep cu B și cu salarii mai mari decât 2000`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 201,
+    id: 200,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
     text: `Fie următorul program Java: 
@@ -1565,9 +1559,9 @@ public class Test {
     codeLanguage: "c",
     options: {
       a: `Sub Sub Sub`,
-      b: `Sub Sub Super`,
-      c: `Super Super Super`,
-      d: `Super Sub Super`,
+      b: `Super Super Super`,
+      c: `Super Sub Super`,
+      d: `Sub Sub Super`,
     },
     correctAnswer: "a",
   },

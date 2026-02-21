@@ -13,6 +13,7 @@ interface QuestionCardProps {
   isBookmarked: boolean;
   onSelectAnswer: (answer: AnswerKey) => void;
   onBookmark: () => void;
+  onRetry?: () => void;
 }
 
 const optionLabels: Record<AnswerKey, string> = { a: "A", b: "B", c: "C", d: "D" };
@@ -26,6 +27,7 @@ export function QuestionCard({
   isBookmarked,
   onSelectAnswer,
   onBookmark,
+  onRetry,
 }: QuestionCardProps) {
   const [animateKey, setAnimateKey] = useState(question.id);
 
@@ -140,6 +142,20 @@ export function QuestionCard({
           );
         })}
       </div>
+
+      {/* Retry button for wrong answers */}
+      {showFeedback && selectedAnswer && selectedAnswer !== question.correctAnswer && onRetry && (
+        <button
+          onClick={onRetry}
+          className="mt-4 w-full flex items-center justify-center gap-2 px-4 py-3 rounded-[var(--radius-md)] border-2 border-[var(--color-border)] bg-[var(--color-bg-primary)] hover:bg-[var(--color-bg-hover)] hover:border-[var(--color-accent)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-all cursor-pointer"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="1 4 1 10 7 10" />
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+          </svg>
+          <span className="text-sm font-medium">Reîncearcă</span>
+        </button>
+      )}
     </div>
   );
 }

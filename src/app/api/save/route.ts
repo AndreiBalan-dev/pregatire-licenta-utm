@@ -1,14 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
 import { savedSessions } from "@/db/schema";
+import { eq, count } from "drizzle-orm";
 import { generateSaveKey, hashIp } from "@/lib/crypto";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { validateSessionData } from "@/lib/validation";
-import { RATE_LIMITS } from "@/lib/constants";
+import { RATE_LIMITS, MAX_SESSIONS_PER_IP } from "@/lib/constants";
 
 export async function POST(request: NextRequest) {
-  // Rate limiting
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  // Rate limiting - x-real-ip is set by Vercel's edge network (not spoofable)
+  const ip = request.headers.get("x-real-ip") || request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   const ipHashed = hashIp(ip);
 
   const rateCheck = checkRateLimit(`save:${ipHashed}`, RATE_LIMITS.save);
@@ -22,6 +23,12 @@ export async function POST(request: NextRequest) {
         },
       }
     );
+  }
+
+  // Check Content-Length to reject oversized payloads early
+  const contentLength = parseInt(request.headers.get("content-length") || "0", 10);
+  if (contentLength > 600_000) {
+    return NextResponse.json({ error: "Datele sunt prea mari." }, { status: 413 });
   }
 
   // Parse body
@@ -39,6 +46,23 @@ export async function POST(request: NextRequest) {
   }
 
   const { displayName, sessionData, totalAnswered, totalCorrect } = validation.data!;
+
+  // Check max sessions per IP to prevent abuse
+  try {
+    const [{ sessionCount }] = await db
+      .select({ sessionCount: count() })
+      .from(savedSessions)
+      .where(eq(savedSessions.ipHash, ipHashed));
+
+    if (sessionCount >= MAX_SESSIONS_PER_IP) {
+      return NextResponse.json(
+        { error: "Ai atins limita maximă de sesiuni salvate." },
+        { status: 429 }
+      );
+    }
+  } catch (error) {
+    console.error("Session count check error:", error);
+  }
 
   // Generate unique key
   const key = generateSaveKey();
@@ -61,5 +85,11 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  return NextResponse.json({ key }, { status: 201 });
+  return NextResponse.json({ key }, {
+    status: 201,
+    headers: {
+      "Cache-Control": "no-store",
+      "X-Content-Type-Options": "nosniff",
+    },
+  });
 }

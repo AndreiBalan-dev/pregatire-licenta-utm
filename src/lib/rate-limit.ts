@@ -1,4 +1,5 @@
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const MAX_ENTRIES = 10_000;
 
 export interface RateLimitConfig {
   windowMs: number;
@@ -11,8 +12,8 @@ export function checkRateLimit(
 ): { allowed: boolean; remaining: number; resetAt: number } {
   const now = Date.now();
 
-  // Periodic cleanup (1% chance per call)
-  if (Math.random() < 0.01) {
+  // Cleanup expired entries (1% chance per call, or forced if too many entries)
+  if (Math.random() < 0.01 || rateLimitMap.size > MAX_ENTRIES) {
     for (const [key, val] of rateLimitMap) {
       if (val.resetAt < now) rateLimitMap.delete(key);
     }

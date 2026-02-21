@@ -3,7 +3,7 @@ import { pgTable, timestamp, jsonb, integer, varchar, index } from "drizzle-orm/
 export const savedSessions = pgTable(
   "saved_sessions",
   {
-    key: varchar("key", { length: 16 }).primaryKey(),
+    key: varchar("key", { length: 24 }).primaryKey(),
     displayName: varchar("display_name", { length: 50 }),
     sessionData: jsonb("session_data").notNull(),
     totalAnswered: integer("total_answered").notNull().default(0),

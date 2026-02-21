@@ -10,6 +10,7 @@ import {
 } from "@/lib/session-types";
 import { STORAGE_KEY } from "@/lib/constants";
 import { shuffleArray } from "@/lib/utils";
+import { questionsBySubject } from "@/data";
 
 function loadSession(): LocalSession {
   if (typeof window === "undefined") return createDefaultSession();
@@ -79,6 +80,61 @@ export function useSession() {
               lastPracticedAt: new Date().toISOString(),
             },
           },
+        };
+        persistSession(updated);
+        return updated;
+      });
+    },
+    [persistSession]
+  );
+
+  const retryQuestion = useCallback(
+    (questionId: number, subjectId: string) => {
+      setSession((prev) => {
+        const existing = prev.answers[questionId];
+        if (!existing) return prev;
+
+        const { [questionId]: _, ...remainingAnswers } = prev.answers;
+        const prevStat = prev.subjectStats[subjectId] || { attempted: 0, correct: 0, lastPracticedAt: new Date().toISOString() };
+
+        const updated: LocalSession = {
+          ...prev,
+          answers: remainingAnswers,
+          subjectStats: {
+            ...prev.subjectStats,
+            [subjectId]: {
+              attempted: Math.max(0, prevStat.attempted - 1),
+              correct: Math.max(0, prevStat.correct - (existing.isCorrect ? 1 : 0)),
+              lastPracticedAt: prevStat.lastPracticedAt,
+            },
+          },
+        };
+        persistSession(updated);
+        return updated;
+      });
+    },
+    [persistSession]
+  );
+
+  const resetSubject = useCallback(
+    (subjectId: string) => {
+      setSession((prev) => {
+        const subjectQuestions = questionsBySubject[subjectId] || [];
+        const subjectQIds = new Set(subjectQuestions.map((q) => q.id));
+
+        const filteredAnswers: typeof prev.answers = {};
+        for (const [qId, answer] of Object.entries(prev.answers)) {
+          if (!subjectQIds.has(Number(qId))) {
+            filteredAnswers[Number(qId)] = answer;
+          }
+        }
+
+        const { [subjectId]: _, ...restStats } = prev.subjectStats;
+
+        const updated: LocalSession = {
+          ...prev,
+          answers: filteredAnswers,
+          subjectStats: restStats,
         };
         persistSession(updated);
         return updated;
@@ -211,6 +267,8 @@ export function useSession() {
     isLoaded,
     hasExistingSession,
     answerQuestion,
+    retryQuestion,
+    resetSubject,
     toggleBookmark,
     startPractice,
     updatePracticeIndex,

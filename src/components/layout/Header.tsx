@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/practica", label: "Practică" },
   { href: "/rezultate", label: "Rezultate" },
   { href: "/revizuire", label: "Revizuire" },
+  { href: "/despre", label: "Despre" },
 ];
 
 export function Header() {

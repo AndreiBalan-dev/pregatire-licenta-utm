@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { cn, formatPercentage } from "@/lib/utils";
@@ -17,9 +18,10 @@ export function ModuleCard({ module, totalQuestions, answeredCount, correctCount
   const pct = formatPercentage(answeredCount, totalQuestions);
 
   return (
+    <Link href={`/practica?modul=${module.id}`} className="block">
     <Card
       hover
-      className={cn("p-5 animate-slide-up")}
+      className={cn("p-5 animate-slide-up cursor-pointer")}
       style={
         {
           "--module-color": module.color,
@@ -97,5 +99,6 @@ export function ModuleCard({ module, totalQuestions, answeredCount, correctCount
         </div>
       )}
     </Card>
+    </Link>
   );
 }

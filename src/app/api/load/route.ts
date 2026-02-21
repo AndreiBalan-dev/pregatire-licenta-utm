@@ -8,8 +8,8 @@ import { validateSaveKey } from "@/lib/validation";
 import { RATE_LIMITS } from "@/lib/constants";
 
 export async function POST(request: NextRequest) {
-  // Rate limiting
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  // Rate limiting - x-real-ip is set by Vercel's edge network (not spoofable)
+  const ip = request.headers.get("x-real-ip") || request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   const ipHashed = hashIp(ip);
 
   const rateCheck = checkRateLimit(`load:${ipHashed}`, RATE_LIMITS.load);
@@ -57,6 +57,11 @@ export async function POST(request: NextRequest) {
       totalAnswered: session.totalAnswered,
       totalCorrect: session.totalCorrect,
       savedAt: session.createdAt,
+    }, {
+      headers: {
+        "Cache-Control": "no-store",
+        "X-Content-Type-Options": "nosniff",
+      },
     });
   } catch (error) {
     console.error("Load error:", error);

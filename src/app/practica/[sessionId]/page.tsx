@@ -22,6 +22,7 @@ export default function QuizPage() {
     session,
     isLoaded,
     answerQuestion,
+    retryQuestion,
     toggleBookmark,
     updatePracticeIndex,
     endPractice,
@@ -133,6 +134,14 @@ export default function QuizPage() {
     if (!currentQuestion) return;
     toggleBookmark(currentQuestion.id);
   }, [currentQuestion, toggleBookmark]);
+
+  const handleRetry = useCallback(() => {
+    if (!currentQuestion) return;
+    retryQuestion(currentQuestion.id, currentQuestion.subjectId);
+    setSelectedAnswer(null);
+    setShowFeedback(false);
+    timer.reset();
+  }, [currentQuestion, retryQuestion, timer]);
 
   const handleEndPractice = useCallback(() => {
     endPractice();
@@ -249,6 +258,7 @@ export default function QuizPage() {
               isBookmarked={isBookmarked}
               onSelectAnswer={handleSelectAnswer}
               onBookmark={handleBookmark}
+              onRetry={handleRetry}
             />
           </div>
 

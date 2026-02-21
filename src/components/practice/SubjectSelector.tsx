@@ -13,6 +13,7 @@ interface SubjectSelectorProps {
   onToggleSubject: (id: string) => void;
   onSelectAllModule: (moduleId: string) => void;
   onDeselectAllModule: (moduleId: string) => void;
+  onResetSubject?: (subjectId: string) => void;
 }
 
 export function SubjectSelector({
@@ -20,6 +21,7 @@ export function SubjectSelector({
   onToggleSubject,
   onSelectAllModule,
   onDeselectAllModule,
+  onResetSubject,
 }: SubjectSelectorProps) {
   const [expandedModules, setExpandedModules] = useState<string[]>(modules.map((m) => m.id));
   const { session } = useSession();
@@ -154,8 +156,26 @@ export function SubjectSelector({
                           )}>
                             {subject.icon} {subject.name}
                           </span>
-                          <span className="text-xs text-[var(--color-text-tertiary)] flex-shrink-0">
-                            {answered}/{questions.length}
+                          <span className="flex items-center gap-1.5 flex-shrink-0">
+                            <span className="text-xs text-[var(--color-text-tertiary)]">
+                              {answered}/{questions.length}
+                            </span>
+                            {answered > 0 && onResetSubject && (
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  onResetSubject(subject.id);
+                                }}
+                                className="p-0.5 rounded text-[var(--color-text-tertiary)] hover:text-[var(--color-wrong)] hover:bg-[var(--color-wrong-bg)] transition-colors cursor-pointer"
+                                title="Resetează progresul"
+                              >
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <polyline points="1 4 1 10 7 10" />
+                                  <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                                </svg>
+                              </button>
+                            )}
                           </span>
                         </div>
                         <div className="mt-1.5 h-1 rounded-full bg-[var(--color-bg-primary)] overflow-hidden">

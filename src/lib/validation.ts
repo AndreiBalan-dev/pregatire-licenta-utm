@@ -23,8 +23,12 @@ export function validateSessionData(body: unknown): ValidationResult {
     if (typeof b.displayName !== "string" || b.displayName.length > MAX_DISPLAY_NAME_LENGTH) {
       return { success: false, error: `Numele este prea lung (max ${MAX_DISPLAY_NAME_LENGTH} caractere).` };
     }
-    // Sanitize: remove control characters
+    // Reject control characters
     if (/[\x00-\x1f\x7f]/.test(b.displayName)) {
+      return { success: false, error: "Numele conține caractere invalide." };
+    }
+    // Reject HTML/script tags to prevent stored XSS
+    if (/<[^>]*>/.test(b.displayName)) {
       return { success: false, error: "Numele conține caractere invalide." };
     }
   }
@@ -71,7 +75,7 @@ export function validateSaveKey(key: unknown): key is string {
   return (
     typeof key === "string" &&
     key.length >= 8 &&
-    key.length <= 16 &&
+    key.length <= 24 &&
     /^[a-zA-Z0-9_-]+$/.test(key)
   );
 }

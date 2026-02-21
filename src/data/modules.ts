@@ -18,7 +18,7 @@ export const modules: Module[] = [
         id: "programare-python",
         name: "Programare în Python",
         moduleId: "programming",
-        questionCount: 50,
+        questionCount: 49,
         icon: "🐍",
       },
       {
