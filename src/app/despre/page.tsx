@@ -27,9 +27,9 @@ export default function DesprePage() {
             <div className="flex items-start gap-4">
               <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0">
                 <img
-                  src="https://i.imgur.com/UJhfuwT.jpeg"
+                  src="https://i.imgur.com/ftA62ZL.jpeg"
                   alt="Bălan Andrei Marian"
-                  className="w-full h-full object-cover scale-150"
+                  className="w-full h-full object-cover scale-[1.2]"
                 />
               </div>
               <div>
