@@ -25,11 +25,11 @@ export default function DesprePage() {
           {/* Creator */}
           <Card className="p-6 mb-6 animate-slide-up">
             <div className="flex items-start gap-4">
-              <div className="w-14 h-14 rounded-full bg-[var(--color-accent-muted)] flex items-center justify-center flex-shrink-0">
-                <span className="text-2xl font-bold text-[var(--color-accent)]" style={{ fontFamily: "var(--font-display)" }}>
-                  BA
-                </span>
-              </div>
+              <img
+                src="https://i.imgur.com/UJhfuwT.jpeg"
+                alt="Bălan Andrei Marian"
+                className="w-14 h-14 rounded-full object-cover flex-shrink-0"
+              />
               <div>
                 <h2
                   className="text-xl font-bold text-[var(--color-text-primary)] mb-1"
@@ -210,7 +210,7 @@ export default function DesprePage() {
               </p>
               <div className="grid grid-cols-2 gap-3 pt-3">
                 <div className="p-3 rounded-[var(--radius-md)] bg-[var(--color-bg-tertiary)]">
-                  <div className="text-2xl font-bold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>652</div>
+                  <div className="text-2xl font-bold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>665</div>
                   <div className="text-xs text-[var(--color-text-tertiary)]">intrebari</div>
                 </div>
                 <div className="p-3 rounded-[var(--radius-md)] bg-[var(--color-bg-tertiary)]">
