@@ -362,10 +362,7 @@ valorificat (introdus) pe piață.`,
     id: 645,
     moduleId: "web",
     subjectId: "inovare-transformare-digitala",
-    text: `Industry 4.0 reprezintă: 
-
- 
-5`,
+    text: `Industry 4.0 reprezintă:`,
     code: undefined,
     codeLanguage: undefined,
     options: {

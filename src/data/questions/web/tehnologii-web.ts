@@ -218,10 +218,11 @@ pagini Web?`,
     id: 521,
     moduleId: "web",
     subjectId: "tehnologii-web",
-    text: `Ce afișează secventa de codL anul este: <span id="demo"></span> 
-<script> 
-const d = new Date();`,
-    code: `document.getElementById("demo").innerHTML = d.getFullYear(); 
+    text: `Ce afișează secvența de cod?`,
+    code: `anul este: <span id="demo"></span>
+<script>
+const d = new Date();
+document.getElementById("demo").innerHTML = d.getFullYear();
 </script>`,
     codeLanguage: "js",
     options: {
@@ -387,13 +388,12 @@ Javascript?`,
     id: 532,
     moduleId: "web",
     subjectId: "tehnologii-web",
-    text: `Ca va afisa scriptul PHP? 
-?>`,
+    text: `Ce va afișa scriptul PHP?`,
     code: `<?php 
 $i = 5.7; echo $i.”<br />“; 
 $i = sprintf(“%05.2f”, $i); 
 echo ‘<br />’. $i;`,
-    codeLanguage: "c",
+    codeLanguage: "php",
     options: {
       a: `5.70 05.7`,
       b: `5.7;05.70`,

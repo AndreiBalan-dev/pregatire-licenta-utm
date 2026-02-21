@@ -65,22 +65,33 @@ function PracticaContent() {
   const handleStart = () => {
     if (selectedSubjects.length === 0) return;
 
-    let allQuestionIds = selectedSubjects.flatMap((sid) =>
+    // Get all questions, putting unanswered ones first for a smarter experience
+    const allQuestions = selectedSubjects.flatMap((sid) =>
       (questionsBySubject[sid] || [])
         .filter((q) => !onlyUnanswered || !session.answers[q.id])
-        .map((q) => q.id)
     );
 
-    if (allQuestionIds.length === 0) return;
+    if (allQuestions.length === 0) return;
 
-    if (questionCount !== "all") {
-      allQuestionIds = allQuestionIds.slice(0, questionCount);
+    // Sort: unanswered first, then previously answered
+    const sorted = allQuestions.sort((a, b) => {
+      const aAnswered = session.answers[a.id] ? 1 : 0;
+      const bAnswered = session.answers[b.id] ? 1 : 0;
+      return aAnswered - bAnswered;
+    });
+
+    let questionIds = sorted.map((q) => q.id);
+    const batchSize = questionCount === "all" ? null : questionCount;
+
+    if (batchSize !== null) {
+      questionIds = questionIds.slice(0, batchSize);
     }
 
     const sessionId = startPractice(
       selectedSubjects,
-      allQuestionIds,
-      session.settings.shuffleOptions
+      questionIds,
+      session.settings.shuffleOptions,
+      batchSize
     );
     router.push(`/practica/${sessionId}`);
   };

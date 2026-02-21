@@ -571,10 +571,6 @@ NOD *link;
  };`,
     code: `ce va afișa următoarea funcție, dacă este apelată prin print(HEAD)? 
 
- 
- 
-7 
- 
 void print(NOD *head) 
 { 
      NOD *iter=head; 
@@ -660,12 +656,6 @@ Dacă vectorul x = (9, 15, 23, 25, 4, 5, 8), care va fi vectorul C la apelarea f
  
  while (iterB <= ultim) 
 
- 
- 
-8 
- 
- 
-  
  C[iterC ++]= x[iterB ++]; 
 }`,
     codeLanguage: "c",

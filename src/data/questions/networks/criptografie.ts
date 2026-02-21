@@ -499,11 +499,7 @@ frecvență biți este necesar ca:`,
     id: 489,
     moduleId: "networks",
     subjectId: "criptografie",
-    text: `Care dintre afirmațiile de mai jos nu reprezintă un criteriu de aleatorism propus de 
-Golomb: 
-
- 
-6`,
+    text: `Care dintre afirmațiile de mai jos nu reprezintă un criteriu de aleatorism propus de Golomb:`,
     code: undefined,
     codeLanguage: undefined,
     options: {

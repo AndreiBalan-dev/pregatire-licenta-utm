@@ -180,10 +180,6 @@ if(i>=j) printf("1");
  
 else printf("0");  
 
- 
- 
-3 
- 
    return 0; 
 }`,
     codeLanguage: "c",

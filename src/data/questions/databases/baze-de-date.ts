@@ -158,18 +158,7 @@ s-au emis cel puţin 3 chitanţe?`,
     codeLanguage: undefined,
     options: {
       a: `SELECT Nrchitanta, Suma, Data FROM CHITANTE WHERE COUNT(NrChitanta)>=3`,
-      b: `SELECT CHITANTE.Data FROM CHITANTE GROUP BY CHITANTE.Data HAVING 
-COUNT(NrChitanta) >= 3 
- 
-11 Se dă tabelul: 
-ANGAJATI (CodAngaj, Nume, DataAngajare, Compartiment, Profesia, Salariu) 
-Care dintre următoarele instrucţiuni (Transact) SQL permite majorarea salariului cu 3% pentru 
-salariaţii angajaţi în anul 2025? 
-a. UPDATE Angajati SET Salariu = Salariu + 3% WHERE DataAngajare IN 2025 
-b. UPDATE Salariu FROM Angajati SET Salariu=Salariu + 3%* Salariu  
-     WHERE DataAngajare IN (‘1/1/2025’ , ‘31/12/2025’) 
-c. UPDATE Angajati SET Salariu = Salariu*1.03 WHERE YEAR(DataAngajare)= 2025 
-d. UPDATE Salariu FROM Angajati SET Salariu = Salariu * 1.03`,
+      b: `SELECT CHITANTE.Data FROM CHITANTE GROUP BY CHITANTE.Data HAVING COUNT(NrChitanta) >= 3`,
       c: `SELECT COUNT(Data), COUNT(NrChitanta) FROM CHITANTE WHERE Data IS NULL`,
       d: `SELECT Nrchitanta, Suma, Data FROM CHITANTE HAVING COUNT(NrChitanta)>=3`,
     },
@@ -274,11 +263,7 @@ relația dintre entitățile ACTOR și FILM este:`,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Folosind relaţia cadru_did(cod, nume, graddid, data_ang, sal_neg, sal_merit), să se specifice 
-care dintre următoarele exemple este corectă: 
-
- 
- 
-4`,
+care dintre următoarele exemple este corectă:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -440,7 +425,7 @@ WHERE a. ID_Compart = c. ID_Compart`,
     options: {
       a: `Selecţia, proiecţia şi join`,
       b: `Intersecţia, proiecţia şi join`,
-      c: `ID_Angajat, a.Nume, c.ID_Compart, c. Nume_Compart FROM ANGAJATI a, COMPARTIMENT c WHERE a. ID_Compart = c. ID_Compart`,
+      c: `Proiecţia şi join`,
       d: `Selecţia, intersecţia şi join`,
     },
     correctAnswer: "c",

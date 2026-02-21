@@ -74,7 +74,7 @@ dacă numărul real 𝑚 este egal cu media aritmetică a numerelor întregi �
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `/2==m–a și a//2==m-b//2. Câte dintre ele sunt adevărate dacă şi numai dacă numărul real 𝑚 este egal cu media aritmetică a numerelor întregi 𝑎 și 𝑏? a) 2`,
+      a: `2`,
       b: `5`,
       c: `3`,
       d: `4`,
@@ -973,12 +973,7 @@ r = f(T)
     L = list(set(L)) 
     L.sort() 
     return L 
- 
 
- 
- 
-15 
- 
 print(r, T)`,
     codeLanguage: "python",
     options: {

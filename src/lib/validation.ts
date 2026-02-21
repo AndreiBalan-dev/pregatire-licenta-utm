@@ -11,8 +11,23 @@ interface ValidationResult {
   error?: string;
 }
 
+const FORBIDDEN_KEYS = new Set(["__proto__", "constructor", "prototype"]);
+const VALID_ANSWER_KEYS = new Set(["a", "b", "c", "d"]);
+
+function hasForbiddenKeys(obj: unknown): boolean {
+  if (!obj || typeof obj !== "object") return false;
+  for (const key of Object.keys(obj as Record<string, unknown>)) {
+    if (FORBIDDEN_KEYS.has(key)) return true;
+  }
+  return false;
+}
+
 export function validateSessionData(body: unknown): ValidationResult {
-  if (!body || typeof body !== "object") {
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    return { success: false, error: "Date invalide." };
+  }
+
+  if (hasForbiddenKeys(body)) {
     return { success: false, error: "Date invalide." };
   }
 
@@ -34,13 +49,72 @@ export function validateSessionData(body: unknown): ValidationResult {
   }
 
   // Validate sessionData
-  if (!b.sessionData || typeof b.sessionData !== "object") {
+  if (!b.sessionData || typeof b.sessionData !== "object" || Array.isArray(b.sessionData)) {
     return { success: false, error: "Datele sesiunii lipsesc." };
+  }
+
+  if (hasForbiddenKeys(b.sessionData)) {
+    return { success: false, error: "Date invalide." };
   }
 
   const sd = b.sessionData as Record<string, unknown>;
   if (sd.version !== 1) {
     return { success: false, error: "Versiune incompatibilă." };
+  }
+
+  // Validate answers structure if present
+  if (sd.answers !== undefined) {
+    if (!sd.answers || typeof sd.answers !== "object" || Array.isArray(sd.answers)) {
+      return { success: false, error: "Format răspunsuri invalid." };
+    }
+    if (hasForbiddenKeys(sd.answers)) {
+      return { success: false, error: "Date invalide." };
+    }
+    const answers = sd.answers as Record<string, unknown>;
+    const answerKeys = Object.keys(answers);
+
+    if (answerKeys.length > MAX_QUESTIONS) {
+      return { success: false, error: "Prea multe răspunsuri." };
+    }
+
+    for (const qIdStr of answerKeys) {
+      const qId = Number(qIdStr);
+      if (!Number.isInteger(qId) || qId < 0 || qId > 100_000) {
+        return { success: false, error: "ID întrebare invalid." };
+      }
+      const answer = answers[qIdStr];
+      if (!answer || typeof answer !== "object" || Array.isArray(answer)) {
+        return { success: false, error: "Format răspuns invalid." };
+      }
+      const a = answer as Record<string, unknown>;
+      if (!VALID_ANSWER_KEYS.has(a.selected as string)) {
+        return { success: false, error: "Răspuns selectat invalid." };
+      }
+      if (typeof a.isCorrect !== "boolean") {
+        return { success: false, error: "Format răspuns invalid." };
+      }
+      if (typeof a.answeredAt !== "string") {
+        return { success: false, error: "Format răspuns invalid." };
+      }
+      if (typeof a.timeSpentMs !== "number" || a.timeSpentMs < 0 || a.timeSpentMs > 3_600_000) {
+        return { success: false, error: "Timp invalid." };
+      }
+    }
+  }
+
+  // Validate bookmarks if present
+  if (sd.bookmarks !== undefined) {
+    if (!Array.isArray(sd.bookmarks)) {
+      return { success: false, error: "Format marcaje invalid." };
+    }
+    if (sd.bookmarks.length > MAX_QUESTIONS) {
+      return { success: false, error: "Prea multe marcaje." };
+    }
+    for (const b of sd.bookmarks) {
+      if (!Number.isInteger(b) || b < 0 || b > 100_000) {
+        return { success: false, error: "ID marcaj invalid." };
+      }
+    }
   }
 
   // Validate stats

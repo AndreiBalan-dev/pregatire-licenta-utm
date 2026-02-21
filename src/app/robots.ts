@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/api/"],
     },
-    sitemap: "https://pregatire-licenta-utm.vercel.app/sitemap.xml",
+    sitemap: "https://utmlearn.com/sitemap.xml",
   };
 }

@@ -158,7 +158,7 @@ export function useSession() {
   );
 
   const startPractice = useCallback(
-    (subjectIds: string[], questionIds: number[], shuffle: boolean): string => {
+    (subjectIds: string[], questionIds: number[], shuffle: boolean, batchSize: number | null = null): string => {
       const ordered = shuffle ? shuffleArray(questionIds) : questionIds;
       const practice: PracticeState = {
         subjectIds,
@@ -166,6 +166,7 @@ export function useSession() {
         currentIndex: 0,
         mode: "practice",
         startedAt: new Date().toISOString(),
+        batchSize,
       };
       const sessionId = crypto.randomUUID();
       setSession((prev) => {

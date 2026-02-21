@@ -8,8 +8,11 @@ import { validateSessionData } from "@/lib/validation";
 import { RATE_LIMITS, MAX_SESSIONS_PER_IP } from "@/lib/constants";
 
 export async function POST(request: NextRequest) {
-  // Rate limiting - x-real-ip is set by Vercel's edge network (not spoofable)
-  const ip = request.headers.get("x-real-ip") || request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  // IP resolution — only trust x-real-ip (set by Vercel edge, not spoofable)
+  const ip = request.headers.get("x-real-ip") || "unknown";
+  if (ip === "unknown" && process.env.NODE_ENV === "production") {
+    return NextResponse.json({ error: "Cerere invalidă." }, { status: 400 });
+  }
   const ipHashed = hashIp(ip);
 
   const rateCheck = checkRateLimit(`save:${ipHashed}`, RATE_LIMITS.save);
@@ -25,9 +28,13 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // Check Content-Length to reject oversized payloads early
-  const contentLength = parseInt(request.headers.get("content-length") || "0", 10);
-  if (contentLength > 600_000) {
+  // Require Content-Length and reject oversized payloads
+  const clHeader = request.headers.get("content-length");
+  if (!clHeader) {
+    return NextResponse.json({ error: "Cerere invalidă." }, { status: 411 });
+  }
+  const contentLength = parseInt(clHeader, 10);
+  if (isNaN(contentLength) || contentLength > 600_000) {
     return NextResponse.json({ error: "Datele sunt prea mari." }, { status: 413 });
   }
 
@@ -61,7 +68,7 @@ export async function POST(request: NextRequest) {
       );
     }
   } catch (error) {
-    console.error("Session count check error:", error);
+    console.error("Session count check error:", error instanceof Error ? error.message : "unknown");
   }
 
   // Generate unique key
@@ -78,7 +85,7 @@ export async function POST(request: NextRequest) {
       ipHash: ipHashed,
     });
   } catch (error) {
-    console.error("Save error:", error);
+    console.error("Save error:", error instanceof Error ? error.message : "unknown");
     return NextResponse.json(
       { error: "Eroare la salvare. Încearcă din nou." },
       { status: 500 }

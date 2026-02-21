@@ -209,9 +209,6 @@ sch(x,&y);
  
 printf("%d",x+y); 
 
- 
-4 
- 
   return 0; 
 }`,
     codeLanguage: "c",

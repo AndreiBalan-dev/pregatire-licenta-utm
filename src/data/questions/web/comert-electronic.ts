@@ -51,8 +51,7 @@ electronica se pedepseste cu:`,
     id: 564,
     moduleId: "web",
     subjectId: "comert-electronic",
-    text: `Proiectarea, implementarea si dezvoltarea unui site de  se poate face 
-folosind aplicatia software:`,
+    text: `Proiectarea, implementarea si dezvoltarea unui site de comerț electronic se poate face folosind aplicatia software:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -115,12 +114,7 @@ contractul la distanta, fara penalitati si fara invocarea vreunui motiv in timp 
     id: 568,
     moduleId: "web",
     subjectId: "comert-electronic",
-    text: `Sistemul electronic de transfer de fonduri (EFT-Electronic Found Transfer) reprezinta: 
-
- 
- 
- 
-2`,
+    text: `Sistemul electronic de transfer de fonduri (EFT-Electronic Found Transfer) reprezinta:`,
     code: undefined,
     codeLanguage: undefined,
     options: {

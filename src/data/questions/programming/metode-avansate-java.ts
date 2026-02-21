@@ -52,11 +52,11 @@ ob.a++;
 System.out.println(C.a); 
     } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `2`,
       b: `nicio valoare, se obține o eroare la executare.`,
-      c: `; } } După executarea programului, va fi afişată valoarea: a) 3`,
+      c: `3`,
       d: `1`,
     },
     correctAnswer: "c",
@@ -79,21 +79,16 @@ C ob1=new C();
  
 C ob2=new C(); 
 
- (JAVA) 
- 
-2 
- 
- 
 ob1.a++; 
  
 System.out.println(ob2.a); 
     } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `1;`,
       b: `nicio valoare, se obține o eroare la executare.`,
-      c: `; } } După executarea programului, va fi afişată valoarea: a) 0;`,
+      c: `0`,
       d: `2;`,
     },
     correctAnswer: "c",
@@ -185,10 +180,6 @@ class A
 După executarea programului, se va afişa:`,
     code: `public A() { System.out.print("A"); } 
 
- (JAVA) 
- 
-3 
- 
 } 
  
 class B extends A 
@@ -212,7 +203,7 @@ C ob=new C();
  
     } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `C`,
       b: `A`,
@@ -259,15 +250,10 @@ B b=new B();
  
 C c=new C(); 
 
- (JAVA) 
- 
-4 
- 
- 
 System.out.println(b.x+" "+c.x); 
     } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `3 4`,
       b: `3 2`,
@@ -315,7 +301,7 @@ B b=new B(7);
 System.out.println(a.x+" "+b.x); 
     } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `01`,
       b: `57`,
@@ -350,12 +336,6 @@ public class Test{
  
 public static void main(String[] args){ 
 
- (JAVA) 
- 
-5 
- 
- 
- 
 A a = null;  
  
  
@@ -365,7 +345,7 @@ a.staticMethod();
 } 
  
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `programul afișează mesajul Metoda statica`,
       b: `se obține la executare excepția java.lang.NullPointerException`,
@@ -398,7 +378,7 @@ class B extends A
     } 
 } 
 Afișează`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `10 20`,
       b: `eroare la executare`,
@@ -430,7 +410,6 @@ final?`,
     text: `Următorul program Java: 
  
 
- (JAVA) 
  
 6`,
     code: `public class Test { 
@@ -454,23 +433,11 @@ System.out.println(Arrays.toString(a));
     } 
 } 
 Afișează`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `[10, 20, 30, 40, 50] [100, 2, 3, 4, 5, 6, 7]`,
       b: `[10, 20, 30, 40, 50] [100, 2, 3, 4, 5, 6, 7]`,
-      c: `); 
-    } 
- 
-    public static void main(String[] args){ 
-        int []v = {1,2,3,4,5,6,7}; 
-        test(v); 
-        System.out.println(Arrays.toString(v)); 
-    } 
-} 
-Afișează 
- 
-a) [10, 200, 30, 40, 50] 
-[1 2, 3, 4, 5, 6, 7]`,
+      c: `[10, 200, 30, 40, 50] [1, 2, 3, 4, 5, 6, 7]`,
       d: `[10, 200, 30, 40, 50] [100, 2, 3, 4, 5, 6, 7]`,
     },
     correctAnswer: "c",
@@ -515,10 +482,6 @@ public class teste_grila
 { 
     public static void main(String[] args) 
 
- (JAVA) 
- 
-7 
- 
     { 
  
  
@@ -531,7 +494,7 @@ ob.f(); ob.g();
 ob.afisare(); 
     } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `2 10`,
       b: `6 6`,
@@ -546,7 +509,6 @@ public class teste_grila
 { 
     public static void main(String[] args) 
 
- (JAVA) 
     { 
  
  
@@ -591,7 +553,7 @@ După executarea programului, pe ecran se va afişa:`,
 System.out.println(C.f()+" "+C.f()+" "+C.f()); 
     } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `1 2 6`,
       b: `1 1 1`,
@@ -629,17 +591,13 @@ public class teste_grila
 { 
     public static void main(String[] args) 
 
- (JAVA) 
- 
-8 
- 
     { 
  
  
 C.f();C.f();C.f(); 
     } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `0 0 0`,
       b: `1 4 25`,
@@ -680,7 +638,7 @@ InterruptedException{
         System.out.print(3); 
     } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `10 cifre egale cu 1, 10 cifre egale cu 2 și o cifră egală cu 3, cifrele fiind în orice ordine posibilă`,
       b: `10 cifre egale cu 1, urmate de 10 cifre egale cu 2 și la sfârșit o cifră egală cu 3`,
@@ -711,11 +669,6 @@ După executarea programului, va fi afişată valoarea:`,
     code: `class Sir{ 
     private String sir; 
 
- (JAVA) 
- 
-9 
- 
- 
     public Sir(String sir){ 
         this.sir = sir; 
     } 
@@ -728,7 +681,7 @@ public class Test {
         System.out.println(s.getSir() + " " + t.getSir()); 
     } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `Alex Dan`,
       b: `Matei Dan`,
@@ -756,12 +709,12 @@ public class Test {
     id: 170,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
-    text: ``,
-    code: `Care este rolul declaraţiilor import într-o sursă Java?`,
-    codeLanguage: "python",
+    text: `Care este rolul declaraţiilor import într-o sursă Java?`,
+    code: undefined,
+    codeLanguage: undefined,
     options: {
       a: `Elimină necesitatea declarării variabilelor;`,
-      b: `Permite referireaclaselorfărăutilizareade prefixe;`,
+      b: `Permite referirea claselor fără utilizarea de prefixe;`,
       c: `Elimină apelurile directe ale funcţiilor fără clase.`,
       d: `Permite importul imaginilor folosite;`,
     },
@@ -773,17 +726,12 @@ public class Test {
     subjectId: "metode-avansate-java",
     text: `Considerăm următorul program Java: 
 După executarea programului, va fi afişată valoarea:`,
-    code: `class Calcul_1{ 
-    void calcul(int a, int b){ 
-        System.out.print(a + b + " "); 
-    } 
+    code: `class Calcul_1{
+    void calcul(int a, int b){
+        System.out.print(a + b + " ");
+    }
+}
 
- (JAVA) 
- 
-10 
- 
-} 
-  
 class Calcul_2 extends Calcul_1{ 
     void calcul(int a, int b){ 
         System.out.print(a - b + " "); 
@@ -807,7 +755,7 @@ public class Test{
         z.calcul(5, 6); 
     } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `2 7 11`,
       b: `3 7 11`,
@@ -845,7 +793,7 @@ if( s.equals( "Computer" ) )`,
     codeLanguage: undefined,
     options: {
       a: `Testează dacă obiectul specificat este o clonă a obiectului current`,
-      b: `Creeaza şi returnează o copie a obiectului curent (JAVA)`,
+      b: `Creeaza şi returnează o copie a obiectului curent`,
       c: `Returneaza codul asociat constructorului implicit`,
       d: `Creeaza un obiect nou al clasei folosind constructorul implicit`,
     },
@@ -864,7 +812,7 @@ public static void main(String args[]){
 int a = 3;int b = (a = 2) * a;int c = b * (b = 5) ; 
 System.out.println("a = " + a + ", b = " + b + ", c = " + 
 c);}}`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `a = 2, b = 5, c = 20`,
       b: `a = 3, b = 6, c = 30`,
@@ -890,11 +838,11 @@ if(v[i]<-2) suma+=v[i];
 System.out.println(suma);  
 }  
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
-      a: `; } } După executarea programului, pe ecran se va afişa: a) -7`,
+      a: `-7`,
       b: `-13`,
-      c: `-11 (JAVA)`,
+      c: `-11`,
       d: `0`,
     },
     correctAnswer: "a",
@@ -912,7 +860,7 @@ Afisează:`,
 public static void main(String args[]){ 
    System.out.println(atom.length) ;  
 }}`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `8`,
       b: `7`,
@@ -934,7 +882,7 @@ Afisează:`,
 public static void main(String args[]){ 
    System.out.println(atom[0].length()) ;  
 }}`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `10`,
       b: `6`,
@@ -958,12 +906,12 @@ x=6.7f;
 System.out.print(x); 
 } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `La execuţie se va afişa: 2.3f 6.7f;`,
       b: `La execuţie se va afişa: 2.3f 2.3f;`,
       c: `La execuţie se va afişa: 2.3 6.7;`,
-      d: `Va aparea eroare la compilare deoarece valoarea variabilei x nu se mai poatemodifica;`,
+      d: `Va aparea eroare la compilare deoarece valoarea variabilei x nu se mai poate modifica;`,
     },
     correctAnswer: "d",
   },
@@ -978,10 +926,6 @@ Afişează:`,
 int x=1; 
 void f(int x){ 
 
- (JAVA) 
- 
-13 
- 
 this.x=x;} 
 int getX_C1(){ 
 return x;}} 
@@ -997,7 +941,7 @@ C2 obiect = new C2();
 obiect.f(4); 
 System.out.print(obiect.getX_C2() + " "); 
 System.out.println(obiect.getX_C1());}}`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `Programul este correct şi va afişa la execuţie 4.0 4;`,
       b: `Programul este corect şi va afişa la execuţie 5 4;`,
@@ -1046,12 +990,8 @@ C2 obiect = new C2();
 obiect.f(4); 
 System.out.print(obiect.getX_C2() + " "); 
 
- (JAVA) 
- 
-14 
- 
 System.out.println(obiect.getX_C1());}}`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `Va aparea eroare la compilare deoarece în clasa C2 s-a suprascris gresit atributul x din clasa C1;`,
       b: `Programul este correct şi va afişa la execuţie 5.0 5;`,
@@ -1090,7 +1030,7 @@ Afișează:`,
     } 
  
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `Examen`,
       b: `EXAMEN`,
@@ -1112,9 +1052,9 @@ Afișează:`,
     { 
 System.out.println(sir2.toUpperCase());    } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
-      a: `Java (JAVA)`,
+      a: `Java`,
       b: `rama`,
       c: `ogramare`,
       d: `RAMA`,
@@ -1138,7 +1078,7 @@ numar = numar << 1;
  
 System.out.println(numar);} 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `32`,
       b: `8`,
@@ -1160,7 +1100,7 @@ Afisează:`,
 public static void main(String args[]){ 
   System.out.println(atom.length) ;  
 }}`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `5`,
       b: `2`,
@@ -1192,7 +1132,7 @@ public static void main(String args[]){
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `Niciorelație (JAVA)`,
+      a: `Nicio relație`,
       b: `relație de tip HAS-A.`,
       c: `relație de tip Can Do`,
       d: `relație de tip IS-A`,
@@ -1223,7 +1163,7 @@ b[i];
         System.out.println(s); 
     } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `14`,
       b: `15`,
@@ -1276,7 +1216,7 @@ public class Test{
         System.out.println(b.x + " " + c.x); 
     } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `3 3`,
       b: `3 2`,
@@ -1291,7 +1231,6 @@ public class Test{
     subjectId: "metode-avansate-java",
     text: `Considerăm următorul program Java: 
 
- (JAVA) 
 După executarea programului, va fi afişată valoarea:`,
     code: `class C1{ 
     int x = 1; 
@@ -1307,7 +1246,7 @@ public class Test{
         System.out.println(ob.f(1) + ob.f(2,2)); 
     } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `5`,
       b: `6`,
@@ -1328,7 +1267,7 @@ se va afişa:`,
 else System.out.print("B"); 
 if (s.equals(t)) System.out.print("C"); 
 else System.out.print("D");`,
-    codeLanguage: "python",
+    codeLanguage: "java",
     options: {
       a: `AC`,
       b: `BC`,
@@ -1360,12 +1299,8 @@ public class Test{
         System.out.println(ob.x); 
     } 
 
- (JAVA) 
- 
-18 
- 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `Eroare la rulare (excepție NullPointerException netratată)`,
       b: `4`,
@@ -1418,7 +1353,7 @@ public class Test {
         System.out.println(a.f(”A”) + a.g(”C”)); 
     } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `ACDC`,
       b: `AACB`,
@@ -1457,15 +1392,11 @@ public class Test {
     public static void main(String[] args) { 
         HashMap m = new HashMap(); 
 
- (JAVA) 
- 
-19 
- 
         System.out.println(m); 
  
     } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `{null=null, a=null, b=JavaSE, c=Python}`,
       b: `{a=null, b=JavaSE, c=Python}`,
@@ -1491,7 +1422,7 @@ public class Test {
  
     } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `{a=null, b=JavaSE, c=Python}`,
       b: `{null=PHP, a=null, b=JavaSE, c=Python}`,
@@ -1539,10 +1470,6 @@ După executarea programului se va afișa:`,
  
 class Sub extends Super { 
 
- (JAVA) 
- 
-21 
- 
     public static void print() { System.out.println("Sub"); } 
 } 
  
@@ -1556,7 +1483,7 @@ public class Test {
         r.print(); 
     } 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "java",
     options: {
       a: `Sub Sub Sub`,
       b: `Super Super Super`,

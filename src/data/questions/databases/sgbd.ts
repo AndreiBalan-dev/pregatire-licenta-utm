@@ -183,11 +183,7 @@ restaurate pentru a avea pierderi minime în baza de date?`,
     codeLanguage: undefined,
     options: {
       a: `2 differential, 2 log`,
-      b: `m.; differential backups din 4 în 4 ore; transaction log 
-backups la fiecare 30’. Sistemul cade la 11:24 a.m. După ce se face un full backup 
-restore, câte backups transaction logs şi diferenţiale (numărul minim) trebuie 
-restaurate pentru a avea pierderi minime în baza de date? 
-a. 1 differential, 2 log`,
+      b: `1 differential, 2 log`,
       c: `2 differential, 1 log`,
       d: `1 differetial, 10 log`,
     },
@@ -646,11 +642,7 @@ tip de apel trebuie folosit?`,
     subjectId: "sgbd",
     text: `Dacă o linie dintr-un tabel s-a modificat de mai multe ori de la ultimul backup full 
 al bazei de date, fişierul transaction log backup conţine numai ultimul set de valori 
-pentru acea linie? 
-
- 
- 
-9`,
+pentru acea linie?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -697,17 +689,7 @@ optimă pentru a obține acest deziderat?`,
       a: `CREATE INDEX expertise_index ON Contractors (expertise) WHERE lastUpdated > '20240101';`,
       b: `CREATE INDEX expertise_index ON Contractors(lastUpdated) INCLUDE (expertise);`,
       c: `CREATE INDEX expertise_index ON Contractors (lastUpdated, expertise);`,
-      d: `CREATE INDEX expertise_index 
-    ON Constractors (expertise, lastUpdated); 
- 
-48 Ocazional doriți să limitați permisiunile unui user sau rol interzicând permisiunile 
-la 
-acel cont de securitate. Ce face interzicerea permisiunilor pe un anumit cont de 
-securitate ? 
-a. Asigură că un user sau rol moștenește permisiunile din oricare alt rol pe viitor 
-b. Dezactivează permisiunile dacă sunt moștenite din alt rol 
-c. Activează permisiunile dacă sunt moștenite din alt rol 
-d. Permisiunile nu sunt cumulative pentru un user sau un rol`,
+      d: `CREATE INDEX expertise_index ON Contractors (expertise, lastUpdated);`,
     },
     correctAnswer: "c",
   },
@@ -754,39 +736,7 @@ SalePrice decimal(10,2),   CurrentStock bigint,   NumberSold bigint)
     codeLanguage: "sql",
     options: {
       a: `Acordați utilizatorului permisiunea SELECT pe coloanele Name, SalePrice, CurrentStock și NumberSold și permisiunea ALTER pe coloanele Name și SalePrice din tabela Products.`,
-      b: `Acordați rolului Public permisiunea SELECT pe coloanele Name, SalePrice, 
-CurrentStock și NumberSold și permisiunea ALTER  pe coloanele Name  și 
-SalePrice din tabela Products. 
- 
-
-UNIVERSITATEA TITU MAIORESCU 
-FACULTATEA DE INFORMATICĂ 
- 
- 
- 
- 
- 
- 
- 
-MODELE ÎNTREBĂRI EXAMEN LICENȚĂ 2026 
- 
- 
- 
- 
- 
- 
- 
- 
-MODULUL 3  
- 
-Sisteme de operare  
-Rețele de calculatoare  
-Administrarea rețelelor de calculatoare 
-Criptografie 
-Observatie: 
- 
-Semnul punct si virgula (;) de la sfarsitul variantelor si semnul punct (.) de la ultima varianta nu 
-face parte din comanda.`,
+      b: `Acordați rolului Public permisiunea SELECT pe coloanele Name, SalePrice, CurrentStock și NumberSold și permisiunea ALTER pe coloanele Name și SalePrice din tabela Products.`,
       c: `Acordați utilizatorului permisiunile SELECT și ALTER pe vederea definită de 
 instrucțiunea: CREATE VIEW dbo.CustomerProduct AS SELECT Name, 
 SalePrice, (CurrentStock - NumberSold) AS AvailableStock FROM dbo.Products.`,

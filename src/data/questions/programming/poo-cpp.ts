@@ -20,7 +20,7 @@ cls c;
 f(c); 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `constructorul de clasă se apelează de două ori, iar cel de copiere nicio dată;`,
       b: `constructorul de clasă se apelează o dată, iar cel de copiere nu se apelează;`,
@@ -47,7 +47,7 @@ cls c;
 f(c); 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `constructorul clasei se apelează o dată, iar cel de copiere nu se apelează nicio dată;`,
       b: `constructorul de copiere se apelează o dată, iar cel de clasă nu se apelează;`,
@@ -77,14 +77,10 @@ C *pob;       //declarația 1
 C ob;         //declarația 2 
 C *vpob[5];   //declarația 3 
 
- (C++) 
- 
-2 
- 
 C vob[5];      //declarația 4 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `Declarațiile 2 și 4;`,
       b: `Declarațiile 1 si 3;`,
@@ -146,7 +142,6 @@ public:
 int b; 
 afișează: 
 
- (C++) 
  
 3`,
     code: `class c1{ 
@@ -162,7 +157,7 @@ c1 ob1(2);
 c2 ob2(2,3); 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `constructor 1 constructor 2 destructor 2 destructor 1`,
       b: `constructor 1 constructor 1 constructor 2 destructor 2 destructor 1 destructor 1`,
@@ -198,7 +193,7 @@ b=new D();
 delete b; 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `B() ~B() D() ~B()`,
       b: `B() ~B() B() D() ~D()`,
@@ -217,7 +212,6 @@ public:
 public:  
 Programul afișează: 
 
- (C++) 
  
 4`,
     code: `#include <iostream.h> 
@@ -236,7 +230,7 @@ D d;
 D d1(d); 
 return 0;  
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `B() B() B(B&b) B() D() B(B &b) D() B(B &b)`,
       b: `B() B(B&b) B() D() B(B &b) D(D &d)`,
@@ -292,7 +286,7 @@ persoana p(20);
 cout<<p++.get_varsta(); 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `18`,
       b: `21`,
@@ -315,7 +309,6 @@ B(const B &a){ x=a.x; y=a.y;}
 }; 
  
 
- (C++) 
 În care dintre următoarele situații se realizează copierea unui obiect într-altul:`,
     code: `class B{`,
     codeLanguage: "cpp",
@@ -323,7 +316,7 @@ B(const B &a){ x=a.x; y=a.y;}
       a: `B c2(0.0, 0,0);`,
       b: `B c4(1);`,
       c: `B c1, c3=c1;`,
-      d: `{ x=a.x; y=a.y;} }; (C++)`,
+      d: `{ x=a.x; y=a.y;} };`,
     },
     correctAnswer: "d",
   },
@@ -347,7 +340,7 @@ int main()
 cout<<cls::imp(k);  
 return 0;  
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `12`,
       b: `14`,
@@ -384,9 +377,9 @@ a->f(); b->f();
 a->g(); b->g(); 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
-      a: `B::f() D::f() B::g() D::g() (C++)`,
+      a: `B::f() D::f() B::g() D::g()`,
       b: `B::f() B::g() D::f() D::g()`,
       c: `B::f() D::f() B::g() B::g()`,
       d: `D::f() B::f() B::g() B::g() B::g()`,
@@ -426,7 +419,7 @@ a->f(); b->f(); c->f();
 a->g(); b->g(); c->g(); 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `B::f() D1::f() D::f() B::g() D1::g() D2::g()`,
       b: `B::f() D1::f() B::f() B::g() B::g() B::g()`,
@@ -450,7 +443,7 @@ int main(){
 cls *po=new cls[3]; 
 delete []po; 
 }]`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `se apelează de patru ori.`,
       b: `se apelează de trei ori;`,
@@ -465,7 +458,6 @@ delete []po;
     subjectId: "poo-cpp",
     text: `Fie următorul program C++: 
 
- (C++) 
 public: 
 salariat (int v=20) {varsta =v;} 
 operator int() { return varsta;} 
@@ -482,7 +474,7 @@ int a=s++, b=++s;
 cout<<a<<"   "<<b<<endl; 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `22 23`,
       b: `21 22`,
@@ -515,7 +507,7 @@ cout<<(--(--c)).get_raza()<<" ";
 cout<<c.get_raza()<<" "; 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `3.5 4.5 2.5 3.5`,
       b: `5.5 4.5 2.5 3.5`,
@@ -534,7 +526,6 @@ public:
 static int s; 
 }; 
 
- (C++) 
 int  C::s=0; 
 int a=7; C::s=a;  
 În secvența de mai sus, inițializarea lui s este:`,
@@ -544,7 +535,7 @@ int main(){
 cout<<C::s; 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `ilegală, deoarece nu există niciun obiect creat;`,
       b: `ilegală, deoarece s este inițializat în afara clasei;`,
@@ -610,7 +601,6 @@ return 0;
 } 
  
 
- (C++) 
  
 9`,
     codeLanguage: "cpp",
@@ -652,24 +642,9 @@ pc=&c;
 cout<<pc->get_raza()<<" "<<c.get_inaltime()<<endl; 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
-      a: `{inaltime=i;} 
-void operator++(){inaltime++;} 
-float get_inaltime(){return inaltime;} 
-}; 
-int main(){ 
-Cerc *pc; 
-Cilindru c(2,6); 
-pc=&c; 
-++ *pc; 
-cout<<pc->get_raza()<<" "<<c.get_inaltime()<<endl; 
-return 0; 
-} 
- 
-Programul afișează: 
- 
-a) 2   5`,
+      a: `2 5`,
       b: `3 6`,
       c: `2 6`,
       d: `2 5`,
@@ -699,10 +674,9 @@ return 0;
 } 
  
 
- (C++) 
  
 10`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `1 1`,
       b: `0 1`,
@@ -729,7 +703,7 @@ int main(){
 c a; 
 c b=a; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `executarea constructorului de copiere;`,
       b: `executarea metodei prin care se supraîncărcă operatorul =;`,
@@ -754,7 +728,7 @@ int main(){
 cls *po=new cls[3];  
 delete []po; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `nu se apelează nicio dată;`,
       b: `se apelează o dată;`,
@@ -772,7 +746,7 @@ primește ca parametru o referință la un obiect al clasei respective are acces
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `la membrii protected. (C++)`,
+      a: `la membrii protected.`,
       b: `la membrii public și la cei protected;`,
       c: `la toți membrii;`,
       d: `doar la membrii declarați public;`,
@@ -798,7 +772,7 @@ A ob(1,2,3); cout<<ob[1];
 ob[1]=25; cout<<ob[1]; 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `produce supraîncărcarea unui operator unar;`,
       b: `este o funcţie membru oarecare a clasei A, care nu produce supraîncărcarea unui operator;`,
@@ -828,7 +802,7 @@ C c(5);
 cout<<2+c+3;  
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `supraîncărcările operator+() nu se justifică deoarece au același cod;`,
       b: `supraîncărcările operator + () trebuie să fie friend;`,
@@ -854,13 +828,9 @@ void scrie_a( ) { cout<<a; }
 int main(){  
 c2 ob; ob.scrie_a(); 
 
- (C++) 
- 
-12 
- 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `programul afișează valoarea lui a;`,
       b: `prin derivare publică, accesul la membrii moşteniţi devine public.`,
@@ -895,9 +865,9 @@ D ob1(7), ob2(-12);
 cout<<(ob1+ob2).get_x(); 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
-      a: `{return x+a.x; } }; int main(){ D ob1(7), ob2(-12); cout<<(ob1+ob2).get_x(); return 0; } Programul afișează: a) eroare, clasa B nu poate fi moștenită de clasa D;`,
+      a: `eroare, clasa B nu poate fi moștenită de clasa D;`,
       b: `eroare, metoda operator nu are acces la un membru privat al clasei de bază;`,
       c: `eroare, operatorul + nu se poate aplica pentru tipuri abstracte de date.`,
       d: `programul afișează valoarea -5;`,
@@ -927,12 +897,12 @@ cout<<d.y;
 //varianta 3 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `1+3;`,
       b: `1`,
       c: `1+2+3;`,
-      d: `1+2; (C++)`,
+      d: `1+2;`,
     },
     correctAnswer: "a",
   },
@@ -964,7 +934,7 @@ vector x(10);
 f(x);   
 return 0;  
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `numerele de la 1 la 10`,
       b: `numerele de la 0 la 9`,
@@ -1006,7 +976,7 @@ c vob[3];
  
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `nici una`,
       b: `1+2+3+4`,
@@ -1040,7 +1010,7 @@ B *p1=new D, *p2=new B, *p3=new B(p1->f(*p2));
 cout<<p3->x; 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `45`,
       b: `eroare, nu se poate instanţia un obiect al unei clase derivate printr-un pointer la un obiect de tip clasa de bază;`,
@@ -1062,7 +1032,6 @@ B() { x++; i=1; }
 static int get_x() { return x; } 
 int get_i() { return i; } 
 
- (C++) 
 }; 
 int B::x; 
 public:  
@@ -1085,7 +1054,7 @@ delete p;
 cout<<D::get_x(); 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `programul afişează valoarea 221;`,
       b: `eroare, data membră statică x nu este iniţializată;`,
@@ -1111,7 +1080,7 @@ float b=8.6;
 cout<<g(a,b); 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `3`,
       b: `13.6`,
@@ -1139,10 +1108,9 @@ return 0;
 } 
  
 
- (C++) 
  
 16`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `3.6`,
       b: `eroare, parametrizarea clasei T este incorrect realizată`,
@@ -1172,7 +1140,7 @@ int main()
 cout<<(ob1+ob2).get_x(); 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `-3`,
       b: `eroare, în clasa derivată D nu se poate accesa data membră privată x a clasei B`,
@@ -1205,7 +1173,7 @@ B *p1=new D, *p2=new B, *p3=new B(p1->f(*p2));
 cout<<p3->x; 
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `41`,
       b: `eroare, în clasa derivată D nu se poate accesa data membră x a clasei B`,
@@ -1220,7 +1188,6 @@ return 0;
     subjectId: "poo-cpp",
     text: `Fie următorul program C++: 
 
- (C++) 
 public:  
 int a;  
 cls1() { a=7; }  
@@ -1241,7 +1208,7 @@ cls2 y(x);
 cout<<y.b;  
 return 0;  
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `eroare, constructorul de copiere nu poate accesa o dată publică a clasei cls1`,
       b: `eroare, constructorul de copiere nu este corect definit`,
@@ -1301,16 +1268,12 @@ class c{
 c& c::operator=(c &c){ cout << endl << "copiere cu egal"; return c;}  
 c::c(const c &c) { cout << endl << "Constructor de copiere"; }  
 
- (C++) 
- 
-18 
- 
 int main()  
 {  
  c x,y=x;  
  c b=x; x=y;  
 };`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `apeleaza de doua ori operator=(), o data constructorul de copiere si o data constructorul implicit;`,
       b: `apeleaza de doua ori constructorul de copiere, o data operator=() si o data constructorul implicit;`,
@@ -1340,7 +1303,7 @@ ppp[i] = new Persoana();
 for(int i=0; i<5; i++)  
 delete ppp[i];  
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `7;`,
       b: `5;`,
@@ -1381,10 +1344,6 @@ void operator=(Persoana& p){
 this->varsta = p.varsta;  
 delete[] this->nume;  
 
- (C++) 
- 
-19 
- 
 this->nume = new char[strlen(p.nume)+1];  
 strcpy(this->nume, p.nume);  
 cout<<"Operator="<<endl;}  
@@ -1392,7 +1351,7 @@ cout<<"Operator="<<endl;}
   
 int main()  
 {`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `constructor – de douã ori, constructor de copiere – o datã, operator= - de douã ori,`,
       b: `constructor – de douã ori, constructor de copiere – de douã ori, operator= - o datã,`,
@@ -1438,7 +1397,7 @@ int main()
 cout << foo() << endl;     
 return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `2`,
       b: `0`,
@@ -1454,7 +1413,6 @@ return 0;
     text: `Pentru ca secvența de mai jos să se execute fără erori, precizați care dintre implementările 
 C++ de mai jos, ale unui operator de comparație, este corectă? 
 
- (C++) 
 class Box 
 { 
         int capacity; 
@@ -1477,7 +1435,7 @@ class Box
               } 
   return 0; 
 }`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `bool operator<(Box b){return b1 > b2 ? true : false;}`,
       b: `bool operator<(Box b){return this->capacity < b.capacity ? true : false;}`,
@@ -1516,7 +1474,6 @@ public:
 } 
  
 
- (C++) 
   cout<salariu<<" "<spor<<" "<salariu + this->spor;`,
     code: `class Angajat { 
  void afiseazaSalariu() { 
@@ -1532,7 +1489,7 @@ class Economist: public Angajat {
   return aux; 
 } 
 };`,
-    codeLanguage: "c",
+    codeLanguage: "cpp",
     options: {
       a: `două suprascrieri și o supraîncărcare`,
       b: `suprascriere și două supraîncărcări`,

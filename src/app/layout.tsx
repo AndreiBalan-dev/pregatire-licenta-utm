@@ -23,7 +23,7 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
-const siteUrl = "https://pregatire-licenta-utm.vercel.app";
+const siteUrl = "https://utmlearn.com";
 
 export const viewport: Viewport = {
   width: "device-width",

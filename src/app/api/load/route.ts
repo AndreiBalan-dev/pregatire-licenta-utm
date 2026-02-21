@@ -8,8 +8,11 @@ import { validateSaveKey } from "@/lib/validation";
 import { RATE_LIMITS } from "@/lib/constants";
 
 export async function POST(request: NextRequest) {
-  // Rate limiting - x-real-ip is set by Vercel's edge network (not spoofable)
-  const ip = request.headers.get("x-real-ip") || request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  // IP resolution — only trust x-real-ip (set by Vercel edge, not spoofable)
+  const ip = request.headers.get("x-real-ip") || "unknown";
+  if (ip === "unknown" && process.env.NODE_ENV === "production") {
+    return NextResponse.json({ error: "Cerere invalidă." }, { status: 400 });
+  }
   const ipHashed = hashIp(ip);
 
   const rateCheck = checkRateLimit(`load:${ipHashed}`, RATE_LIMITS.load);
@@ -64,7 +67,7 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error("Load error:", error);
+    console.error("Load error:", error instanceof Error ? error.message : "unknown");
     return NextResponse.json(
       { error: "Eroare la încărcare." },
       { status: 500 }

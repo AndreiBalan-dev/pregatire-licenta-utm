@@ -12,7 +12,7 @@ import { Modal } from "@/components/ui/Modal";
 import { useSession } from "@/hooks/useSession";
 import { useTimer } from "@/hooks/useTimer";
 import { useKeyboardNav } from "@/hooks/useKeyboardNav";
-import { getQuestion } from "@/data";
+import { getQuestion, questionsBySubject } from "@/data";
 import { cn, formatPercentage, formatTime } from "@/lib/utils";
 import type { AnswerKey } from "@/data/types";
 
@@ -24,6 +24,7 @@ export default function QuizPage() {
     answerQuestion,
     retryQuestion,
     toggleBookmark,
+    startPractice,
     updatePracticeIndex,
     endPractice,
   } = useSession();
@@ -149,6 +150,49 @@ export default function QuizPage() {
     router.push("/rezultate");
   }, [endPractice, router]);
 
+  // Calculate remaining unanswered for "continue next batch"
+  const remainingUnanswered = useMemo(() => {
+    if (!practice) return 0;
+    const currentSet = new Set(practice.questionIds);
+    let count = 0;
+    for (const sid of practice.subjectIds) {
+      const questions = questionsBySubject[sid] || [];
+      for (const q of questions) {
+        if (!currentSet.has(q.id) && !session.answers[q.id]) {
+          count++;
+        }
+      }
+    }
+    return count;
+  }, [practice, session.answers]);
+
+  const handleContinueNextBatch = useCallback(() => {
+    if (!practice) return;
+    const currentSet = new Set(practice.questionIds);
+    const nextIds: number[] = [];
+    for (const sid of practice.subjectIds) {
+      const questions = questionsBySubject[sid] || [];
+      for (const q of questions) {
+        if (!currentSet.has(q.id) && !session.answers[q.id]) {
+          nextIds.push(q.id);
+        }
+      }
+    }
+    if (nextIds.length === 0) return;
+
+    const batchSize = practice.batchSize;
+    const batch = batchSize ? nextIds.slice(0, batchSize) : nextIds;
+
+    const newSessionId = startPractice(
+      practice.subjectIds,
+      batch,
+      session.settings.shuffleOptions,
+      batchSize
+    );
+    setShowSummary(false);
+    router.replace(`/practica/${newSessionId}`);
+  }, [practice, session.answers, session.settings.shuffleOptions, startPractice, router]);
+
   useKeyboardNav({
     onSelectOption: handleSelectAnswer,
     onNext: goToNext,
@@ -156,6 +200,13 @@ export default function QuizPage() {
     onBookmark: handleBookmark,
     enabled: !showSummary,
   });
+
+  // No active session — redirect to practice selection
+  useEffect(() => {
+    if (isLoaded && !practice) {
+      router.replace("/practica");
+    }
+  }, [isLoaded, practice, router]);
 
   if (!isLoaded) {
     return (
@@ -167,28 +218,9 @@ export default function QuizPage() {
 
   if (!practice || !currentQuestion) {
     return (
-      <>
-        <Header />
-        <main className="py-16">
-          <Container narrow>
-            <div className="text-center">
-              <h2
-                className="text-2xl font-bold text-[var(--color-text-primary)] mb-4"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Nicio sesiune activă
-              </h2>
-              <p className="text-[var(--color-text-secondary)] mb-6">
-                Selectează materiile și începe o nouă sesiune de practică.
-              </p>
-              <Button onClick={() => router.push("/practica")}>
-                Alege Materiile
-              </Button>
-            </div>
-          </Container>
-        </main>
-        <MobileNav />
-      </>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-2 border-[var(--color-border-strong)] border-t-[var(--color-accent)]" />
+      </div>
     );
   }
 
@@ -340,20 +372,48 @@ export default function QuizPage() {
             </div>
           )}
 
-          <div className="flex gap-3 pt-2">
-            <Button
-              variant="secondary"
-              className="flex-1"
-              onClick={() => setShowSummary(false)}
-            >
-              Continuă
-            </Button>
-            <Button
-              className="flex-1"
-              onClick={handleEndPractice}
-            >
-              Vezi Rezultatele
-            </Button>
+          {/* Remaining info */}
+          {remainingUnanswered > 0 && (
+            <div className="text-center text-xs text-[var(--color-text-tertiary)]">
+              Încă {remainingUnanswered} întrebări nerezolvate din aceste materii
+            </div>
+          )}
+          {remainingUnanswered === 0 && practiceStats.answered > 0 && (
+            <div className="text-center text-sm font-medium text-[var(--color-correct)]">
+              Ai rezolvat toate întrebările din aceste materii!
+            </div>
+          )}
+
+          <div className="flex flex-col gap-2 pt-2">
+            {/* Continue next batch — primary action if there are more */}
+            {remainingUnanswered > 0 && (
+              <Button
+                className="w-full"
+                onClick={handleContinueNextBatch}
+              >
+                Următoarele {practice.batchSize ? Math.min(practice.batchSize, remainingUnanswered) : remainingUnanswered} întrebări
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </Button>
+            )}
+            <div className="flex gap-2">
+              <Button
+                variant="secondary"
+                className="flex-1"
+                onClick={() => setShowSummary(false)}
+              >
+                Înapoi la sesiune
+              </Button>
+              <Button
+                variant={remainingUnanswered > 0 ? "ghost" : "primary"}
+                className="flex-1"
+                onClick={handleEndPractice}
+              >
+                Vezi Rezultatele
+              </Button>
+            </div>
           </div>
         </div>
       </Modal>
