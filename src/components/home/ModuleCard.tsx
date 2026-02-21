@@ -69,7 +69,7 @@ export function ModuleCard({ module, totalQuestions, answeredCount, correctCount
       </div>
 
       {/* Subject list */}
-      <div className="mt-4 flex flex-wrap gap-1.5 flex-1">
+      <div className="mt-4 flex flex-wrap gap-1.5 content-start">
         {module.subjects.map((s) => (
           <span
             key={s.id}
@@ -81,6 +81,7 @@ export function ModuleCard({ module, totalQuestions, answeredCount, correctCount
       </div>
 
       {/* Accuracy indicator */}
+      <div className="mt-auto" />
       {answeredCount > 0 && (
         <div className="mt-3 pt-3 border-t border-[var(--color-border)] flex items-center gap-2 text-xs">
           <span className="text-[var(--color-text-tertiary)]">Acuratețe:</span>
