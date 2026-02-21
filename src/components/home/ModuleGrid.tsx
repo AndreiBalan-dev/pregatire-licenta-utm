@@ -1,0 +1,52 @@
+"use client";
+
+import { modules } from "@/data/modules";
+import { ModuleCard } from "./ModuleCard";
+import { Container } from "@/components/layout/Container";
+import { useSession } from "@/hooks/useSession";
+import { allQuestions, questionsByModule } from "@/data";
+
+export function ModuleGrid() {
+  const { session } = useSession();
+
+  return (
+    <section className="py-12">
+      <Container>
+        <div className="flex items-center gap-3 mb-8">
+          <h2
+            className="text-2xl font-bold text-[var(--color-text-primary)]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Module
+          </h2>
+          <span className="text-sm text-[var(--color-text-tertiary)]">
+            {allQuestions.length} întrebări
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {modules.map((mod, i) => {
+            const moduleQuestions = questionsByModule[mod.id] || [];
+            const answeredCount = moduleQuestions.filter(
+              (q) => session.answers[q.id]
+            ).length;
+            const correctCount = moduleQuestions.filter(
+              (q) => session.answers[q.id]?.isCorrect
+            ).length;
+
+            return (
+              <ModuleCard
+                key={mod.id}
+                module={mod}
+                totalQuestions={moduleQuestions.length}
+                answeredCount={answeredCount}
+                correctCount={correctCount}
+                delay={i * 80}
+              />
+            );
+          })}
+        </div>
+      </Container>
+    </section>
+  );
+}
