@@ -8,7 +8,7 @@ import { validateSessionData } from "@/lib/validation";
 import { RATE_LIMITS, MAX_SESSIONS_PER_IP } from "@/lib/constants";
 
 export async function POST(request: NextRequest) {
-  // IP resolution — only trust x-real-ip (set by Vercel edge, not spoofable)
+  // IP resolution - only trust x-real-ip (set by Vercel edge, not spoofable)
   const ip = request.headers.get("x-real-ip") || "unknown";
   if (ip === "unknown" && process.env.NODE_ENV === "production") {
     return NextResponse.json({ error: "Cerere invalidă." }, { status: 400 });

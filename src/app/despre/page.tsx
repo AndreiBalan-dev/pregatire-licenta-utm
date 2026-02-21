@@ -27,9 +27,9 @@ export default function DesprePage() {
             <div className="flex items-start gap-4">
               <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0">
                 <img
-                  src="https://i.imgur.com/UJhfuwT.jpeg"
+                  src="https://i.imgur.com/ftA62ZL.jpeg"
                   alt="Bălan Andrei Marian"
-                  className="w-full h-full object-cover scale-150"
+                  className="w-full h-full object-cover scale-[1.2]"
                 />
               </div>
               <div>
@@ -45,7 +45,9 @@ export default function DesprePage() {
                 <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-4">
                   Aceasta platforma a fost creata pentru a ajuta studentii UTM sa se pregateasca
                   eficient pentru examenul de licenta. Toate intrebarile sunt extrase din materialele
-                  oficiale de examen si organizate pe module si discipline.
+                  oficiale de examen si organizate pe module si discipline. Daca te pregatesti
+                  pentru licenta sau ai colegi si prieteni care dau examenul, trimite-le linkul - cu
+                  cat mai multi exersam, cu atat mai bine ne descurcam cu totii.
                 </p>
                 <div className="flex flex-wrap items-center gap-3">
                   <a

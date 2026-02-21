@@ -615,7 +615,7 @@ Sorry, your browser does not support inline SVG.
     codeLanguage: undefined,
     options: {
       a: `Eticheta pentru definirea unui element vid este...</numeElement>;`,
-      b: `Referinţa unui caracter se realizează <!—referinta --> ;`,
+      b: `Referinţa unui caracter se realizează <!--referinta --> ;`,
       c: `Declaraţia XML se realizează cu <?Idprocesor date?> ;`,
       d: `Pentru delimitatoarele sectiune CDATA se foloseste <![CDATA[ informatii cdata]]> ;`,
     },
