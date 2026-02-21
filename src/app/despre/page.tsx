@@ -45,9 +45,7 @@ export default function DesprePage() {
                 <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-4">
                   Aceasta platforma a fost creata pentru a ajuta studentii UTM sa se pregateasca
                   eficient pentru examenul de licenta. Toate intrebarile sunt extrase din materialele
-                  oficiale de examen si organizate pe module si discipline. Daca te pregatesti
-                  pentru licenta sau ai colegi si prieteni care dau examenul, trimite-le linkul - cu
-                  cat mai multi exersam, cu atat mai bine ne descurcam cu totii.
+                  oficiale de examen si organizate pe module si discipline.
                 </p>
                 <div className="flex flex-wrap items-center gap-3">
                   <a
@@ -122,7 +120,8 @@ export default function DesprePage() {
             <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-3">
               Platforma #1 din Romania pentru pregatirea la BAC Matematica. Lectii interactive,
               tutore AI personal disponibil 24/7 si exercitii rezolvate pas cu pas. Daca te pregatesti
-              pentru Bacalaureat, Algebo.ai este instrumentul de care ai nevoie.
+              pentru Bacalaureat sau ai prieteni si colegi care dau BAC-ul, recomanda-le Algebo.ai -
+              ii va ajuta enorm.
             </p>
             <div className="flex flex-wrap gap-2 mb-4">
               <span className="text-xs px-2 py-1 rounded-full bg-[var(--color-accent-muted)] text-[var(--color-accent)] font-medium">Tutore AI Personal</span>
