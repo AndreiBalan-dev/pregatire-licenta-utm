@@ -5,7 +5,7 @@ export const tehniciAvansate: Question[] = [
     id: 205,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Complexitatea minimă a unui algoritm care calculează numărul tuturor submulțimilor 
+    text: `Complexitatea minimă a unui algoritm care calculează numărul tuturor submulțimilor
 unei mulțimi cu 𝑛 elemente este:`,
     code: undefined,
     codeLanguage: undefined,
@@ -21,7 +21,7 @@ unei mulțimi cu 𝑛 elemente este:`,
     id: 206,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Complexitatea minimă a unui algoritm care afişează toate submulțimile unei mulțimi cu 
+    text: `Complexitatea minimă a unui algoritm care afişează toate submulțimile unei mulțimi cu
 𝑛 elemente este:`,
     code: undefined,
     codeLanguage: undefined,
@@ -37,7 +37,7 @@ unei mulțimi cu 𝑛 elemente este:`,
     id: 207,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Complexitatea minimă a unui algoritm care calculează numărul modurilor în care pot fi 
+    text: `Complexitatea minimă a unui algoritm care calculează numărul modurilor în care pot fi
 aşezate n cărți pe un raft suficient de lung este:`,
     code: undefined,
     codeLanguage: undefined,
@@ -53,7 +53,7 @@ aşezate n cărți pe un raft suficient de lung este:`,
     id: 208,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Complexitatea  minimă a unui algoritm care afişează toate modurile în care pot fi aşezate 
+    text: `Complexitatea  minimă a unui algoritm care afişează toate modurile în care pot fi aşezate
 n cărți pe un raft suficient de lung este:`,
     code: undefined,
     codeLanguage: undefined,
@@ -69,31 +69,22 @@ n cărți pe un raft suficient de lung este:`,
     id: 209,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Considerăm următorul program în limbajul C: 
- 
+    text: `Considerăm următorul program în limbajul C:
+
 Complexitatea algoritmului implementat în acest program este:`,
-    code: `#include<stdio.h> 
-int main() 
-{ 
- 
-int i,j,n,a[101]; 
- 
-scanf("%d",&n); 
- 
-for(i=0;i<n;i++) scanf("%d",&a[i]); 
- 
-i=0; 
- 
-while((i<n)&&(a[i]<0)) i++; 
- 
-j=n-1; 
- 
-while((j>=0)&&(a[j]>=0)) j--; 
- 
-if(i>=j) printf("1"); 
- 
-else printf("0");  
-   return 0; 
+    code: `#include<stdio.h>
+int main()
+{
+  int i,j,n,a[101];
+  scanf("%d",&n);
+  for(i=0;i<n;i++) scanf("%d",&a[i]);
+  i=0;
+  while((i<n)&&(a[i]<0)) i++;
+  j=n-1;
+  while((j>=0)&&(a[j]>=0)) j--;
+  if(i>=j) printf("1");
+  else printf("0");
+  return 0;
 }`,
     codeLanguage: "c",
     options: {
@@ -131,33 +122,19 @@ Complexitatea algoritmului implementat în acest program este:`,
     code: `#include<stdio.h>
 int main()
 {
-
-int a[100],i,j,n,s; 
- 
-scanf("%d",&n); 
- 
-for(i=0;i<n;i++) scanf("%d",&a[i]); 
- 
- 
-i = s = 0; 
- 
-while(i<n) 
- 
-{ 
- 
-   j=i+1; 
- 
-   while((j<=n) && (a[i]==a[j])) j++; 
- 
-   s++; 
- 
-   i=j; 
- 
-} 
- 
-printf("\\n\\n%d\\n" , s); 
- 
-return 0; 
+  int a[100],i,j,n,s;
+  scanf("%d",&n);
+  for(i=0;i<n;i++) scanf("%d",&a[i]);
+  i = s = 0;
+  while(i<n)
+  {
+    j=i+1;
+    while((j<=n) && (a[i]==a[j])) j++;
+    s++;
+    i=j;
+  }
+  printf("\\n\\n%d\\n" , s);
+  return 0;
 }`,
     codeLanguage: "c",
     options: {
@@ -172,32 +149,22 @@ return 0;
     id: 212,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Considerăm următorul program în limbajul C: 
- 
-Programul afişează:`,
-    code: `#include<stdio.h> 
-int main() 
-{ 
- 
-int i,j,n,a[101]; 
- 
-scanf("%d",&n); 
- 
-for(i=0;i<n;i++) scanf("%d",&a[i]); 
- 
-i=0; 
- 
-while((i<n)&&(a[i]<0)) i++; 
- 
-j=n-1; 
- 
-while((j>=0)&&(a[j]>=0)) j--; 
- 
-if(i>=j) printf("1"); 
- 
-else printf("0");  
+    text: `Considerăm următorul program în limbajul C:
 
-   return 0; 
+Programul afişează:`,
+    code: `#include<stdio.h>
+int main()
+{
+  int i,j,n,a[101];
+  scanf("%d",&n);
+  for(i=0;i<n;i++) scanf("%d",&a[i]);
+  i=0;
+  while((i<n)&&(a[i]<0)) i++;
+  j=n-1;
+  while((j>=0)&&(a[j]>=0)) j--;
+  if(i>=j) printf("1");
+  else printf("0");
+  return 0;
 }`,
     codeLanguage: "c",
     options: {
@@ -212,39 +179,25 @@ else printf("0");
     id: 213,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Considerăm următorul program în limbajul C: 
- 
+    text: `Considerăm următorul program în limbajul C:
+
 Presupunând că tabloul 𝑎 este ordonat crescător, precizați ce afişează programul dat:`,
-    code: `#include<stdio.h> 
-int main() 
-{ 
- 
-int a[100],i,j,n,s; 
- 
-scanf("%d",&n); 
- 
-for(i=0;i<n;i++) scanf("%d",&a[i]); 
- 
- 
-i = s = 0; 
- 
-while(i<n) 
- 
-{ 
- 
-   j=i+1; 
- 
-   while((j<=n) && (a[i]==a[j])) j++; 
- 
-   s++; 
- 
-   i=j; 
- 
-} 
- 
-printf("\\n\\n%d\\n" , s); 
- 
-return 0; 
+    code: `#include<stdio.h>
+int main()
+{
+  int a[100],i,j,n,s;
+  scanf("%d",&n);
+  for(i=0;i<n;i++) scanf("%d",&a[i]);
+  i = s = 0;
+  while(i<n)
+  {
+    j=i+1;
+    while((j<=n) && (a[i]==a[j])) j++;
+    s++;
+    i=j;
+  }
+  printf("\\n\\n%d\\n" , s);
+  return 0;
 }`,
     codeLanguage: "c",
     options: {
@@ -259,20 +212,17 @@ return 0;
     id: 214,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Se consideră următoarea funcţie recursivă, scrisă în limbajul C: 
- 
-int F(int n) 
-{  
-if (n==0) return 0;   
-else  
-   
- if ((n%10)>F(n/10)) return n%10; 
-     else return F(n/10);   
-}  
- 
+    text: `Se consideră următoarea funcţie recursivă, scrisă în limbajul C:
+
 Ce valoare va returna funcția după apelul 𝐹(38423)?`,
-    code: undefined,
-    codeLanguage: undefined,
+    code: `int F(int n)
+{
+  if (n==0) return 0;
+  else
+    if ((n%10)>F(n/10)) return n%10;
+    else return F(n/10);
+}`,
+    codeLanguage: "c",
     options: {
       a: `4`,
       b: `3`,
@@ -285,39 +235,25 @@ Ce valoare va returna funcția după apelul 𝐹(38423)?`,
     id: 215,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Se consideră următorul program în limbajul C: 
- 
+    text: `Se consideră următorul program în limbajul C:
+
 Ce afişează programul de mai sus?`,
-    code: `#include<stdio.h> 
-int F(int v[],int n)  
-{    
- 
-if(n==0) return v[0];     
- 
-else      
- 
- 
-if(v[n]<0) return F(v,n-1);       
- 
- 
-else return v[n]+F(v,n-1);  
-}   
-int main() 
-{ 
- 
-int i,v[10]; 
- 
-for(i=0;i<10;i++) 
- 
- 
-if(i%2==0) v[i]=i; 
- 
- 
-else v[i]=-i; 
- 
-printf("%d",F(v,9)); 
- 
-return 0; 
+    code: `#include<stdio.h>
+int F(int v[],int n)
+{
+  if(n==0) return v[0];
+  else
+    if(v[n]<0) return F(v,n-1);
+    else return v[n]+F(v,n-1);
+}
+int main()
+{
+  int i,v[10];
+  for(i=0;i<10;i++)
+    if(i%2==0) v[i]=i;
+    else v[i]=-i;
+  printf("%d",F(v,9));
+  return 0;
 }`,
     codeLanguage: "c",
     options: {
@@ -332,19 +268,15 @@ return 0;
     id: 216,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Se consideră următoarea funcţie recursivă, scrisă în limbajul C: 
- 
-int f(int n) 
-{  
- 
-if (n==0) return 1;  
- 
-else return(((n%10)%2 == 0) && (f(n/10)!=0)); 
-} 
- 
+    text: `Se consideră următoarea funcţie recursivă, scrisă în limbajul C:
+
 Ce valoare va returna funcția după apelul 𝑓(6904)?`,
-    code: undefined,
-    codeLanguage: undefined,
+    code: `int f(int n)
+{
+  if (n==0) return 1;
+  else return(((n%10)%2 == 0) && (f(n/10)!=0));
+}`,
+    codeLanguage: "c",
     options: {
       a: `4`,
       b: `0`,
@@ -357,17 +289,15 @@ Ce valoare va returna funcția după apelul 𝑓(6904)?`,
     id: 217,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Se consideră următoarea funcţie recursivă, scrisă în limbajul C: 
- 
-int f(int x) 
-{ 
-if(x==0) return 0; 
-   else return (f(x-1)+3*x-1); 
-} 
- 
+    text: `Se consideră următoarea funcţie recursivă, scrisă în limbajul C:
+
 Pentru ce valoare a parametrului 𝑥 funcția 𝑓 va întoarce valoarea 57?`,
-    code: undefined,
-    codeLanguage: undefined,
+    code: `int f(int x)
+{
+  if(x==0) return 0;
+  else return (f(x-1)+3*x-1);
+}`,
+    codeLanguage: "c",
     options: {
       a: `6`,
       b: `5`,
@@ -380,19 +310,17 @@ Pentru ce valoare a parametrului 𝑥 funcția 𝑓 va întoarce valoarea 57?`,
     id: 218,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Se consideră următoarea funcţie recursivă, scrisă în limbajul C: 
- 
-int p(int n,int x) 
-{ 
-   if(x==n) return 1; 
-   else 
-     if(n%x==0) return 0; 
-     else return p(n,x+1); 
-} 
- 
+    text: `Se consideră următoarea funcţie recursivă, scrisă în limbajul C:
+
 În urma apelului 𝑝(𝑛, 2) funcția va întoarce valoarea 1 dacă și numai dacă:`,
-    code: undefined,
-    codeLanguage: undefined,
+    code: `int p(int n,int x)
+{
+  if(x==n) return 1;
+  else
+    if(n%x==0) return 0;
+    else return p(n,x+1);
+}`,
+    codeLanguage: "c",
     options: {
       a: `numărul natural 𝑛 este par;`,
       b: `numărul natural 𝑛 este prim;`,
@@ -405,7 +333,7 @@ int p(int n,int x)
     id: 219,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Indicaţi care dintre următorii algoritmi nu se bazează pe tehnica de programare Divide et 
+    text: `Indicaţi care dintre următorii algoritmi nu se bazează pe tehnica de programare Divide et
 Impera:`,
     code: undefined,
     codeLanguage: undefined,
@@ -421,7 +349,7 @@ Impera:`,
     id: 220,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Stabiliți care dintre următoarele metode de sortare se bazează pe tehnica de programare 
+    text: `Stabiliți care dintre următoarele metode de sortare se bazează pe tehnica de programare
 Divide et Impera:`,
     code: undefined,
     codeLanguage: undefined,
@@ -452,35 +380,25 @@ Divide et Impera:`,
     id: 222,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Considerăm următoarele două funcții scrise în limbajul C: 
- 
-int a[100]; 
-int max(int x,int y) 
-{ 
- 
-if(x>y) return x; 
- 
-else return y; 
-} 
-int F(int p, int u) 
-{ 
-if(p==u) return a[p]; 
- 
-else 
- 
-{ 
- 
- int m=(p+u)/2; 
- 
- return max(F(p,m),F(m+1,u)); 
- 
-} 
-} 
- 
-Ştiind că tabloul a este format din n numere naturale nenule, iar apelul subprogramului va 
-fi 𝐹(0, 𝑛−1), precizați tehnica de programare utilizată în cadrul funcției 𝐹:`,
-    code: undefined,
-    codeLanguage: undefined,
+    text: `Considerăm următoarele două funcții scrise în limbajul C:
+
+Ştiind că tabloul a este format din n numere naturale nenule, iar apelul subprogramului va fi 𝐹(0, 𝑛−1), precizați tehnica de programare utilizată în cadrul funcției 𝐹:`,
+    code: `int a[100];
+int max(int x,int y)
+{
+  if(x>y) return x;
+  else return y;
+}
+int F(int p, int u)
+{
+  if(p==u) return a[p];
+  else
+  {
+    int m=(p+u)/2;
+    return max(F(p,m),F(m+1,u));
+  }
+}`,
+    codeLanguage: "c",
     options: {
       a: `Greedy;`,
       b: `Divide et Impera.`,
@@ -493,8 +411,8 @@ fi 𝐹(0, 𝑛−1), precizați tehnica de programare utilizată în cadrul fun
     id: 223,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Fie 𝑣 un tablou unidimensional format din 1000000 de numere reale ordonate 
-descrescător şi 𝑥 un număr real. Pentru a verifica dacă valoarea 𝑥 se găseşte sau nu în 
+    text: `Fie 𝑣 un tablou unidimensional format din 1000000 de numere reale ordonate
+descrescător şi 𝑥 un număr real. Pentru a verifica dacă valoarea 𝑥 se găseşte sau nu în
 tabloul 𝑣, algoritmul de căutare binară va efectua:`,
     code: undefined,
     codeLanguage: undefined,
@@ -510,28 +428,19 @@ tabloul 𝑣, algoritmul de căutare binară va efectua:`,
     id: 224,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Considerăm următoarea funcție scrisă în limbajul C: 
- 
-int S(int a[], int p, int u) 
-{ 
- 
-if(p>u) return 0; 
- 
-else 
- 
-{ 
- 
- int m=(p+u)/2; 
- 
- return a[m] + S(a,p,m-1) + S(a,m+1,u); 
- 
-} 
-} 
- 
-Ştiind că tabloul a este format din n numere întregi, iar apelul subprogramului va fi 
-𝑆(𝑎, 0, 𝑛−1), precizați ce va calcula funcția 𝑆:`,
-    code: undefined,
-    codeLanguage: undefined,
+    text: `Considerăm următoarea funcție scrisă în limbajul C:
+
+Ştiind că tabloul a este format din n numere întregi, iar apelul subprogramului va fi 𝑆(𝑎, 0, 𝑛−1), precizați ce va calcula funcția 𝑆:`,
+    code: `int S(int a[], int p, int u)
+{
+  if(p>u) return 0;
+  else
+  {
+    int m=(p+u)/2;
+    return a[m] + S(a,p,m-1) + S(a,m+1,u);
+  }
+}`,
+    codeLanguage: "c",
     options: {
       a: `numărul valorilor pozitive din tabloul 𝑎;`,
       b: `valoarea elementului din mijlocul tabloului 𝑎;`,
@@ -544,8 +453,8 @@ else
     id: 225,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Dacă ultima soluție afişată de algoritmul backtracking pentru generarea tuturor 
-permutărilor mulțimii {1,2, … ,7} este 7,6,3,5,4,2,1, atunci următoarea soluție care va fi 
+    text: `Dacă ultima soluție afişată de algoritmul backtracking pentru generarea tuturor
+permutărilor mulțimii {1,2, … ,7} este 7,6,3,5,4,2,1, atunci următoarea soluție care va fi
 afişată este:`,
     code: undefined,
     codeLanguage: undefined,
@@ -561,8 +470,8 @@ afişată este:`,
     id: 226,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Dacă ultima soluție afişată de algoritmul backtracking pentru generarea tuturor 
-permutărilor mulțimii {1,2,…,7} este 6,5,7,4,3,2,1, atunci următoarea soluție care va fi 
+    text: `Dacă ultima soluție afişată de algoritmul backtracking pentru generarea tuturor
+permutărilor mulțimii {1,2,…,7} este 6,5,7,4,3,2,1, atunci următoarea soluție care va fi
 afişată este:`,
     code: undefined,
     codeLanguage: undefined,
@@ -578,8 +487,8 @@ afişată este:`,
     id: 227,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Dacă ultima soluție afişată de algoritmul backtracking pentru generarea tuturor 
-permutărilor mulțimii {1,2,…,7} este 6,7,4,5,3,2,1, atunci următoarea soluție care va fi 
+    text: `Dacă ultima soluție afişată de algoritmul backtracking pentru generarea tuturor
+permutărilor mulțimii {1,2,…,7} este 6,7,4,5,3,2,1, atunci următoarea soluție care va fi
 afişată este:`,
     code: undefined,
     codeLanguage: undefined,
@@ -595,10 +504,10 @@ afişată este:`,
     id: 228,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Folosind tehnica de programare backtracking pentru a genera toate permutările mulțimii 
-{1,2, . . . , 𝑛}, o soluție se memorează sub forma unui tablou unidimensional 𝑥1, 𝑥2, . . . , 𝑥𝑛. 
-Dacă au fost deja generate valori pentru componentele 𝑥1, 𝑥2, . . . , 𝑥𝑘−1, iar pentru 
-componenta 𝑥𝑘 (1 < 𝑘< 𝑛) au fost deja  testate  toate  valorile  posibile  şi nu a fost 
+    text: `Folosind tehnica de programare backtracking pentru a genera toate permutările mulțimii
+{1,2, . . . , 𝑛}, o soluție se memorează sub forma unui tablou unidimensional 𝑥1, 𝑥2, . . . , 𝑥𝑛.
+Dacă au fost deja generate valori pentru componentele 𝑥1, 𝑥2, . . . , 𝑥𝑘−1, iar pentru
+componenta 𝑥𝑘 (1 < 𝑘< 𝑛) au fost deja  testate  toate  valorile  posibile  şi nu a fost
 găsită  niciuna  convenabilă, atunci:`,
     code: undefined,
     codeLanguage: undefined,
@@ -614,8 +523,8 @@ găsită  niciuna  convenabilă, atunci:`,
     id: 229,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Considerăm ecuația 𝑎1𝑥1 + 𝑎2𝑥2 + ⋯+ 𝑎𝑛𝑥𝑛= 𝑦, unde 𝑎1, 𝑎2, … , 𝑎𝑛, 𝑦 sunt numere 
-naturale nenule. Pentru a determina toate soluțiile ecuației de forma (𝑥1, 𝑥2, … , 𝑥𝑛), cu  
+    text: `Considerăm ecuația 𝑎1𝑥1 + 𝑎2𝑥2 + ⋯+ 𝑎𝑛𝑥𝑛= 𝑦, unde 𝑎1, 𝑎2, … , 𝑎𝑛, 𝑦 sunt numere
+naturale nenule. Pentru a determina toate soluțiile ecuației de forma (𝑥1, 𝑥2, … , 𝑥𝑛), cu
 𝑥1, 𝑥2, … , 𝑥𝑛 numere naturale, se poate folosi direct algoritmul backtracking pentru:`,
     code: undefined,
     codeLanguage: undefined,
@@ -631,15 +540,15 @@ naturale nenule. Pentru a determina toate soluțiile ecuației de forma (𝑥1, 
     id: 230,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Un algoritm optim care să afişeze toate subşirurile crescătoare de lungime maximă ale 
+    text: `Un algoritm optim care să afişeze toate subşirurile crescătoare de lungime maximă ale
 unui şir format din 𝑛 numere foloseşte:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
       a: `doar metoda Greedy.`,
       b: `doar metoda backtracking (se generează toate subşirurile şirului respectiv, iar pentru fiecare subşir se verifică dacă este crescător şi, respectiv, maximal);`,
-      c: `mai întâi metoda programării dinamice pentru a determina lungimea maximă 𝑙𝑚𝑎𝑥 a 
-unui subşir crescător al şirului dat şi apoi metoda backtracking pentru a genera toate 
+      c: `mai întâi metoda programării dinamice pentru a determina lungimea maximă 𝑙𝑚𝑎𝑥 a
+unui subşir crescător al şirului dat şi apoi metoda backtracking pentru a genera toate
 subşirurile crescătoare de lungime 𝑙𝑚𝑎𝑥 ale şirului considerat;`,
       d: `doar metoda programării dinamice;`,
     },
@@ -649,8 +558,8 @@ subşirurile crescătoare de lungime 𝑙𝑚𝑎𝑥 ale şirului considerat;`,
     id: 231,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Considerăm că în Facultatea de Informatică sunt înscrişi 𝑛 studenți în anul III. Pentru a 
-afişa toate grupele ce pot fi formate din câte 𝑝 studenți (𝑝≤𝑛) putem folosi algoritmul 
+    text: `Considerăm că în Facultatea de Informatică sunt înscrişi 𝑛 studenți în anul III. Pentru a
+afişa toate grupele ce pot fi formate din câte 𝑝 studenți (𝑝≤𝑛) putem folosi algoritmul
 backtracking pentru:`,
     code: undefined,
     codeLanguage: undefined,
@@ -666,8 +575,8 @@ backtracking pentru:`,
     id: 232,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Utilizând metoda backtracking, se generează toate descompunerile distincte ale numărului 
-natural 𝑛= 10 ca sumă a cel puțin două numere naturale nenule. Care este ultima 
+    text: `Utilizând metoda backtracking, se generează toate descompunerile distincte ale numărului
+natural 𝑛= 10 ca sumă a cel puțin două numere naturale nenule. Care este ultima
 descompunere generată?`,
     code: undefined,
     codeLanguage: undefined,
@@ -683,8 +592,8 @@ descompunere generată?`,
     id: 233,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Utilizând metoda backtracking, se generează toate descompunerile distincte ale numărului 
-natural 𝑛= 16 ca sumă a cel puțin două numere naturale nenule. Care este ultima 
+    text: `Utilizând metoda backtracking, se generează toate descompunerile distincte ale numărului
+natural 𝑛= 16 ca sumă a cel puțin două numere naturale nenule. Care este ultima
 descompunere generată?`,
     code: undefined,
     codeLanguage: undefined,
@@ -700,9 +609,9 @@ descompunere generată?`,
     id: 234,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Fie 𝑆 o sumă de bani şi 𝑣1, 𝑣2, … , 𝑣𝑛 valorile a n tipuri de monede. Presupunând că din 
-fiecare tip avem la dispoziţie un număr nelimitat de monede, pentru afişarea tuturor 
-modalităţilor în care poate fi plătită suma 𝑆 folosind monede disponibile trebuie să 
+    text: `Fie 𝑆 o sumă de bani şi 𝑣1, 𝑣2, … , 𝑣𝑛 valorile a n tipuri de monede. Presupunând că din
+fiecare tip avem la dispoziţie un număr nelimitat de monede, pentru afişarea tuturor
+modalităţilor în care poate fi plătită suma 𝑆 folosind monede disponibile trebuie să
 utilizăm un algoritm bazat pe metoda:`,
     code: undefined,
     codeLanguage: undefined,
@@ -718,9 +627,9 @@ utilizăm un algoritm bazat pe metoda:`,
     id: 235,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Considerăm  un rucsac cu ajutorul căruia putem transporta 66 kg şi 7 obiecte având 
-greutățile 23, 10, 10,  25, 38, 7 şi 5 kg, iar câştigurile obținute prin transportul integral al 
-fiecărui obiect la destinație sunt 69, 10, 30, 100, 19, 14 şi 50 RON. Ştiind că din orice 
+    text: `Considerăm  un rucsac cu ajutorul căruia putem transporta 66 kg şi 7 obiecte având
+greutățile 23, 10, 10,  25, 38, 7 şi 5 kg, iar câştigurile obținute prin transportul integral al
+fiecărui obiect la destinație sunt 69, 10, 30, 100, 19, 14 şi 50 RON. Ştiind că din orice
 obiect putem încărca şi numai o parte a sa, câştigul maxim pe care îl putem obține este:`,
     code: undefined,
     codeLanguage: undefined,
@@ -736,9 +645,9 @@ obiect putem încărca şi numai o parte a sa, câştigul maxim pe care îl pute
     id: 236,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Considerăm  un rucsac cu ajutorul căruia putem transporta 67 kg şi 7 obiecte având 
-greutățile 10, 5, 20, 10, 20, 25 şi 21 kg, iar câştigurile obținute prin transportul integral al 
-fiecărui obiect la destinație sunt 30, 40, 40, 10, 4, 50 şi 30 RON. Ştiind că din oricare 
+    text: `Considerăm  un rucsac cu ajutorul căruia putem transporta 67 kg şi 7 obiecte având
+greutățile 10, 5, 20, 10, 20, 25 şi 21 kg, iar câştigurile obținute prin transportul integral al
+fiecărui obiect la destinație sunt 30, 40, 40, 10, 4, 50 şi 30 RON. Ştiind că din oricare
 obiect putem încărca şi numai o parte a sa, câştigul maxim pe care îl putem obține este:`,
     code: undefined,
     codeLanguage: undefined,
@@ -754,9 +663,9 @@ obiect putem încărca şi numai o parte a sa, câştigul maxim pe care îl pute
     id: 237,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Considerăm  un rucsac cu ajutorul căruia putem transporta 53 kg şi 7 obiecte având 
-greutățile 10, 5, 18, 10, 8, 20 şi 40 kg, iar câştigurile obținute prin transportul integral al 
-fiecărui obiect la destinație sunt 30, 40, 36, 10, 16, 10 şi 30 RON. Ştiind că din oricare 
+    text: `Considerăm  un rucsac cu ajutorul căruia putem transporta 53 kg şi 7 obiecte având
+greutățile 10, 5, 18, 10, 8, 20 şi 40 kg, iar câştigurile obținute prin transportul integral al
+fiecărui obiect la destinație sunt 30, 40, 36, 10, 16, 10 şi 30 RON. Ştiind că din oricare
 obiect putem încărca şi numai o parte a sa, câştigul maxim pe care îl putem obține este:`,
     code: undefined,
     codeLanguage: undefined,
@@ -772,7 +681,7 @@ obiect putem încărca şi numai o parte a sa, câştigul maxim pe care îl pute
     id: 238,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Stabiliți care dintre următoarele propoziții referitoare la tehnica de programare Greedy 
+    text: `Stabiliți care dintre următoarele propoziții referitoare la tehnica de programare Greedy
 sunt adevărate:`,
     code: undefined,
     codeLanguage: undefined,
@@ -788,20 +697,20 @@ sunt adevărate:`,
     id: 239,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `La un ghişeu stau la coadă 𝑛 persoane, numerotate cu 1,2, . . . , 𝑛. Cunoscând  timpii de 
-servire 𝑡1, 𝑡2, … , 𝑡𝑛 ai celor 𝑛 persoane şi ştiind că pentru a servi o persoană 𝑘 trebuie 
-servite persoanele 1,2, . . . , 𝑘−1 aflate înaintea sa, trebuie să determinăm un mod de 
-rearanjare al persoanelor  la  coadă, astfel  încât  timpul  de  aşteptare  al  fiecărei  
-persoane  să  fie  minim. Stabiliți care dintre următoarele variante de rezolvare a acestei 
+    text: `La un ghişeu stau la coadă 𝑛 persoane, numerotate cu 1,2, . . . , 𝑛. Cunoscând  timpii de
+servire 𝑡1, 𝑡2, … , 𝑡𝑛 ai celor 𝑛 persoane şi ştiind că pentru a servi o persoană 𝑘 trebuie
+servite persoanele 1,2, . . . , 𝑘−1 aflate înaintea sa, trebuie să determinăm un mod de
+rearanjare al persoanelor  la  coadă, astfel  încât  timpul  de  aşteptare  al  fiecărei
+persoane  să  fie  minim. Stabiliți care dintre următoarele variante de rezolvare a acestei
 probleme este corectă şi are o complexitate minimă:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `se generează toate modurile în care pot fi rearanjate cele 𝑛 persoane la coadă şi pentru 
-fiecare mod de rearanjare se calculează timpul total 𝑇 de servire al celor 𝑛 persoane, 
+      a: `se generează toate modurile în care pot fi rearanjate cele 𝑛 persoane la coadă şi pentru
+fiecare mod de rearanjare se calculează timpul total 𝑇 de servire al celor 𝑛 persoane,
 iar soluția este tabloul pentru care valoarea lui 𝑇 este minimă;`,
-      b: `se generează toate modurile în care pot fi rearanjate cele 𝑛 persoane la coadă şi pentru 
-fiecare mod de rearanjare se calculează într-un tablou timpii de servire, iar soluția este 
+      b: `se generează toate modurile în care pot fi rearanjate cele 𝑛 persoane la coadă şi pentru
+fiecare mod de rearanjare se calculează într-un tablou timpii de servire, iar soluția este
 dată de tabloul minim în sens lexicografic;`,
       c: `se rearanjează persoanele în ordinea descrescătoare a timpilor de servire;`,
       d: `se rearanjează persoanele în ordinea crescătoare a timpilor de servire.`,
@@ -813,9 +722,9 @@ dată de tabloul minim în sens lexicografic;`,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `La un ghişeu stau la coadă 7 persoane 𝑝1, 𝑝2, … , 𝑝7. Cunoscând timpii lor de servire 𝑡1 =
-10, 𝑡2 = 6, 𝑡3 = 5, 𝑡4 = 7, 𝑡5 = 2, 𝑡6 = 8, 𝑡7 = 4 şi ştiind că pentru a servi o 
-persoană trebuie servite, mai întâi, toate persoanele aflate înaintea sa, precizați care dintre 
-următoarele modalități de rearanjare a persoanelor la coadă minimizează timpul mediu de 
+10, 𝑡2 = 6, 𝑡3 = 5, 𝑡4 = 7, 𝑡5 = 2, 𝑡6 = 8, 𝑡7 = 4 şi ştiind că pentru a servi o
+persoană trebuie servite, mai întâi, toate persoanele aflate înaintea sa, precizați care dintre
+următoarele modalități de rearanjare a persoanelor la coadă minimizează timpul mediu de
 așteptare:`,
     code: undefined,
     codeLanguage: undefined,
@@ -832,9 +741,9 @@ așteptare:`,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `La un ghişeu stau la coadă 7 persoane 𝑝1, 𝑝2, … , 𝑝7. Cunoscând timpii lor de servire 𝑡1 =
-12,  𝑡2 = 6,  𝑡3 = 15,  𝑡4 = 15,  𝑡5 = 12,  𝑡6 = 8, 𝑡7 = 2 şi ştiind că pentru a servi o 
-persoană trebuie servite, mai întâi, toate persoanele aflate înaintea sa, precizați care dintre 
-următoarele modalități de rearanjare a persoanelor la coadă nu minimizează timpul mediu 
+12,  𝑡2 = 6,  𝑡3 = 15,  𝑡4 = 15,  𝑡5 = 12,  𝑡6 = 8, 𝑡7 = 2 şi ştiind că pentru a servi o
+persoană trebuie servite, mai întâi, toate persoanele aflate înaintea sa, precizați care dintre
+următoarele modalități de rearanjare a persoanelor la coadă nu minimizează timpul mediu
 de așteptare:`,
     code: undefined,
     codeLanguage: undefined,
@@ -850,30 +759,30 @@ de așteptare:`,
     id: 242,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `În Aula Magna a Universității Titu Maiorescu din București se va organiza un festival de 
-teatru care va dura o singură zi. Fiecare regizor a transmis organizatorului festivalului 
-intervalul de timp în care se poate desfășura spectacolul său. Organizatorul festivalului 
-dorește să programeze un număr maxim de spectacole. Știind că spectacolele nu se pot 
-suprapune și că între oricare două spectacole consecutive nu există nicio pauză, stabiliți 
-care dintre strategiile de planificare de tip Greedy de mai jos pot fi folosite de către 
-organizatorul festivalului pentru a planifica un număr maxim de spectacole în Aula 
+    text: `În Aula Magna a Universității Titu Maiorescu din București se va organiza un festival de
+teatru care va dura o singură zi. Fiecare regizor a transmis organizatorului festivalului
+intervalul de timp în care se poate desfășura spectacolul său. Organizatorul festivalului
+dorește să programeze un număr maxim de spectacole. Știind că spectacolele nu se pot
+suprapune și că între oricare două spectacole consecutive nu există nicio pauză, stabiliți
+care dintre strategiile de planificare de tip Greedy de mai jos pot fi folosite de către
+organizatorul festivalului pentru a planifica un număr maxim de spectacole în Aula
 Magna în ziua respectivă:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `se sortează spectacolele în ordinea crescătoare a duratei lor, se programează primul 
-spectacol și apoi se consideră, pe rând, restul spectacolelor, un spectacol fiind 
+      a: `se sortează spectacolele în ordinea crescătoare a duratei lor, se programează primul
+spectacol și apoi se consideră, pe rând, restul spectacolelor, un spectacol fiind
 programat doar dacă începe după ce se termină spectacolul programat anterior;`,
-      b: `se sortează spectacolele în ordinea descrescătoare a orelor la care se termină, se 
-programează primul spectacol și apoi se consideră, pe rând, restul spectacolelor, un 
-spectacol fiind programat doar dacă începe după ce se termină spectacolul programat 
+      b: `se sortează spectacolele în ordinea descrescătoare a orelor la care se termină, se
+programează primul spectacol și apoi se consideră, pe rând, restul spectacolelor, un
+spectacol fiind programat doar dacă începe după ce se termină spectacolul programat
 anterior.`,
-      c: `se sortează spectacolele în ordinea crescătoare a orelor la care se termină, se 
-programează primul spectacol și apoi se consideră, pe rând, restul spectacolelor, un 
-spectacol fiind programat doar dacă începe după ce se termină spectacolul programat 
+      c: `se sortează spectacolele în ordinea crescătoare a orelor la care se termină, se
+programează primul spectacol și apoi se consideră, pe rând, restul spectacolelor, un
+spectacol fiind programat doar dacă începe după ce se termină spectacolul programat
 anterior;`,
-      d: `se sortează spectacolele în ordinea crescătoare a orelor la care încep, se programează 
-primul spectacol și apoi se consideră, pe rând, restul spectacolelor, un spectacol fiind 
+      d: `se sortează spectacolele în ordinea crescătoare a orelor la care încep, se programează
+primul spectacol și apoi se consideră, pe rând, restul spectacolelor, un spectacol fiind
 programat doar dacă începe după ce se termină spectacolul programat anterior;`,
     },
     correctAnswer: "c",
@@ -882,16 +791,16 @@ programat doar dacă începe după ce se termină spectacolul programat anterior
     id: 243,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `În Aula Magna a Universității Titu Maiorescu din București se va organiza un festival de 
-teatru care va dura o singură zi. Fiecare regizor a transmis organizatorului festivalului 
-intervalul de timp [ℎℎ1: 𝑚𝑚1, ℎℎ2: 𝑚𝑚2] în care se poate desfășura spectacolul său. 
-Știind că spectacolele nu se pot suprapune și între oricare două spectacole consecutive nu 
-există nicio pauză, organizatorul festivalului s-a gândit să folosească o strategie de 
-planificare de tip Greedy pentru a planifica un număr maxim de spectacole în cadrul 
-festivalului. Considerând că 7 regizori au trimis intervalele de desfăşurare ale 
+    text: `În Aula Magna a Universității Titu Maiorescu din București se va organiza un festival de
+teatru care va dura o singură zi. Fiecare regizor a transmis organizatorului festivalului
+intervalul de timp [ℎℎ1: 𝑚𝑚1, ℎℎ2: 𝑚𝑚2] în care se poate desfășura spectacolul său.
+Știind că spectacolele nu se pot suprapune și între oricare două spectacole consecutive nu
+există nicio pauză, organizatorul festivalului s-a gândit să folosească o strategie de
+planificare de tip Greedy pentru a planifica un număr maxim de spectacole în cadrul
+festivalului. Considerând că 7 regizori au trimis intervalele de desfăşurare ale
 spectacolelor lor 𝑠1 = [08: 00,10: 30], 𝑠2 = [08: 30,09: 00], 𝑠3 = [16: 30,18: 00], 𝑠4 =
-[10: 30,10: 45], 𝑠5 = [11: 00,17: 00], 𝑠6 = [11: 30,13: 00], 𝑠7 = [15: 15,16: 45], 
-precizați care dintre variantele de mai jos reprezintă o planificare corectă, cu un număr 
+[10: 30,10: 45], 𝑠5 = [11: 00,17: 00], 𝑠6 = [11: 30,13: 00], 𝑠7 = [15: 15,16: 45],
+precizați care dintre variantele de mai jos reprezintă o planificare corectă, cu un număr
 maxim de spectacole:`,
     code: undefined,
     codeLanguage: undefined,
@@ -907,16 +816,16 @@ maxim de spectacole:`,
     id: 244,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `În Aula Magna a Universității Titu Maiorescu din București se va organiza un festival de 
-teatru care va dura o singură zi. Fiecare regizor a transmis organizatorului festivalului 
-intervalul de timp [ℎℎ1: 𝑚𝑚1, ℎℎ2: 𝑚𝑚2] în care se poate desfășura spectacolul său. 
-Știind că spectacolele nu se pot suprapune și între oricare două spectacole consecutive nu 
-există nicio pauză, organizatorul festivalului s-a gândit să folosească o strategie de 
-planificare de tip Greedy pentru a planifica un număr maxim de spectacole în cadrul 
-festivalului. Considerând că 7 regizori au trimis intervalele de desfăşurare ale 
+    text: `În Aula Magna a Universității Titu Maiorescu din București se va organiza un festival de
+teatru care va dura o singură zi. Fiecare regizor a transmis organizatorului festivalului
+intervalul de timp [ℎℎ1: 𝑚𝑚1, ℎℎ2: 𝑚𝑚2] în care se poate desfășura spectacolul său.
+Știind că spectacolele nu se pot suprapune și între oricare două spectacole consecutive nu
+există nicio pauză, organizatorul festivalului s-a gândit să folosească o strategie de
+planificare de tip Greedy pentru a planifica un număr maxim de spectacole în cadrul
+festivalului. Considerând că 7 regizori au trimis intervalele de desfăşurare ale
 spectacolelor lor 𝑠1 = [08: 00,10: 30], 𝑠2 = [08: 30,11: 00], 𝑠3 = [16: 30,18: 00], 𝑠4 =
-[10: 30,10: 45], 𝑠5 = [11: 00,12: 00], 𝑠6 = [12: 30,16: 00], 𝑠7 = [17: 15,18: 45], 
-precizați care dintre variantele de mai jos reprezintă o planificare corectă, cu un număr 
+[10: 30,10: 45], 𝑠5 = [11: 00,12: 00], 𝑠6 = [12: 30,16: 00], 𝑠7 = [17: 15,18: 45],
+precizați care dintre variantele de mai jos reprezintă o planificare corectă, cu un număr
 maxim de spectacole:`,
     code: undefined,
     codeLanguage: undefined,
@@ -932,15 +841,15 @@ maxim de spectacole:`,
     id: 245,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Se consideră un triunghi de numere întregi format din 𝑛 linii, astfel: prima linie conține 
-un număr, a doua linie conține două numere,. . ., ultima linie conține 𝑛 numere. În acest 
-triunghi se pot forma sume de numere întregi în felul următor:  
-➢ se selectează numărul aflat pe prima linie; 
-➢ la fiecare pas se selectează fie numărul aflat pe următoarea linie sub ultimul număr 
-selectat, fie numărul aflat pe următoarea linie și o coloană la dreapta față de ultimul 
-număr selectat, până când se ajunge pe ultima linie a triunghiului de numere. 
- 
-Un algoritm cu complexitate minimă care determină cea mai mare sumă ce se poate 
+    text: `Se consideră un triunghi de numere întregi format din 𝑛 linii, astfel: prima linie conține
+un număr, a doua linie conține două numere,. . ., ultima linie conține 𝑛 numere. În acest
+triunghi se pot forma sume de numere întregi în felul următor:
+➢ se selectează numărul aflat pe prima linie;
+➢ la fiecare pas se selectează fie numărul aflat pe următoarea linie sub ultimul număr
+selectat, fie numărul aflat pe următoarea linie și o coloană la dreapta față de ultimul
+număr selectat, până când se ajunge pe ultima linie a triunghiului de numere.
+
+Un algoritm cu complexitate minimă care determină cea mai mare sumă ce se poate
 obține respectând regulile de mai sus folosește metoda:`,
     code: undefined,
     codeLanguage: undefined,
@@ -961,15 +870,15 @@ obține respectând regulile de mai sus folosește metoda:`,
 12   −20
 30   50   180
 21   14   20   16
- 
- 
-În acest triunghi se pot forma sume de numere întregi în felul următor:  
-➢ se selectează numărul aflat pe prima linie; 
-➢ la fiecare pas se selectează fie numărul aflat pe următoarea linie sub ultimul număr 
-selectat, fie numărul aflat pe următoarea linie și o coloană la dreapta față de ultimul 
-număr selectat, până când se ajunge pe ultima linie a triunghiului de numere. 
- 
-Care este suma maximă ce poate fi obținută în triunghiul dat, respectând condițiile 
+
+
+În acest triunghi se pot forma sume de numere întregi în felul următor:
+➢ se selectează numărul aflat pe prima linie;
+➢ la fiecare pas se selectează fie numărul aflat pe următoarea linie sub ultimul număr
+selectat, fie numărul aflat pe următoarea linie și o coloană la dreapta față de ultimul
+număr selectat, până când se ajunge pe ultima linie a triunghiului de numere.
+
+Care este suma maximă ce poate fi obținută în triunghiul dat, respectând condițiile
 precizate mai sus?`,
     code: undefined,
     codeLanguage: undefined,
@@ -990,15 +899,15 @@ precizate mai sus?`,
 −12   −20
 130   200   118
 210   114   320   160
- 
- 
-În acest triunghi se pot forma sume de numere întregi în felul următor:  
-➢ se selectează numărul aflat pe prima linie; 
-➢ la fiecare pas se selectează fie numărul aflat pe următoarea linie sub ultimul număr 
-selectat, fie numărul aflat pe următoarea linie și o coloană la dreapta față de ultimul 
-număr selectat, până când se ajunge pe ultima linie a triunghiului de numere. 
- 
-Care este suma maximă ce poate fi obținută în triunghiul dat, respectând condițiile 
+
+
+În acest triunghi se pot forma sume de numere întregi în felul următor:
+➢ se selectează numărul aflat pe prima linie;
+➢ la fiecare pas se selectează fie numărul aflat pe următoarea linie sub ultimul număr
+selectat, fie numărul aflat pe următoarea linie și o coloană la dreapta față de ultimul
+număr selectat, până când se ajunge pe ultima linie a triunghiului de numere.
+
+Care este suma maximă ce poate fi obținută în triunghiul dat, respectând condițiile
 precizate mai sus?`,
     code: undefined,
     codeLanguage: undefined,
@@ -1014,9 +923,9 @@ precizate mai sus?`,
     id: 248,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Fie 𝑆 o sumă de bani şi 𝑣1, 𝑣2, … , 𝑣𝑛 valorile a n tipuri de monede (se presupune că din 
-fiecare tip de monedă avem la dispoziţie un număr nelimitat de monede). Un algoritm 
-optim care să determine numărul minim de monede cu care poate fi plătită suma 𝑆, 
+    text: `Fie 𝑆 o sumă de bani şi 𝑣1, 𝑣2, … , 𝑣𝑛 valorile a n tipuri de monede (se presupune că din
+fiecare tip de monedă avem la dispoziţie un număr nelimitat de monede). Un algoritm
+optim care să determine numărul minim de monede cu care poate fi plătită suma 𝑆,
 folosind monede de tipurile date, folosește metoda:`,
     code: undefined,
     codeLanguage: undefined,
@@ -1096,7 +1005,7 @@ folosind monede de tipurile date, folosește metoda:`,
     id: 253,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Având la dispoziție un număr nelimitat de monede cu valorile 5 RON, 4 RON, 3 RON și 
+    text: `Având la dispoziție un număr nelimitat de monede cu valorile 5 RON, 4 RON, 3 RON și
 1 RON, precizați numărul minim de monede cu care poate fi plătită suma de 17 RON:`,
     code: undefined,
     codeLanguage: undefined,
@@ -1112,7 +1021,7 @@ folosind monede de tipurile date, folosește metoda:`,
     id: 254,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Având la dispoziție un număr nelimitat de monede cu valorile 7 RON, 6 RON, 3 RON și 
+    text: `Având la dispoziție un număr nelimitat de monede cu valorile 7 RON, 6 RON, 3 RON și
 2 RON, precizați numărul minim de monede cu care poate fi plătită suma de 19 RON:`,
     code: undefined,
     codeLanguage: undefined,

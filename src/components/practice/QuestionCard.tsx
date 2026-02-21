@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { CodeBlock } from "@/components/ui/CodeBlock";
 import type { Question, AnswerKey } from "@/data/types";
 
 interface QuestionCardProps {
@@ -66,25 +67,23 @@ export function QuestionCard({
         </button>
       </div>
 
+      {/* Code block - rendered above question text to match PDF layout */}
+      {question.code && (
+        <div className="mb-4">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-xs font-medium text-[var(--color-text-tertiary)] uppercase tracking-wider">
+              {question.codeLanguage || "Cod"}
+            </span>
+          </div>
+          <CodeBlock code={question.code} language={question.codeLanguage} />
+        </div>
+      )}
+
       {/* Question text */}
       <div className="mb-6">
         <p className="text-base leading-relaxed text-[var(--color-text-primary)] whitespace-pre-wrap">
           {question.text}
         </p>
-
-        {/* Code block */}
-        {question.code && (
-          <div className="mt-4">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs font-medium text-[var(--color-text-tertiary)] uppercase tracking-wider">
-                {question.codeLanguage || "Cod"}
-              </span>
-            </div>
-            <pre className="code-block">
-              <code>{question.code}</code>
-            </pre>
-          </div>
-        )}
       </div>
 
       {/* Options */}

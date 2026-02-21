@@ -5,20 +5,17 @@ export const pooCpp: Question[] = [
     id: 101,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie secvența în limbajul C++: 
- 
-public: 
-În momentul executării programului de mai sus:`,
-    code: `class cls{ 
- 
-cls(){ cout<<"constructor";} 
-cls(cls &c){cout<<"constructor de copiere";} 
-}; 
-int f(cls c){ return 1;} 
-int main(){ 
-cls c;  
-f(c); 
-return 0; 
+    text: `Fie secvența în limbajul C++:\nÎn momentul executării programului de mai sus:`,
+    code: `class cls{
+public:
+  cls(){ cout<<"constructor";}
+  cls(cls &c){cout<<"constructor de copiere";}
+};
+int f(cls c){ return 1;}
+int main(){
+  cls c;
+  f(c);
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -33,19 +30,17 @@ return 0;
     id: 102,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie secvența în limbajul C++: 
- 
-public:  
-În momentul executării programului de mai sus:`,
-    code: `class cls{ 
-cls(){ cout<<"constructor";} 
-cls(cls &c){cout<<"constructor de copiere";} 
-}; 
-int f(cls &c){ return 1;} 
-int main(){ 
-cls c;  
-f(c); 
-return 0; 
+    text: `Fie secvența în limbajul C++:\nÎn momentul executării programului de mai sus:`,
+    code: `class cls{
+public:
+  cls(){ cout<<"constructor";}
+  cls(cls &c){cout<<"constructor de copiere";}
+};
+int f(cls &c){ return 1;}
+int main(){
+  cls c;
+  f(c);
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -60,25 +55,19 @@ return 0;
     id: 103,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie secvența în limbajul C++: 
- 
-public: 
-     
-Declarațiile admise în acest caz sunt:`,
-    code: `class C{ 
-int a; 
-virtual void metoda1()=0; 
-     
-virtual void metoda2()=0; 
-}; 
- 
-int main(){ 
-C *pob;       //declarația 1 
-C ob;         //declarația 2 
-C *vpob[5];   //declarația 3 
-
-C vob[5];      //declarația 4 
-return 0; 
+    text: `Fie secvența în limbajul C++:\nDeclarațiile admise în acest caz sunt:`,
+    code: `class C{
+  int a;
+public:
+  virtual void metoda1()=0;
+  virtual void metoda2()=0;
+};
+int main(){
+  C *pob;       //declarația 1
+  C ob;         //declarația 2
+  C *vpob[5];   //declarația 3
+  C vob[5];     //declarația 4
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -93,19 +82,14 @@ return 0;
     id: 104,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie clasa  C++:  
-  
- public :  
-  
-c (int , int ) ;  
- int det_a ( ) {return a ;}  
-  
-~c () ;  
-};  
-  
-Semnul ~ are rolul :`,
-    code: `class c {  
- int a, b ;`,
+    text: `Fie clasa C++:\nSemnul ~ are rolul:`,
+    code: `class c{
+  int a, b;
+public:
+  c(int, int);
+  int det_a() {return a;}
+  ~c();
+};`,
     codeLanguage: "cpp",
     options: {
       a: `de a nega logic rezultatul returnat de metoda c( );`,
@@ -134,25 +118,23 @@ Semnul ~ are rolul :`,
     id: 106,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Secvenţa următoare în limbajul C++:
-
+    text: `Secvenţa următoare în limbajul C++:\nafișează:`,
+    code: `class c1{
 public:
-int a;
+  int a;
+  c1(int y){ a=y;cout<<"constructor 1";}
+  ~c1(){cout<<"destructor 2";}
+};
+class c2:public c1{
 public:
-int b;
-afișează:`,
-    code: `class c1{ 
-c1(int y){ a=y;cout<<"constructor 1";} 
-~c1(){cout<<"destructor 2";} 
-}; 
-class c2:public c1{ 
-      c2(int y, int x):c1(y) { b=x; cout<<"constructor 2";} 
-      ~c2(){cout<<"destructor 2";} 
-}; 
-int main(){  
-c1 ob1(2); 
-c2 ob2(2,3); 
-return 0; 
+  int b;
+  c2(int y, int x):c1(y) { b=x; cout<<"constructor 2";}
+  ~c2(){cout<<"destructor 2";}
+};
+int main(){
+  c1 ob1(2);
+  c2 ob2(2,3);
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -167,28 +149,24 @@ return 0;
     id: 107,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++: 
- 
-public:  
-public:  
-Programul afișează:`,
-    code: `#include <iostream.h> 
-class B{ 
-B(){cout<<"B()"<<endl;} 
-~B(){cout<<"~B()"<<endl;} 
-}; 
- 
- 
-class D: public B{  
-D(){cout<<"D()"<<endl;} 
-~D(){cout<<"~D()"<<endl;} 
-}; 
-int main(){ 
-B *b=new B();  
-delete b; 
-b=new D();   
-delete b; 
-return 0; 
+    text: `Fie următorul program C++:\nProgramul afișează:`,
+    code: `#include <iostream.h>
+class B{
+public:
+  B(){cout<<"B()"<<endl;}
+  ~B(){cout<<"~B()"<<endl;}
+};
+class D: public B{
+public:
+  D(){cout<<"D()"<<endl;}
+  ~D(){cout<<"~D()"<<endl;}
+};
+int main(){
+  B *b=new B();
+  delete b;
+  b=new D();
+  delete b;
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -203,26 +181,24 @@ return 0;
     id: 108,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie programul C++:
-
+    text: `Fie programul C++:\nProgramul afișează:`,
+    code: `#include <iostream.h>
+class B{
 public:
+  B(){cout<<"B()"<<endl;}
+  B(B &b){cout<<"B(B &b)"<<endl;}
+};
+class D: public B{
 public:
-Programul afișează:`,
-    code: `#include <iostream.h> 
-class B{  
-B(){cout<<"B()"<<endl;} 
-B(B &b){cout<<"B(B &b)"<<endl;} 
-}; 
-class D: public B{  
-D(){cout<<"D()"<<endl;} 
-D(D &d){cout<<"D(D &d)"<<endl;} 
-}; 
-int main(){ 
-B b;  
-B b1(b);  
-D d;  
-D d1(d); 
-return 0;  
+  D(){cout<<"D()"<<endl;}
+  D(D &d){cout<<"D(D &d)"<<endl;}
+};
+int main(){
+  B b;
+  B b1(b);
+  D d;
+  D d1(d);
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -237,21 +213,14 @@ return 0;
     id: 109,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie clasa C++ : 
- 
-public: 
-float c (int, int) 
- 
- 
-int get_a {return a;} 
- 
- 
-c ();  
-}; 
- 
-Declaraţia float c(int, int) ar putea corespunde unui constructor al clasei?`,
-    code: `class c {  
-int a,b;`,
+    text: `Fie clasa C++:\nDeclaraţia float c(int, int) ar putea corespunde unui constructor al clasei?`,
+    code: `class c{
+  int a,b;
+public:
+  float c(int, int)
+  int get_a {return a;}
+  c();
+};`,
     codeLanguage: "cpp",
     options: {
       a: `nu, deoarece crează ambiguitate;`,
@@ -265,20 +234,18 @@ int a,b;`,
     id: 110,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie secvenţa următoare: 
- 
-public: 
-persoana(int v=18){varsta=v;} 
-persoana& operator++(int){varsta++; return *this;} 
-int get_varsta(){return varsta;} 
-}; 
-Secvența afișează:`,
-    code: `class persoana{ 
-int varsta; 
-int main(){ 
-persoana p(20); 
-cout<<p++.get_varsta(); 
-return 0; 
+    text: `Fie secvenţa următoare:\nSecvența afișează:`,
+    code: `class persoana{
+  int varsta;
+public:
+  persoana(int v=18){varsta=v;}
+  persoana& operator++(int){varsta++; return *this;}
+  int get_varsta(){return varsta;}
+};
+int main(){
+  persoana p(20);
+  cout<<p++.get_varsta();
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -293,18 +260,14 @@ return 0;
     id: 111,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Se consideră următoarea secvență de program C++: 
- 
-private: 
-int x,y; 
-public: 
-B(int a,int b){ x=a;y=b; } 
-B(const B &a){ x=a.x; y=a.y;} 
-}; 
- 
-
-În care dintre următoarele situații se realizează copierea unui obiect într-altul:`,
-    code: `class B{`,
+    text: `Se consideră următoarea secvență de program C++:\nÎn care dintre următoarele situații se realizează copierea unui obiect într-altul:`,
+    code: `class B{
+private:
+  int x,y;
+public:
+  B(int a,int b){ x=a;y=b; }
+  B(const B &a){ x=a.x; y=a.y;}
+};`,
     codeLanguage: "cpp",
     options: {
       a: `B c2(0.0, 0,0);`,
@@ -318,21 +281,20 @@ B(const B &a){ x=a.x; y=a.y;}
     id: 112,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++: 
- 
-public:  
-cls(int x=7) { j=x; }  
-static int imp(int k){ cls a; return i+k+a.j; } };  
-int cls::i;  
-Indicați ce se va afișa pe ecran  în urma executării programului:`,
-    code: `#include<iostream.h>  
-class cls {  
-static int i;  
-int j;  
-int main()  
-{ int k=5;  
-cout<<cls::imp(k);  
-return 0;  
+    text: `Fie următorul program C++:\nIndicați ce se va afișa pe ecran în urma executării programului:`,
+    code: `#include<iostream.h>
+class cls{
+  static int i;
+  int j;
+public:
+  cls(int x=7) { j=x; }
+  static int imp(int k){ cls a; return i+k+a.j; }
+};
+int cls::i;
+int main(){
+  int k=5;
+  cout<<cls::imp(k);
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -347,29 +309,25 @@ return 0;
     id: 113,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++: 
- 
-public: 
-public: 
-Indicați ce se va afișa pe ecran  în urma executării programului:`,
-    code: `#include <iostream.h> 
-class B{ 
-virtual void f() { cout<<"B::f() ";} 
-void g() { cout<<"B::g() ";} 
-}; 
- 
- 
-class D: public B{ 
-void f() { cout<<"D::f() ";} 
-void g() { cout<<"D::g() ";} 
-}; 
-int main(){ 
-int i; 
-B *a=new B(); 
-B *b=new D();  
-a->f(); b->f();  
-a->g(); b->g(); 
-return 0; 
+    text: `Fie următorul program C++:\nIndicați ce se va afișa pe ecran în urma executării programului:`,
+    code: `#include <iostream.h>
+class B{
+public:
+  virtual void f() { cout<<"B::f() ";}
+  void g() { cout<<"B::g() ";}
+};
+class D: public B{
+public:
+  void f() { cout<<"D::f() ";}
+  void g() { cout<<"D::g() ";}
+};
+int main(){
+  int i;
+  B *a=new B();
+  B *b=new D();
+  a->f(); b->f();
+  a->g(); b->g();
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -384,34 +342,30 @@ return 0;
     id: 114,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++: 
- 
-public: 
-public: 
-public: 
-Indicați ce se va afișa pe ecran  în urma executării programului:`,
-    code: `#include <iostream.h> 
-class B{ 
-virtual void f() { cout<<"B::f() ";} 
-void g() { cout<<"B::g() ";} 
-}; 
- 
- 
-class D1: public B{ 
-void f() { cout<<"D1::f() ";} 
-void g() { cout<<"D1::g() ";} 
-}; 
-class D2: public B{ 
-void g() { cout<<"D2::g() ";} 
-}; 
-int main(){ 
-int i; 
-B *a=new B(); 
-B *b=new D1();  
-B *c=new D2(); 
-a->f(); b->f(); c->f(); 
-a->g(); b->g(); c->g(); 
-return 0; 
+    text: `Fie următorul program C++:\nIndicați ce se va afișa pe ecran în urma executării programului:`,
+    code: `#include <iostream.h>
+class B{
+public:
+  virtual void f() { cout<<"B::f() ";}
+  void g() { cout<<"B::g() ";}
+};
+class D1: public B{
+public:
+  void f() { cout<<"D1::f() ";}
+  void g() { cout<<"D1::g() ";}
+};
+class D2: public B{
+public:
+  void g() { cout<<"D2::g() ";}
+};
+int main(){
+  int i;
+  B *a=new B();
+  B *b=new D1();
+  B *c=new D2();
+  a->f(); b->f(); c->f();
+  a->g(); b->g(); c->g();
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -426,17 +380,16 @@ return 0;
     id: 115,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++: 
-public: 
-Destructorul clasei:`,
-    code: `#include 
-class cls{ 
-~cls(){cout<<"\\n Destructor";} 
-}; 
-int main(){ 
-cls *po=new cls[3]; 
-delete []po; 
-}]`,
+    text: `Fie următorul program C++:\nDestructorul clasei:`,
+    code: `#include
+class cls{
+public:
+  ~cls(){cout<<"\\n Destructor";}
+};
+int main(){
+  cls *po=new cls[3];
+  delete []po;
+}`,
     codeLanguage: "cpp",
     options: {
       a: `se apelează de patru ori.`,
@@ -450,23 +403,21 @@ delete []po;
     id: 116,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++: 
-
-public: 
-salariat (int v=20) {varsta =v;} 
-operator int() { return varsta;} 
-salariat& operator++(){varsta++; return *this;} 
-salariat operator++ (int) { varsta++; return *this;} 
-}; 
-Programul afișează:`,
-    code: `#include<iostream.h> 
-class salariat{  
-int varsta; 
-int main(){  
-salariat s(21); 
-int a=s++, b=++s; 
-cout<<a<<"   "<<b<<endl; 
-return 0; 
+    text: `Fie următorul program C++:\nProgramul afișează:`,
+    code: `#include<iostream.h>
+class salariat{
+  int varsta;
+public:
+  salariat(int v=20) {varsta=v;}
+  operator int() { return varsta;}
+  salariat& operator++(){varsta++; return *this;}
+  salariat operator++(int) { varsta++; return *this;}
+};
+int main(){
+  salariat s(21);
+  int a=s++, b=++s;
+  cout<<a<<"   "<<b<<endl;
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -481,25 +432,23 @@ return 0;
     id: 117,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++: 
- 
-public: 
-float raza; 
-Cerc(float r){raza=r;} 
-float get_raza(){return raza;} 
-Cerc operator++(){raza++; return *this;} 
-Cerc operator--(){raza--; return *this;} 
-}; 
-Programul afișează:`,
-    code: `#include <iostream.h> 
-class Cerc{ 
-int main(){  
-Cerc c(3.5); 
-cout<<(++(++c)).get_raza()<<" ";  
-cout<<c.get_raza()<<" "; 
-cout<<(--(--c)).get_raza()<<" "; 
-cout<<c.get_raza()<<" "; 
-return 0; 
+    text: `Fie următorul program C++:\nProgramul afișează:`,
+    code: `#include <iostream.h>
+class Cerc{
+public:
+  float raza;
+  Cerc(float r){raza=r;}
+  float get_raza(){return raza;}
+  Cerc operator++(){raza++; return *this;}
+  Cerc operator--(){raza--; return *this;}
+};
+int main(){
+  Cerc c(3.5);
+  cout<<(++(++c)).get_raza()<<" ";
+  cout<<c.get_raza()<<" ";
+  cout<<(--(--c)).get_raza()<<" ";
+  cout<<c.get_raza()<<" ";
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -514,20 +463,17 @@ return 0;
     id: 118,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie secvența de program C++: 
- 
-public:  
-static int s; 
-}; 
-
-int  C::s=0; 
-int a=7; C::s=a;  
-În secvența de mai sus, inițializarea lui s este:`,
-    code: `#include <iostream.h> 
-class C{ 
-int main(){  
-cout<<C::s; 
-return 0; 
+    text: `Fie secvența de program C++:\nÎn secvența de mai sus, inițializarea lui s este:`,
+    code: `#include <iostream.h>
+class C{
+public:
+  static int s;
+};
+int C::s=0;
+int main(){
+  int a=7; C::s=a;
+  cout<<C::s;
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -542,17 +488,14 @@ return 0;
     id: 119,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie secvența C++: 
- 
-public: 
-complex(double x=1.0,double y=6.80){re=x; im=y;} 
-complex( const complex &u){re=u.re;im=u.im;} 
-}; 
- 
-Precizaţi în ce situaţie se utilizează constructorul de copiere:`,
-    code: `class complex{ 
-double re; 
-double im;`,
+    text: `Fie secvența C++:\nPrecizaţi în ce situaţie se utilizează constructorul de copiere:`,
+    code: `class complex{
+  double re;
+  double im;
+public:
+  complex(double x=1.0,double y=6.80){re=x; im=y;}
+  complex(const complex &u){re=u.re;im=u.im;}
+};`,
     codeLanguage: "cpp",
     options: {
       a: `complex z3(0.1,1.0);`,
@@ -566,32 +509,30 @@ double im;`,
     id: 120,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie secvența C++:  
- 
-public: 
-public: 
-public: 
-public: 
-public: 
-Secvența afișează:`,
-    code: `class A1{ 
-A1(){cout << "A1 ";} 
-}; 
-class A2{ 
-A2(){cout << "A2 ";} 
-}; 
-class AA1 : public A1, virtual public A2{ 
-AA1(){cout << "AA1 ";} 
-}; 
-class AA2 : public A1, virtual A2{ 
-AA2(){cout << "AA2 ";} 
-}; 
-class B : public AA1, virtual public AA2{ 
-B(){cout << "B ";} 
-}; 
-int  main(){ 
-B ob1; 
-return 0;
+    text: `Fie secvența C++:\nSecvența afișează:`,
+    code: `class A1{
+public:
+  A1(){cout << "A1 ";}
+};
+class A2{
+public:
+  A2(){cout << "A2 ";}
+};
+class AA1 : public A1, virtual public A2{
+public:
+  AA1(){cout << "AA1 ";}
+};
+class AA2 : public A1, virtual A2{
+public:
+  AA2(){cout << "AA2 ";}
+};
+class B : public AA1, virtual public AA2{
+public:
+  B(){cout << "B ";}
+};
+int main(){
+  B ob1;
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -606,31 +547,29 @@ return 0;
     id: 121,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie programul C++: 
- 
-public: 
-Cerc(float r){raza=r;} 
-float get_raza(){return raza;} 
-void operator++(){raza++;} 
-}; 
-public: 
-Cilindru(float raza, float i):Cerc(raza){inaltime=i;} 
-void operator++(){inaltime++;} 
-float get_inaltime(){return inaltime;} 
-}; 
-Programul afișează:`,
-    code: `#include <iostream.h> 
-class Cerc{ 
-float raza; 
-class Cilindru : public Cerc{ 
-float inaltime; 
-int main(){ 
-Cerc *pc; 
-Cilindru c(2,6); 
-pc=&c; 
-++ *pc; 
-cout<<pc->get_raza()<<" "<<c.get_inaltime()<<endl; 
-return 0; 
+    text: `Fie programul C++:\nProgramul afișează:`,
+    code: `#include <iostream.h>
+class Cerc{
+  float raza;
+public:
+  Cerc(float r){raza=r;}
+  float get_raza(){return raza;}
+  void operator++(){raza++;}
+};
+class Cilindru : public Cerc{
+  float inaltime;
+public:
+  Cilindru(float raza, float i):Cerc(raza){inaltime=i;}
+  void operator++(){inaltime++;}
+  float get_inaltime(){return inaltime;}
+};
+int main(){
+  Cerc *pc;
+  Cilindru c(2,6);
+  pc=&c;
+  ++ *pc;
+  cout<<pc->get_raza()<<" "<<c.get_inaltime()<<endl;
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -645,22 +584,20 @@ return 0;
     id: 122,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++: 
- 
-out<<p.varsta<<"  "<<p.salariul; return out; 
-} 
-public: 
-persoana(int v){varsta=v;salariul=0;} 
-persoana(){varsta=0;salariul=0;} 
-}; 
-Programul afișează:`,
-    code: `#include<ostream.h> 
-class persoana{  
-int varsta, salariul; 
-friend ostream & operator<<(ostream &out,persoana p){ 
-int main(){ 
-persoana p(1);cout<<p; 
-return 0;
+    text: `Fie următorul program C++:\nProgramul afișează:`,
+    code: `#include<ostream.h>
+class persoana{
+  int varsta, salariul;
+  friend ostream & operator<<(ostream &out,persoana p){
+    out<<p.varsta<<"  "<<p.salariul; return out;
+  }
+public:
+  persoana(int v){varsta=v;salariul=0;}
+  persoana(){varsta=0;salariul=0;}
+};
+int main(){
+  persoana p(1);cout<<p;
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -675,19 +612,17 @@ return 0;
     id: 123,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie programul C++: 
- 
-      public: 
-c(){}; 
-c(const c&){}; 
-void operator=(c&){}; 
-}; 
-Linia de cod c b=a; determină:`,
-    code: `class c{  
-int a; 
-int main(){  
-c a; 
-c b=a; 
+    text: `Fie programul C++:\nLinia de cod c b=a; determină:`,
+    code: `class c{
+  int a;
+public:
+  c(){};
+  c(const c&){};
+  void operator=(c&){};
+};
+int main(){
+  c a;
+  c b=a;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -702,17 +637,15 @@ c b=a;
     id: 124,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++: 
- 
-public:  
-Destructorul clasei:`,
-    code: `#include<iostream.h> 
-class cls{  
-~cls(){cout<<"\\n Destructor";} 
-}; 
-int main(){ 
-cls *po=new cls[3];  
-delete []po; 
+    text: `Fie următorul program C++:\nDestructorul clasei:`,
+    code: `#include<iostream.h>
+class cls{
+public:
+  ~cls(){cout<<"\\n Destructor";}
+};
+int main(){
+  cls *po=new cls[3];
+  delete []po;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -727,8 +660,7 @@ delete []po;
     id: 125,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `O funcție independentă declarată friend în domeniul public dintr-o clasă C++ și care 
-primește ca parametru o referință la un obiect al clasei respective are acces:`,
+    text: `O funcție independentă declarată friend în domeniul public dintr-o clasă C++ și care primește ca parametru o referință la un obiect al clasei respective are acces:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -743,20 +675,18 @@ primește ca parametru o referință la un obiect al clasei respective are acces
     id: 126,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++: 
- 
-public: 
-A(int i, int j, int k){a[0]=i; a[1]=j; a[2]=k;} 
-int& operator[](int i){return a[i];} 
-}; 
-Ce se poate afirma despre operator[]()?`,
-    code: `#include<iostream.h> 
-class A{ 
-int a[3]; 
-int main(){ 
-A ob(1,2,3); cout<<ob[1]; 
-ob[1]=25; cout<<ob[1]; 
-return 0; 
+    text: `Fie următorul program C++:\nCe se poate afirma despre operator[]()?`,
+    code: `#include<iostream.h>
+class A{
+  int a[3];
+public:
+  A(int i, int j, int k){a[0]=i; a[1]=j; a[2]=k;}
+  int& operator[](int i){return a[i];}
+};
+int main(){
+  A ob(1,2,3); cout<<ob[1];
+  ob[1]=25; cout<<ob[1];
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -771,22 +701,19 @@ return 0;
     id: 127,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Considerăm următorul program C++: 
- 
-public: 
-int x; 
-C(int v) { x=v;} 
-double operator+(C &c, double d){return c.x+d;} 
-double operator+(double d, C &c){return c.x+d;} 
-}; 
-Stabiliți care dintre următoarele afirmații sunt adevărate:`,
-    code: `#include<iostream.h> 
-class C{ 
- 
-int main() { 
-C c(5);  
-cout<<2+c+3;  
-return 0; 
+    text: `Considerăm următorul program C++:\nStabiliți care dintre următoarele afirmații sunt adevărate:`,
+    code: `#include<iostream.h>
+class C{
+public:
+  int x;
+  C(int v) { x=v;}
+  double operator+(C &c, double d){return c.x+d;}
+  double operator+(double d, C &c){return c.x+d;}
+};
+int main() {
+  C c(5);
+  cout<<2+c+3;
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -801,20 +728,17 @@ return 0;
     id: 128,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie programul C++: 
- 
-public: 
-int b; 
-Selectaţi  afirmaţia corectă:`,
-    code: `#include<iostream.h> 
-class c1{ int a;}; 
-class c2:public c1{ 
-void scrie_a( ) { cout<<a; } 
-}; 
-int main(){  
-c2 ob; ob.scrie_a(); 
-
-return 0; 
+    text: `Fie programul C++:\nSelectaţi afirmaţia corectă:`,
+    code: `#include<iostream.h>
+class c1{ int a;};
+class c2:public c1{
+public:
+  int b;
+  void scrie_a() { cout<<a; }
+};
+int main(){
+  c2 ob; ob.scrie_a();
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -829,27 +753,23 @@ return 0;
     id: 129,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie programul următor C++: 
- 
-public: 
-B(int i=10) { x=i;} 
-int get_x() { return x; }  
-}; 
-public:  
- 
-D(int i):B(i){} 
- 
-D operator+(const D& a) {return x+a.x; }  
-}; 
-Programul afișează:`,
-    code: `#include<iostream.h> 
-class B{  
-int x; 
-class D: public B{  
-int main(){  
-D ob1(7), ob2(-12); 
-cout<<(ob1+ob2).get_x(); 
-return 0; 
+    text: `Fie programul următor C++:\nProgramul afișează:`,
+    code: `#include<iostream.h>
+class B{
+  int x;
+public:
+  B(int i=10) { x=i;}
+  int get_x() { return x; }
+};
+class D: public B{
+public:
+  D(int i):B(i){}
+  D operator+(const D& a) {return x+a.x; }
+};
+int main(){
+  D ob1(7), ob2(-12);
+  cout<<(ob1+ob2).get_x();
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -864,24 +784,22 @@ return 0;
     id: 130,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++: 
- 
-Variantele care permit accesul la variabile pentru afișare sunt:`,
-    code: `#include<iostream.h> 
-class B1{int x;}; 
-class B2{int y;}; 
-class B3{int z;}; 
-class B4{int t;}; 
-class D: public B1, private B2, protected B3,B4 {public : int m;}; 
-int main(){  
-D d; 
-cout<<d.m; 
-//varianta 1 
-cout<<d.x; 
-//varianta 2 
-cout<<d.y; 
-//varianta 3 
-return 0; 
+    text: `Fie următorul program C++:\nVariantele care permit accesul la variabile pentru afișare sunt:`,
+    code: `#include<iostream.h>
+class B1{int x;};
+class B2{int y;};
+class B3{int z;};
+class B4{int t;};
+class D: public B1, private B2, protected B3,B4 {public : int m;};
+int main(){
+  D d;
+  cout<<d.m;
+  //varianta 1
+  cout<<d.x;
+  //varianta 2
+  cout<<d.y;
+  //varianta 3
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -896,29 +814,22 @@ return 0;
     id: 131,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Considerăm următorul program C++: 
- 
-public: 
- 
- 
-operator int (){return nr_c;} 
- 
- 
-vector(int); 
-}; 
-vector::vector(int n){ 
-pe=new int[n]; nr_c=n; 
-while(n--) pe[n]=n; 
-} 
-Programul afişează:`,
-    code: `class vector{  
-int * pe, nr_c; 
- 
-void f(int i){cout<<i<<endl;} 
-int main(){  
-vector x(10); 
-f(x);   
-return 0;  
+    text: `Considerăm următorul program C++:\nProgramul afişează:`,
+    code: `class vector{
+  int * pe, nr_c;
+public:
+  operator int(){return nr_c;}
+  vector(int);
+};
+vector::vector(int n){
+  pe=new int[n]; nr_c=n;
+  while(n--) pe[n]=n;
+}
+void f(int i){cout<<i<<endl;}
+int main(){
+  vector x(10);
+  f(x);
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -933,34 +844,23 @@ return 0;
     id: 132,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Considerăm următorul program C++: 
- 
-public: 
- 
-Declaraţiile admise:`,
-    code: `class c{  
-int a; 
-  
- virtual void metoda1()=0; 
- 
- virtual void metoda2(int)=0; 
-}; 
-int main{ 
- 
-c  *pob;  
-//declaraţia 1 
- 
-c ob; 
- 
-//declaraţia 2 
- 
-c *vpob[3]; 
-//declaraţia 3 
- 
-c vob[3]; 
-//declaraţia 4 
- 
-return 0; 
+    text: `Considerăm următorul program C++:\nDeclaraţiile admise:`,
+    code: `class c{
+  int a;
+public:
+  virtual void metoda1()=0;
+  virtual void metoda2(int)=0;
+};
+int main{
+  c *pob;
+  //declaraţia 1
+  c ob;
+  //declaraţia 2
+  c *vpob[3];
+  //declaraţia 3
+  c vob[3];
+  //declaraţia 4
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -1004,26 +904,24 @@ Precizaţi care dintre afirmaţiile de mai sus sunt corecte:`,
     id: 134,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++:
-
+    text: `Fie următorul program C++:\nProgramul afişează:`,
+    code: `#include<iostream.h>
+class B{
 public:
-int x; 
-B(int i=16) { x=i; } 
-B f(B ob) { return x+ob.x; }  
-}; 
-public:  
-D(int i=25) { x=i; } 
-B f(B ob) { return x+ob.x+1; } 
-Programul afişează:`,
-    code: `#include<iostream.h> 
-class B{  
-class D: public B{  
-void afisare(){ cout<<x; }  
-}; 
-int main(){  
-B *p1=new D, *p2=new B, *p3=new B(p1->f(*p2)); 
-cout<<p3->x; 
-return 0; 
+  int x;
+  B(int i=16) { x=i; }
+  B f(B ob) { return x+ob.x; }
+};
+class D: public B{
+public:
+  D(int i=25) { x=i; }
+  B f(B ob) { return x+ob.x+1; }
+  void afisare(){ cout<<x; }
+};
+int main(){
+  B *p1=new D, *p2=new B, *p3=new B(p1->f(*p2));
+  cout<<p3->x;
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -1038,36 +936,33 @@ return 0;
     id: 135,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++: 
- 
-public:  
-static int x; 
-B() { x++; i=1; } 
-~B() { x--; } 
-static int get_x() { return x; } 
-int get_i() { return i; } 
-
-}; 
-int B::x; 
-public:  
-D() { x++; } 
-~D() { x--; } 
-}; 
-int f(B *q){ return (q->get_i())+1;} 
-Programul afişează:`,
-    code: `#include<iostream.h> 
-class B{  
-int i; 
-class D: public B{  
-int main(){  
-B *p=new B; 
-cout<<f(p); 
-delete p; 
-p=new D; 
-cout<<f(p); 
-delete p; 
-cout<<D::get_x(); 
-return 0; 
+    text: `Fie următorul program C++:\nProgramul afişează:`,
+    code: `#include<iostream.h>
+class B{
+  int i;
+public:
+  static int x;
+  B() { x++; i=1; }
+  ~B() { x--; }
+  static int get_x() { return x; }
+  int get_i() { return i; }
+};
+int B::x;
+class D: public B{
+public:
+  D() { x++; }
+  ~D() { x--; }
+};
+int f(B *q){ return (q->get_i())+1;}
+int main(){
+  B *p=new B;
+  cout<<f(p);
+  delete p;
+  p=new D;
+  cout<<f(p);
+  delete p;
+  cout<<D::get_x();
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -1082,18 +977,16 @@ return 0;
     id: 136,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++: 
- 
-Programul afişează:`,
-    code: `#include <iostream.h> 
-template<class T, class E> 
-float f(T x, E y){ return x+y;} 
-float g(int x, float y){ return x-y;} 
-int main(){  
-int a=5; 
-float b=8.6; 
-cout<<g(a,b); 
-return 0; 
+    text: `Fie următorul program C++:\nProgramul afişează:`,
+    code: `#include <iostream.h>
+template<class T, class E>
+float f(T x, E y){ return x+y;}
+float g(int x, float y){ return x-y;}
+int main(){
+  int a=5;
+  float b=8.6;
+  cout<<g(a,b);
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -1108,18 +1001,16 @@ return 0;
     id: 137,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++: 
- 
-Programul afişează:`,
-    code: `#include <iostream.h> 
-template<class T> 
-int f(T x, T y){ return x+y;} 
-int f(int x, int y){ return x-y;} 
-int main(){  
-int a=5; 
-float b=8.6; 
-cout<<f(a,b);
-return 0;
+    text: `Fie următorul program C++:\nProgramul afişează:`,
+    code: `#include <iostream.h>
+template<class T>
+int f(T x, T y){ return x+y;}
+int f(int x, int y){ return x-y;}
+int main(){
+  int a=5;
+  float b=8.6;
+  cout<<f(a,b);
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -1134,22 +1025,23 @@ return 0;
     id: 138,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++: 
-public:  
-B(int i=10) { x=i; } 
-int get_x() { return x; }}; 
-public:  
-D(int i):B(i) {} 
-D operator+(const D& a) {return x+a.x; }}; 
-Indicați ce se va afișa pe ecran  în urma executării programului:`,
-    code: `#include<iostream.h> 
-class B{  
-int x; 
-class D: public B{  
-int main() 
-{ D ob1(7), ob2(-12); 
-cout<<(ob1+ob2).get_x(); 
-return 0; 
+    text: `Fie următorul program C++:\nIndicați ce se va afișa pe ecran în urma executării programului:`,
+    code: `#include<iostream.h>
+class B{
+  int x;
+public:
+  B(int i=10) { x=i; }
+  int get_x() { return x; }
+};
+class D: public B{
+public:
+  D(int i):B(i) {}
+  D operator+(const D& a) {return x+a.x; }
+};
+int main(){
+  D ob1(7), ob2(-12);
+  cout<<(ob1+ob2).get_x();
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -1164,25 +1056,24 @@ return 0;
     id: 139,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++: 
- 
-public:  
-int x; 
-B(int i=16) { x=i; } 
-B f(B ob) { return x+ob.x; } }; 
-public:  
-D(int i=25) { x=i; } 
-B f(B ob) { return x+ob.x+1; } 
-Programul afişează:`,
-    code: `#include<iostream.h> 
-class B{  
-class D: public B{  
-void afisare(){ cout<<x; } }; 
-int main() 
-{  
-B *p1=new D, *p2=new B, *p3=new B(p1->f(*p2)); 
-cout<<p3->x; 
-return 0; 
+    text: `Fie următorul program C++:\nProgramul afişează:`,
+    code: `#include<iostream.h>
+class B{
+public:
+  int x;
+  B(int i=16) { x=i; }
+  B f(B ob) { return x+ob.x; }
+};
+class D: public B{
+public:
+  D(int i=25) { x=i; }
+  B f(B ob) { return x+ob.x+1; }
+  void afisare(){ cout<<x; }
+};
+int main(){
+  B *p1=new D, *p2=new B, *p3=new B(p1->f(*p2));
+  cout<<p3->x;
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -1197,27 +1088,25 @@ return 0;
     id: 140,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++: 
-
-public:  
-int a;  
-cls1() { a=7; }  
-};  
-public:  
-int b;  
-cls2(int i) { b=i; }  
-cls2(cls1& x) { b=x.a; }  
-};  
-Programul afişează:`,
-    code: `#include<iostream.h>  
-class cls1{  
-class cls2{  
-int main(){  
-cls1 x;  
-cout<<x.a;  
-cls2 y(x);  
-cout<<y.b;  
-return 0;  
+    text: `Fie următorul program C++:\nProgramul afişează:`,
+    code: `#include<iostream.h>
+class cls1{
+public:
+  int a;
+  cls1() { a=7; }
+};
+class cls2{
+public:
+  int b;
+  cls2(int i) { b=i; }
+  cls2(cls1& x) { b=x.a; }
+};
+int main(){
+  cls1 x;
+  cout<<x.a;
+  cls2 y(x);
+  cout<<y.b;
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -1247,8 +1136,7 @@ return 0;
     id: 142,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `O funcţie independentă declarată friend în domeniul private dintr-o clasă şi care primeşte 
-ca parametru o referinţă la un obiect al clasei respective are acces:`,
+    text: `O funcţie independentă declarată friend în domeniul private dintr-o clasă şi care primeşte ca parametru o referinţă la un obiect al clasei respective are acces:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -1263,26 +1151,21 @@ ca parametru o referinţă la un obiect al clasei respective are acces:`,
     id: 143,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++:  
-  
- public :  
-  
-c() {}  
-  
-c(const c&);  
- c& operator =(c&);};  
-Programul:`,
-    code: `#include <iostream>  
-using namespace std;  
-class c{  
- int a; 
-c& c::operator=(c &c){ cout << endl << "copiere cu egal"; return c;}  
-c::c(const c &c) { cout << endl << "Constructor de copiere"; }  
-
-int main()  
-{  
- c x,y=x;  
- c b=x; x=y;  
+    text: `Fie următorul program C++:\nProgramul:`,
+    code: `#include <iostream>
+using namespace std;
+class c{
+  int a;
+public:
+  c() {}
+  c(const c&);
+  c& operator=(c&);
+};
+c& c::operator=(c &c){ cout << endl << "copiere cu egal"; return c;}
+c::c(const c &c) { cout << endl << "Constructor de copiere"; }
+int main(){
+  c x,y=x;
+  c b=x; x=y;
 };`,
     codeLanguage: "cpp",
     options: {
@@ -1297,22 +1180,21 @@ int main()
     id: 144,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `De câte ori este apelat destructorul clasei Persoana în programul urmãtor C++?  
-  
-public:  
-Răspuns:`,
-    code: `#include <iostream>  
-using namespace std;  
-class Persoana{  
-Persoana() {cout<<"Constructor"<<endl;}  
-~Persoana() {cout<<"Destructor"<<endl;}};  
-int main(){  
-Persoana** ppp;  
-ppp = new Persoana*[5];  
-for(int i=0; i<5; i++)  
-ppp[i] = new Persoana();  
-for(int i=0; i<5; i++)  
-delete ppp[i];  
+    text: `De câte ori este apelat destructorul clasei Persoana în programul urmãtor C++?\nRăspuns:`,
+    code: `#include <iostream>
+using namespace std;
+class Persoana{
+public:
+  Persoana() {cout<<"Constructor"<<endl;}
+  ~Persoana() {cout<<"Destructor"<<endl;}
+};
+int main(){
+  Persoana** ppp;
+  ppp = new Persoana*[5];
+  for(int i=0; i<5; i++)
+    ppp[i] = new Persoana();
+  for(int i=0; i<5; i++)
+    delete ppp[i];
 }`,
     codeLanguage: "cpp",
     options: {
@@ -1327,41 +1209,36 @@ delete ppp[i];
     id: 145,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `În programul urmãtor C++:  
-  
-public:  
-Persoana(int v=0, char* n="Oarecare"):varsta(v){  
-this->nume = new char[strlen(n)+1];  
-strcpy(this->nume,n);  
-Persoana p1, p2(20, "Gigel");  
-Persoana p3 = p1;  
-p3 = p2;  
-Persoana p4 = p1;  
-}  
-  
-Sunt apelate urmãtoarele:`,
-    code: `#include <iostream>  
-using namespace std;  
-class Persoana{  
-int varsta;  
-char* nume;  
-cout<<"Constructor"<<endl;}  
-Persoana(Persoana& p){  
-this->varsta = p.varsta;  
-this->nume = new char[strlen(p.nume)+1];  
-strcpy(this->nume, p.nume);  
-cout<<"Constructor de copiere"<<endl;}  
-void operator=(Persoana& p){  
-this->varsta = p.varsta;  
-delete[] this->nume;  
-
-this->nume = new char[strlen(p.nume)+1];  
-strcpy(this->nume, p.nume);  
-cout<<"Operator="<<endl;}  
-~Persoana(){ cout<<"Destructor"<<endl;}};  
-  
-int main()  
-{`,
+    text: `În programul urmãtor C++:\nSunt apelate urmãtoarele:`,
+    code: `#include <iostream>
+using namespace std;
+class Persoana{
+  int varsta;
+  char* nume;
+public:
+  Persoana(int v=0, char* n="Oarecare"):varsta(v){
+    this->nume = new char[strlen(n)+1];
+    strcpy(this->nume,n);
+    cout<<"Constructor"<<endl;}
+  Persoana(Persoana& p){
+    this->varsta = p.varsta;
+    this->nume = new char[strlen(p.nume)+1];
+    strcpy(this->nume, p.nume);
+    cout<<"Constructor de copiere"<<endl;}
+  void operator=(Persoana& p){
+    this->varsta = p.varsta;
+    delete[] this->nume;
+    this->nume = new char[strlen(p.nume)+1];
+    strcpy(this->nume, p.nume);
+    cout<<"Operator="<<endl;}
+  ~Persoana(){ cout<<"Destructor"<<endl;}
+};
+int main(){
+  Persoana p1, p2(20, "Gigel");
+  Persoana p3 = p1;
+  p3 = p2;
+  Persoana p4 = p1;
+}`,
     codeLanguage: "cpp",
     options: {
       a: `constructor – de douã ori, constructor de copiere – o datã, operator= - de douã ori,`,
@@ -1375,8 +1252,7 @@ int main()
     id: 146,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Presupunem că în C++ clasa A este prietenă cu clasa B, iar clasa B este prietenă cu clasa 
-C. Care dintre următoarele afirmații este adevărată?`,
+    text: `Presupunem că în C++ clasa A este prietenă cu clasa B, iar clasa B este prietenă cu clasa C. Care dintre următoarele afirmații este adevărată?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -1391,22 +1267,21 @@ C. Care dintre următoarele afirmații este adevărată?`,
     id: 147,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Se consideră programul următor C++: 
- public:     
-~A(){i=10;}};   
-int foo(){  i=3;     
-A ob;     
-return i; 
-               }  
-Programul următor afișează:`,
-    code: `#include<iostream.h>   
-int i;   
-class A 
-{ 
-int main() 
-{     
-cout << foo() << endl;     
-return 0; 
+    text: `Se consideră programul următor C++:\nProgramul următor afișează:`,
+    code: `#include<iostream.h>
+int i;
+class A{
+public:
+  ~A(){i=10;}
+};
+int foo(){
+  i=3;
+  A ob;
+  return i;
+}
+int main(){
+  cout << foo() << endl;
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -1421,30 +1296,25 @@ return 0;
     id: 148,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Pentru ca secvența de mai jos să se execute fără erori, precizați care dintre implementările 
-C++ de mai jos, ale unui operator de comparație, este corectă? 
-
-class Box 
-{ 
-        int capacity; 
-     public: 
-         Box(){} 
-         Box(double capacity){ 
-                this->capacity = capacity; 
-              }};`,
-    code: `int main() 
-{ 
-   Box b1(10); 
-   Box b2 = Box(14); 
-   if(b1 < b2) 
-{ 
-  cout<<"Box 2 has large capacity."; 
-               
-} 
-  else{ 
-  cout<<"Box 1 has large capacity."; 
-              } 
-  return 0; 
+    text: `Pentru ca secvența de mai jos să se execute fără erori, precizați care dintre implementările C++ de mai jos, ale unui operator de comparație, este corectă?`,
+    code: `class Box{
+  int capacity;
+public:
+  Box(){}
+  Box(double capacity){
+    this->capacity = capacity;
+  }
+};
+int main(){
+  Box b1(10);
+  Box b2 = Box(14);
+  if(b1 < b2){
+    cout<<"Box 2 has large capacity.";
+  }
+  else{
+    cout<<"Box 1 has large capacity.";
+  }
+  return 0;
 }`,
     codeLanguage: "cpp",
     options: {
@@ -1459,8 +1329,7 @@ class Box
     id: 149,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Supraîncărcarea unor operatori în C++ se poate realiza prin funcţii operator sau prin 
-funcţii friend. Una dintre diferențele dintre aceste două posibilități constă în:`,
+    text: `Supraîncărcarea unor operatori în C++ se poate realiza prin funcţii operator sau prin funcţii friend. Una dintre diferențele dintre aceste două posibilități constă în:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -1475,30 +1344,29 @@ funcţii friend. Una dintre diferențele dintre aceste două posibilități cons
     id: 150,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Precizați de câte ori se realizează mecanismul de suprascriere și de câte ori mecanismul 
-de supraîncărcare în următoarele clase C++: 
-protected: 
-int salariu; 
-public: 
- public: 
-  cout<salariu<<" "<spor; 
-} 
- 
-
-  cout<salariu<<" "<spor<<" "<salariu + this->spor;`,
-    code: `class Angajat { 
- void afiseazaSalariu() { 
-   cout<salariu; 
-} 
-}; 
- 
-class Economist: public Angajat { 
- int spor; 
- void afiseazaSalariu() { 
- void afiseazaSalariu(int bonus) { 
-  cout<<mesaj<<" "<<aux; 
-  return aux; 
-} 
+    text: `Precizați de câte ori se realizează mecanismul de suprascriere și de câte ori mecanismul de supraîncărcare în următoarele clase C++:`,
+    code: `class Angajat{
+protected:
+  int salariu;
+public:
+  void afiseazaSalariu() {
+    cout<salariu;
+  }
+};
+class Economist: public Angajat{
+  int spor;
+public:
+  void afiseazaSalariu() {
+    cout<salariu<<" "<spor;
+  }
+  void afiseazaSalariu(int bonus) {
+    cout<salariu<<" "<spor<<" "<<bonus;
+  }
+  int totalSalariu(char* mesaj){
+    int aux = this->salariu + this->spor;
+    cout<<mesaj<<" "<<aux;
+    return aux;
+  }
 };`,
     codeLanguage: "cpp",
     options: {

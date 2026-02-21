@@ -20,8 +20,7 @@ export const programarePython: Question[] = [
     id: 52,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Pentru ca instrucțiunea Python del t[1:4] să nu producă o eroare în momentul executării 
-sale, variabila t trebuie să fie inițializată prin:`,
+    text: `Pentru ca instrucțiunea Python del t[1:4] să nu producă o eroare în momentul executării sale, variabila t trebuie să fie inițializată prin:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -36,8 +35,7 @@ sale, variabila t trebuie să fie inițializată prin:`,
     id: 53,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Pentru ca instrucțiunea Python t[1]=7 să nu producă o eroare în momentul executării sale, 
-variabila t trebuie să fie inițializată prin:`,
+    text: `Pentru ca instrucțiunea Python t[1]=7 să nu producă o eroare în momentul executării sale, variabila t trebuie să fie inițializată prin:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -52,8 +50,7 @@ variabila t trebuie să fie inițializată prin:`,
     id: 54,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Care dintre următoarele expresii logice scrise în limbajul Python este adevărată dacă şi numai 
-dacă numărul natural memorat în variabila 𝑥 este par și nu aparţine intervalului (10,20]?`,
+    text: `Care dintre următoarele expresii logice scrise în limbajul Python este adevărată dacă şi numai dacă numărul natural memorat în variabila 𝑥 este par și nu aparţine intervalului (10,20]?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -68,9 +65,7 @@ dacă numărul natural memorat în variabila 𝑥 este par și nu aparţine inte
     id: 55,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următoarele 5 expresii scrise în limbajul Python: (a+b)/2==m, (a+b)//2==m, 
-a+b==2*m, (b-a)/2==m–a și a//2==m-b//2. Câte dintre ele sunt adevărate dacă şi numai 
-dacă numărul real 𝑚 este egal cu media aritmetică a numerelor întregi 𝑎 și 𝑏?`,
+    text: `Considerăm următoarele 5 expresii scrise în limbajul Python: (a+b)/2==m, (a+b)//2==m, a+b==2*m, (b-a)/2==m–a și a//2==m-b//2. Câte dintre ele sunt adevărate dacă şi numai dacă numărul real 𝑚 este egal cu media aritmetică a numerelor întregi 𝑎 și 𝑏?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -115,15 +110,9 @@ dacă numărul real 𝑚 este egal cu media aritmetică a numerelor întregi �
     id: 58,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Se consideră următoarea secvenţă de instrucțiuni Python:
-
-t, a, b = 0, 2025, 9
-while a > b:
-    a, t = a-b, t+1
-print(t, a)
-Ce valori vor fi afișate pe ecran după executarea secvenței de mai sus?`,
-    code: undefined,
-    codeLanguage: undefined,
+    text: `Se consideră următoarea secvenţă de instrucțiuni Python:\nCe valori vor fi afișate pe ecran după executarea secvenței de mai sus?`,
+    code: `t, a, b = 0, 2025, 9\nwhile a > b:\n    a, t = a-b, t+1\nprint(t, a)`,
+    codeLanguage: "python",
     options: {
       a: `225  9`,
       b: `224  0`,
@@ -151,19 +140,8 @@ Ce valori vor fi afișate pe ecran după executarea secvenței de mai sus?`,
     id: 60,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următoarea secvenţă de instrucțiuni Python: 
- 
-s = 0 
-while n > 0: 
-    if n % 10 > s: 
-        s = n % 10 
-    else: 
-        break 
-    n = n // 10 
-else: 
-    s = 10 
-Ce valoare se va afişa după executarea secvenţei de mai sus pentru 𝑛=  75321?`,
-    code: `print(s)`,
+    text: `Considerăm următoarea secvenţă de instrucțiuni Python:\nCe valoare se va afişa după executarea secvenţei de mai sus pentru 𝑛 = 75321?`,
+    code: `s = 0\nwhile n > 0:\n    if n % 10 > s:\n        s = n % 10\n    else:\n        break\n    n = n // 10\nelse:\n    s = 10\nprint(s)`,
     codeLanguage: "python",
     options: {
       a: `5`,
@@ -177,19 +155,8 @@ Ce valoare se va afişa după executarea secvenţei de mai sus pentru 𝑛=  753
     id: 61,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următoarea secvenţă de instrucțiuni Python: 
- 
-s = 0 
-while n > 0: 
-    if n % 10 > s: 
-        s = n % 10 
-    else: 
-        break 
-    n = n // 10 
-else: 
-    s = 10 
-Ce valoare se va afişa după executarea secvenţei de mai sus pentru 𝑛=  75521?`,
-    code: `print(s)`,
+    text: `Considerăm următoarea secvenţă de instrucțiuni Python:\nCe valoare se va afişa după executarea secvenţei de mai sus pentru 𝑛 = 75521?`,
+    code: `s = 0\nwhile n > 0:\n    if n % 10 > s:\n        s = n % 10\n    else:\n        break\n    n = n // 10\nelse:\n    s = 10\nprint(s)`,
     codeLanguage: "python",
     options: {
       a: `7`,
@@ -203,13 +170,8 @@ Ce valoare se va afişa după executarea secvenţei de mai sus pentru 𝑛=  755
     id: 62,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următoarea secvenţă de instrucțiuni Python: 
- 
-x, y, t = 0, 1, 10 
-while t > 0: 
-    x, y, t = y, x+y, t-1 
-Ce valori se vor afişa după executarea secvenţei de mai sus?`,
-    code: `print(x, y)`,
+    text: `Considerăm următoarea secvenţă de instrucțiuni Python:\nCe valori se vor afişa după executarea secvenţei de mai sus?`,
+    code: `x, y, t = 0, 1, 10\nwhile t > 0:\n    x, y, t = y, x+y, t-1\nprint(x, y)`,
     codeLanguage: "python",
     options: {
       a: `55 144`,
@@ -223,16 +185,8 @@ Ce valori se vor afişa după executarea secvenţei de mai sus?`,
     id: 63,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următorul program Python: 
- 
-    L = L[2:] + L[0:2] 
- 
-L = [1, 2, 3, 4, 5] 
-f(L) 
-Ce se va afişa pe ecran după executarea programului de mai sus?`,
-    code: `def f(L): 
-    L[0], L[1] = L[1], L[0] 
-print(L)`,
+    text: `Considerăm următorul program Python:\nCe se va afişa pe ecran după executarea programului de mai sus?`,
+    code: `def f(L):\n    L[0], L[1] = L[1], L[0]\n    L = L[2:] + L[0:2]\nL = [1, 2, 3, 4, 5]\nf(L)\nprint(L)`,
     codeLanguage: "python",
     options: {
       a: `[3, 4, 5, 2, 1]`,
@@ -246,17 +200,8 @@ print(L)`,
     id: 64,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următorul program Python: 
- 
-    L = L[2:] + L[0:2] 
-    return L 
- 
-L = [1, 2, 3, 4, 5] 
-L = f(L) 
-Ce valori se vor afişa pe ecran după executarea programului de mai sus?`,
-    code: `def f(L): 
-    L[0], L[1] = L[1], L[0] 
-print(L)`,
+    text: `Considerăm următorul program Python:\nCe valori se vor afişa pe ecran după executarea programului de mai sus?`,
+    code: `def f(L):\n    L[0], L[1] = L[1], L[0]\n    L = L[2:] + L[0:2]\n    return L\nL = [1, 2, 3, 4, 5]\nL = f(L)\nprint(L)`,
     codeLanguage: "python",
     options: {
       a: `[3, 4, 5, 2, 1]`,
@@ -270,17 +215,8 @@ print(L)`,
     id: 65,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următorul program Python: 
- 
-Pentru ca programul să ruleze fără erori trebuie ca punctele de suspensie să nu fie înlocuite cu:`,
-    code: `def f(L, x): 
-    x[0] = 0 
-    L += x 
- 
-L = [1, 2, 3, 4] 
-x = ... 
-f(L, x) 
-print(L)`,
+    text: `Considerăm următorul program Python:\nPentru ca programul să ruleze fără erori trebuie ca punctele de suspensie să nu fie înlocuite cu:`,
+    code: `def f(L, x):\n    x[0] = 0\n    L += x\nL = [1, 2, 3, 4]\nx = ...\nf(L, x)\nprint(L)`,
     codeLanguage: "python",
     options: {
       a: `[1, 2, 3]`,
@@ -294,17 +230,8 @@ print(L)`,
     id: 66,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următorul program Python: 
- 
-Pentru ca programul să afișeze valoarea 5 trebuie ca punctele de suspensie să fie înlocuite cu:`,
-    code: `def f(L, x): 
-    x[0] = 0 
-    L += x 
- 
-L = [0, 1, 2] 
-x = ... 
-f(L, x) 
-print(len(L))`,
+    text: `Considerăm următorul program Python:\nPentru ca programul să afișeze valoarea 5 trebuie ca punctele de suspensie să fie înlocuite cu:`,
+    code: `def f(L, x):\n    x[0] = 0\n    L += x\nL = [0, 1, 2]\nx = ...\nf(L, x)\nprint(len(L))`,
     codeLanguage: "python",
     options: {
       a: `[[[3], [4]]]`,
@@ -318,10 +245,7 @@ print(len(L))`,
     id: 67,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm o listă nevidă 𝐿 ale cărei elemente sunt liste nevide de numere întregi (de exemplu, 
-𝐿 = [[10, 70, −100], [50], [1, 100, 70]). Care dintre următoarele expresii Python nu atribuie 
-variabilei de tip întreg 𝑙𝑚𝑎𝑥 cel mai mare număr care apare în sublistele listei 𝐿 (pentru 
-exemplul dat anterior acesta este 100)?`,
+    text: `Considerăm o listă nevidă 𝐿 ale cărei elemente sunt liste nevide de numere întregi (de exemplu, 𝐿 = [[10, 70, −100], [50], [1, 100, 70]). Care dintre următoarele expresii Python nu atribuie variabilei de tip întreg 𝑙𝑚𝑎𝑥 cel mai mare număr care apare în sublistele listei 𝐿 (pentru exemplul dat anterior acesta este 100)?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -336,13 +260,8 @@ exemplul dat anterior acesta este 100)?`,
     id: 68,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următoarea secvenţă de instrucțiuni Python: 
- 
-s = input() 
-while len(s) > 0: 
-    s = s.replace(s[0], "") 
-Pentru orice șir format doar din caractere ASCII introdus de la tastatură programul va afișa:`,
-    code: `print(s)`,
+    text: `Considerăm următoarea secvenţă de instrucțiuni Python:\nPentru orice șir format doar din caractere ASCII introdus de la tastatură programul va afișa:`,
+    code: `s = input()\nwhile len(s) > 0:\n    s = s.replace(s[0], "")\nprint(s)`,
     codeLanguage: "python",
     options: {
       a: `șirul introdus de la tastatură fără prima literă`,
@@ -356,15 +275,8 @@ Pentru orice șir format doar din caractere ASCII introdus de la tastatură prog
     id: 69,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următoarea secvenţă de instrucțiuni Python: 
- 
-s = input() 
-t = "" 
-Pentru orice șir format doar din litere mici ale alfabetului englez introdus de la tastatură 
-secvența dată este echivalentă cu:`,
-    code: `for x in range(ord("a"), ord("z")+1):
-    t += chr(x) * s.count(chr(x))
-print(t)`,
+    text: `Considerăm următoarea secvenţă de instrucțiuni Python:\nPentru orice șir format doar din litere mici ale alfabetului englez introdus de la tastatură secvența dată este echivalentă cu:`,
+    code: `s = input()\nt = ""\nfor x in range(ord("a"), ord("z")+1):\n    t += chr(x) * s.count(chr(x))\nprint(t)`,
     codeLanguage: "python",
     options: {
       a: `print("".join(sorted(input())))`,
@@ -378,8 +290,7 @@ print(t)`,
     id: 70,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Dacă s="restaurare" și t="orchestrare", atunci valoarea expresiei s.find(t[4:7]) 
-+ t.find(s[-4:-1]) este egală cu:`,
+    text: `Dacă s="restaurare" și t="orchestrare", atunci valoarea expresiei s.find(t[4:7]) + t.find(s[-4:-1]) este egală cu:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -394,11 +305,7 @@ print(t)`,
     id: 71,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Fie 𝑠 un șir de caractere format din exact 10 litere mici din alfabetul englez și următoarele 4 
-expresii de tip logic, scrise în limbajul Python: s[:5]*2==s, s.index(s[5:])==0, 
-s[:5]==s[5:] și s.startswith(s[5:])+s.endswith(s[:5])==2. Câte dintre cele 4 
-expresii sunt adevărate dacă și numai dacă șirul 𝑠 se poate obține prin concatenarea a două 
-șiruri identice de lungime 5?`,
+    text: `Fie 𝑠 un șir de caractere format din exact 10 litere mici din alfabetul englez și următoarele 4 expresii de tip logic, scrise în limbajul Python: s[:5]*2==s, s.index(s[5:])==0, s[:5]==s[5:] și s.startswith(s[5:])+s.endswith(s[:5])==2. Câte dintre cele 4 expresii sunt adevărate dacă și numai dacă șirul 𝑠 se poate obține prin concatenarea a două șiruri identice de lungime 5?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -413,20 +320,7 @@ expresii sunt adevărate dacă și numai dacă șirul 𝑠 se poate obține prin
     id: 72,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Fie 𝑡 un șir de caractere format din numere naturale nenule despărțite între ele prin spații și 
-următoarele 4 expresii scrise în limbajul Python:  
- 
-• 
-x=int("".join(sorted(t.split()))) 
-• 
-x=int("".join(sorted("".join(t.split())))) 
-• 
-x=int("".join(sorted("".join(t.split())))[::-1]) 
-• 
-x=int("".join(sorted(t)[::-1])) 
-  
-În câte dintre cele 4 expresii variabila 𝑥 va conține întotdeauna cel mai mare număr care se 
-poate forma folosind toate cifrele tuturor numerelor din șirul 𝑡?`,
+    text: `Fie 𝑡 un șir de caractere format din numere naturale nenule despărțite între ele prin spații și următoarele 4 expresii scrise în limbajul Python:\n\n• x=int("".join(sorted(t.split())))\n• x=int("".join(sorted("".join(t.split()))))\n• x=int("".join(sorted("".join(t.split())))[::-1])\n• x=int("".join(sorted(t)[::-1]))\n\nÎn câte dintre cele 4 expresii variabila 𝑥 va conține întotdeauna cel mai mare număr care se poate forma folosind toate cifrele tuturor numerelor din șirul 𝑡?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -441,15 +335,8 @@ poate forma folosind toate cifrele tuturor numerelor din șirul 𝑡?`,
     id: 73,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următoarea secvenţă de instrucțiuni Python: 
- 
-s = "abcd" * 2 
-L = list(s[:6]) 
-L += s[4:] 
-L[3:] = L[7:] 
-s = "".join(L) 
-Ce se va afişa pe ecran după executarea secvenţei date?`,
-    code: `print(s)`,
+    text: `Considerăm următoarea secvenţă de instrucțiuni Python:\nCe se va afişa pe ecran după executarea secvenţei date?`,
+    code: `s = "abcd" * 2\nL = list(s[:6])\nL += s[4:]\nL[3:] = L[7:]\ns = "".join(L)\nprint(s)`,
     codeLanguage: "python",
     options: {
       a: `abcbcd`,
@@ -463,15 +350,8 @@ Ce se va afişa pe ecran după executarea secvenţei date?`,
     id: 74,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următoarea secvenţă de instrucțiuni Python: 
- 
-s = "abcd" * 2 
-L = list(s[:6]) 
-L += [s[4:]] 
-L[3:] = L[7:] 
-s = "".join(L) 
-Ce se va afişa pe ecran după executarea secvenţei date?`,
-    code: `print(s)`,
+    text: `Considerăm următoarea secvenţă de instrucțiuni Python:\nCe se va afişa pe ecran după executarea secvenţei date?`,
+    code: `s = "abcd" * 2\nL = list(s[:6])\nL += [s[4:]]\nL[3:] = L[7:]\ns = "".join(L)\nprint(s)`,
     codeLanguage: "python",
     options: {
       a: `abcabcd`,
@@ -485,8 +365,7 @@ Ce se va afişa pe ecran după executarea secvenţei date?`,
     id: 75,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Care dintre următoarele secvențe de inițializare nu va produce o listă 𝐿 formată doar din 
-numere naturale pare?`,
+    text: `Care dintre următoarele secvențe de inițializare nu va produce o listă 𝐿 formată doar din numere naturale pare?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -501,14 +380,8 @@ numere naturale pare?`,
     id: 76,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următoarea secvenţă de instrucțiuni Python: 
- 
-Ce se va afişa pe ecran după executarea secvenţei date?`,
-    code: `t = set([x for x in range(0, 21, 2)] * 2) 
-u = [x for x in range(0, 31, 3)] * 3 
-t = t.intersection(u) 
-t.update(tuple(u)) 
-print(len(t))`,
+    text: `Considerăm următoarea secvenţă de instrucțiuni Python:\nCe se va afişa pe ecran după executarea secvenţei date?`,
+    code: `t = set([x for x in range(0, 21, 2)] * 2)\nu = [x for x in range(0, 31, 3)] * 3\nt = t.intersection(u)\nt.update(tuple(u))\nprint(len(t))`,
     codeLanguage: "python",
     options: {
       a: `5`,
@@ -522,31 +395,7 @@ print(len(t))`,
     id: 77,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următoarele 4 funcții scrise în limbajul Python:
-
-a) def sc1(n):
-    return sum([int(x) for x in str(n)])
-
-b) def sc2(n):
-    d = {int(x): str(n).count(x) for x in str(n)}
-    return sum([x * d[x] for x in d])
-
-c) def sc3(n):
-    s = 0
-    while n >= 10:
-        s += n // 10
-        n %= 10
-    return s + n
-
-d) def sc4(n):
-    L = [int(x) for x in str(n)]
-    while len(L) > 1:
-        x = L.pop()
-        y = L.pop()
-        L.append(x+y)
-    return L[0]
-
-Câte dintre cele 4 funcții definite anterior furnizează suma cifrelor numărului natural 𝑛 transmis ca parametru?`,
+    text: `Considerăm următoarele 4 funcții scrise în limbajul Python:\n\na) def sc1(n):\n    return sum([int(x) for x in str(n)])\n\nb) def sc2(n):\n    d = {int(x): str(n).count(x) for x in str(n)}\n    return sum([x * d[x] for x in d])\n\nc) def sc3(n):\n    s = 0\n    while n >= 10:\n        s += n // 10\n        n %= 10\n    return s + n\n\nd) def sc4(n):\n    L = [int(x) for x in str(n)]\n    while len(L) > 1:\n        x = L.pop()\n        y = L.pop()\n        L.append(x+y)\n    return L[0]\n\nCâte dintre cele 4 funcții definite anterior furnizează suma cifrelor numărului natural 𝑛 transmis ca parametru?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -561,13 +410,8 @@ Câte dintre cele 4 funcții definite anterior furnizează suma cifrelor număru
     id: 78,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Ce se va afișa după rularea programului Python de mai jos? 
- 
-L = [(1,2), (3,4), (5,6)] 
-t = tuple() 
-for x in L: 
-    t += x`,
-    code: `print(t)`,
+    text: `Ce se va afișa după rularea programului Python de mai jos?`,
+    code: `L = [(1,2), (3,4), (5,6)]\nt = tuple()\nfor x in L:\n    t += x\nprint(t)`,
     codeLanguage: "python",
     options: {
       a: `(9, 12)`,
@@ -581,12 +425,8 @@ for x in L:
     id: 79,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Ce se va afișa după rularea programului Python de mai jos? 
- 
-L = [1]`,
-    code: `for x in range(3): 
-    L = L + [L] 
-print(L)`,
+    text: `Ce se va afișa după rularea programului Python de mai jos?`,
+    code: `L = [1]\nfor x in range(3):\n    L = L + [L]\nprint(L)`,
     codeLanguage: "python",
     options: {
       a: `[[1], [1], [1]]`,
@@ -600,12 +440,8 @@ print(L)`,
     id: 80,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Ce se va afișa după rularea programului Python de mai jos? 
- 
-L = [1]`,
-    code: `for x in range(3): 
-    L = [L] 
-print(L)`,
+    text: `Ce se va afișa după rularea programului Python de mai jos?`,
+    code: `L = [1]\nfor x in range(3):\n    L = [L]\nprint(L)`,
     codeLanguage: "python",
     options: {
       a: `[1, 1, 1]`,
@@ -620,13 +456,7 @@ print(L)`,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Ce se va afișa după rularea programului Python de mai jos?`,
-    code: `def test(L): 
-L.sort() 
-L.remove(L[0]) 
- 
-L = [5, 1, 4, 3, 6, 5, 1, 1, 7] 
-L = test(L) 
-print(L)`,
+    code: `def test(L):\n    L.sort()\n    L.remove(L[0])\nL = [5, 1, 4, 3, 6, 5, 1, 1, 7]\nL = test(L)\nprint(L)`,
     codeLanguage: "python",
     options: {
       a: `None`,
@@ -655,12 +485,8 @@ print(L)`,
     id: 83,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următorul program Python: 
- 
-s = "101,Popescu,Ion,Mihai,9.50" 
-x, *y, z = s.split(",") 
-Ce se va afişa pe ecran după executarea programului dat?`,
-    code: `print(x, y, z, sep=" -> ")`,
+    text: `Considerăm următorul program Python:\nCe se va afişa pe ecran după executarea programului dat?`,
+    code: `s = "101,Popescu,Ion,Mihai,9.50"\nx, *y, z = s.split(",")\nprint(x, y, z, sep=" -> ")`,
     codeLanguage: "python",
     options: {
       a: `101 -> 'PopescuIonMihai' -> 9.50`,
@@ -674,18 +500,8 @@ Ce se va afişa pe ecran după executarea programului dat?`,
     id: 84,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următorul program Python: 
- 
-s = "Ana are mere si pere verzi" 
-t = "" 
-while True: 
-    x, *y, z = s.split() 
-    t += " ".join([x, z]) + " " 
-    if len(y) == 0: 
-        break 
-    s = " ".join(y) 
-Ce se va afişa pe ecran după executarea programului dat?`,
-    code: `print(t)`,
+    text: `Considerăm următorul program Python:\nCe se va afişa pe ecran după executarea programului dat?`,
+    code: `s = "Ana are mere si pere verzi"\nt = ""\nwhile True:\n    x, *y, z = s.split()\n    t += " ".join([x, z]) + " "\n    if len(y) == 0:\n        break\n    s = " ".join(y)\nprint(t)`,
     codeLanguage: "python",
     options: {
       a: `Ana are verzi mere si pere`,
@@ -714,8 +530,7 @@ Ce se va afişa pe ecran după executarea programului dat?`,
     id: 86,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Fie lista L = [10, [3.14, True, [20, "test", 2.71]], "usor"]. Care dintre 
-următoarele expresii poate fi utilizată pentru a elimina cuvântul "test" din lista L?`,
+    text: `Fie lista L = [10, [3.14, True, [20, "test", 2.71]], "usor"]. Care dintre următoarele expresii poate fi utilizată pentru a elimina cuvântul "test" din lista L?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -730,13 +545,8 @@ următoarele expresii poate fi utilizată pentru a elimina cuvântul "test" din 
     id: 87,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Ce se va afișa după rularea programului Python de mai jos? 
- 
-d = {}`,
-    code: `for i in range(2): 
-    for j in range(3): 
-        d[i], d[j] = j, i 
-print(d)`,
+    text: `Ce se va afișa după rularea programului Python de mai jos?`,
+    code: `d = {}\nfor i in range(2):\n    for j in range(3):\n        d[i], d[j] = j, i\nprint(d)`,
     codeLanguage: "python",
     options: {
       a: `{0: 2, 1: 2, 2: 1}`,
@@ -750,16 +560,8 @@ print(d)`,
     id: 88,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Fie următoarea funcție scrisă în limbajul Python: 
- 
-Dacă a și b sunt două variabile de tip numeric, atunci după executarea secvenței de instrucțiuni 
- 
-t = f(a, b) 
-întotdeauna se va afișa:`,
-    code: `def f(x, y): 
-    return x-y, x+y 
- 
-print(t[1]-t[0])`,
+    text: `Fie următoarea funcție scrisă în limbajul Python:\nDacă a și b sunt două variabile de tip numeric, atunci după executarea secvenței de instrucțiuni\nt = f(a, b)\nprint(t[1]-t[0])\nîntotdeauna se va afișa:`,
+    code: `def f(x, y):\n    return x-y, x+y`,
     codeLanguage: "python",
     options: {
       a: `dublul valorii numărului b`,
@@ -788,13 +590,8 @@ print(t[1]-t[0])`,
     id: 90,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Ce se va afișa după rularea programului Python de mai jos? 
- 
-dct = {} 
-dct['1'] = (1, 2) 
-dct['2'] = (2, 1) 
-for x in dct:`,
-    code: `print(dct[x][1], end="")`,
+    text: `Ce se va afișa după rularea programului Python de mai jos?`,
+    code: `dct = {}\ndct['1'] = (1, 2)\ndct['2'] = (2, 1)\nfor x in dct:\n    print(dct[x][1], end="")`,
     codeLanguage: "python",
     options: {
       a: `(1,2)`,
@@ -808,11 +605,7 @@ for x in dct:`,
     id: 91,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Produsele dintr-un magazin online sunt caracterizate prin categorie, denumire, cantitate și preț 
-unitar. De exemplu, un televizor se poate caracteriza prin următoarele informații: "Audio-
-video", "Televizor Philips 32PHS6605/12", 10, 1500 RON. Care dintre următoarele structuri 
-de date din limbajul Python permite actualizarea eficientă a cantității și prețului unitar pentru 
-un anumit produs?`,
+    text: `Produsele dintr-un magazin online sunt caracterizate prin categorie, denumire, cantitate și preț unitar. De exemplu, un televizor se poate caracteriza prin următoarele informații: "Audio-video", "Televizor Philips 32PHS6605/12", 10, 1500 RON. Care dintre următoarele structuri de date din limbajul Python permite actualizarea eficientă a cantității și prețului unitar pentru un anumit produs?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -827,22 +620,8 @@ un anumit produs?`,
     id: 92,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următorul program Python: 
- 
-f = open("exemplu.txt") 
-p = len(f.readline()) 
-q = len(f.readlines()) 
-r = len(f.read()) 
-f.close() 
-Dacă fișierul text "exemplu.txt" are conținutul 
-Ana 
-are 
-mere 
-si 
-pere 
-multe! 
-atunci, după rularea programului de mai sus, se va afișa:`,
-    code: `print(p + q + r)`,
+    text: `Considerăm următorul program Python:\nDacă fișierul text "exemplu.txt" are conținutul\nAna\nare\nmere\nsi\npere\nmulte!\natunci, după rularea programului de mai sus, se va afișa:`,
+    code: `f = open("exemplu.txt")\np = len(f.readline())\nq = len(f.readlines())\nr = len(f.read())\nf.close()\nprint(p + q + r)`,
     codeLanguage: "python",
     options: {
       a: `37`,
@@ -856,25 +635,8 @@ atunci, după rularea programului de mai sus, se va afișa:`,
     id: 93,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următorul program Python: 
- 
-f = open("exemplu.txt") 
-s = t = u = 0 
-while True: 
-    aux = f.readline() 
-    if not aux: 
-        break 
-    u += 1 
-    s += len(aux.split()) 
-    t += sum([len(x) for x in aux.split()]) 
-f.close() 
-Dacă fișierul text "exemplu.txt" are conținutul 
-Ana 
-are mere verzi 
-si pere 
-multe! 
-atunci, după rularea programului de mai sus, se va afișa:`,
-    code: `print(u, s, t)`,
+    text: `Considerăm următorul program Python:\nDacă fișierul text "exemplu.txt" are conținutul\nAna\nare mere verzi\nsi pere\nmulte!\natunci, după rularea programului de mai sus, se va afișa:`,
+    code: `f = open("exemplu.txt")\ns = t = u = 0\nwhile True:\n    aux = f.readline()\n    if not aux:\n        break\n    u += 1\n    s += len(aux.split())\n    t += sum([len(x) for x in aux.split()])\nf.close()\nprint(u, s, t)`,
     codeLanguage: "python",
     options: {
       a: `5 10 27`,
@@ -888,22 +650,8 @@ atunci, după rularea programului de mai sus, se va afișa:`,
     id: 94,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următorul program Python: 
- 
-f = open("numere.txt") 
-r = set() 
-for aux in f: 
-    s = sum([int(x) for x in aux.split()]) 
-    r.add(s) 
-Dacă fișierul text "numere.txt" are conținutul
-20 -10 10
-10 10 10 20 10
-20 20 -20 30
-50
-50 -80 70 -20
-atunci, după rularea programului de mai sus, se va afișa:`,
-    code: `print(*sorted(r))
-f.close()`,
+    text: `Considerăm următorul program Python:\nDacă fișierul text "numere.txt" are conținutul\n20 -10 10\n10 10 10 20 10\n20 20 -20 30\n50\n50 -80 70 -20\natunci, după rularea programului de mai sus, se va afișa:`,
+    code: `f = open("numere.txt")\nr = set()\nfor aux in f:\n    s = sum([int(x) for x in aux.split()])\n    r.add(s)\nprint(*sorted(r))\nf.close()`,
     codeLanguage: "python",
     options: {
       a: `20 20 50 60`,
@@ -917,26 +665,9 @@ f.close()`,
     id: 95,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următorul program Python: 
- 
-f = open("numere.txt") 
-r = [] 
-for aux in f: 
-    t = max([x for x in aux.split()]) 
-    r.append(t) 
-f.close() 
-aux = "".join(sorted(r)) 
-f = open("numere.txt", "a") 
-f.write("\\n"+aux) 
-f.close() 
- 
-Dacă fișierul text "numere.txt" are conținutul 
-20 70 1100 
-500 60 100 
-1000 7 500 
-atunci, după rularea programului de mai sus, ultima linie din fișierul numere.txt va fi:`,
-    code: undefined,
-    codeLanguage: undefined,
+    text: `Considerăm următorul program Python:\nDacă fișierul text "numere.txt" are conținutul\n20 70 1100\n500 60 100\n1000 7 500\natunci, după rularea programului de mai sus, ultima linie din fișierul numere.txt va fi:`,
+    code: `f = open("numere.txt")\nr = []\nfor aux in f:\n    t = max([x for x in aux.split()])\n    r.append(t)\nf.close()\naux = "".join(sorted(r))\nf = open("numere.txt", "a")\nf.write("\\n"+aux)\nf.close()`,
+    codeLanguage: "python",
     options: {
       a: `50010001100`,
       b: `60770`,
@@ -950,10 +681,7 @@ atunci, după rularea programului de mai sus, ultima linie din fișierul numere.
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Ce se va afișa pe ecran după executarea programului Python de mai jos?`,
-    code: `def f(a=2, b=3): 
-      return a + b 
- 
-print(f(f(7)))`,
+    code: `def f(a=2, b=3):\n    return a + b\nprint(f(f(7)))`,
     codeLanguage: "python",
     options: {
       a: `13`,
@@ -968,10 +696,7 @@ print(f(f(7)))`,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Ce se va afișa pe ecran după executarea programului Python de mai jos?`,
-    code: `def f(a=10, b=20): 
-    return a + b 
- 
-print(f(f(30),f(50)))`,
+    code: `def f(a=10, b=20):\n    return a + b\nprint(f(f(30),f(50)))`,
     codeLanguage: "python",
     options: {
       a: `60`,
@@ -985,18 +710,8 @@ print(f(f(30),f(50)))`,
     id: 98,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Fie următoarea funcție scrisă în limbajul Python: 
- 
-Dacă T este o listă cu elemente de tip numeric, atunci după executarea secvenței de instrucțiuni 
- 
-r = f(T) 
-întotdeauna se vor afișa:`,
-    code: `def f(L): 
-    L = list(set(L)) 
-    L.sort() 
-    return L 
-
-print(r, T)`,
+    text: `Fie următoarea funcție scrisă în limbajul Python:\nDacă T este o listă cu elemente de tip numeric, atunci după executarea secvenței de instrucțiuni\nr = f(T)\nprint(r, T)\nîntotdeauna se vor afișa:`,
+    code: `def f(L):\n    L = list(set(L))\n    L.sort()\n    return L`,
     codeLanguage: "python",
     options: {
       a: `valorile distincte (fără duplicate) din lista T în ordine crescătoare și apoi lista T inițială sortată crescător`,
@@ -1011,12 +726,7 @@ print(r, T)`,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Ce se va afișa pe ecran după executarea programului de mai jos?`,
-    code: `def f(lst): 
-    del lst[lst[2]] 
-    return lst 
- 
-L = [x * x for x in range(5)] 
-print(f(L))`,
+    code: `def f(lst):\n    del lst[lst[2]]\n    return lst\nL = [x * x for x in range(5)]\nprint(f(L))`,
     codeLanguage: "python",
     options: {
       a: `[0, 1, 9, 16]`,
@@ -1030,14 +740,8 @@ print(f(L))`,
     id: 100,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Fie următorul program scris în limbajul Python: 
- 
-După executarea programului de mai sus, pe ecran se va afișa:`,
-    code: `def f(x, y): 
-    return x & y, x | y 
- 
-t = f(0b101101, 0b111000) 
-print(bin(t[1] ^ t[0]))`,
+    text: `Fie următorul program scris în limbajul Python:\nDupă executarea programului de mai sus, pe ecran se va afișa:`,
+    code: `def f(x, y):\n    return x & y, x | y\nt = f(0b101101, 0b111000)\nprint(bin(t[1] ^ t[0]))`,
     codeLanguage: "python",
     options: {
       a: `0b10101`,

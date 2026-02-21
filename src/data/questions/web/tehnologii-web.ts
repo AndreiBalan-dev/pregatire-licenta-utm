@@ -5,8 +5,7 @@ export const tehnologiiWeb: Question[] = [
     id: 514,
     moduleId: "web",
     subjectId: "tehnologii-web",
-    text: `Primul fişier imagine încărcat într-o pagină html poate fi schimbat cu un alt fişier daca se 
-utilizează:`,
+    text: `Primul fişier imagine încărcat într-o pagină html poate fi schimbat cu un alt fişier daca se utilizează:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -21,8 +20,7 @@ utilizează:`,
     id: 515,
     moduleId: "web",
     subjectId: "tehnologii-web",
-    text: `Care dintre următoarele coduri nu este corect pentru setarea imaginii de fundal a unei 
-pagini Web?`,
+    text: `Care dintre următoarele coduri nu este corect pentru setarea imaginii de fundal a unei pagini Web?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -37,8 +35,7 @@ pagini Web?`,
     id: 516,
     moduleId: "web",
     subjectId: "tehnologii-web",
-    text: `Dimensionarea unei imagini se realizează folosind urmatoarele atribute ale tag-ului 
-<img>?`,
+    text: `Dimensionarea unei imagini se realizează folosind urmatoarele atribute ale tag-ului <img>?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -120,7 +117,7 @@ pagini Web?`,
       a: `<link rel="stylesheet" type="text/css" href="exemplu.css" /> ;`,
       b: `<area shape="circle_radius" coords="100,100,30" href="cv.html" target="_windows">;`,
       c: `<?xml-stylesheet style="exemplu.css" type="text/css"?>;`,
-      d: `<area shape="polygon" coords=‘‘50,350,150,350,100,250,300" "href=test.html" >;`,
+      d: `<area shape="polygon" coords=''50,350,150,350,100,250,300" "href=test.html" >;`,
     },
     correctAnswer: "a",
   },
@@ -221,8 +218,8 @@ pagini Web?`,
     text: `Ce afișează secvența de cod?`,
     code: `anul este: <span id="demo"></span>
 <script>
-const d = new Date();
-document.getElementById("demo").innerHTML = d.getFullYear();
+  const d = new Date();
+  document.getElementById("demo").innerHTML = d.getFullYear();
 </script>`,
     codeLanguage: "js",
     options: {
@@ -237,8 +234,7 @@ document.getElementById("demo").innerHTML = d.getFullYear();
     id: 529,
     moduleId: "web",
     subjectId: "tehnologii-web",
-    text: `Care din următoarele nu sunt metodele şi proprietăţile pentru obiectul window din 
-Javascript?`,
+    text: `Care din următoarele nu sunt metodele şi proprietăţile pentru obiectul window din Javascript?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -389,10 +385,11 @@ Javascript?`,
     moduleId: "web",
     subjectId: "tehnologii-web",
     text: `Ce va afișa scriptul PHP?`,
-    code: `<?php 
-$i = 5.7; echo $i."<br />"; 
-$i = sprintf("%05.2f", $i); 
-echo ‘<br />’. $i;`,
+    code: `<?php
+  $i = 5.7; echo $i."<br />";
+  $i = sprintf("%05.2f", $i);
+  echo '<br />'. $i;
+?>`,
     codeLanguage: "php",
     options: {
       a: `5.70 05.7`,
@@ -481,17 +478,17 @@ echo ‘<br />’. $i;`,
     id: 545,
     moduleId: "web",
     subjectId: "tehnologii-web",
-    text: `Ce se afiseaza intr-un browser care suporta SVG, dupa incarcarea codului? 
-<!DOCTYPE html> 
-<html> 
-<body> 
-<svg width="400" height="180"> 
-  <rect x="50" y="50"  width="100" height="100" rx="10" ry="10" 
-  style="fill:red;opacity:1" /> 
-Sorry, your browser does not support inline SVG. 
-</svg> 
-</body></html>`,
-    code: undefined,
+    text: `Ce se afiseaza intr-un browser care suporta SVG, dupa incarcarea codului?`,
+    code: `<!DOCTYPE html>
+<html>
+<body>
+  <svg width="400" height="180">
+    <rect x="50" y="50" width="100" height="100" rx="10" ry="10"
+      style="fill:red;opacity:1" />
+    Sorry, your browser does not support inline SVG.
+  </svg>
+</body>
+</html>`,
     codeLanguage: undefined,
     options: {
       a: `un dreptunghi cu laturile 100 px si colturi nerotunjite;`,
@@ -655,8 +652,7 @@ Sorry, your browser does not support inline SVG.
     id: 556,
     moduleId: "web",
     subjectId: "tehnologii-web",
-    text: `Pentru a introduce un fişier RSS în paginile unui site trebuie specificat în partea de 
-HEAD a documentului web o linie de forma:`,
+    text: `Pentru a introduce un fişier RSS în paginile unui site trebuie specificat în partea de HEAD a documentului web o linie de forma:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -701,12 +697,11 @@ HEAD a documentului web o linie de forma:`,
     id: 559,
     moduleId: "web",
     subjectId: "tehnologii-web",
-    text: `Care este rolul butonului "submit" pentru codul de mai jos? 
-<form action="test.php" method="POST"> 
-Introduceti numele : <input type="text" name="n"><br> 
-<input type="submit" value="Trimite"> 
+    text: `Care este rolul butonului "submit" pentru codul de mai jos?`,
+    code: `<form action="test.php" method="POST">
+  Introduceti numele : <input type="text" name="n"><br>
+  <input type="submit" value="Trimite">
 </form>`,
-    code: undefined,
     codeLanguage: undefined,
     options: {
       a: `Transmite la fisierul test.php de pe server continutul variabilei n;`,

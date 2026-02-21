@@ -80,27 +80,24 @@ export const sgbd: Question[] = [
     id: 361,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Se dă tabelul 
-STUDENT(CNP, Nume, Grupa, Adresa) 
-şi următoarea secvenţă ce reprezintă o tranzacţie: 
-CREATE table STUDENT_NOU ( CNP NUMBER, Nume VARCHAR(30)) 
-UPDATE STUDENT_NOU SET Nume = 'Ionescu' 
-Rollback to s2 
-Care este rezultatul acestei tranzacţii pentru tabela STUDENT_NOU?`,
-    code: `INSERT INTO STUDENT_NOU SELECT CNP, Nume from STUDENT 
-Savepoint s1 
-UPDATE STUDENT_NOU SET Nume = UPPER(Nume) 
-Savepoint s2 
-DELETE FROM STUDENT_NOU 
-Rollback to s2 
-DELETE FROM STUDENT_NOU WHERE CNP=100 
- UPDATE STUDENT_NOU SET Nume = 'Ionescu' WHERE CNP=100 
- Rollback`,
+    text: `Se dă tabelul STUDENT(CNP, Nume, Grupa, Adresa) şi următoarea secvenţă ce reprezintă o tranzacţie. Care este rezultatul acestei tranzacţii pentru tabela STUDENT_NOU?`,
+    code: `CREATE TABLE STUDENT_NOU (CNP NUMBER, Nume VARCHAR(30))
+INSERT INTO STUDENT_NOU SELECT CNP, Nume FROM STUDENT
+SAVEPOINT s1
+UPDATE STUDENT_NOU SET Nume = UPPER(Nume)
+SAVEPOINT s2
+DELETE FROM STUDENT_NOU
+ROLLBACK TO s2
+DELETE FROM STUDENT_NOU WHERE CNP = 100
+UPDATE STUDENT_NOU SET Nume = 'Ionescu'
+ROLLBACK TO s2
+UPDATE STUDENT_NOU SET Nume = 'Ionescu' WHERE CNP = 100
+ROLLBACK`,
     codeLanguage: "sql",
     options: {
       a: `Nu putem să facem Rollback mai mult de o dată pe un punct de reluare`,
       b: `Nu avem linii în tabelă`,
-      c: `Avem un student cu numele ‘Ionescu’`,
+      c: `Avem un student cu numele 'Ionescu'`,
       d: `Ultimul UPDATE eşuează deoarece studentul cu CNP-ul 100 a fost şters`,
     },
     correctAnswer: "b",
@@ -139,8 +136,7 @@ DELETE FROM STUDENT_NOU WHERE CNP=100
     id: 364,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Care dintre următoarele afirmaţii nu este adevărată despre bazele de date Microsoft 
-SQL Server?`,
+    text: `Care dintre următoarele afirmaţii nu este adevărată despre bazele de date Microsoft SQL Server?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -170,11 +166,7 @@ SQL Server?`,
     id: 366,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Aţi planificat ca Microsoft SQL Server 2000 să facă backups ale unei baze de date astfel: 
-full backup la ora 2:00 a.m.; differential backups din 4 în 4 ore; transaction log 
-backups la fiecare 30’. Sistemul cade la 11:24 a.m. După ce se face un full backup 
-restore, câte backups transaction logs şi diferenţiale (numărul minim) trebuie 
-restaurate pentru a avea pierderi minime în baza de date?`,
+    text: `Aţi planificat ca Microsoft SQL Server 2000 să facă backups ale unei baze de date astfel: full backup la ora 2:00 a.m.; differential backups din 4 în 4 ore; transaction log backups la fiecare 30'. Sistemul cade la 11:24 a.m. După ce se face un full backup restore, câte backups transaction logs şi diferenţiale (numărul minim) trebuie restaurate pentru a avea pierderi minime în baza de date?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -384,13 +376,10 @@ restaurate pentru a avea pierderi minime în baza de date?`,
     id: 380,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Secvenţa de comenzi: 
-             SET AUTOCOMMIT OFF 
- 
-are ca efect:`,
-    code: `DELETE FROM stoc 
-   
- ROLLBACK`,
+    text: `Secvenţa de comenzi are ca efect:`,
+    code: `SET AUTOCOMMIT OFF
+DELETE FROM stoc
+ROLLBACK`,
     codeLanguage: "sql",
     options: {
       a: `Nu execută nici o ştergere`,
@@ -404,8 +393,7 @@ are ca efect:`,
     id: 381,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Care dintre următoarele instrucţiuni este necesară pentru a defini începutul unei 
-tranzacţii explicite în Microsoft Transact-SQL ?`,
+    text: `Care dintre următoarele instrucţiuni este necesară pentru a defini începutul unei tranzacţii explicite în Microsoft Transact-SQL?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -420,8 +408,7 @@ tranzacţii explicite în Microsoft Transact-SQL ?`,
     id: 382,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Ce problemă de concurenţă apare când o tranzacţie citeşte datele necomise de o 
-altă tranzacţie aflată în derulare?`,
+    text: `Ce problemă de concurenţă apare când o tranzacţie citeşte datele necomise de o altă tranzacţie aflată în derulare?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -451,9 +438,7 @@ altă tranzacţie aflată în derulare?`,
     id: 384,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Trebuie să modificaţi o procedură stocată şi mai mulţi utilizatori au primit 
-permisiunea de execuţie a  ei. Ce instrucţiune ar trebui să utilizaţi pentru a o modifica, 
-fără a afecta permisiunile existente?`,
+    text: `Trebuie să modificaţi o procedură stocată şi mai mulţi utilizatori au primit permisiunea de execuţie a ei. Ce instrucţiune ar trebui să utilizaţi pentru a o modifica, fără a afecta permisiunile existente?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -483,8 +468,7 @@ fără a afecta permisiunile existente?`,
     id: 386,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Ce caracteristică este utilizată pentru a preveni conflictele de actualizare, astfel 
-incât utilizatorii să nu poată citi sau modifica datele când alţi utilizatori le modifică?`,
+    text: `Ce caracteristică este utilizată pentru a preveni conflictele de actualizare, astfel incât utilizatorii să nu poată citi sau modifica datele când alţi utilizatori le modifică?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -499,14 +483,12 @@ incât utilizatorii să nu poată citi sau modifica datele când alţi utilizato
     id: 387,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Aţi creat o vedere folosind comanda: 
-CREATE VIEW dbo.Employee  
-    WITH  ENCRYPTION  
-trebui să folosiţi?`,
-    code: `AS SELECT Name FROM dbo.HumanResources  
-        WHERE isEmployee = 1  
-        WITH CHECK OPTION 
-Trebuie să împiedicaţi alţi utilizatori să copieze vederea. Ce instrucţiune ar`,
+    text: `Aţi creat o vedere folosind comanda. Trebuie să împiedicaţi alţi utilizatori să copieze vederea. Ce instrucţiune ar trebui să folosiţi?`,
+    code: `CREATE VIEW dbo.Employee
+  WITH ENCRYPTION
+  AS SELECT Name FROM dbo.HumanResources
+    WHERE isEmployee = 1
+    WITH CHECK OPTION`,
     codeLanguage: "sql",
     options: {
       a: `ALTER VIEW dbo.Employee AS SELECT Name FROM dbo.HumanResources WHERE isEmployee = 1 WITH CHECK OPTION`,
@@ -520,21 +502,20 @@ Trebuie să împiedicaţi alţi utilizatori să copieze vederea. Ce instrucţiun
     id: 388,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Se dă secvența de cod următoare: 
-PRINT ' Eroare în date!' 
-COMMIT TRAN 
-END CATCH 
-Câte înregistrări ale dbo.tabel vor fi afișate de instrucțiunea SELECT?`,
-    code: `CREATE TABLE dbo.tabel 
-(ID int NOT NULL PRIMARY KEY) 
-GO 
-BEGIN TRY 
-BEGIN TRAN 
-INSERT INTO dbo.tabel VALUES(1) 
-INSERT INTO dbo.tabel VALUES(2) 
-INSERT INTO dbo.tabel VALUES(1) 
-END TRY 
-BEGIN CATCH 
+    text: `Se dă secvența de cod următoare. Câte înregistrări ale dbo.tabel vor fi afișate de instrucțiunea SELECT?`,
+    code: `CREATE TABLE dbo.tabel
+  (ID int NOT NULL PRIMARY KEY)
+GO
+BEGIN TRY
+  BEGIN TRAN
+  INSERT INTO dbo.tabel VALUES(1)
+  INSERT INTO dbo.tabel VALUES(2)
+  INSERT INTO dbo.tabel VALUES(1)
+END TRY
+BEGIN CATCH
+  PRINT ' Eroare în date!'
+  COMMIT TRAN
+END CATCH
 SELECT * FROM dbo.tabel`,
     codeLanguage: "sql",
     options: {
@@ -549,11 +530,9 @@ SELECT * FROM dbo.tabel`,
     id: 389,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Un utilizator are permisiunile INSERT și UPDATE pe un tabel dintr-o bază de 
-date, acordate prin rolul Public. El activează un rol aplicație pentru acea bază de 
-avea utilizatorul pe tabel?`,
-    code: `date, care permite numai permisiunea SELECT pe acel tabel. Ce permisiuni va`,
-    codeLanguage: "sql",
+    text: `Un utilizator are permisiunile INSERT și UPDATE pe un tabel dintr-o bază de date, acordate prin rolul Public. El activează un rol aplicație pentru acea bază de date, care permite numai permisiunea SELECT pe acel tabel. Ce permisiuni va avea utilizatorul pe tabel?`,
+    code: undefined,
+    codeLanguage: undefined,
     options: {
       a: `SELECT`,
       b: `INSERT, UPDATE`,
@@ -596,17 +575,15 @@ avea utilizatorul pe tabel?`,
     id: 392,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Considerăm următorul fragment de cod SQL dintr-o procedură stocată. Ce se 
-întâmplă dacă apare o eroare în timpul execuției instrucțiunii INSERT? 
-... 
-PRINT @Val 
-IF @@error = 0 
-RETURN 1 
-ELSE 
-RETURN 0 
- 
-… Bloc i-ni SQL …`,
-    code: `INSERT INTO Tabela (Col1) VALUES (@Val)`,
+    text: `Considerăm următorul fragment de cod SQL dintr-o procedură stocată. Ce se întâmplă dacă apare o eroare în timpul execuției instrucțiunii INSERT?`,
+    code: `...
+INSERT INTO Tabela (Col1) VALUES (@Val)
+PRINT @Val
+IF @@error = 0
+  RETURN 1
+ELSE
+  RETURN 0
+... Bloc i-ni SQL ...`,
     codeLanguage: "sql",
     options: {
       a: `Se iese din procedura stocată cu valoarea de retur 1`,
@@ -620,8 +597,7 @@ RETURN 0
     id: 393,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Se poate folosi acelaşi nume pentru mai multe tabele dintr-un server de baze de 
-date ?`,
+    text: `Se poate folosi acelaşi nume pentru mai multe tabele dintr-un server de baze de date?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -636,8 +612,7 @@ date ?`,
     id: 394,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Dacă utilizatorul "stud" crează o vedere, cine poate face interogări pe acea 
-vedere?`,
+    text: `Dacă utilizatorul "stud" crează o vedere, cine poate face interogări pe acea vedere?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -682,12 +657,10 @@ vedere?`,
     id: 397,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Secvenţa de comenzi Microsoft SQL Server: 
-SET IMPLICIT_TRANSACTIONS  OFF  
-    
-BEGIN TRANSACTION 
-are ca efect:`,
-    code: `DELETE FROM Tabel_sursa  
+    text: `Secvenţa de comenzi Microsoft SQL Server are ca efect:`,
+    code: `SET IMPLICIT_TRANSACTIONS OFF
+BEGIN TRANSACTION
+  DELETE FROM Tabel_sursa
   ROLLBACK`,
     codeLanguage: "sql",
     options: {
@@ -702,13 +675,7 @@ are ca efect:`,
     id: 398,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Compania dumneavoastră utilizează o procedură stocată numită webAnalysis  
-pentru a analiza informația de pe un Web site. Procedura întoarce 1 dacă analiza a 
-avut loc cu succes și 0 dacă a existat o problemă. Dumneavoastră creați o 
-interogare care execută un grup de operații de întreținere zilnice, incluzând 
-procedura webAnalysis. Trebuie să comiteți modificările făcute de procedură, dacă 
-analiza a înregistrat succes, fără să afectați execuția altor task-uri executate de 
-interogare. Care set de instrucțiuni ar trebui să folosiți?`,
+    text: `Compania dumneavoastră utilizează o procedură stocată numită webAnalysis pentru a analiza informația de pe un Web site. Procedura întoarce 1 dacă analiza a avut loc cu succes și 0 dacă a existat o problemă. Dumneavoastră creați o interogare care execută un grup de operații de întreținere zilnice, incluzând procedura webAnalysis. Trebuie să comiteți modificările făcute de procedură, dacă analiza a înregistrat succes, fără să afectați execuția altor task-uri executate de interogare. Care set de instrucțiuni ar trebui să folosiți?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -723,8 +690,7 @@ interogare. Care set de instrucțiuni ar trebui să folosiți?`,
     id: 399,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Dacă doriți să returnați o valoare dintr-o procedură stocată intr-un parametru, care 
-tip de apel trebuie folosit?`,
+    text: `Dacă doriți să returnați o valoare dintr-o procedură stocată intr-un parametru, care tip de apel trebuie folosit?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -739,9 +705,7 @@ tip de apel trebuie folosit?`,
     id: 400,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Dacă o linie dintr-un tabel s-a modificat de mai multe ori de la ultimul backup full 
-al bazei de date, fişierul transaction log backup conţine numai ultimul set de valori 
-pentru acea linie?`,
+    text: `Dacă o linie dintr-un tabel s-a modificat de mai multe ori de la ultimul backup full al bazei de date, fişierul transaction log backup conţine numai ultimul set de valori pentru acea linie?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -756,13 +720,9 @@ pentru acea linie?`,
     id: 401,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Baza de date folosită de dumneavoastră conține o tabelă numită Employees, care 
-are o coloană de tip nvarchar(MAX) numită lastName.Aveți deja un index 
-clustered numit id_index pe coloana id a tabelei. Unul dintre utilizatorii 
-dumneavoastră reclamă timpii de interogare lungi obținuți când folosește coloana 
-folosiți?`,
-    code: `lastName în clauza WHERE a instrucțiunii SELECT. Ce instrucțiune ar trebui să`,
-    codeLanguage: "sql",
+    text: `Baza de date folosită de dumneavoastră conține o tabelă numită Employees, care are o coloană de tip nvarchar(MAX) numită lastName. Aveți deja un index clustered numit id_index pe coloana id a tabelei. Unul dintre utilizatorii dumneavoastră reclamă timpii de interogare lungi obținuți când folosește coloana lastName în clauza WHERE a instrucțiunii SELECT. Ce instrucțiune ar trebui să folosiți?`,
+    code: undefined,
+    codeLanguage: undefined,
     options: {
       a: `CREATE INDEX name_index ON Employees (lastName);`,
       b: `ALTER INDEX id_index ON Employees (id, lastName);`,
@@ -775,14 +735,10 @@ folosiți?`,
     id: 402,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `O bază de date folosită de dumneavoastră include o tabelă numită Contractors. 
-Aplicațiile folosesc frecvent următoarea instrucțiune pentru a accesa înregistrările 
-actualizate după 1 ianuarie 2024:  
-    AND lastUpdated > '20240101'; 
-Trebuie să reduceți timpul necesar execuției acestei instrucțiuni. Care este soluția 
-optimă pentru a obține acest deziderat?`,
-    code: `SELECT id, name FROM Contractors 
-    WHERE expertise = @searchWord`,
+    text: `O bază de date folosită de dumneavoastră include o tabelă numită Contractors. Aplicațiile folosesc frecvent următoarea instrucțiune pentru a accesa înregistrările actualizate după 1 ianuarie 2024. Trebuie să reduceți timpul necesar execuției acestei instrucțiuni. Care este soluția optimă pentru a obține acest deziderat?`,
+    code: `SELECT id, name FROM Contractors
+  WHERE expertise = @searchWord
+  AND lastUpdated > '20240101';`,
     codeLanguage: "sql",
     options: {
       a: `CREATE INDEX expertise_index ON Contractors (expertise) WHERE lastUpdated > '20240101';`,
@@ -811,24 +767,23 @@ optimă pentru a obține acest deziderat?`,
     id: 404,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Ați creat o vedere folosind comanda: 
-CREATE VIEW dbo.AngajatiNoi 
-    AS SELECT 
-        Nume, 
-        SalariuLunar, 
-        (SalariuLunar * 12) AS SalariuAnual, 
-        Data_Ang 
-            AND Data_Ang > '1/1/2024' 
-    WITH CHECK OPTION; 
-Trebuie să inserați o linie folosind această vedere. Ce instrucțiune ar trebui să folosiți?`,
-    code: `FROM dbo.ResurseUmane 
-        WHERE Nume IS NOT NULL`,
+    text: `Ați creat o vedere folosind comanda. Trebuie să inserați o linie folosind această vedere. Ce instrucțiune ar trebui să folosiți?`,
+    code: `CREATE VIEW dbo.AngajatiNoi
+  AS SELECT
+    Nume,
+    SalariuLunar,
+    (SalariuLunar * 12) AS SalariuAnual,
+    Data_Ang
+    FROM dbo.ResurseUmane
+    WHERE Nume IS NOT NULL
+      AND Data_Ang > '1/1/2024'
+  WITH CHECK OPTION;`,
     codeLanguage: "sql",
     options: {
       a: `INSERT INTO dbo. AngajatiNoi (Nume, SalariuAnual, Data_Ang) VALUES ('Popa Ion', 50000, '3/12/2024');`,
       b: `INSERT INTO dbo. AngajatiNoi (Nume, SalariuLunar, Data_Ang) VALUES ('Mihnea George', 4000, '5/13/2024');`,
       c: `INSERT INTO dbo. AngajatiNoi (Nume) VALUES ('Tonoiu Petre');`,
-      d: `INSERT INTO dbo. AngajatiNoi (Nume, SalariuLunar, Data_Ang) VALUES ('Stan Remus’, 2500, '11/5/2020');`,
+      d: `INSERT INTO dbo. AngajatiNoi (Nume, SalariuLunar, Data_Ang) VALUES ('Stan Remus', 2500, '11/5/2020');`,
     },
     correctAnswer: "b",
   },
@@ -836,27 +791,25 @@ Trebuie să inserați o linie folosind această vedere. Ce instrucțiune ar treb
     id: 405,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Ați creat o tabelă folosind instrucțiunea: 
-Un utilizator necesită următoarele tipuri de acces: 
-Trebuie să acordați permisiuni pentru a satisface aceste cerințe, fără a da permisiuni 
-suplimentare sau a restricționa accesul. Ce ar trebui să faceți?`,
-    code: `CREATE TABLE dbo.Products (ID int IDENTITY(1,1) NOT NULL, 
-      
-Name nvarchar(60) NOT NULL,  Cost decimal(10,2), 
-SalePrice decimal(10,2),   CurrentStock bigint,   NumberSold bigint) 
-- SELECT pe coloanele Name  și SalePrice; 
-- SELECT pe stocul disponibil(diferența dintre CurrentStock și NumberSold ); 
-- ALTER pe coloanele Name  și SalePrice.`,
+    text: `Ați creat o tabelă folosind instrucțiunea. Un utilizator necesită următoarele tipuri de acces:
+- SELECT pe coloanele Name și SalePrice;
+- SELECT pe stocul disponibil (diferența dintre CurrentStock și NumberSold);
+- ALTER pe coloanele Name și SalePrice.
+Trebuie să acordați permisiuni pentru a satisface aceste cerințe, fără a da permisiuni suplimentare sau a restricționa accesul. Ce ar trebui să faceți?`,
+    code: `CREATE TABLE dbo.Products (
+  ID int IDENTITY(1,1) NOT NULL,
+  Name nvarchar(60) NOT NULL,
+  Cost decimal(10,2),
+  SalePrice decimal(10,2),
+  CurrentStock bigint,
+  NumberSold bigint
+)`,
     codeLanguage: "sql",
     options: {
       a: `Acordați utilizatorului permisiunea SELECT pe coloanele Name, SalePrice, CurrentStock și NumberSold și permisiunea ALTER pe coloanele Name și SalePrice din tabela Products.`,
       b: `Acordați rolului Public permisiunea SELECT pe coloanele Name, SalePrice, CurrentStock și NumberSold și permisiunea ALTER pe coloanele Name și SalePrice din tabela Products.`,
-      c: `Acordați utilizatorului permisiunile SELECT și ALTER pe vederea definită de 
-instrucțiunea: CREATE VIEW dbo.CustomerProduct AS SELECT Name, 
-SalePrice, (CurrentStock - NumberSold) AS AvailableStock FROM dbo.Products.`,
-      d: `Acordați utilizatorului permisiunea ALTER pe vederea definită de instrucțiunea: 
-CREATE VIEW dbo.CustomerProductSelect AS SELECT Name, SalePrice, 
-(CurrentStock - NumberSold) AS AvailableStock FROM dbo.Products.`,
+      c: `Acordați utilizatorului permisiunile SELECT și ALTER pe vederea definită de instrucțiunea: CREATE VIEW dbo.CustomerProduct AS SELECT Name, SalePrice, (CurrentStock - NumberSold) AS AvailableStock FROM dbo.Products.`,
+      d: `Acordați utilizatorului permisiunea ALTER pe vederea definită de instrucțiunea: CREATE VIEW dbo.CustomerProductSelect AS SELECT Name, SalePrice, (CurrentStock - NumberSold) AS AvailableStock FROM dbo.Products.`,
     },
     correctAnswer: "c",
   },

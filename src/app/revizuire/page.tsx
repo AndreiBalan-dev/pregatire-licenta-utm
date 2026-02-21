@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Container } from "@/components/layout/Container";
 import { Card } from "@/components/ui/Card";
+import { CodeBlock } from "@/components/ui/CodeBlock";
 import { useSession } from "@/hooks/useSession";
 import { getQuestion, allQuestions } from "@/data";
 import { modules } from "@/data/modules";
@@ -139,10 +140,8 @@ export default function RevizuirePage() {
 
                 return (
                   <Card key={question.id} className="p-5">
-                    <div className="flex items-start justify-between gap-3 mb-3">
-                      <p className="text-sm text-[var(--color-text-primary)] leading-relaxed whitespace-pre-wrap">
-                        {question.text}
-                      </p>
+                    <div className="flex items-start justify-between gap-3 mb-2">
+                      <div className="flex-1 min-w-0" />
                       <button
                         onClick={() => toggleBookmark(question.id)}
                         className={cn(
@@ -157,10 +156,14 @@ export default function RevizuirePage() {
                     </div>
 
                     {question.code && (
-                      <pre className="code-block text-xs mb-3">
-                        <code>{question.code}</code>
-                      </pre>
+                      <div className="mb-3">
+                        <CodeBlock code={question.code} language={question.codeLanguage} className="text-xs" />
+                      </div>
                     )}
+
+                    <p className="text-sm text-[var(--color-text-primary)] leading-relaxed whitespace-pre-wrap mb-3">
+                      {question.text}
+                    </p>
 
                     <div className="space-y-1.5">
                       {(Object.keys(question.options) as AnswerKey[]).map((key) => {

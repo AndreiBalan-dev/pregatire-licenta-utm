@@ -5,8 +5,7 @@ export const fundamenteleProgramarii: Question[] = [
     id: 1,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `În care dintre variantele de mai jos se declară un tablou unidimensional (vector) 𝑥 în care
-se pot memora cel mult 100 de numere reale?`,
+    text: `În care dintre variantele de mai jos se declară un tablou unidimensional (vector) 𝑥 în care se pot memora cel mult 100 de numere reale?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -21,8 +20,7 @@ se pot memora cel mult 100 de numere reale?`,
     id: 2,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Care dintre următoarele expresii logice este adevărată (are o valoare nenulă) dacă şi numai
-dacă numărul real memorat în variabila 𝑥 nu aparţine intervalului (0,5]?`,
+    text: `Care dintre următoarele expresii logice este adevărată (are o valoare nenulă) dacă şi numai dacă numărul real memorat în variabila 𝑥 nu aparţine intervalului (0,5]?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -37,8 +35,7 @@ dacă numărul real memorat în variabila 𝑥 nu aparţine intervalului (0,5]?`
     id: 3,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Care dintre următoarele expresii este adevărată (are o valoare nenulă) dacă şi numai dacă
-numărul întreg memorat în variabila 𝑥 aparţine intervalului (1,6]?`,
+    text: `Care dintre următoarele expresii este adevărată (are o valoare nenulă) dacă şi numai dacă numărul întreg memorat în variabila 𝑥 aparţine intervalului (1,6]?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -53,10 +50,9 @@ numărul întreg memorat în variabila 𝑥 aparţine intervalului (1,6]?`,
     id: 4,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `După executarea instrucțiunii  float x = 27/5*2/3*7; ce valoare va fi memorată în
-variabila 𝑥?`,
-    code: undefined,
-    codeLanguage: undefined,
+    text: `După executarea instrucțiunii de mai jos, ce valoare va fi memorată în variabila 𝑥?`,
+    code: `float x = 27/5*2/3*7;`,
+    codeLanguage: "c",
     options: {
       a: `25.2`,
       b: `21.0`,
@@ -69,10 +65,9 @@ variabila 𝑥?`,
     id: 5,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `După executarea instrucțiunii  float x = 55/17*5/8+48/5/8*15; ce valoare va fi
-memorată în variabila 𝑥?`,
-    code: undefined,
-    codeLanguage: undefined,
+    text: `După executarea instrucțiunii de mai jos, ce valoare va fi memorată în variabila 𝑥?`,
+    code: `float x = 55/17*5/8+48/5/8*15;`,
+    codeLanguage: "c",
     options: {
       a: `17.022058`,
       b: `17.0`,
@@ -85,7 +80,8 @@ memorată în variabila 𝑥?`,
     id: 6,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Se consideră următoarea secvenţă de instrucțiuni:`,
+    text: `Se consideră următoarea secvenţă de instrucțiuni:
+Ce valori vor fi afișate pe ecran după executarea secvenței de mai sus?`,
     code: `int t=0,a=1234,b=10;
 while(a>=b)
 {
@@ -106,8 +102,7 @@ printf("%d %d",t,a);`,
     id: 7,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Care dintre următoarele secvenţe de instrucţiuni afişează valoarea 654, ştiind că 𝑠 şi 𝑖 sunt
-două variabile de tip întreg?`,
+    text: `Care dintre următoarele secvenţe de instrucţiuni afişează valoarea 654, ştiind că 𝑠 şi 𝑖 sunt două variabile de tip întreg?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -122,8 +117,7 @@ două variabile de tip întreg?`,
     id: 8,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Care dintre următoarele secvenţe de instrucţiuni afişează valoarea 5432, ştiind că 𝑠 şi 𝑖 sunt
-două variabile de tip întreg?`,
+    text: `Care dintre următoarele secvenţe de instrucţiuni afişează valoarea 5432, ştiind că 𝑠 şi 𝑖 sunt două variabile de tip întreg?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -139,9 +133,7 @@ două variabile de tip întreg?`,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
     text: `Considerăm următoarea secvenţă de instrucțiuni:
-
-Ştiind că variabilele 𝑠 şi 𝑛 sunt de tip întreg, ce valoare se va afişa după executarea secvenţei
-de mai sus pentru 𝑛=93321?`,
+Ştiind că variabilele 𝑠 şi 𝑛 sunt de tip întreg, ce valoare se va afişa după executarea secvenţei de mai sus pentru 𝑛=93321?`,
     code: `s=0;
 while(n>0)
 {
@@ -163,8 +155,7 @@ printf("%d",s);`,
     id: 10,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Care dintre următoarele secvenţe de instrucțiuni afişează câtul şi restul împărţirii numărului
-natural 𝑎 la numărul natural nenul 𝑏?`,
+    text: `Care dintre următoarele secvenţe de instrucțiuni afişează câtul şi restul împărţirii numărului natural 𝑎 la numărul natural nenul 𝑏?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -180,7 +171,6 @@ natural 𝑎 la numărul natural nenul 𝑏?`,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
     text: `Considerăm următorul program:
-
 Ce valoare se va afişa pe ecran după executarea programului de mai sus?`,
     code: `#include <stdio.h>
 void sch(int a, int *b)
@@ -190,7 +180,6 @@ void sch(int a, int *b)
   a = *b;
   *b = aux;
 }
-
 int main()
 {
   int x = 1,y = 2;
@@ -212,7 +201,6 @@ int main()
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
     text: `Considerăm următorul program:
-
 Ce valori se vor afişa pe ecran după executarea programului de mai sus?`,
     code: `#include <stdio.h>
 void sch(char a, char *b)
@@ -222,7 +210,6 @@ void sch(char a, char *b)
   a = *b;
   *b = aux;
 }
-
 int main()
 {
   char x = '1',y = '2';
@@ -244,7 +231,6 @@ int main()
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
     text: `Considerăm următorul program:
-
 Ce valoare se va afişa pe ecran după executarea programului de mai sus?`,
     code: `#include <stdio.h>
 void sch(int *a, int b)
@@ -254,7 +240,6 @@ void sch(int *a, int b)
   *a = b;
   b = aux;
 }
-
 int main()
 {
   int x = 1,y = 2;
@@ -276,7 +261,6 @@ int main()
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
     text: `Considerăm următorul program:
-
 Ce valori se vor afişa pe ecran după executarea programului de mai sus?`,
     code: `#include<stdio.h>
 void f(int a,int *b)
@@ -285,14 +269,12 @@ void f(int a,int *b)
   *b=a;
   (*b)++;
 }
-
 void g(int *a,int b)
 {
   b++;
   *a=b;
   (*a)++;
 }
-
 int main()
 {
   int x=4, y=-2;
@@ -314,8 +296,7 @@ int main()
     id: 15,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Care dintre următoarele secvenţe de instrucţiuni atribuie variabilei de tip întreg 𝑚𝑎𝑥 cea
-mai mare valoare din tabloul 𝑎, format din 𝑛 numere întregi?`,
+    text: `Care dintre următoarele secvenţe de instrucţiuni atribuie variabilei de tip întreg 𝑚𝑎𝑥 cea mai mare valoare din tabloul 𝑎, format din 𝑛 numere întregi?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -331,10 +312,7 @@ mai mare valoare din tabloul 𝑎, format din 𝑛 numere întregi?`,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
     text: `Considerăm următoarea secvenţă de instrucțiuni:
-
-Cu ce expresie dintre cele de mai jos trebuie înlocuite punctele de suspensie din secvenţa
-de instrucțiuni dată astfel încât aceasta să afişeze câte valori strict pozitive şi pare sunt în
-tabloul 𝑎, format din 𝑛 numere întregi?`,
+Cu ce expresie dintre cele de mai jos trebuie înlocuite punctele de suspensie din secvenţa de instrucțiuni dată astfel încât aceasta să afişeze câte valori strict pozitive şi pare sunt în tabloul 𝑎, format din 𝑛 numere întregi?`,
     code: `np=0;
 for(i=0;i<n;i++)
   if(...) np++;
@@ -368,13 +346,12 @@ printf("%d",np);`,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
     text: `Considerăm următoarea secvenţă de instrucțiuni:
-
 Ce se va afişa pe ecran după executarea secvenţei date?`,
     code: `char s[100];
 strcpy(s,"");
 strcat(s,"abcdefgh");
 strcpy(s+2,s+4);
-printf("%s %d" ,s,strlen(s));`,
+printf("%s %d",s,strlen(s));`,
     codeLanguage: "c",
     options: {
       a: `adefgh 6`,
@@ -388,9 +365,7 @@ printf("%s %d" ,s,strlen(s));`,
     id: 19,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Care din următoarele expresii de tip logic este adevărată (are o valoare nenulă) dacă şi
-numai dacă şirul de caractere 𝑠, de lungime 10, este obţinut prin concatenarea a două şiruri
-identice?`,
+    text: `Care din următoarele expresii de tip logic este adevărată (are o valoare nenulă) dacă şi numai dacă şirul de caractere 𝑠, de lungime 10, este obţinut prin concatenarea a două şiruri identice?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -406,7 +381,6 @@ identice?`,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
     text: `Considerăm următoarea secvenţă de instrucțiuni:
-
 Ce se va afişa pe ecran după executarea secvenţei date?`,
     code: `char s[]="abcdabcd",c = 'c';
 char *p = strchr(s,c);
@@ -425,7 +399,6 @@ printf("%d",p - s);`,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
     text: `Considerăm următoarea secvenţă de instrucțiuni:
-
 Ce se va afişa pe ecran după executarea secvenţei date?`,
     code: `char s[20];
 strcpy(s,"abcdabcd");
@@ -446,7 +419,6 @@ printf("%d",strlen(s));`,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
     text: `Considerăm următoarea secvenţă de instrucțiuni:
-
 Ce se va afişa pe ecran după executarea secvenţei date?`,
     code: `char s[20];
 strncpy(s,"abcdabcd",6);
@@ -468,14 +440,11 @@ printf("%s",s);`,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
     text: `Considerăm următoarele structuri:
-
-Știind că variabila st este de tip Student, indicați instrucţiunea de mai jos prin care luna
-naşterii studentului respectiv primește valoarea 12:`,
+Știind că variabila st este de tip Student, indicați instrucţiunea de mai jos prin care luna naşterii studentului respectiv primește valoarea 12:`,
     code: `typedef struct
 {
   int zi,luna,an;
 }Data;
-
 typedef struct
 {
   char nume[30];
@@ -496,14 +465,11 @@ typedef struct
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
     text: `Considerăm următoarele structuri:
-
-Știind că variabila st este de tip Student*, indicați instrucţiunea de mai jos prin care anul
-naşterii studentului respectiv primește valoarea 1990:`,
+Știind că variabila st este de tip Student*, indicați instrucţiunea de mai jos prin care anul naşterii studentului respectiv primește valoarea 1990:`,
     code: `typedef struct
 {
   int zi,luna,an;
 }Data;
-
 typedef struct
 {
   char nume[30];
@@ -524,15 +490,11 @@ typedef struct
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
     text: `Considerăm următoarele structuri:
-
-Știind că variabila a este de tip Punct_3D, fiind folosită pentru a stoca coordonatele unui
-punct în spațiu, indicați instrucţiunea de mai jos prin care toate cele 3 coordonate ale
-punctului a se iniţializează cu valoarea 0:`,
+Știind că variabila a este de tip Punct_3D, fiind folosită pentru a stoca coordonatele unui punct în spațiu, indicați instrucţiunea de mai jos prin care toate cele 3 coordonate ale punctului a se iniţializează cu valoarea 0:`,
     code: `typedef struct
 {
   int x,y;
 }Punct_2D;
-
 typedef struct
 {
   Punct_2D p;
@@ -551,18 +513,12 @@ typedef struct
     id: 26,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Considerăm tipul de date Punct, capabil să memoreze abscisa şi ordonata unui punct din
-plan, şi tipul de date Segment, capabil să memoreze două puncte reprezentând
-extremităţile unui segment din plan, definite astfel:
-
-Care dintre următoarele expresii are o valoare nenulă dacă şi numai dacă variabila 𝑠 de tip
-Segment memorează informații despre un segment vertical (aflat pe axa Oy sau paralel cu
-axa Oy)?`,
+    text: `Considerăm tipul de date Punct, capabil să memoreze abscisa şi ordonata unui punct din plan, şi tipul de date Segment, capabil să memoreze două puncte reprezentând extremităţile unui segment din plan, definite astfel:
+Care dintre următoarele expresii are o valoare nenulă dacă şi numai dacă variabila 𝑠 de tip Segment memorează informații despre un segment vertical (aflat pe axa Oy sau paralel cu axa Oy)?`,
     code: `typedef struct
 {
   float x,y;
 }Punct;
-
 typedef struct
 {
   Punct A,B;
@@ -580,17 +536,12 @@ typedef struct
     id: 27,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Considerăm tipul de date Punct, capabil să memoreze abscisa şi ordonata unui punct din
-plan, şi tipul de date Segment, capabil să memoreze două puncte reprezentând
-extremităţile unui segment din plan, definite astfel:
-
-Care dintre următoarele funcții returnează lungimea segmentului transmis prin intermediul
-parametrului s de tip Segment?`,
+    text: `Considerăm tipul de date Punct, capabil să memoreze abscisa şi ordonata unui punct din plan, şi tipul de date Segment, capabil să memoreze două puncte reprezentând extremităţile unui segment din plan, definite astfel:
+Care dintre următoarele funcții returnează lungimea segmentului transmis prin intermediul parametrului s de tip Segment?`,
     code: `typedef struct
 {
   float x,y;
 }Punct;
-
 typedef struct
 {
   Punct A,B;
@@ -608,10 +559,7 @@ typedef struct
     id: 28,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Considerăm funcția int suma(int x,int y) care returnează suma numerelor întregi x
-și y, precum și funcția int prod(int x,int y) care returnează produsul numerelor
-întregi x și y. Știind că a, b și c sunt 3 variabile de tip întreg, care dintre expresiile de mai
-jos atribuie variabilei t de tip întreg valoarea expresiei (a+b)*(a+c)+b*c?`,
+    text: `Considerăm funcția int suma(int x,int y) care returnează suma numerelor întregi x și y, precum și funcția int prod(int x,int y) care returnează produsul numerelor întregi x și y. Știind că a, b și c sunt 3 variabile de tip întreg, care dintre expresiile de mai jos atribuie variabilei t de tip întreg valoarea expresiei (a+b)*(a+c)+b*c?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -626,10 +574,7 @@ jos atribuie variabilei t de tip întreg valoarea expresiei (a+b)*(a+c)+b*c?`,
     id: 29,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Considerăm funcția int suma(int x,int y) care returnează suma numerelor întregi x
-și y, precum și funcția int prod(int x,int y) care returnează produsul numerelor
-întregi x și y. Știind că a, b și c sunt 3 variabile de tip întreg, care dintre expresiile de mai
-jos atribuie variabilei t de tip întreg valoarea expresiei a*b+a*b*c?`,
+    text: `Considerăm funcția int suma(int x,int y) care returnează suma numerelor întregi x și y, precum și funcția int prod(int x,int y) care returnează produsul numerelor întregi x și y. Știind că a, b și c sunt 3 variabile de tip întreg, care dintre expresiile de mai jos atribuie variabilei t de tip întreg valoarea expresiei a*b+a*b*c?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -659,8 +604,7 @@ jos atribuie variabilei t de tip întreg valoarea expresiei a*b+a*b*c?`,
     id: 31,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Care dintre următoarele funcții poate fi folosită într-un program pentru a citi de la tastatură
-un tablou unidimensional format din numere întregi?`,
+    text: `Care dintre următoarele funcții poate fi folosită într-un program pentru a citi de la tastatură un tablou unidimensional format din numere întregi?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -675,8 +619,7 @@ un tablou unidimensional format din numere întregi?`,
     id: 32,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Care dintre următoarele funcții nu returnează suma elementelor tabloului unidimensional
-de numere întregi transmis ca parametru?`,
+    text: `Care dintre următoarele funcții nu returnează suma elementelor tabloului unidimensional de numere întregi transmis ca parametru?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -691,11 +634,7 @@ de numere întregi transmis ca parametru?`,
     id: 33,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Funcția minmax primește prin parametrul de intrare v un tablou unidimensional format din
-numere întregi, iar prin parametrul de intrare n primește numărul de elemente ale tabloului
-v. Funcția trebuie să întoarcă prin doi parametri de ieșire, min și max, valoarea minimă și,
-respectiv, valoarea maximă din tabloul v. Care dintre următoarele variante reprezintă un
-antet corect al funcției minmax?`,
+    text: `Funcția minmax primește prin parametrul de intrare v un tablou unidimensional format din numere întregi, iar prin parametrul de intrare n primește numărul de elemente ale tabloului v. Funcția trebuie să întoarcă prin doi parametri de ieșire, min și max, valoarea minimă și, respectiv, valoarea maximă din tabloul v. Care dintre următoarele variante reprezintă un antet corect al funcției minmax?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -710,9 +649,7 @@ antet corect al funcției minmax?`,
     id: 34,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Fie v un tablou unidimensional format din 100 de numere reale de tip double și numărul
-natural k cuprins între 0 și 99. Care dintre următoarele expresii afișează adresa elementului
-v[k]?`,
+    text: `Fie v un tablou unidimensional format din 100 de numere reale de tip double și numărul natural k cuprins între 0 și 99. Care dintre următoarele expresii afișează adresa elementului v[k]?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -727,10 +664,7 @@ v[k]?`,
     id: 35,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Fie 𝑣 un tablou unidimensional format din 100 de numere reale de tip double și 𝑝 o
-variabilă de tip pointer către double în care este memorată adresa ultimului element al
-tabloului 𝑣 (double *p=&v[99];). Care dintre următoarele expresii nu afișează numărul
-de octeți pe care îi ocupă tabloul 𝑣 în memorie?`,
+    text: `Fie 𝑣 un tablou unidimensional format din 100 de numere reale de tip double și 𝑝 o variabilă de tip pointer către double în care este memorată adresa ultimului element al tabloului 𝑣 (double *p=&v[99];). Care dintre următoarele expresii nu afișează numărul de octeți pe care îi ocupă tabloul 𝑣 în memorie?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -745,8 +679,7 @@ de octeți pe care îi ocupă tabloul 𝑣 în memorie?`,
     id: 36,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Care dintre următoarele secvențe de cod poate fi utilizată pentru a aloca dinamic un tablou
-unidimensional 𝑎 format din 100 de numere întregi?`,
+    text: `Care dintre următoarele secvențe de cod poate fi utilizată pentru a aloca dinamic un tablou unidimensional 𝑎 format din 100 de numere întregi?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -761,8 +694,7 @@ unidimensional 𝑎 format din 100 de numere întregi?`,
     id: 37,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Care dintre următoarele secvențe de cod poate fi utilizată pentru a aloca dinamic un tablou
-bidimensional 𝑎 format din 10 de linii și 20 de coloane de numere întregi?`,
+    text: `Care dintre următoarele secvențe de cod poate fi utilizată pentru a aloca dinamic un tablou bidimensional 𝑎 format din 10 de linii și 20 de coloane de numere întregi?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -777,8 +709,7 @@ bidimensional 𝑎 format din 10 de linii și 20 de coloane de numere întregi?`
     id: 38,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Fie 𝑎 un tabloul bidimensional pătratic de dimensiune 𝑛. Care dintre următoarele secvențe
-de cod afișează elementele aflate pe diagonala principală a matricei 𝑎?`,
+    text: `Fie 𝑎 un tabloul bidimensional pătratic de dimensiune 𝑛. Care dintre următoarele secvențe de cod afișează elementele aflate pe diagonala principală a matricei 𝑎?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -793,8 +724,7 @@ de cod afișează elementele aflate pe diagonala principală a matricei 𝑎?`,
     id: 39,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Fie 𝑎 un tabloul bidimensional pătratic de dimensiune 𝑛. Care dintre următoarele secvențe
-de cod afișează elementele aflate pe diagonala secundară a matricei 𝑎?`,
+    text: `Fie 𝑎 un tabloul bidimensional pătratic de dimensiune 𝑛. Care dintre următoarele secvențe de cod afișează elementele aflate pe diagonala secundară a matricei 𝑎?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -809,9 +739,7 @@ de cod afișează elementele aflate pe diagonala secundară a matricei 𝑎?`,
     id: 40,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Fie 𝑎 un tabloul bidimensional pătratic de dimensiune 𝑛. Care dintre următoarele secvențe
-de cod afișează elementele triunghiului delimitat de prima coloană, diagonala principală și
-ultima linie din matricea 𝑎?`,
+    text: `Fie 𝑎 un tabloul bidimensional pătratic de dimensiune 𝑛. Care dintre următoarele secvențe de cod afișează elementele triunghiului delimitat de prima coloană, diagonala principală și ultima linie din matricea 𝑎?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -826,9 +754,7 @@ ultima linie din matricea 𝑎?`,
     id: 41,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Fie 𝑎 un tabloul bidimensional pătratic de dimensiune 𝑛. Care dintre următoarele secvențe
-de cod afișează elementele triunghiului delimitat de diagonala principală, ultima coloană și
-prima linie din matricea 𝑎?`,
+    text: `Fie 𝑎 un tabloul bidimensional pătratic de dimensiune 𝑛. Care dintre următoarele secvențe de cod afișează elementele triunghiului delimitat de diagonala principală, ultima coloană și prima linie din matricea 𝑎?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -843,8 +769,7 @@ prima linie din matricea 𝑎?`,
     id: 42,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Fie 𝑎 un tabloul bidimensional pătratic de dimensiune 𝑛. Care dintre următoarele secvențe
-de cod afișează suma elementelor de pe fiecare linie a matricei 𝑎?`,
+    text: `Fie 𝑎 un tabloul bidimensional pătratic de dimensiune 𝑛. Care dintre următoarele secvențe de cod afișează suma elementelor de pe fiecare linie a matricei 𝑎?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -859,8 +784,7 @@ de cod afișează suma elementelor de pe fiecare linie a matricei 𝑎?`,
     id: 43,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Care dintre următoarele funcții returnează dimensiunea în octeți a unui fișier text a cărui
-cale este transmisă prin parametrul de intrare 𝑛𝑓?`,
+    text: `Care dintre următoarele funcții returnează dimensiunea în octeți a unui fișier text a cărui cale este transmisă prin parametrul de intrare 𝑛𝑓?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -875,15 +799,14 @@ cale este transmisă prin parametrul de intrare 𝑛𝑓?`,
     id: 44,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Care dintre următoarele funcții returnează numărul de linii dintr-un fișier text a cărui cale
-este transmisă prin parametrul de intrare 𝑛𝑓 (se presupune că fișierul nu conține linii vide)?`,
+    text: `Care dintre următoarele funcții returnează numărul de linii dintr-un fișier text a cărui cale este transmisă prin parametrul de intrare 𝑛𝑓 (se presupune că fișierul nu conține linii vide)?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
       a: `int nr(char *nf) { char s[1001]; FILE *f=fopen(nf,"r"); int n=0; while(fscanf(f,"%s",s)==1) n++; fclose(f); return n; }`,
       b: `int nr(char *nf) { char c; FILE *f=fopen(nf,"r"); int n=0; while(fscanf(f,"%c",&c)==1) if(c=='\\n') n++; fclose(f); return n; }`,
-      c: `int nr(char *nf) { FILE *f=fopen(nf,"r"); int n=sizeof(f); fclose (f); return n/sizeof(char *); }`,
-      d: `int nr(char *nf) { char s[1001]; FILE *f=fopen(nf,"r"); int n=0; while(fgets(s,1000,f)) n++; fclose (f); return n; }`,
+      c: `int nr(char *nf) { FILE *f=fopen(nf,"r"); int n=sizeof(f); fclose(f); return n/sizeof(char *); }`,
+      d: `int nr(char *nf) { char s[1001]; FILE *f=fopen(nf,"r"); int n=0; while(fgets(s,1000,f)) n++; fclose(f); return n; }`,
     },
     correctAnswer: "d",
   },
@@ -892,12 +815,9 @@ este transmisă prin parametrul de intrare 𝑛𝑓 (se presupune că fișierul 
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
     text: `Considerăm următorul program:
-
-Știind ca lungimea maximă a unei linii din fișierul text test.txt este de 100 de caractere, ce
-se va afișa după executarea programului de mai sus?`,
+Știind ca lungimea maximă a unei linii din fișierul text test.txt este de 100 de caractere, ce se va afișa după executarea programului de mai sus?`,
     code: `#include<stdio.h>
 #include<string.h>
-
 int main()
 {
   FILE *f=fopen("test.txt","r");
@@ -922,14 +842,9 @@ int main()
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
     text: `Considerăm următorul program:
-
-Presupunând că fiecare dintre cele 5 șiruri care vor fi citite de la tastatură vor fi formate din
-minim două caractere și maxim 10, stabiliți cu care dintre instrucțiunile de mai jos trebuie
-înlocuite spațiile punctate din program astfel încât acesta să afișeze șirul format din ultimele
-două caractere din fiecare dintre cele 5 șiruri citite:`,
+Presupunând că fiecare dintre cele 5 șiruri care vor fi citite de la tastatură vor fi formate din minim două caractere și maxim 10, stabiliți cu care dintre instrucțiunile de mai jos trebuie înlocuite spațiile punctate din program astfel încât acesta să afișeze șirul format din ultimele două caractere din fiecare dintre cele 5 șiruri citite:`,
     code: `#include<stdio.h>
 #include<string.h>
-
 int main()
 {
   char s[21],aux[11];
@@ -956,8 +871,7 @@ int main()
     id: 47,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Care dintre următoarele secvențe de cod afișează pe ecran șirul de numere 1 2 2 3 3 3
-4 4 4 4 5 5 5 5 5?`,
+    text: `Care dintre următoarele secvențe de cod afișează pe ecran șirul de numere 1 2 2 3 3 3 4 4 4 4 5 5 5 5 5?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -972,15 +886,14 @@ int main()
     id: 48,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Stabiliți care dintre următoarele funcții întorc poziția primei valori strict pozitive din tabloul
-𝑣 format din 𝑛 numere întregi sau -1 dacă tabloul nu conține nici un număr pozitiv:`,
+    text: `Stabiliți care dintre următoarele funcții întorc poziția primei valori strict pozitive din tabloul 𝑣 format din 𝑛 numere întregi sau -1 dacă tabloul nu conține nici un număr pozitiv:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
       a: `int p(int v[],int n) { int i,x=-1; for(i=0;i<n;i++) if(v[i]>0) x=i; return x; }`,
       b: `int p(int v[],int n) { int x=0; while(v[x]<=0) x++; return x-1; }`,
       c: `int p(int v[],int n) { int i,x=-1; for(i=0;i<n;i++) if((v[i]>0)&&(x<0)) x=i; return x; }`,
-      d: `int p(int v[],int n) { int i; for(int i=0;i<n;i++) if (v[i]>0) return i; else return -1; }`,
+      d: `int p(int v[],int n) { int i; for(int i=0;i<n;i++) if(v[i]>0) return i; else return -1; }`,
     },
     correctAnswer: "c",
   },
@@ -989,17 +902,15 @@ int main()
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
     text: `Considerăm următoarea secvență de cod:
-
-Dacă valorile introduse pentru variabilele a și b vor fi două numere naturale nenule cu
-proprietatea că a < b, atunci pe ecran se vor afișa:`,
+Dacă valorile introduse pentru variabilele a și b vor fi două numere naturale nenule cu proprietatea că a < b, atunci pe ecran se vor afișa:`,
     code: `int a, b, p=1;
 scanf("%d %d", &a, &b);
 while(p < a)
-   p = p*2;
+  p = p*2;
 while(p <= b)
 {
-   printf("%d\\n", p);
-   p = p*2;
+  printf("%d\\n", p);
+  p = p*2;
 }`,
     codeLanguage: "c",
     options: {
@@ -1015,10 +926,8 @@ while(p <= b)
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
     text: `Considerăm următorul program:
-
 Ce valori vor fi afișate pe ecran după executarea programului de mai sus?`,
     code: `#include<stdio.h>
-
 void p(int v[],int *n)
 {
   int i,j,g;
@@ -1035,7 +944,6 @@ void p(int v[],int *n)
   }
   while(g);
 }
-
 int main()
 {
   int i,v[]={-1,2,-3,-4,5},n=5;
@@ -1046,9 +954,9 @@ int main()
 }`,
     codeLanguage: "c",
     options: {
-      a: `–1 -3 -4`,
+      a: `\u20131 -3 -4`,
       b: `2 5`,
-      c: `–1 2 -3 -4`,
+      c: `\u20131 2 -3 -4`,
       d: `2 -3 -4 5`,
     },
     correctAnswer: "b",
