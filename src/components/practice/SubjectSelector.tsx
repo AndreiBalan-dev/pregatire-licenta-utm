@@ -109,7 +109,7 @@ export function SubjectSelector({
 
             {/* Subjects */}
             {isExpanded && (
-              <div className="border-t border-[var(--color-border)] px-4 py-2">
+              <div className="border-t border-[var(--color-border)] px-4 py-2 space-y-1">
                 {mod.subjects.map((subject) => {
                   const questions = questionsBySubject[subject.id] || [];
                   const answered = questions.filter((q) => session.answers[q.id]).length;
