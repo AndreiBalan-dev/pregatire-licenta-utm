@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Syne, IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const syne = Syne({
@@ -140,6 +141,7 @@ export default function RootLayout({
       >
         <div className="noise-overlay" aria-hidden="true" />
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
