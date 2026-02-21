@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { useSession } from "@/hooks/useSession";
 import { useTimer } from "@/hooks/useTimer";
-import { useKeyboardNav } from "@/hooks/useKeyboardNav";
 import { getQuestion, questionsBySubject } from "@/data";
 import { cn, formatPercentage, formatTime } from "@/lib/utils";
 import type { AnswerKey } from "@/data/types";
@@ -192,14 +191,6 @@ export default function QuizPage() {
     setShowSummary(false);
     router.replace(`/practica/${newSessionId}`);
   }, [practice, session.answers, session.settings.shuffleOptions, startPractice, router]);
-
-  useKeyboardNav({
-    onSelectOption: handleSelectAnswer,
-    onNext: goToNext,
-    onPrev: goToPrev,
-    onBookmark: handleBookmark,
-    enabled: !showSummary,
-  });
 
   // No active session — redirect to practice selection
   useEffect(() => {

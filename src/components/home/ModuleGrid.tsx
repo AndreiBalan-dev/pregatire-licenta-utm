@@ -24,7 +24,7 @@ export function ModuleGrid() {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 md:[grid-auto-rows:1fr] gap-4">
           {modules.map((mod, i) => {
             const moduleQuestions = questionsByModule[mod.id] || [];
             const answeredCount = moduleQuestions.filter(

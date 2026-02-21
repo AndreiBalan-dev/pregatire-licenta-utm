@@ -33,20 +33,6 @@ export default function HomePage() {
         />
         <ModuleGrid />
 
-        {/* Keyboard shortcuts hint */}
-        <section className="py-8 border-t border-[var(--color-border)]">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-wrap items-center gap-6 text-xs text-[var(--color-text-tertiary)]">
-              <span className="uppercase tracking-wider font-medium text-[var(--color-text-secondary)]" style={{ fontFamily: "var(--font-display)" }}>
-                Scurtături tastatură
-              </span>
-              <span><kbd className="px-1.5 py-0.5 rounded bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] font-mono">1-4</kbd> Selectează răspuns</span>
-              <span><kbd className="px-1.5 py-0.5 rounded bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] font-mono">→</kbd> Următoarea</span>
-              <span><kbd className="px-1.5 py-0.5 rounded bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] font-mono">←</kbd> Anterioara</span>
-              <span><kbd className="px-1.5 py-0.5 rounded bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] font-mono">S</kbd> Marchează</span>
-            </div>
-          </div>
-        </section>
       </main>
       <MobileNav />
       <ToastContainer toasts={toasts} onRemove={removeToast} />

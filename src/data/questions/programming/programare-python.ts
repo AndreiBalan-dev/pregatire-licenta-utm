@@ -14,7 +14,7 @@ export const programarePython: Question[] = [
       c: `tuplu`,
       d: `mulțime`,
     },
-    correctAnswer: "b",
+    correctAnswer: "c",
   },
   {
     id: 52,
@@ -30,7 +30,7 @@ sale, variabila t trebuie să fie inițializată prin:`,
       c: `t = (1, 2, 3, 4, 5)`,
       d: `t = [1, 2, 3, 4, 5]`,
     },
-    correctAnswer: "c",
+    correctAnswer: "d",
   },
   {
     id: 53,
@@ -46,7 +46,7 @@ variabila t trebuie să fie inițializată prin:`,
       c: `t = {1, 2, 3, 4, 5}`,
       d: `t = (1, 2, 3, 4, 5)`,
     },
-    correctAnswer: "d",
+    correctAnswer: "a",
   },
   {
     id: 54,
@@ -79,7 +79,7 @@ dacă numărul real 𝑚 este egal cu media aritmetică a numerelor întregi �
       c: `3`,
       d: `4`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
     id: 56,
@@ -94,7 +94,7 @@ dacă numărul real 𝑚 este egal cu media aritmetică a numerelor întregi �
       c: `165.0`,
       d: `165.22448979591840`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
     id: 57,
@@ -115,6 +115,27 @@ dacă numărul real 𝑚 este egal cu media aritmetică a numerelor întregi �
     id: 58,
     moduleId: "programming",
     subjectId: "programare-python",
+    text: `Se consideră următoarea secvenţă de instrucțiuni Python:
+
+t, a, b = 0, 2025, 9
+while a > b:
+    a, t = a-b, t+1
+print(t, a)
+Ce valori vor fi afișate pe ecran după executarea secvenței de mai sus?`,
+    code: undefined,
+    codeLanguage: undefined,
+    options: {
+      a: `225  9`,
+      b: `224  0`,
+      c: `225  0`,
+      d: `224  9`,
+    },
+    correctAnswer: "d",
+  },
+  {
+    id: 59,
+    moduleId: "programming",
+    subjectId: "programare-python",
     text: `Care dintre următoarele secvenţe de instrucţiuni Python nu afişează valoarea 4210?`,
     code: undefined,
     codeLanguage: undefined,
@@ -124,10 +145,10 @@ dacă numărul real 𝑚 este egal cu media aritmetică a numerelor întregi �
       c: `s = 0 for i in range(4210): s += 1 print(s)`,
       d: `s = 4201 while s <= 4210: s += 1 print(s)`,
     },
-    correctAnswer: "c",
+    correctAnswer: "d",
   },
   {
-    id: 59,
+    id: 60,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Considerăm următoarea secvenţă de instrucțiuni Python: 
@@ -150,10 +171,10 @@ Ce valoare se va afişa după executarea secvenţei de mai sus pentru 𝑛=  753
       c: `1`,
       d: `7`,
     },
-    correctAnswer: "c",
+    correctAnswer: "b",
   },
   {
-    id: 60,
+    id: 61,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Considerăm următoarea secvenţă de instrucțiuni Python: 
@@ -176,10 +197,10 @@ Ce valoare se va afişa după executarea secvenţei de mai sus pentru 𝑛=  755
       c: `10`,
       d: `5`,
     },
-    correctAnswer: "b",
+    correctAnswer: "d",
   },
   {
-    id: 61,
+    id: 62,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Considerăm următoarea secvenţă de instrucțiuni Python: 
@@ -196,10 +217,10 @@ Ce valori se vor afişa după executarea secvenţei de mai sus?`,
       c: `89 144`,
       d: `89 55`,
     },
-    correctAnswer: "d",
+    correctAnswer: "b",
   },
   {
-    id: 62,
+    id: 63,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Considerăm următorul program Python: 
@@ -222,7 +243,7 @@ print(L)`,
     correctAnswer: "c",
   },
   {
-    id: 63,
+    id: 64,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Considerăm următorul program Python: 
@@ -243,10 +264,10 @@ print(L)`,
       c: `[1, 2, 3, 4, 5]`,
       d: `[2, 1, 3, 4, 5]`,
     },
-    correctAnswer: "d",
+    correctAnswer: "a",
   },
   {
-    id: 64,
+    id: 65,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Considerăm următorul program Python: 
@@ -270,7 +291,7 @@ print(L)`,
     correctAnswer: "c",
   },
   {
-    id: 65,
+    id: 66,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Considerăm următorul program Python: 
@@ -291,10 +312,10 @@ print(len(L))`,
       c: `list({3, 3})`,
       d: `{0:[100, 200, 300], 1:[400, 500, 600, 700]}`,
     },
-    correctAnswer: "b",
+    correctAnswer: "d",
   },
   {
-    id: 66,
+    id: 67,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Considerăm o listă nevidă 𝐿 ale cărei elemente sunt liste nevide de numere întregi (de exemplu, 
@@ -312,7 +333,7 @@ exemplul dat anterior acesta este 100)?`,
     correctAnswer: "a",
   },
   {
-    id: 67,
+    id: 68,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Considerăm următoarea secvenţă de instrucțiuni Python: 
@@ -329,10 +350,10 @@ Pentru orice șir format doar din caractere ASCII introdus de la tastatură prog
       c: `ultima literă din șirul introdus de la tastatură`,
       d: `prima literă din șirul introdus de la tastatură`,
     },
-    correctAnswer: "d",
+    correctAnswer: "b",
   },
   {
-    id: 68,
+    id: 69,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Considerăm următoarea secvenţă de instrucțiuni Python: 
@@ -341,13 +362,9 @@ s = input()
 t = "" 
 Pentru orice șir format doar din litere mici ale alfabetului englez introdus de la tastatură 
 secvența dată este echivalentă cu:`,
-    code: `for x in range(ord("a"), ord("z")+1): 
-    t += chr(x) * s.count(chr(x)) 
-print(t) 
-
- 
- 
-6`,
+    code: `for x in range(ord("a"), ord("z")+1):
+    t += chr(x) * s.count(chr(x))
+print(t)`,
     codeLanguage: "python",
     options: {
       a: `print("".join(sorted(input())))`,
@@ -355,10 +372,10 @@ print(t)
       c: `s = input() t = "" for x in set(sorted(set(s))): t += x * s.count(x) print(t)`,
       d: `s = input() t = sum([x*s.count(chr(x)) for x in range(ord("a"), ord("z")+1)]) print(t)`,
     },
-    correctAnswer: "d",
+    correctAnswer: "a",
   },
   {
-    id: 69,
+    id: 70,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Dacă s="restaurare" și t="orchestrare", atunci valoarea expresiei s.find(t[4:7]) 
@@ -374,7 +391,7 @@ print(t)
     correctAnswer: "c",
   },
   {
-    id: 70,
+    id: 71,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Fie 𝑠 un șir de caractere format din exact 10 litere mici din alfabetul englez și următoarele 4 
@@ -390,10 +407,10 @@ expresii sunt adevărate dacă și numai dacă șirul 𝑠 se poate obține prin
       c: `4`,
       d: `1`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 71,
+    id: 72,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Fie 𝑡 un șir de caractere format din numere naturale nenule despărțite între ele prin spații și 
@@ -409,11 +426,7 @@ x=int("".join(sorted("".join(t.split())))[::-1])
 x=int("".join(sorted(t)[::-1])) 
   
 În câte dintre cele 4 expresii variabila 𝑥 va conține întotdeauna cel mai mare număr care se 
-poate forma folosind toate cifrele tuturor numerelor din șirul 𝑡? 
-
- 
- 
-7`,
+poate forma folosind toate cifrele tuturor numerelor din șirul 𝑡?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -422,10 +435,10 @@ poate forma folosind toate cifrele tuturor numerelor din șirul 𝑡?
       c: `2`,
       d: `4`,
     },
-    correctAnswer: "b",
+    correctAnswer: "c",
   },
   {
-    id: 72,
+    id: 73,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Considerăm următoarea secvenţă de instrucțiuni Python: 
@@ -444,10 +457,10 @@ Ce se va afişa pe ecran după executarea secvenţei date?`,
       c: `abc`,
       d: `abcabcd`,
     },
-    correctAnswer: "c",
+    correctAnswer: "a",
   },
   {
-    id: 73,
+    id: 74,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Considerăm următoarea secvenţă de instrucțiuni Python: 
@@ -469,7 +482,7 @@ Ce se va afişa pe ecran după executarea secvenţei date?`,
     correctAnswer: "d",
   },
   {
-    id: 74,
+    id: 75,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Care dintre următoarele secvențe de inițializare nu va produce o listă 𝐿 formată doar din 
@@ -482,10 +495,10 @@ numere naturale pare?`,
       c: `L = [x * 3 for x in range(20, 0, -2)]`,
       d: `L = [x ** 2 for x in range(0, 21, 2)]`,
     },
-    correctAnswer: "d",
+    correctAnswer: "a",
   },
   {
-    id: 75,
+    id: 76,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Considerăm următoarea secvenţă de instrucțiuni Python: 
@@ -503,41 +516,49 @@ print(len(t))`,
       c: `26`,
       d: `37`,
     },
-    correctAnswer: "a",
-  },
-  {
-    id: 76,
-    moduleId: "programming",
-    subjectId: "programare-python",
-    text: `Considerăm următoarele 4 funcții scrise în limbajul Python:`,
-    code: undefined,
-    codeLanguage: undefined,
-    options: {
-      a: `def sc2(n): d = {int(x): str(n).count(x) for x in str(n)} return sum([x * d[x] for x in d])`,
-      b: `def sc3(n): s = 0 while n >= 10: s += n // 10 n %= 10 return s + n`,
-      c: `def sc4(n): 
-    L = [int(x) for x in str(n)] 
-         while len(L) > 1: 
-   x = L.pop() 
-         
-   y = L.pop() 
-         
-   L.append(x+y) 
-    return L[0] 
- 
-Câte dintre cele 4 funcții definite anterior furnizează suma cifrelor numărului natural 𝑛 
-transmis ca parametru? 
- 
-a) 1 
-b) 2 
-c) 3 
-d) 4`,
-      d: `def sc1(n): return sum([int(x) for x in str(n)])`,
-    },
-    correctAnswer: "d",
+    correctAnswer: "b",
   },
   {
     id: 77,
+    moduleId: "programming",
+    subjectId: "programare-python",
+    text: `Considerăm următoarele 4 funcții scrise în limbajul Python:
+
+a) def sc1(n):
+    return sum([int(x) for x in str(n)])
+
+b) def sc2(n):
+    d = {int(x): str(n).count(x) for x in str(n)}
+    return sum([x * d[x] for x in d])
+
+c) def sc3(n):
+    s = 0
+    while n >= 10:
+        s += n // 10
+        n %= 10
+    return s + n
+
+d) def sc4(n):
+    L = [int(x) for x in str(n)]
+    while len(L) > 1:
+        x = L.pop()
+        y = L.pop()
+        L.append(x+y)
+    return L[0]
+
+Câte dintre cele 4 funcții definite anterior furnizează suma cifrelor numărului natural 𝑛 transmis ca parametru?`,
+    code: undefined,
+    codeLanguage: undefined,
+    options: {
+      a: `1`,
+      b: `2`,
+      c: `3`,
+      d: `4`,
+    },
+    correctAnswer: "c",
+  },
+  {
+    id: 78,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Ce se va afișa după rularea programului Python de mai jos? 
@@ -554,10 +575,10 @@ for x in L:
       c: `((1,2), (3,4), (5,6))`,
       d: `((1, 3, 5), (2, 4, 6))`,
     },
-    correctAnswer: "c",
+    correctAnswer: "b",
   },
   {
-    id: 78,
+    id: 79,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Ce se va afișa după rularea programului Python de mai jos? 
@@ -573,10 +594,10 @@ print(L)`,
       c: `[1, [1], [1, [1]], [1, [1], [1, [1]]]]`,
       d: `[1, 1, 1]`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 79,
+    id: 80,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Ce se va afișa după rularea programului Python de mai jos? 
@@ -592,10 +613,10 @@ print(L)`,
       c: `[[[[1]]]]`,
       d: `[1, [1], [1, [1]], [1, [1], [1, [1]]]]`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 80,
+    id: 81,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Ce se va afișa după rularea programului Python de mai jos?`,
@@ -616,7 +637,7 @@ print(L)`,
     correctAnswer: "a",
   },
   {
-    id: 81,
+    id: 82,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Fie s și t două șiruri de caractere. Care este efectul instrucțiunii s, t = (t, s)[::-1]?`,
@@ -631,7 +652,7 @@ print(L)`,
     correctAnswer: "a",
   },
   {
-    id: 82,
+    id: 83,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Considerăm următorul program Python: 
@@ -647,10 +668,10 @@ Ce se va afişa pe ecran după executarea programului dat?`,
       c: `101 -> 9.50`,
       d: `101 -> ['Popescu', 'Ion', 'Mihai'] -> 9.50`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 83,
+    id: 84,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Considerăm următorul program Python: 
@@ -672,10 +693,10 @@ Ce se va afişa pe ecran după executarea programului dat?`,
       c: `Ana verzi pere are si mere`,
       d: `Ana verzi are pere mere si`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 84,
+    id: 85,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Care dintre următoarele afirmații referitoare la un dicționar din limbajul Python este adevărată?`,
@@ -687,10 +708,10 @@ Ce se va afişa pe ecran după executarea programului dat?`,
       c: `toate cheile unui dicționar trebuie să fie de același tip de date`,
       d: `valorile dintr-un dicționar nu se accesează folosind indecșii lor`,
     },
-    correctAnswer: "c",
+    correctAnswer: "d",
   },
   {
-    id: 85,
+    id: 86,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Fie lista L = [10, [3.14, True, [20, "test", 2.71]], "usor"]. Care dintre 
@@ -706,7 +727,7 @@ următoarele expresii poate fi utilizată pentru a elimina cuvântul "test" din 
     correctAnswer: "b",
   },
   {
-    id: 86,
+    id: 87,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Ce se va afișa după rularea programului Python de mai jos? 
@@ -723,10 +744,10 @@ print(d)`,
       c: `{0: 0, 1: 1, 2: 2}`,
       d: `{0: 1, 1: 2, 2: 1}`,
     },
-    correctAnswer: "c",
+    correctAnswer: "d",
   },
   {
-    id: 87,
+    id: 88,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Fie următoarea funcție scrisă în limbajul Python: 
@@ -746,10 +767,10 @@ print(t[1]-t[0])`,
       c: `dublul valorii numărului a`,
       d: `șirul de caractere obținut prin alipirea diferenței și sumei numerelor a și b`,
     },
-    correctAnswer: "c",
+    correctAnswer: "a",
   },
   {
-    id: 88,
+    id: 89,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Care dintre următoarele structuri de date poate fi utilizată pentru cheile unui dicționar?`,
@@ -761,10 +782,10 @@ print(t[1]-t[0])`,
       c: `un tuplu de liste`,
       d: `un tuplu de tupluri`,
     },
-    correctAnswer: "c",
+    correctAnswer: "d",
   },
   {
-    id: 89,
+    id: 90,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Ce se va afișa după rularea programului Python de mai jos? 
@@ -781,10 +802,10 @@ for x in dct:`,
       c: `21`,
       d: `(2,1)`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 90,
+    id: 91,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Produsele dintr-un magazin online sunt caracterizate prin categorie, denumire, cantitate și preț 
@@ -800,10 +821,10 @@ un anumit produs?`,
       c: `un dicționar cu intrări de forma categorie: {denumire: [cantitate, preț unitar]}`,
       d: `o listă cu șiruri de caractere de forma "categorie, denumire, cantitate și preț unitar"`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 91,
+    id: 92,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Considerăm următorul program Python: 
@@ -829,10 +850,10 @@ atunci, după rularea programului de mai sus, se va afișa:`,
       c: `27`,
       d: `17`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 92,
+    id: 93,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Considerăm următorul program Python: 
@@ -864,7 +885,7 @@ atunci, după rularea programului de mai sus, se va afișa:`,
     correctAnswer: "c",
   },
   {
-    id: 93,
+    id: 94,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Considerăm următorul program Python: 
@@ -874,13 +895,14 @@ r = set()
 for aux in f: 
     s = sum([int(x) for x in aux.split()]) 
     r.add(s) 
-Dacă fișierul text "numere.txt" are conținutul 
-20 -10 10 
-10 10 10 20 10 
-20 20 -20 30 
-50 -80 70 -20 
+Dacă fișierul text "numere.txt" are conținutul
+20 -10 10
+10 10 10 20 10
+20 20 -20 30
+50
+50 -80 70 -20
 atunci, după rularea programului de mai sus, se va afișa:`,
-    code: `print(*sorted(r)) 
+    code: `print(*sorted(r))
 f.close()`,
     codeLanguage: "python",
     options: {
@@ -889,10 +911,10 @@ f.close()`,
       c: `20 20 50 50 60`,
       d: `130`,
     },
-    correctAnswer: "c",
+    correctAnswer: "b",
   },
   {
-    id: 94,
+    id: 95,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Considerăm următorul program Python: 
@@ -921,10 +943,10 @@ atunci, după rularea programului de mai sus, ultima linie din fișierul numere.
       c: `500 1000 1100`,
       d: `1100`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 95,
+    id: 96,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Ce se va afișa pe ecran după executarea programului Python de mai jos?`,
@@ -939,10 +961,10 @@ print(f(f(7)))`,
       c: `11`,
       d: `o eroare, deoarece apelul funcției f conține un singur parametru efectiv`,
     },
-    correctAnswer: "c",
+    correctAnswer: "a",
   },
   {
-    id: 96,
+    id: 97,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Ce se va afișa pe ecran după executarea programului Python de mai jos?`,
@@ -957,10 +979,10 @@ print(f(f(30),f(50)))`,
       c: `120`,
       d: `80`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 97,
+    id: 98,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Fie următoarea funcție scrisă în limbajul Python: 
@@ -985,7 +1007,7 @@ print(r, T)`,
     correctAnswer: "d",
   },
   {
-    id: 98,
+    id: 99,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Ce se va afișa pe ecran după executarea programului de mai jos?`,
@@ -1002,10 +1024,10 @@ print(f(L))`,
       c: `[0, 1, 4, 9]`,
       d: `[0, 1, 4, 16]`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 99,
+    id: 100,
     moduleId: "programming",
     subjectId: "programare-python",
     text: `Fie următorul program scris în limbajul Python: 

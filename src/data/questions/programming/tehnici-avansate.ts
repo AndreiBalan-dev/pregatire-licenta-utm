@@ -2,7 +2,7 @@ import type { Question } from "@/data/types";
 
 export const tehniciAvansate: Question[] = [
   {
-    id: 201,
+    id: 205,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Complexitatea minimă a unui algoritm care calculează numărul tuturor submulțimilor 
@@ -15,10 +15,10 @@ unei mulțimi cu 𝑛 elemente este:`,
       c: `𝒪(2𝑛)`,
       d: `𝒪(𝑛!)`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 202,
+    id: 206,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Complexitatea minimă a unui algoritm care afişează toate submulțimile unei mulțimi cu 
@@ -31,10 +31,10 @@ unei mulțimi cu 𝑛 elemente este:`,
       c: `𝒪(𝑛)`,
       d: `𝒪(2𝑛)`,
     },
-    correctAnswer: "b",
+    correctAnswer: "d",
   },
   {
-    id: 203,
+    id: 207,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Complexitatea minimă a unui algoritm care calculează numărul modurilor în care pot fi 
@@ -47,10 +47,10 @@ aşezate n cărți pe un raft suficient de lung este:`,
       c: `𝒪(𝑛)`,
       d: `𝒪(𝑛2)`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 204,
+    id: 208,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Complexitatea  minimă a unui algoritm care afişează toate modurile în care pot fi aşezate 
@@ -63,10 +63,10 @@ n cărți pe un raft suficient de lung este:`,
       c: `𝒪(𝑛)`,
       d: `𝒪(2𝑛)`,
     },
-    correctAnswer: "b",
+    correctAnswer: "a",
   },
   {
-    id: 205,
+    id: 209,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Considerăm următorul program în limbajul C: 
@@ -102,19 +102,36 @@ else printf("0");
       c: `𝒪(log2 𝑛)`,
       d: `𝒪(𝑛3)`,
     },
-    correctAnswer: "b",
+    correctAnswer: "a",
   },
   {
-    id: 206,
+    id: 210,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Considerăm următorul program în limbajul C: 
- 
+    text: `Se consideră un șir format din maxim 100 de numere naturale distincte cuprinse între 1 și
+1000. Complexitatea minimă a unui algoritm care să afișeze numerele din șir în ordine
+crescătoare este:`,
+    code: undefined,
+    codeLanguage: undefined,
+    options: {
+      a: `𝒪(𝑛2)`,
+      b: `𝒪(𝑛3)`,
+      c: `𝒪(𝑛log2 𝑛)`,
+      d: `𝒪(𝑛)`,
+    },
+    correctAnswer: "d",
+  },
+  {
+    id: 211,
+    moduleId: "programming",
+    subjectId: "tehnici-avansate",
+    text: `Considerăm următorul program în limbajul C:
+
 Complexitatea algoritmului implementat în acest program este:`,
-    code: `#include<stdio.h> 
-int main() 
-{ 
- 
+    code: `#include<stdio.h>
+int main()
+{
+
 int a[100],i,j,n,s; 
  
 scanf("%d",&n); 
@@ -149,10 +166,10 @@ return 0;
       c: `𝒪(𝑛2)`,
       d: `𝒪(𝑛3)`,
     },
-    correctAnswer: "c",
+    correctAnswer: "b",
   },
   {
-    id: 207,
+    id: 212,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Considerăm următorul program în limbajul C: 
@@ -189,10 +206,10 @@ else printf("0");
       c: `1 dacă şi numai dacă tabloul a este sortat crescător şi 0 altfel;`,
       d: `1 dacă şi numai dacă în tabloul a valorile negative se află înaintea celor pozitive şi 0 altfel;`,
     },
-    correctAnswer: "c",
+    correctAnswer: "d",
   },
   {
-    id: 208,
+    id: 213,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Considerăm următorul program în limbajul C: 
@@ -239,7 +256,7 @@ return 0;
     correctAnswer: "b",
   },
   {
-    id: 209,
+    id: 214,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Se consideră următoarea funcţie recursivă, scrisă în limbajul C: 
@@ -262,10 +279,10 @@ Ce valoare va returna funcția după apelul 𝐹(38423)?`,
       c: `2`,
       d: `8`,
     },
-    correctAnswer: "b",
+    correctAnswer: "d",
   },
   {
-    id: 210,
+    id: 215,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Se consideră următorul program în limbajul C: 
@@ -309,10 +326,10 @@ return 0;
       c: `-20`,
       d: `-5`,
     },
-    correctAnswer: "c",
+    correctAnswer: "b",
   },
   {
-    id: 211,
+    id: 216,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Se consideră următoarea funcţie recursivă, scrisă în limbajul C: 
@@ -334,10 +351,10 @@ Ce valoare va returna funcția după apelul 𝑓(6904)?`,
       c: `9`,
       d: `6`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 212,
+    id: 217,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Se consideră următoarea funcţie recursivă, scrisă în limbajul C: 
@@ -357,10 +374,10 @@ Pentru ce valoare a parametrului 𝑥 funcția 𝑓 va întoarce valoarea 57?`,
       c: `10`,
       d: `8`,
     },
-    correctAnswer: "b",
+    correctAnswer: "a",
   },
   {
-    id: 213,
+    id: 218,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Se consideră următoarea funcţie recursivă, scrisă în limbajul C: 
@@ -382,10 +399,10 @@ int p(int n,int x)
       c: `numărul natural 𝑛 nu este prim;`,
       d: `numărul natural 𝑛 este impar.`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 214,
+    id: 219,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Indicaţi care dintre următorii algoritmi nu se bazează pe tehnica de programare Divide et 
@@ -398,10 +415,10 @@ Impera:`,
       c: `sortarea rapidă;`,
       d: `căutarea binară;`,
     },
-    correctAnswer: "c",
+    correctAnswer: "a",
   },
   {
-    id: 215,
+    id: 220,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Stabiliți care dintre următoarele metode de sortare se bazează pe tehnica de programare 
@@ -414,10 +431,10 @@ Divide et Impera:`,
       c: `sortarea prin interclasare;`,
       d: `Bubblesort;`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 216,
+    id: 221,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Indicaţi care dintre următoarele metode de sortare nu are complexitatea 𝒪(𝑛log2 𝑛):`,
@@ -429,10 +446,10 @@ Divide et Impera:`,
       c: `sortarea prin numărare.`,
       d: `sortarea rapidă;`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 217,
+    id: 222,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Considerăm următoarele două funcții scrise în limbajul C: 
@@ -470,10 +487,10 @@ fi 𝐹(0, 𝑛−1), precizați tehnica de programare utilizată în cadrul fun
       c: `backtracking;`,
       d: `programarea dinamică;`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 218,
+    id: 223,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Fie 𝑣 un tablou unidimensional format din 1000000 de numere reale ordonate 
@@ -487,10 +504,10 @@ tabloul 𝑣, algoritmul de căutare binară va efectua:`,
       c: `nu se poate folosi algoritmul de căutare binară în acest caz.`,
       d: `exact 1000000 de comparaţii;`,
     },
-    correctAnswer: "d",
+    correctAnswer: "b",
   },
   {
-    id: 219,
+    id: 224,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Considerăm următoarea funcție scrisă în limbajul C: 
@@ -521,10 +538,10 @@ else
       c: `suma valorilor din tabloul 𝑎.`,
       d: `dublul sumei valorilor din tabloul 𝑎;`,
     },
-    correctAnswer: "b",
+    correctAnswer: "c",
   },
   {
-    id: 220,
+    id: 225,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Dacă ultima soluție afişată de algoritmul backtracking pentru generarea tuturor 
@@ -538,10 +555,10 @@ afişată este:`,
       c: `7,6,5,3,4,2,1`,
       d: `7,6,4,1,2,3,5`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 221,
+    id: 226,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Dacă ultima soluție afişată de algoritmul backtracking pentru generarea tuturor 
@@ -555,10 +572,10 @@ afişată este:`,
       c: `7,6,1,2,3,4,5`,
       d: `7,1,2,3,4,5,6`,
     },
-    correctAnswer: "d",
+    correctAnswer: "b",
   },
   {
-    id: 222,
+    id: 227,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Dacă ultima soluție afişată de algoritmul backtracking pentru generarea tuturor 
@@ -572,10 +589,10 @@ afişată este:`,
       c: `6,7,5,1,2,3,4`,
       d: `7,1,2,3,4,5,6`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 223,
+    id: 228,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Folosind tehnica de programare backtracking pentru a genera toate permutările mulțimii 
@@ -594,7 +611,7 @@ găsită  niciuna  convenabilă, atunci:`,
     correctAnswer: "a",
   },
   {
-    id: 224,
+    id: 229,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Considerăm ecuația 𝑎1𝑥1 + 𝑎2𝑥2 + ⋯+ 𝑎𝑛𝑥𝑛= 𝑦, unde 𝑎1, 𝑎2, … , 𝑎𝑛, 𝑦 sunt numere 
@@ -608,10 +625,10 @@ naturale nenule. Pentru a determina toate soluțiile ecuației de forma (𝑥1, 
       c: `plata unei sume folosind 𝑛 tipuri de monede;`,
       d: `descompunerea unui număr natural ca sumă de numere naturale nenule;`,
     },
-    correctAnswer: "b",
+    correctAnswer: "c",
   },
   {
-    id: 225,
+    id: 230,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Un algoritm optim care să afişeze toate subşirurile crescătoare de lungime maximă ale 
@@ -626,10 +643,10 @@ unui subşir crescător al şirului dat şi apoi metoda backtracking pentru a ge
 subşirurile crescătoare de lungime 𝑙𝑚𝑎𝑥 ale şirului considerat;`,
       d: `doar metoda programării dinamice;`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 226,
+    id: 231,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Considerăm că în Facultatea de Informatică sunt înscrişi 𝑛 studenți în anul III. Pentru a 
@@ -643,10 +660,10 @@ backtracking pentru:`,
       c: `generarea aranjamentelor formate din p elemente ale unei mulțimi cu n elemente;`,
       d: `generarea permutărilor unei mulțimi cu p elemente;`,
     },
-    correctAnswer: "c",
+    correctAnswer: "a",
   },
   {
-    id: 227,
+    id: 232,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Utilizând metoda backtracking, se generează toate descompunerile distincte ale numărului 
@@ -660,10 +677,10 @@ descompunere generată?`,
       c: `5 + 5`,
       d: `4 + 6`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 228,
+    id: 233,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Utilizând metoda backtracking, se generează toate descompunerile distincte ale numărului 
@@ -677,10 +694,10 @@ descompunere generată?`,
       c: `4 + 4 + 4 + 4`,
       d: `7 + 9`,
     },
-    correctAnswer: "c",
+    correctAnswer: "a",
   },
   {
-    id: 229,
+    id: 234,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Fie 𝑆 o sumă de bani şi 𝑣1, 𝑣2, … , 𝑣𝑛 valorile a n tipuri de monede. Presupunând că din 
@@ -695,10 +712,10 @@ utilizăm un algoritm bazat pe metoda:`,
       c: `backtracking;`,
       d: `Greedy;`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 230,
+    id: 235,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Considerăm  un rucsac cu ajutorul căruia putem transporta 66 kg şi 7 obiecte având 
@@ -713,10 +730,10 @@ obiect putem încărca şi numai o parte a sa, câştigul maxim pe care îl pute
       c: `255 RON`,
       d: `217 RON`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 231,
+    id: 236,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Considerăm  un rucsac cu ajutorul căruia putem transporta 67 kg şi 7 obiecte având 
@@ -731,10 +748,10 @@ obiect putem încărca şi numai o parte a sa, câştigul maxim pe care îl pute
       c: `114 RON`,
       d: `280 RON`,
     },
-    correctAnswer: "c",
+    correctAnswer: "b",
   },
   {
-    id: 232,
+    id: 237,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Considerăm  un rucsac cu ajutorul căruia putem transporta 53 kg şi 7 obiecte având 
@@ -749,10 +766,10 @@ obiect putem încărca şi numai o parte a sa, câştigul maxim pe care îl pute
       c: `133.5 RON`,
       d: `133 RON`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 233,
+    id: 238,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Stabiliți care dintre următoarele propoziții referitoare la tehnica de programare Greedy 
@@ -765,10 +782,10 @@ sunt adevărate:`,
       c: `conduce la o soluție optimă doar în cazul în care s-a demonstrat matematic corectitudinea criteriului de selecție pe baza căruia un element din mulțimea inițială este adăugat în soluția problemei.`,
       d: `conduce întotdeauna la o soluție optimă;`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 234,
+    id: 239,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `La un ghişeu stau la coadă 𝑛 persoane, numerotate cu 1,2, . . . , 𝑛. Cunoscând  timpii de 
@@ -789,10 +806,10 @@ dată de tabloul minim în sens lexicografic;`,
       c: `se rearanjează persoanele în ordinea descrescătoare a timpilor de servire;`,
       d: `se rearanjează persoanele în ordinea crescătoare a timpilor de servire.`,
     },
-    correctAnswer: "b",
+    correctAnswer: "d",
   },
   {
-    id: 235,
+    id: 240,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `La un ghişeu stau la coadă 7 persoane 𝑝1, 𝑝2, … , 𝑝7. Cunoscând timpii lor de servire 𝑡1 =
@@ -811,7 +828,7 @@ așteptare:`,
     correctAnswer: "a",
   },
   {
-    id: 236,
+    id: 241,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `La un ghişeu stau la coadă 7 persoane 𝑝1, 𝑝2, … , 𝑝7. Cunoscând timpii lor de servire 𝑡1 =
@@ -827,10 +844,10 @@ de așteptare:`,
       c: `𝑝7, 𝑝2, 𝑝6, 𝑝5, 𝑝1, 𝑝3, 𝑝4`,
       d: `𝑝7, 𝑝6, 𝑝2, 𝑝5, 𝑝1, 𝑝4, 𝑝3`,
     },
-    correctAnswer: "c",
+    correctAnswer: "d",
   },
   {
-    id: 237,
+    id: 242,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `În Aula Magna a Universității Titu Maiorescu din București se va organiza un festival de 
@@ -862,7 +879,7 @@ programat doar dacă începe după ce se termină spectacolul programat anterior
     correctAnswer: "c",
   },
   {
-    id: 238,
+    id: 243,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `În Aula Magna a Universității Titu Maiorescu din București se va organiza un festival de 
@@ -884,10 +901,10 @@ maxim de spectacole:`,
       c: `S2, S4, S6, S7`,
       d: `S1, S2, S4, S5, S6`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 239,
+    id: 244,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `În Aula Magna a Universității Titu Maiorescu din București se va organiza un festival de 
@@ -909,10 +926,10 @@ maxim de spectacole:`,
       c: `S1, S4, S5, S6, S7`,
       d: `S2, S4, S5, S6, S7`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 240,
+    id: 245,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Se consideră un triunghi de numere întregi format din 𝑛 linii, astfel: prima linie conține 
@@ -933,19 +950,17 @@ obține respectând regulile de mai sus folosește metoda:`,
       c: `Greedy;`,
       d: `Divide et Impera.`,
     },
-    correctAnswer: "c",
+    correctAnswer: "a",
   },
   {
-    id: 241,
+    id: 246,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Se consideră următorul triunghi de numere întregi format din 𝑛= 4 linii:  
-12
-−20
-50
-180
-14
-16
+    text: `Se consideră următorul triunghi de numere întregi format din 𝑛= 4 linii:
+10
+12   −20
+30   50   180
+21   14   20   16
  
  
 În acest triunghi se pot forma sume de numere întregi în felul următor:  
@@ -967,21 +982,14 @@ precizate mai sus?`,
     correctAnswer: "c",
   },
   {
-    id: 242,
+    id: 247,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
-    text: `Se consideră următorul triunghi de numere întregi format din 𝑛= 4 linii:  
- 
+    text: `Se consideră următorul triunghi de numere întregi format din 𝑛= 4 linii:
 100
-−12
-−20
-130
-200
-118
-210
-114
-320
-160
+−12   −20
+130   200   118
+210   114   320   160
  
  
 În acest triunghi se pot forma sume de numere întregi în felul următor:  
@@ -1000,10 +1008,10 @@ precizate mai sus?`,
       c: `608`,
       d: `428`,
     },
-    correctAnswer: "b",
+    correctAnswer: "c",
   },
   {
-    id: 243,
+    id: 248,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Fie 𝑆 o sumă de bani şi 𝑣1, 𝑣2, … , 𝑣𝑛 valorile a n tipuri de monede (se presupune că din 
@@ -1018,10 +1026,10 @@ folosind monede de tipurile date, folosește metoda:`,
       c: `Divide et Impera.`,
       d: `backtracking;`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 244,
+    id: 249,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Precizați câte subșiruri strict crescătoare de lungime maximă conține tabloul 𝑣=
@@ -1034,10 +1042,10 @@ folosind monede de tipurile date, folosește metoda:`,
       c: `1`,
       d: `4`,
     },
-    correctAnswer: "c",
+    correctAnswer: "b",
   },
   {
-    id: 245,
+    id: 250,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Precizați câte subșiruri strict crescătoare de lungime maximă conține tabloul 𝑣=
@@ -1050,10 +1058,10 @@ folosind monede de tipurile date, folosește metoda:`,
       c: `2`,
       d: `4`,
     },
-    correctAnswer: "b",
+    correctAnswer: "a",
   },
   {
-    id: 246,
+    id: 251,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Indicați lungimea maximă a unui subșir strict crescător din tabloul 𝑣=
@@ -1066,10 +1074,10 @@ folosind monede de tipurile date, folosește metoda:`,
       c: `5`,
       d: `2`,
     },
-    correctAnswer: "d",
+    correctAnswer: "b",
   },
   {
-    id: 247,
+    id: 252,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Indicați lungimea maximă a unui subșir strict crescător din tabloul 𝑣=
@@ -1082,10 +1090,10 @@ folosind monede de tipurile date, folosește metoda:`,
       c: `4`,
       d: `3`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 248,
+    id: 253,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Având la dispoziție un număr nelimitat de monede cu valorile 5 RON, 4 RON, 3 RON și 
@@ -1101,7 +1109,7 @@ folosind monede de tipurile date, folosește metoda:`,
     correctAnswer: "a",
   },
   {
-    id: 249,
+    id: 254,
     moduleId: "programming",
     subjectId: "tehnici-avansate",
     text: `Având la dispoziție un număr nelimitat de monede cu valorile 7 RON, 6 RON, 3 RON și 
@@ -1114,6 +1122,6 @@ folosind monede de tipurile date, folosește metoda:`,
       c: `4`,
       d: `5`,
     },
-    correctAnswer: "b",
+    correctAnswer: "a",
   },
 ];

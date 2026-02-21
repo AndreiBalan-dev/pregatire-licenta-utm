@@ -162,10 +162,17 @@ export function SubjectSelector({
                             </span>
                             {answered > 0 && onResetSubject && (
                               <button
+                                type="button"
+                                onPointerDown={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                }}
                                 onClick={(e) => {
                                   e.preventDefault();
                                   e.stopPropagation();
-                                  onResetSubject(subject.id);
+                                  if (confirm(`Resetezi progresul pentru ${subject.name}? (${answered} răspunsuri vor fi șterse)`)) {
+                                    onResetSubject(subject.id);
+                                  }
                                 }}
                                 className="p-0.5 rounded text-[var(--color-text-tertiary)] hover:text-[var(--color-wrong)] hover:bg-[var(--color-wrong-bg)] transition-colors cursor-pointer"
                                 title="Resetează progresul"

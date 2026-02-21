@@ -42,3 +42,6 @@ next-env.d.ts
 
 
 .claude
+
+# PDF extracted text (for future audits)
+.pdf-extracts/

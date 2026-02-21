@@ -2,7 +2,7 @@ import type { Question } from "@/data/types";
 
 export const pooCpp: Question[] = [
   {
-    id: 100,
+    id: 101,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie secvența în limbajul C++: 
@@ -27,10 +27,10 @@ return 0;
       c: `constructorul de copiere se apelează o dată, iar cel de clasă nu se apelează;`,
       d: `constructorul de clasă şi cel de copiere se apelează fiecare câte o dată;`,
     },
-    correctAnswer: "b",
+    correctAnswer: "d",
   },
   {
-    id: 101,
+    id: 102,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie secvența în limbajul C++: 
@@ -57,7 +57,7 @@ return 0;
     correctAnswer: "a",
   },
   {
-    id: 102,
+    id: 103,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie secvența în limbajul C++: 
@@ -87,10 +87,10 @@ return 0;
       c: `Declarațiile 1, 2 și 3.`,
       d: `Declarațiile 1 și 2;`,
     },
-    correctAnswer: "d",
+    correctAnswer: "b",
   },
   {
-    id: 103,
+    id: 104,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie clasa  C++:  
@@ -113,10 +113,10 @@ Semnul ~ are rolul :`,
       c: `de a preciza existența destructorului;`,
       d: `de a supraîncarca constructorul clasei;`,
     },
-    correctAnswer: "b",
+    correctAnswer: "c",
   },
   {
-    id: 104,
+    id: 105,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Polimorfismul dinamic în limbajul C++ se realizează cu ajutorul:`,
@@ -128,22 +128,19 @@ Semnul ~ are rolul :`,
       c: `pointerilor și a funcțiilor virtuale`,
       d: `nu se poate realiza polimorfismul dinamic în limbajul C++`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 105,
+    id: 106,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Secvenţa următoare în limbajul C++: 
- 
-public: 
-int a; 
-public:   
-int b; 
-afișează: 
+    text: `Secvenţa următoare în limbajul C++:
 
- 
-3`,
+public:
+int a;
+public:
+int b;
+afișează:`,
     code: `class c1{ 
 c1(int y){ a=y;cout<<"constructor 1";} 
 ~c1(){cout<<"destructor 2";} 
@@ -164,10 +161,10 @@ return 0;
       c: `constructor 1 constructor 2 constructor 1 destructor 1 destructor 2 destructor 1`,
       d: `constructor 1 constructor 1 constructor 2 destructor 2 destructor 1`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 106,
+    id: 107,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie următorul program C++: 
@@ -200,20 +197,17 @@ return 0;
       c: `B() ~B() B() D() ~B()`,
       d: `B() ~B() B() ~B()`,
     },
-    correctAnswer: "b",
+    correctAnswer: "c",
   },
   {
-    id: 107,
+    id: 108,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie programul C++: 
- 
-public:  
-public:  
-Programul afișează: 
+    text: `Fie programul C++:
 
- 
-4`,
+public:
+public:
+Programul afișează:`,
     code: `#include <iostream.h> 
 class B{  
 B(){cout<<"B()"<<endl;} 
@@ -237,10 +231,10 @@ return 0;
       c: `B() B(B&b) D() B(B &b) D() B(B &b)`,
       d: `B() B(B&b) B() D() B() D(D &d)`,
     },
-    correctAnswer: "b",
+    correctAnswer: "d",
   },
   {
-    id: 108,
+    id: 109,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie clasa C++ : 
@@ -265,10 +259,10 @@ int a,b;`,
       c: `da, fiind o supraîncarcare a celui existent;`,
       d: `nu, deoarece constructorul nu are tip returnat;`,
     },
-    correctAnswer: "c",
+    correctAnswer: "d",
   },
   {
-    id: 109,
+    id: 110,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie secvenţa următoare: 
@@ -296,7 +290,7 @@ return 0;
     correctAnswer: "b",
   },
   {
-    id: 110,
+    id: 111,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Se consideră următoarea secvență de program C++: 
@@ -316,12 +310,12 @@ B(const B &a){ x=a.x; y=a.y;}
       a: `B c2(0.0, 0,0);`,
       b: `B c4(1);`,
       c: `B c1, c3=c1;`,
-      d: `{ x=a.x; y=a.y;} };`,
+      d: `B c1(4,5);`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 111,
+    id: 112,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie următorul program C++: 
@@ -347,10 +341,10 @@ return 0;
       c: `13`,
       d: `11`,
     },
-    correctAnswer: "d",
+    correctAnswer: "a",
   },
   {
-    id: 112,
+    id: 113,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie următorul program C++: 
@@ -384,10 +378,10 @@ return 0;
       c: `B::f() D::f() B::g() B::g()`,
       d: `D::f() B::f() B::g() B::g() B::g()`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 113,
+    id: 114,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie următorul program C++: 
@@ -429,7 +423,7 @@ return 0;
     correctAnswer: "b",
   },
   {
-    id: 114,
+    id: 115,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie următorul program C++: 
@@ -450,10 +444,10 @@ delete []po;
       c: `se apelează o dată;`,
       d: `nu se apelează nicio dată;`,
     },
-    correctAnswer: "d",
+    correctAnswer: "b",
   },
   {
-    id: 115,
+    id: 116,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie următorul program C++: 
@@ -481,10 +475,10 @@ return 0;
       c: `20 21`,
       d: `20 22`,
     },
-    correctAnswer: "c",
+    correctAnswer: "a",
   },
   {
-    id: 116,
+    id: 117,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie următorul program C++: 
@@ -514,10 +508,10 @@ return 0;
       c: `5.5 4.5 2.5 2.5`,
       d: `2.5 5.5 4.5 3.5`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 117,
+    id: 118,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie secvența de program C++: 
@@ -542,10 +536,10 @@ return 0;
       c: `ilegală, deoarece s este dublu definit, în clasă și în afara ei;`,
       d: `corectă, deoarece membri statici există înainte de a se crea obiecte din clasă.`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 118,
+    id: 119,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie secvența C++: 
@@ -566,10 +560,10 @@ double im;`,
       c: `complex z1(5.2, 3.6);`,
       d: `complex z1(5.2, 3.6), z2=z1;`,
     },
-    correctAnswer: "c",
+    correctAnswer: "d",
   },
   {
-    id: 119,
+    id: 120,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie secvența C++:  
@@ -597,12 +591,8 @@ B(){cout << "B ";}
 }; 
 int  main(){ 
 B ob1; 
-return 0; 
-} 
- 
-
- 
-9`,
+return 0;
+}`,
     codeLanguage: "cpp",
     options: {
       a: `A1 A2 AA2 A1 AA1 B`,
@@ -610,10 +600,10 @@ return 0;
       c: `A2 A2 AA2 AA1 A1 B`,
       d: `A2 A1 AA2 A1 AA1 B`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 120,
+    id: 121,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie programul C++: 
@@ -649,10 +639,10 @@ return 0;
       c: `2 6`,
       d: `2 5`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 121,
+    id: 122,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie următorul program C++: 
@@ -670,12 +660,8 @@ int varsta, salariul;
 friend ostream & operator<<(ostream &out,persoana p){ 
 int main(){ 
 persoana p(1);cout<<p; 
-return 0; 
-} 
- 
-
- 
-10`,
+return 0;
+}`,
     codeLanguage: "cpp",
     options: {
       a: `1 1`,
@@ -686,7 +672,7 @@ return 0;
     correctAnswer: "c",
   },
   {
-    id: 122,
+    id: 123,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie programul C++: 
@@ -713,7 +699,7 @@ c b=a;
     correctAnswer: "a",
   },
   {
-    id: 123,
+    id: 124,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie următorul program C++: 
@@ -735,10 +721,10 @@ delete []po;
       c: `se apelează de trei ori;`,
       d: `se apelează de patru ori.`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 124,
+    id: 125,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `O funcție independentă declarată friend în domeniul public dintr-o clasă C++ și care 
@@ -751,10 +737,10 @@ primește ca parametru o referință la un obiect al clasei respective are acces
       c: `la toți membrii;`,
       d: `doar la membrii declarați public;`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 125,
+    id: 126,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie următorul program C++: 
@@ -782,7 +768,7 @@ return 0;
     correctAnswer: "c",
   },
   {
-    id: 126,
+    id: 127,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Considerăm următorul program C++: 
@@ -812,7 +798,7 @@ return 0;
     correctAnswer: "b",
   },
   {
-    id: 127,
+    id: 128,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie programul C++: 
@@ -840,7 +826,7 @@ return 0;
     correctAnswer: "c",
   },
   {
-    id: 128,
+    id: 129,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie programul următor C++: 
@@ -872,10 +858,10 @@ return 0;
       c: `eroare, operatorul + nu se poate aplica pentru tipuri abstracte de date.`,
       d: `programul afișează valoarea -5;`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 129,
+    id: 130,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie următorul program C++: 
@@ -904,10 +890,10 @@ return 0;
       c: `1+2+3;`,
       d: `1+2;`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 130,
+    id: 131,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Considerăm următorul program C++: 
@@ -941,10 +927,10 @@ return 0;
       c: `9`,
       d: `10`,
     },
-    correctAnswer: "c",
+    correctAnswer: "d",
   },
   {
-    id: 131,
+    id: 132,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Considerăm următorul program C++: 
@@ -983,15 +969,44 @@ return 0;
       c: `1+2;`,
       d: `1+3;`,
     },
-    correctAnswer: "c",
+    correctAnswer: "d",
   },
   {
-    id: 132,
+    id: 133,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++: 
-                   
-public:  
+    text: `Fie data urmatoarea ierarhie de clase C++:
+
+class B {...}
+class D1:B{...}
+class D2:B{...}
+class M1:D1, public D2{...}
+class M2:virtual D1, virtual D2 {...}
+
+Considerăm următoarele afirmaţii:
+1. clasa M1 va moşteni un obiect de tip B;
+2. clasa M1 va moşteni două obiecte de tip B;
+3. clasa M2 va va moşteni un obiect de tip B;
+4. clasa M2 va moşteni două obiecte de tip B.
+
+Precizaţi care dintre afirmaţiile de mai sus sunt corecte:`,
+    code: undefined,
+    codeLanguage: undefined,
+    options: {
+      a: `2+3`,
+      b: `1+2`,
+      c: `1+3`,
+      d: `2+4`,
+    },
+    correctAnswer: "a",
+  },
+  {
+    id: 134,
+    moduleId: "programming",
+    subjectId: "poo-cpp",
+    text: `Fie următorul program C++:
+
+public:
 int x; 
 B(int i=16) { x=i; } 
 B f(B ob) { return x+ob.x; }  
@@ -1020,7 +1035,7 @@ return 0;
     correctAnswer: "d",
   },
   {
-    id: 133,
+    id: 135,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie următorul program C++: 
@@ -1061,10 +1076,10 @@ return 0;
       c: `eroare, metoda get_x() nu poate fi declarată static;`,
       d: `programul afişează valoarea 220.`,
     },
-    correctAnswer: "b",
+    correctAnswer: "a",
   },
   {
-    id: 134,
+    id: 136,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie următorul program C++: 
@@ -1087,10 +1102,10 @@ return 0;
       c: `-3.6`,
       d: `eroare, parametrizarea clasei T este incorrect realizată`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 135,
+    id: 137,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie următorul program C++: 
@@ -1103,13 +1118,9 @@ int f(int x, int y){ return x-y;}
 int main(){  
 int a=5; 
 float b=8.6; 
-cout<<f(a,b); 
-return 0; 
-} 
- 
-
- 
-16`,
+cout<<f(a,b);
+return 0;
+}`,
     codeLanguage: "cpp",
     options: {
       a: `3.6`,
@@ -1120,7 +1131,7 @@ return 0;
     correctAnswer: "c",
   },
   {
-    id: 136,
+    id: 138,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie următorul program C++: 
@@ -1145,12 +1156,12 @@ return 0;
       a: `-3`,
       b: `eroare, în clasa derivată D nu se poate accesa data membră privată x a clasei B`,
       c: `-4`,
-      d: `{return x+a.x; }}; int main() { D ob1(7), ob2(-12); cout<<(ob1+ob2).get_x(); return 0; }`,
+      d: `-5`,
     },
-    correctAnswer: "d",
+    correctAnswer: "b",
   },
   {
-    id: 137,
+    id: 139,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie următorul program C++: 
@@ -1183,7 +1194,7 @@ return 0;
     correctAnswer: "a",
   },
   {
-    id: 138,
+    id: 140,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie următorul program C++: 
@@ -1218,7 +1229,7 @@ return 0;
     correctAnswer: "c",
   },
   {
-    id: 139,
+    id: 141,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `O funcţie friend diferă de o metodă obişnuită a unei clase prin faptul că:`,
@@ -1230,10 +1241,10 @@ return 0;
       c: `nu se poate defini inline;`,
       d: `nu primeşte pointerul implicit la obiect this;`,
     },
-    correctAnswer: "c",
+    correctAnswer: "d",
   },
   {
-    id: 140,
+    id: 142,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `O funcţie independentă declarată friend în domeniul private dintr-o clasă şi care primeşte 
@@ -1246,10 +1257,10 @@ ca parametru o referinţă la un obiect al clasei respective are acces:`,
       c: `la toti membrii;`,
       d: `doar la membrii publici;`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 141,
+    id: 143,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Fie următorul program C++:  
@@ -1280,10 +1291,10 @@ int main()
       c: `apeleaza de trei ori supraincarcarea operatorului =;`,
       d: `apeleaza de trei ori constructorul de copiere, o data constructorul implicit;`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 142,
+    id: 144,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `De câte ori este apelat destructorul clasei Persoana în programul urmãtor C++?  
@@ -1310,10 +1321,10 @@ delete ppp[i];
       c: `10;`,
       d: `6;`,
     },
-    correctAnswer: "c",
+    correctAnswer: "b",
   },
   {
-    id: 143,
+    id: 145,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `În programul urmãtor C++:  
@@ -1358,10 +1369,10 @@ int main()
       c: `constructor – de patru ori, constructor de copiere – o datã, destructor – de patru ori;`,
       d: `constructor – de trei ori, constructor de copiere - de douã ori, destructor de cinci ori;`,
     },
-    correctAnswer: "c",
+    correctAnswer: "b",
   },
   {
-    id: 144,
+    id: 146,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Presupunem că în C++ clasa A este prietenă cu clasa B, iar clasa B este prietenă cu clasa 
@@ -1374,10 +1385,10 @@ C. Care dintre următoarele afirmații este adevărată?`,
       c: `Clasa A devine automat prietenă cu clasa C`,
       d: `Relația de prietenie nu este tranzitivă, prin urmare clasa A nu este prietenă clasei C.`,
     },
-    correctAnswer: "b",
+    correctAnswer: "d",
   },
   {
-    id: 145,
+    id: 147,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Se consideră programul următor C++: 
@@ -1407,7 +1418,7 @@ return 0;
     correctAnswer: "d",
   },
   {
-    id: 146,
+    id: 148,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Pentru ca secvența de mai jos să se execute fără erori, precizați care dintre implementările 
@@ -1445,7 +1456,7 @@ class Box
     correctAnswer: "b",
   },
   {
-    id: 147,
+    id: 149,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Supraîncărcarea unor operatori în C++ se poate realiza prin funcţii operator sau prin 
@@ -1461,7 +1472,7 @@ funcţii friend. Una dintre diferențele dintre aceste două posibilități cons
     correctAnswer: "d",
   },
   {
-    id: 148,
+    id: 150,
     moduleId: "programming",
     subjectId: "poo-cpp",
     text: `Precizați de câte ori se realizează mecanismul de suprascriere și de câte ori mecanismul 
@@ -1485,7 +1496,7 @@ class Economist: public Angajat {
  int spor; 
  void afiseazaSalariu() { 
  void afiseazaSalariu(int bonus) { 
-  cout<<mesaj<<” ”<<aux; 
+  cout<<mesaj<<" "<<aux; 
   return aux; 
 } 
 };`,

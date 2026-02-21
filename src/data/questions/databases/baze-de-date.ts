@@ -2,7 +2,7 @@ import type { Question } from "@/data/types";
 
 export const bazeDeDate: Question[] = [
   {
-    id: 300,
+    id: 305,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `O bază de date reprezintă:`,
@@ -14,10 +14,10 @@ export const bazeDeDate: Question[] = [
       c: `Un ansamblu de posturi de lucru, fişiere şi unităţi de prelucrare`,
       d: `Un ansamblu de înregistrări accesate în paralel`,
     },
-    correctAnswer: "c",
+    correctAnswer: "b",
   },
   {
-    id: 301,
+    id: 306,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Depozitul de date reprezintă:`,
@@ -29,10 +29,10 @@ export const bazeDeDate: Question[] = [
       c: `O bază de date special concepută prin agregarea tuturor datelor dintr-o organizaţie sau întreprindere, în vederea sprijinirii procesului de luare a deciziilor`,
       d: `O bază de date împreună cu SGBD-ul asociat`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 302,
+    id: 307,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Nivelul fizic de abstractizare a datelor permite:`,
@@ -44,10 +44,10 @@ export const bazeDeDate: Question[] = [
       c: `Proiectarea dicţionarului de date`,
       d: `Automatizarea operaţiilor de întreţinere şi dezvoltare a programelor`,
     },
-    correctAnswer: "c",
+    correctAnswer: "a",
   },
   {
-    id: 303,
+    id: 308,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Când se recomandă să se introducă datele într-o baza de date?`,
@@ -59,10 +59,10 @@ export const bazeDeDate: Question[] = [
       c: `După crearea tuturor tabelelor şi definirea restricţiilor`,
       d: `După crearea fiecărei tabele în parte`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 304,
+    id: 309,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Care dintre următoarele enunţuri caracterizează modelul relaţional?`,
@@ -74,10 +74,10 @@ export const bazeDeDate: Question[] = [
       c: `Este fundamentat pe teoria matematică a relaţiilor`,
       d: `Respectă restricţiile referenţiale`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 305,
+    id: 310,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Intersecţia a două relaţii:`,
@@ -89,10 +89,10 @@ export const bazeDeDate: Question[] = [
       c: `Are ca rezultat o relaţie cu un număr dublu de linii`,
       d: `Cere ca acestea sa aibă aceeaşi schemă`,
     },
-    correctAnswer: "c",
+    correctAnswer: "d",
   },
   {
-    id: 306,
+    id: 311,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Se dă tabelul: 
@@ -110,7 +110,7 @@ pentru fiecare compartiment care incepe cu litera "J"?`,
     correctAnswer: "c",
   },
   {
-    id: 307,
+    id: 312,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Ce se va obţine prin următoarea interogare (Transact) SQL:`,
@@ -125,10 +125,10 @@ WHERE CodLoc IN
       c: `Codul localităţii din care este studentul Ionescu M Petre`,
       d: `Numele studenţilor asemănătoare cu Ionescu M Petre`,
     },
-    correctAnswer: "d",
+    correctAnswer: "b",
   },
   {
-    id: 308,
+    id: 313,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Se dă următoarea instrucțiune (Transact) SQL: 
@@ -144,10 +144,10 @@ WHERE ValTot IN (100, 200)`,
       c: `Numai facturile emise cu valoare intre 100 şi 200, exclusiv capetele`,
       d: `Numai facturile emise cu valoarea de 100 sau 200`,
     },
-    correctAnswer: "c",
+    correctAnswer: "d",
   },
   {
-    id: 309,
+    id: 314,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Se dă tabelul: 
@@ -162,10 +162,10 @@ s-au emis cel puţin 3 chitanţe?`,
       c: `SELECT COUNT(Data), COUNT(NrChitanta) FROM CHITANTE WHERE Data IS NULL`,
       d: `SELECT Nrchitanta, Suma, Data FROM CHITANTE HAVING COUNT(NrChitanta)>=3`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 310,
+    id: 315,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Se dă entitatea ANGAJATI, cu următoarele atribute:  
@@ -180,10 +180,10 @@ de începutul anului 2025, cu profesia "informatician"?`,
       c: `UPDATE Angajati SET CodAngaj = Null WHERE DataAngajare <’1/1/2025’ AND Profesia LIKE ‘%informatician%’`,
       d: `DELETE FROM Angajati WHERE DataAngajare < ’1/1/2025’ AND Profesia LIKE ‘%informatician%’`,
     },
-    correctAnswer: "b",
+    correctAnswer: "d",
   },
   {
-    id: 311,
+    id: 316,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Care dintre urmatoarele comenzi SQL sunt destinate manipulării datelor?`,
@@ -198,7 +198,7 @@ de începutul anului 2025, cu profesia "informatician"?`,
     correctAnswer: "a",
   },
   {
-    id: 312,
+    id: 317,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Ce folosiți atunci când doriți să identificați în mod unic fiecare înregistrare a unui tabel?`,
@@ -210,10 +210,10 @@ de începutul anului 2025, cu profesia "informatician"?`,
       c: `Cheia primară`,
       d: `O regulă de validare`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 313,
+    id: 318,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Când creaţi o bază de date, care sunt fişierele care trebuie create obligatoriu?`,
@@ -225,10 +225,10 @@ de începutul anului 2025, cu profesia "informatician"?`,
       c: `Un fişier de log primar`,
       d: `Un fişier de date primar, un fişier de date secundar şi un fişier de log`,
     },
-    correctAnswer: "b",
+    correctAnswer: "a",
   },
   {
-    id: 314,
+    id: 319,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Pentru o bază de date care stochează datele despre producțiile cinematografice românești, 
@@ -241,10 +241,10 @@ relația dintre entitățile ACTOR și FILM este:`,
       c: `Este o relație unu la mai mulți (one to many)`,
       d: `Este o relație mai mulți la mai mulți (many to many)`,
     },
-    correctAnswer: "b",
+    correctAnswer: "d",
   },
   {
-    id: 315,
+    id: 320,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Care este scopul utilizării unei interogări intr-o bază de date?`,
@@ -256,10 +256,10 @@ relația dintre entitățile ACTOR și FILM este:`,
       c: `Afişează şi modifică relaţii dintre tabele`,
       d: `Modifică modul de stocare a datelor pe suporţii magnetici`,
     },
-    correctAnswer: "c",
+    correctAnswer: "b",
   },
   {
-    id: 316,
+    id: 321,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Folosind relaţia cadru_did(cod, nume, graddid, data_ang, sal_neg, sal_merit), să se specifice 
@@ -275,7 +275,7 @@ care dintre următoarele exemple este corectă:`,
     correctAnswer: "c",
   },
   {
-    id: 317,
+    id: 322,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Interogarea:`,
@@ -289,10 +289,10 @@ care dintre următoarele exemple este corectă:`,
       c: `Este greşită deoarece funcţia min() nu se foloseşte cu şiruri de caractere`,
       d: `Este corectă`,
     },
-    correctAnswer: "c",
+    correctAnswer: "b",
   },
   {
-    id: 318,
+    id: 323,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Se poate folosi acelaşi nume pentru mai multe tabele?`,
@@ -300,14 +300,14 @@ care dintre următoarele exemple este corectă:`,
     codeLanguage: undefined,
     options: {
       a: `Da, dar să nu aparţină aceleeaşi instanţe`,
-      b: `Da, dar să nu aparţină aceleeaşi`,
+      b: `Da, dar să nu aparţină aceleeaşi baze de date`,
       c: `Nu`,
       d: `Da, dacă nu aparţin aceleeaşi scheme`,
     },
-    correctAnswer: "b",
+    correctAnswer: "d",
   },
   {
-    id: 319,
+    id: 324,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Ce tip de integritate cere ca toate liniile unui tabel să aibă un identificator unic, cunoscut 
@@ -320,10 +320,10 @@ ca cheie primara?`,
       c: `Integritatea entităţii`,
       d: `Integritatea de coloană`,
     },
-    correctAnswer: "b",
+    correctAnswer: "c",
   },
   {
-    id: 320,
+    id: 325,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Avem apriori o multitudine de restricţii, dată de o mulţime de dependenţe funcţionale  F. 
@@ -339,7 +339,7 @@ Aceasta este folosită la:`,
     correctAnswer: "b",
   },
   {
-    id: 321,
+    id: 326,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Fie tabelul METEO(localit  varchar(30), tempmin numeric(3), tempmax numeric(4)). 
@@ -352,10 +352,10 @@ Să se stabilească în care dintre exemplele următoare se folosesc incorect op
       c: `SELECT localit*2, tempmax*2 FROM meteo`,
       d: `SELECT localit, -tempmin minim, +tempmax maxim FROM meteo`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 322,
+    id: 327,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Operatorul NOT nu se poate folosi cu:`,
@@ -367,10 +367,10 @@ Să se stabilească în care dintre exemplele următoare se folosesc incorect op
       c: `Operatorul LIKE`,
       d: `Operatorul IN (lista)`,
     },
-    correctAnswer: "c",
+    correctAnswer: "a",
   },
   {
-    id: 323,
+    id: 328,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Interogarea:`,
@@ -384,10 +384,10 @@ WHERE salariu = MAX (salariu)`,
       c: `Este corectă deoarece funcţia MAX() se foloseşte în clauza WHERE`,
       d: `Este greşită deoarece funcţia MIN () nu se foloseşte cu şiruri de caractere`,
     },
-    correctAnswer: "d",
+    correctAnswer: "a",
   },
   {
-    id: 324,
+    id: 329,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Se dau tabelele: 
@@ -407,10 +407,10 @@ ON ZILE1.Data=ZILE2.Data`,
       c: `Zilele în care au lucrat simultan cei doi angajaţi`,
       d: `Numărul total de zile în care au lucrat cei doi angajaţi`,
     },
-    correctAnswer: "b",
+    correctAnswer: "c",
   },
   {
-    id: 325,
+    id: 330,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Se dau tabelele: 
@@ -425,13 +425,13 @@ WHERE a. ID_Compart = c. ID_Compart`,
     options: {
       a: `Selecţia, proiecţia şi join`,
       b: `Intersecţia, proiecţia şi join`,
-      c: `Proiecţia şi join`,
+      c: `Diferenţa, proiecţia şi join`,
       d: `Selecţia, intersecţia şi join`,
     },
-    correctAnswer: "c",
+    correctAnswer: "a",
   },
   {
-    id: 326,
+    id: 331,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Se dau tabelele: 
@@ -453,10 +453,10 @@ HAVING COUNT (DISTINCT po1.Data)> COUNT(DISTINCT po2.Data)`,
       c: `Numărul angajaţilor care au aceleaşi zile lucrate cu 'Ionescu'`,
       d: `Angajaţii cu un număr de zile lucrate mai mare decât ale lui 'Ionescu'`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 327,
+    id: 332,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `O bază de date distribuită este:`,
@@ -468,30 +468,31 @@ HAVING COUNT (DISTINCT po1.Data)> COUNT(DISTINCT po2.Data)`,
       c: `O colecţie de date şi de scheme partajate şi interconectate logic, distribuite fizic pe calculatoarele unei reţele`,
       d: `O colecţie de date împărţită în mai multe fragmente`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 328,
+    id: 333,
     moduleId: "databases",
     subjectId: "baze-de-date",
-    text: `Baza de date curentă include o tabelă numită Employees  cu următoarele coloane: 
-- firstName,  care păstrează prenumele unui angajat; 
-- lastName,  care păstrează numele unui angajat;  
-- depID,  care păsrează  ID –ul departamentului în care lucrează angajaţii. 
-Aţi cerut să se afişeze o listă cu angajaţii sortată descrescător după ID departament, apoi 
-crescător după numele angajaţilor (prenume urmat de nume) în ordinea alfabetică.`,
-    code: `Ce instrucţiune SELECT trebuie să folosiţi?`,
-    codeLanguage: "sql",
+    text: `Baza de date curentă include o tabelă numită Employees  cu următoarele coloane:
+- firstName,  care păstrează prenumele unui angajat;
+- lastName,  care păstrează numele unui angajat;
+- depID,  care păsrează  ID –ul departamentului în care lucrează angajaţii.
+Aţi cerut să se afişeze o listă cu angajaţii sortată descrescător după ID departament, apoi
+crescător după numele angajaţilor (prenume urmat de nume) în ordinea alfabetică.
+Ce instrucţiune SELECT trebuie să folosiţi?`,
+    code: undefined,
+    codeLanguage: undefined,
     options: {
       a: `SELECT lastName, (firstName + ' ' + lastName) AS 'Full Name' FROM Employees ORDER BY lastName, depID`,
       b: `SELECT depID, (firstName + ' ' + lastName) AS 'Full Name' FROM Employees ORDER BY depID, lastName ASC`,
       c: `SELECT (firstName + ' ' + lastName) AS 'Full Name' FROM Employees ORDER BY depID DESC, lastName`,
       d: `SELECT (firstName + ' ' + lastName) AS 'Full Name' FROM Employees ORDER BY depID DESC, 'Full Name'`,
     },
-    correctAnswer: "b",
+    correctAnswer: "d",
   },
   {
-    id: 329,
+    id: 334,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Datorită mutării activităţii comerciale din Germania în SUA, trebuie să schimbăm  
@@ -505,17 +506,16 @@ bază de date, ce ar mai trebui să faceţi?`,
       c: `Ştergeţi indecşii şi constrângerile pentru toate tabele existente din baza de date. Modificaţi collation pentru coloanele acelor tabele.Recreaţi indecşii şi constrângerile.`,
       d: `Modificaţi database collation şi selectaţi opţiunea auto-indexing.`,
     },
-    correctAnswer: "b",
+    correctAnswer: "a",
   },
   {
-    id: 330,
+    id: 335,
     moduleId: "databases",
     subjectId: "baze-de-date",
-    text: `Ce se va obţine prin următoarea interogare (Transact) SQL: 
-Petre’) ?`,
-    code: `SELECT Nume FROM STUDENTI INNER JOIN LOCALIT ON 
-STUDENTI.CodLoc=LOCALIT.CodLoc 
-WHERE CodLoc NOT IN (SELECT CodLoc FROM STUDENTI WHERE Nume = ‘Ionescu M`,
+    text: `Ce se va obţine prin următoarea interogare (Transact) SQL:`,
+    code: `SELECT Nume FROM STUDENTI INNER JOIN LOCALIT ON
+STUDENTI.CodLoc=LOCALIT.CodLoc
+WHERE CodLoc NOT IN (SELECT CodLoc FROM STUDENTI WHERE Nume = ‘Ionescu M Petre’)`,
     codeLanguage: "sql",
     options: {
       a: `Numărul studenţilor care nu sunt din aceeaşi localitate cu 'Ionescu M Petre'`,
@@ -523,10 +523,10 @@ WHERE CodLoc NOT IN (SELECT CodLoc FROM STUDENTI WHERE Nume = ‘Ionescu M`,
       c: `Codul localităţii din care este studentul 'Ionescu M Petre'`,
       d: `Numele studenţilor care nu sunt din aceeaşi localitate cu 'Ionescu M Petre'`,
     },
-    correctAnswer: "b",
+    correctAnswer: "d",
   },
   {
-    id: 331,
+    id: 336,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Pentru a afişa numele angajaţilor care au un salariu mai mare decât al  cel puţin unui manager 
@@ -543,10 +543,10 @@ Ce instrucţiune ar trebui să folosiţi ?`,
       c: `SELECT name FROM Employees WHERE EXISTS (SELECT * FROM Management WHERE salary < Employees.salary)`,
       d: `SELECT name FROM Employees WHERE NOT salary < ALL (SELECT salary FROM Management)`,
     },
-    correctAnswer: "d",
+    correctAnswer: "b",
   },
   {
-    id: 332,
+    id: 337,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Ce se va afişa în urma executării instrucţiunii SQL:`,
@@ -560,26 +560,27 @@ GROUP BY id_departament`,
       c: `Afişează id departament şi, pentru pentru acel id, data celei mai vechi angajări`,
       d: `Afişează id departament şi, pentru acel id, data celei mai noi angajări`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 333,
+    id: 338,
     moduleId: "databases",
     subjectId: "baze-de-date",
-    text: `Trebuie să creaţi o tabelă nouă şi să o populaţi cu aceste date folosind cel mai mic număr de 
-instrucţiuni posibil.Ce ar trebui să faceţi ?`,
-    code: `Aţi scris o instrucţiune SELECT complexă care afişează date din mai multe tabele.`,
-    codeLanguage: "sql",
+    text: `Aţi scris o instrucţiune SELECT complexă care afişează date din mai multe tabele.
+Trebuie să creaţi o tabelă nouă şi să o populaţi cu aceste date folosind cel mai mic număr de
+instrucţiuni posibil. Ce ar trebui să faceţi ?`,
+    code: undefined,
+    codeLanguage: undefined,
     options: {
       a: `Creaţi tabela şi apoi folosiţi instrucţiunea INSERT INTO ... SELECT FROM pentru a o popula.`,
       b: `Folosiţi o instrucţiune SELECT INTO pentru a crea şi popula tabela.`,
       c: `Folosiţi o instrucţiune SELECT INTO pentru a crea şi popula o tabelă temporară, apoi creaţi tabela permanentă din tabela temporară.`,
       d: `Creaţi tabela, apoi folosiţi o instrucţiune SELECT INTO pentru a o popula.`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
-    id: 334,
+    id: 339,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Firma la care lucraţi vinde echipamente de la fabricanţi  multipli care folosesc  ID-uri de 
@@ -594,10 +595,10 @@ permise intrări multiple pentru acelaţi produs. Ce instrucţiune ar trebui fol
       c: `CREATE TABLE Products ( productID int, manufacturerID int, productName varchar(50), price decimal(7,2), CONSTRAINT product_key PRIMARY KEY (productID, manufacturerID))`,
       d: `CREATE TABLE Products ( productID int, manufacturerID int, productName varchar(50) PRIMARY KEY, price decimal(7,2))`,
     },
-    correctAnswer: "b",
+    correctAnswer: "c",
   },
   {
-    id: 335,
+    id: 340,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Comanda: 
@@ -612,10 +613,10 @@ ORDER BY cantp`,
       c: `Proiecţie şi joncţiune`,
       d: `Selecţie şi intersecţie`,
     },
-    correctAnswer: "c",
+    correctAnswer: "b",
   },
   {
-    id: 336,
+    id: 341,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Din categoria funcţiilor de grup face parte:`,
@@ -630,19 +631,19 @@ ORDER BY cantp`,
     correctAnswer: "c",
   },
   {
-    id: 337,
+    id: 342,
     moduleId: "databases",
     subjectId: "baze-de-date",
-    text: `Dându-se tabelele Produse(codp, denp, pret ) şi Comenzi(nr_cda, codp, cant, data), 
-instrucţiunile SELECT: 
+    text: `Dându-se tabelele Produse(codp, denp, pret ) şi Comenzi(nr_cda, codp, cant, data),
+instrucţiunile SELECT:`,
+    code: `SELECT *
+FROM comenzi c
+WHERE 'Stilou'=(SELECT denp FROM produse p WHERE  p.codp=c.codp)
+  şi
+SELECT c.nr_cda, c.codp, c.cant, c.data
+FROM comenzi c, produse p
+WHERE p.codp=c.codp
 AND  p.denp = 'Stilou'`,
-    code: `SELECT * 
-FROM comenzi c 
-WHERE 'Stilou'=(SELECT denp FROM produse p WHERE  p.codp=c.codp) 
-  şi 
-SELECT c.nr_cda, c.codp, c.cant, c.data 
-FROM comenzi c, produse p 
-WHERE p.codp=c.codp`,
     codeLanguage: "sql",
     options: {
       a: `Ar fi identice dacă în primul SELECT s-ar folosi operatorul IN şi nu =`,
@@ -650,10 +651,10 @@ WHERE p.codp=c.codp`,
       c: `Sunt diferite`,
       d: `Sunt identice`,
     },
-    correctAnswer: "c",
+    correctAnswer: "d",
   },
   {
-    id: 338,
+    id: 343,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Comanda DROP nume_tabela este echivalentă cu comanda:`,
@@ -665,10 +666,10 @@ WHERE p.codp=c.codp`,
       c: `ALTER TABLE nume_tabela DROP column all`,
       d: `Cu nici una`,
     },
-    correctAnswer: "a",
+    correctAnswer: "d",
   },
   {
-    id: 339,
+    id: 344,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Folosind tabela cadru_did(cod, nume, graddid, data_ang, sal_neg, sal_merit), creată şi 
@@ -684,7 +685,7 @@ populată cu date, să se specifice care dintre exemplele următoare este corect
     correctAnswer: "b",
   },
   {
-    id: 340,
+    id: 345,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Un utilizator a șters accidental o linie din tabela Produse, care conține o coloană IDENTITY 
@@ -698,16 +699,17 @@ mesaj de eroare. Ce ar trebui să faceți?`,
       c: `Executați instrucțiunea SET IDENTITY_INSERT Produse ON și apoi inserați linia.`,
       d: `Puneți pe on proprietatea IDENTITY_INSERT folosind SQL Server Management Studio (SSMS) și apoi inserați linia.`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 341,
+    id: 346,
     moduleId: "databases",
     subjectId: "baze-de-date",
-    text: `liniile din prima tabelă și numai liniile care îndeplinesc condiția din JOIN din a doua tabelă. 
+    text: `Scrieți o instrucțiune SELECT care extrage date din două tabele. Trebuie să returnați toate
+liniile din prima tabelă și numai liniile care îndeplinesc condiția din JOIN din a doua tabelă.
 Ce tip de JOIN ar trebui să folosiți?`,
-    code: `Scrieți o instrucțiune SELECT care extrage date din două tabele. Trebuie să returnați toate`,
-    codeLanguage: "sql",
+    code: undefined,
+    codeLanguage: undefined,
     options: {
       a: `LEFT`,
       b: `RIGHT`,
@@ -717,7 +719,7 @@ Ce tip de JOIN ar trebui să folosiți?`,
     correctAnswer: "a",
   },
   {
-    id: 342,
+    id: 347,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Compania dumneavoastră are un număr de mașini care sunt folosite de angajați pentru o 
@@ -739,7 +741,7 @@ folosită?`,
     correctAnswer: "b",
   },
   {
-    id: 343,
+    id: 348,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Compania dumneavoastră folosește tabela WebSites pentru a urmări informația despre 
@@ -756,18 +758,18 @@ Ce instrucțiune ar trebui să folosiți?`,
       c: `SELECT SUM(hits)/COUNT(id) FROM WebStats GROUP BY id;`,
       d: `SELECT COUNT(*), AVG(hits) FROM WebStats GROUP BY hits;`,
     },
-    correctAnswer: "c",
+    correctAnswer: "a",
   },
   {
-    id: 344,
+    id: 349,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Ați creat tabela Angajati cu instrucțiunea: 
 Se vor adăuga, apoi,  patru persoane: 
-- ”Angajat unu” în  departamentul Sales; 
-- “Angajat doi” în departamentul Sales; 
-- “Angajat trei” în departamentul Marketing; 
-- “Angajat patru” în departamentul HR. 
+- "Angajat unu" în  departamentul Sales; 
+- "Angajat doi" în departamentul Sales; 
+- "Angajat trei" în departamentul Marketing; 
+- "Angajat patru" în departamentul HR. 
 Trebuie să adăugați acești angajați tabelei Angajati folosind cea mai mică secvență de cod. Care 
 interogare ar trebui executată în acest scop?`,
     code: `CREATE TABLE Angajati (nume varchar(20), departament varchar(20));`,
@@ -792,10 +794,10 @@ INSERT INTO Angajati
       c: `INSERT INTO Angajati VALUES (' Angajat unu', 'Sales'), (' Angajat doi', 'Sales'), (' Angajat trei', 'Marketing'), (' Angajat patru', 'HR');`,
       d: `INSERT INTO Angajati (nume, departament) VALUES (' Angajat unu', 'Sales'), (' Angajat doi', 'Sales'), (' Angajat trei', 'Marketing'), (' Angajat patru', 'HR');`,
     },
-    correctAnswer: "a",
+    correctAnswer: "c",
   },
   {
-    id: 345,
+    id: 350,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Ce clauză trebuie adăugată după următoarea instrucţiune Transact SQL, pentru a fi corect 
@@ -810,10 +812,10 @@ GROUP BY id_departament`,
       c: `WHERE MAX (salariu) > 1500`,
       d: `HAVING salariu > 1500`,
     },
-    correctAnswer: "c",
+    correctAnswer: "b",
   },
   {
-    id: 346,
+    id: 351,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Ați creat tabela Angajati, în care păstrați informațiile despre angajații firmei unde lucrați, cu 
@@ -829,10 +831,10 @@ modificați coloanele tabelei?`,
       c: `Adăugați NULL la coloana nume.`,
       d: `Adăugați NOT NULL la coloanele telefon și email.`,
     },
-    correctAnswer: "b",
+    correctAnswer: "a",
   },
   {
-    id: 347,
+    id: 352,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Avand tabelele cadrudid(cod(PK), nume, graddid, cod_fac_ang(FK)) și 
@@ -844,15 +846,15 @@ WHERE f.denumire IN ('drept', 'informatica')
 GROUP BY c.graddid`,
     codeLanguage: "sql",
     options: {
-      a: `Afișează numărul total de grade didactice ale profesorilor din facultățile de 'drept' și 'informatica' b. Db-creator c. DBA d. Db-manager`,
+      a: `Afișează numărul total de grade didactice ale profesorilor din facultățile de 'drept' și 'informatica'`,
       b: `Afișează , pentru profesorii din universitate care predau la facultățile de 'informatica' și 'drept', gradul didactic și numărul de profesori care au acel grad didactic`,
       c: `Afișează , pentru profesorii angajați la facultățile de 'drept' și de 'informatica' , gradul didactic și numărul de profesori care au acel grad didactic`,
       d: `Este incorect scrisă, pentru că nu putem avea simultan clauzele JOIN si WHERE`,
     },
-    correctAnswer: "d",
+    correctAnswer: "c",
   },
   {
-    id: 348,
+    id: 353,
     moduleId: "databases",
     subjectId: "baze-de-date",
     text: `Care dintre următoarele afirmaţii  sunt adevărate despre constrângeri?`,
@@ -864,6 +866,43 @@ GROUP BY c.graddid`,
       c: `Dacă nu se specifică un nume pentru constrângere, server-ul de oferă unul`,
       d: `Indecşii creaţi de constrângerile PRIMARY KEY şi UNIQUE KEY pot fi şterşi folosind instrucţiunea DROP INDEX`,
     },
-    correctAnswer: "b",
+    correctAnswer: "d",
+  },
+  {
+    id: 354,
+    moduleId: "databases",
+    subjectId: "baze-de-date",
+    text: `Se dă tabelul:
+ANGAJATI (CodAngaj, Nume, DataAngajare, Compartiment, Profesia, Salariu)
+Care dintre următoarele instrucţiuni (Transact) SQL permite majorarea salariului cu 3% pentru
+salariaţii angajaţi în anul 2025?`,
+    code: undefined,
+    codeLanguage: undefined,
+    options: {
+      a: `UPDATE Angajati SET Salariu = Salariu + 3% WHERE DataAngajare IN 2025`,
+      b: `UPDATE Salariu FROM Angajati SET Salariu=Salariu + 3%* Salariu WHERE DataAngajare IN ('1/1/2025' , '31/12/2025')`,
+      c: `UPDATE Angajati SET Salariu = Salariu*1.03 WHERE YEAR(DataAngajare)= 2025`,
+      d: `UPDATE Salariu FROM Angajati SET Salariu = Salariu * 1.03`,
+    },
+    correctAnswer: "c",
+  },
+  {
+    id: 355,
+    moduleId: "databases",
+    subjectId: "baze-de-date",
+    text: `Următoarele interogări:`,
+    code: `1. SELECT * FROM comenzi c
+    WHERE 'penar'=(SELECT den_prod FROM produs p WHERE p.codp=c.codp)
+2. SELECT c.nr_cda, c.codp, c.cant, c.data, c.codfisc
+    FROM comenzi c, produs p
+    WHERE  p.codp=c.codp AND p.den_prod='penar'`,
+    codeLanguage: "sql",
+    options: {
+      a: `Sunt identice ca efect`,
+      b: `Sunt diferite ca efect`,
+      c: `Ar fi identice ca efect dacă în cererea 2 s-ar folosi operatorul OR în loc de AND`,
+      d: `Afişează rezultate complet diferite`,
+    },
+    correctAnswer: "a",
   },
 ];
