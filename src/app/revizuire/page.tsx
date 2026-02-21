@@ -11,7 +11,7 @@ import { modules } from "@/data/modules";
 import { cn } from "@/lib/utils";
 import type { AnswerKey } from "@/data/types";
 
-type Filter = "wrong" | "bookmarked" | "all";
+type Filter = "wrong" | "correct" | "bookmarked" | "all";
 
 const optionLabels: Record<AnswerKey, string> = { a: "A", b: "B", c: "C", d: "D" };
 
@@ -26,6 +26,10 @@ export default function RevizuirePage() {
     if (filter === "wrong") {
       questionIds = Object.entries(session.answers)
         .filter(([, a]) => !a.isCorrect)
+        .map(([id]) => Number(id));
+    } else if (filter === "correct") {
+      questionIds = Object.entries(session.answers)
+        .filter(([, a]) => a.isCorrect)
         .map(([id]) => Number(id));
     } else if (filter === "bookmarked") {
       questionIds = session.bookmarks;
@@ -48,6 +52,7 @@ export default function RevizuirePage() {
   }
 
   const wrongCount = Object.values(session.answers).filter((a) => !a.isCorrect).length;
+  const correctCount = Object.values(session.answers).filter((a) => a.isCorrect).length;
   const bookmarkCount = session.bookmarks.length;
 
   return (
@@ -66,6 +71,7 @@ export default function RevizuirePage() {
           <div className="flex flex-wrap items-center gap-2 mb-4">
             {([
               { key: "wrong" as Filter, label: "Greșite", count: wrongCount },
+              { key: "correct" as Filter, label: "Corecte", count: correctCount },
               { key: "bookmarked" as Filter, label: "Marcate", count: bookmarkCount },
               { key: "all" as Filter, label: "Toate", count: Object.keys(session.answers).length },
             ]).map((tab) => (
