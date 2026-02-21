@@ -192,7 +192,7 @@ export default function QuizPage() {
     router.replace(`/practica/${newSessionId}`);
   }, [practice, session.answers, session.settings.shuffleOptions, startPractice, router]);
 
-  // No active session — redirect to practice selection
+  // No active session - redirect to practice selection
   useEffect(() => {
     if (isLoaded && !practice) {
       router.replace("/practica");
@@ -376,7 +376,7 @@ export default function QuizPage() {
           )}
 
           <div className="flex flex-col gap-2 pt-2">
-            {/* Continue next batch — primary action if there are more */}
+            {/* Continue next batch - primary action if there are more */}
             {remainingUnanswered > 0 && (
               <Button
                 className="w-full"
