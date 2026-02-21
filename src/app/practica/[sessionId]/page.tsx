@@ -45,11 +45,12 @@ export default function QuizPage() {
     return getQuestion(qId) || null;
   }, [practice]);
 
-  // Restore previous answer if exists
+  // Restore answer only if it was made during this practice session
   useEffect(() => {
-    if (!currentQuestion) return;
+    if (!currentQuestion || !practice) return;
     const existingAnswer = session.answers[currentQuestion.id];
-    if (existingAnswer) {
+    const isFromThisSession = existingAnswer && existingAnswer.answeredAt >= practice.startedAt;
+    if (isFromThisSession) {
       setSelectedAnswer(existingAnswer.selected);
       setShowFeedback(true);
     } else {
@@ -65,7 +66,7 @@ export default function QuizPage() {
     let wrong = 0;
     for (const qId of practice.questionIds) {
       const a = session.answers[qId];
-      if (a) {
+      if (a && a.answeredAt >= practice.startedAt) {
         if (a.isCorrect) correct++;
         else wrong++;
       }
@@ -218,7 +219,8 @@ export default function QuizPage() {
                   Math.min(practice.questionIds.length, practice.currentIndex + 7)
                 ).map((qId, i) => {
                   const actualIndex = Math.max(0, practice.currentIndex - 3) + i;
-                  const answered = session.answers[qId];
+                  const raw = session.answers[qId];
+                  const answered = raw && raw.answeredAt >= practice.startedAt ? raw : undefined;
                   return (
                     <button
                       key={qId}

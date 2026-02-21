@@ -10,6 +10,7 @@ export interface PracticeState {
   questionIds: number[];
   currentIndex: number;
   mode: "practice" | "review";
+  startedAt: string;
 }
 
 export interface SubjectStat {

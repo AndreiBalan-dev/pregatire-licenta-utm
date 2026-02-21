@@ -29,12 +29,18 @@ function PracticaContent() {
     }
   }, [searchParams]);
   const [questionCount, setQuestionCount] = useState<"all" | 10 | 25 | 50>("all");
+  const [onlyUnanswered, setOnlyUnanswered] = useState(false);
 
-  const totalAvailable = useMemo(() => {
-    return selectedSubjects.reduce((sum, sid) => {
-      return sum + (questionsBySubject[sid]?.length || 0);
-    }, 0);
-  }, [selectedSubjects]);
+  const { totalAvailable, unansweredCount } = useMemo(() => {
+    let total = 0;
+    let unanswered = 0;
+    for (const sid of selectedSubjects) {
+      const questions = questionsBySubject[sid] || [];
+      total += questions.length;
+      unanswered += questions.filter((q) => !session.answers[q.id]).length;
+    }
+    return { totalAvailable: total, unansweredCount: unanswered };
+  }, [selectedSubjects, session.answers]);
 
   const toggleSubject = (id: string) => {
     setSelectedSubjects((prev) =>
@@ -60,8 +66,12 @@ function PracticaContent() {
     if (selectedSubjects.length === 0) return;
 
     let allQuestionIds = selectedSubjects.flatMap((sid) =>
-      (questionsBySubject[sid] || []).map((q) => q.id)
+      (questionsBySubject[sid] || [])
+        .filter((q) => !onlyUnanswered || !session.answers[q.id])
+        .map((q) => q.id)
     );
+
+    if (allQuestionIds.length === 0) return;
 
     if (questionCount !== "all") {
       allQuestionIds = allQuestionIds.slice(0, questionCount);
@@ -106,13 +116,32 @@ function PracticaContent() {
           {selectedSubjects.length > 0 && (
             <div className="mt-6 p-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] animate-fade-in">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <div>
+                <div className="space-y-2">
                   <span className="text-sm text-[var(--color-text-secondary)]">
-                    {totalAvailable} întrebări disponibile
+                    {onlyUnanswered ? unansweredCount : totalAvailable} întrebări{onlyUnanswered ? " nerezolvate" : " disponibile"}
                   </span>
 
+                  {/* Only unanswered toggle */}
+                  {unansweredCount < totalAvailable && (
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <button
+                        onClick={() => setOnlyUnanswered(!onlyUnanswered)}
+                        className={`relative w-9 h-5 rounded-full transition-colors cursor-pointer ${
+                          onlyUnanswered ? "bg-[var(--color-accent)]" : "bg-[var(--color-border-strong)]"
+                        }`}
+                      >
+                        <span className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform ${
+                          onlyUnanswered ? "translate-x-4" : ""
+                        }`} />
+                      </button>
+                      <span className="text-xs text-[var(--color-text-tertiary)]">
+                        Doar nerezolvate ({unansweredCount})
+                      </span>
+                    </label>
+                  )}
+
                   {/* Question count selector */}
-                  <div className="flex items-center gap-2 mt-2">
+                  <div className="flex items-center gap-2">
                     <span className="text-xs text-[var(--color-text-tertiary)]">Câte:</span>
                     {([10, 25, 50, "all"] as const).map((count) => (
                       <button
@@ -130,7 +159,11 @@ function PracticaContent() {
                   </div>
                 </div>
 
-                <Button onClick={handleStart} size="lg">
+                <Button
+                  onClick={handleStart}
+                  size="lg"
+                  disabled={onlyUnanswered && unansweredCount === 0}
+                >
                   Începe Practica
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <line x1="5" y1="12" x2="19" y2="12" />

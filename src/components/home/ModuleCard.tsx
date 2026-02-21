@@ -18,10 +18,10 @@ export function ModuleCard({ module, totalQuestions, answeredCount, correctCount
   const pct = formatPercentage(answeredCount, totalQuestions);
 
   return (
-    <Link href={`/practica?modul=${module.id}`} className="block">
+    <Link href={`/practica?modul=${module.id}`} className="block h-full">
     <Card
       hover
-      className={cn("p-5 animate-slide-up cursor-pointer")}
+      className={cn("p-5 animate-slide-up cursor-pointer h-full flex flex-col")}
       style={
         {
           "--module-color": module.color,
@@ -69,7 +69,7 @@ export function ModuleCard({ module, totalQuestions, answeredCount, correctCount
       </div>
 
       {/* Subject list */}
-      <div className="mt-4 flex flex-wrap gap-1.5">
+      <div className="mt-4 flex flex-wrap gap-1.5 flex-1">
         {module.subjects.map((s) => (
           <span
             key={s.id}

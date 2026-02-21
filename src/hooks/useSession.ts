@@ -165,6 +165,7 @@ export function useSession() {
         questionIds: ordered,
         currentIndex: 0,
         mode: "practice",
+        startedAt: new Date().toISOString(),
       };
       const sessionId = crypto.randomUUID();
       setSession((prev) => {
