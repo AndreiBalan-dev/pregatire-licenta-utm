@@ -78,7 +78,7 @@ export function QuestionCard({
       )}
 
       <div className="mb-6">
-        <p className="text-base leading-relaxed text-[var(--color-text-primary)] whitespace-pre-wrap">
+        <p className="text-base leading-relaxed text-[var(--color-text-primary)] whitespace-pre-wrap break-words">
           {question.text}
         </p>
       </div>
@@ -97,7 +97,7 @@ export function QuestionCard({
               disabled={showFeedback}
               className={cn(
                 "option-btn w-full text-left px-4 py-3.5 rounded-[var(--radius-md)] border-2 border-[var(--color-border)] cursor-pointer",
-                "flex items-start gap-3",
+                "flex items-start gap-3 min-w-0 overflow-hidden",
                 "disabled:cursor-default",
                 !showFeedback && isSelected && "selected",
                 showCorrect && "correct",
@@ -121,7 +121,7 @@ export function QuestionCard({
               </span>
               <span
                 className={cn(
-                  "text-sm leading-relaxed pt-0.5",
+                  "text-sm leading-relaxed pt-0.5 min-w-0 break-words",
                   showCorrect
                     ? "text-[var(--color-correct)] font-medium"
                     : showWrong
