@@ -31,7 +31,6 @@ function saveSession(session: LocalSession) {
     session.lastActiveAt = new Date().toISOString();
     localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
   } catch {
-    // localStorage full or unavailable
   }
 }
 
@@ -40,13 +39,11 @@ export function useSession() {
   const [isLoaded, setIsLoaded] = useState(false);
   const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Load from localStorage on mount
   useEffect(() => {
     setSession(loadSession());
     setIsLoaded(true);
   }, []);
 
-  // Debounced save to localStorage
   const persistSession = useCallback((updated: LocalSession) => {
     setSession(updated);
     if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);

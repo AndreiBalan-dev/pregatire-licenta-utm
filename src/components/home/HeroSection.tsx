@@ -13,12 +13,10 @@ interface HeroSectionProps {
 export function HeroSection({ hasExistingSession, totalAnswered, accuracy }: HeroSectionProps) {
   return (
     <section className="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28">
-      {/* Grid background */}
       <div className="absolute inset-0 grid-pattern opacity-40" />
 
       <Container className="relative">
         <div className="max-w-3xl">
-          {/* Eyebrow */}
           <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)] animate-fade-in">
             <span className="w-2 h-2 rounded-full bg-[var(--color-correct)] animate-pulse" />
             <span className="text-xs font-medium text-[var(--color-text-secondary)] uppercase tracking-wider">
@@ -26,7 +24,6 @@ export function HeroSection({ hasExistingSession, totalAnswered, accuracy }: Her
             </span>
           </div>
 
-          {/* Title */}
           <h1
             className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.1] mb-6 animate-fade-in stagger-1"
             style={{ fontFamily: "var(--font-display)" }}
@@ -37,12 +34,10 @@ export function HeroSection({ hasExistingSession, totalAnswered, accuracy }: Her
             <span className="text-[var(--color-text-primary)]">UTM</span>
           </h1>
 
-          {/* Description */}
           <p className="text-lg text-[var(--color-text-secondary)] mb-10 max-w-xl leading-relaxed animate-fade-in stagger-2">
             665 de grile pentru examenul de licență la Informatică UTM. Programare, baze de date, rețele și tehnologii web - totul într-un singur loc.
           </p>
 
-          {/* CTA */}
           <div className="flex flex-wrap items-center gap-4 animate-fade-in stagger-3">
             <Link href="/practica">
               <Button size="lg">
@@ -60,7 +55,6 @@ export function HeroSection({ hasExistingSession, totalAnswered, accuracy }: Her
             </Link>
           </div>
 
-          {/* Quick stats if existing session */}
           {hasExistingSession && (
             <div className="mt-10 flex items-center gap-6 text-sm animate-fade-in stagger-4">
               <div className="flex items-center gap-2">

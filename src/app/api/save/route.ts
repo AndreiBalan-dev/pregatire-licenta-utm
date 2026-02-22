@@ -8,7 +8,6 @@ import { validateSessionData } from "@/lib/validation";
 import { RATE_LIMITS, MAX_SESSIONS_PER_IP } from "@/lib/constants";
 
 export async function POST(request: NextRequest) {
-  // IP resolution - only trust x-real-ip (set by Vercel edge, not spoofable)
   const ip = request.headers.get("x-real-ip") || "unknown";
   if (ip === "unknown" && process.env.NODE_ENV === "production") {
     return NextResponse.json({ error: "Cerere invalidă." }, { status: 400 });
@@ -28,7 +27,6 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // Require Content-Length and reject oversized payloads
   const clHeader = request.headers.get("content-length");
   if (!clHeader) {
     return NextResponse.json({ error: "Cerere invalidă." }, { status: 411 });
@@ -38,7 +36,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Datele sunt prea mari." }, { status: 413 });
   }
 
-  // Parse body
   let body: unknown;
   try {
     body = await request.json();
@@ -46,7 +43,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Date invalide." }, { status: 400 });
   }
 
-  // Validate
   const validation = validateSessionData(body);
   if (!validation.success) {
     return NextResponse.json({ error: validation.error }, { status: 400 });
@@ -54,7 +50,6 @@ export async function POST(request: NextRequest) {
 
   const { displayName, sessionData, totalAnswered, totalCorrect } = validation.data!;
 
-  // Check max sessions per IP to prevent abuse
   try {
     const [{ sessionCount }] = await db
       .select({ sessionCount: count() })
@@ -72,10 +67,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Eroare internă." }, { status: 500 });
   }
 
-  // Generate unique key
   const key = generateSaveKey();
 
-  // Insert
   try {
     await db.insert(savedSessions).values({
       key,

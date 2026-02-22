@@ -20,7 +20,6 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[var(--color-bg-primary)]/80 backdrop-blur-md">
       <Container>
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <Link
             href="/"
             className="flex items-center gap-2 group"
@@ -36,7 +35,6 @@ export function Header() {
             </span>
           </Link>
 
-          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link
@@ -54,7 +52,6 @@ export function Header() {
             ))}
           </nav>
 
-          {/* Right side */}
           <div className="flex items-center gap-2">
             <Link
               href="/salveaza"

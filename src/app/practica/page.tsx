@@ -18,7 +18,6 @@ function PracticaContent() {
   const { startPractice, resetSubject, session } = useSession();
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
 
-  // Pre-select subjects from module query param
   useEffect(() => {
     const modulParam = searchParams.get("modul");
     if (modulParam) {
@@ -65,7 +64,6 @@ function PracticaContent() {
   const handleStart = () => {
     if (selectedSubjects.length === 0) return;
 
-    // Get all questions, putting unanswered ones first for a smarter experience
     const allQuestions = selectedSubjects.flatMap((sid) =>
       (questionsBySubject[sid] || [])
         .filter((q) => !onlyUnanswered || !session.answers[q.id])
@@ -73,7 +71,6 @@ function PracticaContent() {
 
     if (allQuestions.length === 0) return;
 
-    // Sort: unanswered first, then previously answered
     const sorted = allQuestions.sort((a, b) => {
       const aAnswered = session.answers[a.id] ? 1 : 0;
       const bAnswered = session.answers[b.id] ? 1 : 0;
@@ -101,7 +98,6 @@ function PracticaContent() {
       <Header />
       <main className="py-8 pb-24 md:pb-8">
         <Container narrow>
-          {/* Title */}
           <div className="mb-8">
             <h1
               className="text-3xl font-bold text-[var(--color-text-primary)] mb-2"
@@ -114,7 +110,6 @@ function PracticaContent() {
             </p>
           </div>
 
-          {/* Subject selector */}
           <SubjectSelector
             selectedSubjects={selectedSubjects}
             onToggleSubject={toggleSubject}
@@ -123,7 +118,6 @@ function PracticaContent() {
             onResetSubject={resetSubject}
           />
 
-          {/* Config bar */}
           {selectedSubjects.length > 0 && (
             <div className="mt-6 p-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] animate-fade-in">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -132,7 +126,6 @@ function PracticaContent() {
                     {onlyUnanswered ? unansweredCount : totalAvailable} întrebări{onlyUnanswered ? " nerezolvate" : " disponibile"}
                   </span>
 
-                  {/* Only unanswered toggle */}
                   {unansweredCount < totalAvailable && (
                     <label className="flex items-center gap-2 cursor-pointer">
                       <button
@@ -151,7 +144,6 @@ function PracticaContent() {
                     </label>
                   )}
 
-                  {/* Question count selector */}
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-[var(--color-text-tertiary)]">Câte:</span>
                     {([10, 25, 50, "all"] as const).map((count) => (

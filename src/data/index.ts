@@ -1,6 +1,5 @@
 import type { Question } from "./types";
 
-// Import all question sets
 import { fundamenteleProgramarii } from "./questions/programming/fundamentele-programarii";
 import { programarePython } from "./questions/programming/programare-python";
 import { pooCpp } from "./questions/programming/poo-cpp";
@@ -33,21 +32,17 @@ export const allQuestions: Question[] = [
   ...inovareTransformareDigitala,
 ];
 
-// Lookup maps
 export const questionsByModule: Record<string, Question[]> = {};
 export const questionsBySubject: Record<string, Question[]> = {};
 const questionMap = new Map<number, Question>();
 
 for (const q of allQuestions) {
-  // By module
   if (!questionsByModule[q.moduleId]) questionsByModule[q.moduleId] = [];
   questionsByModule[q.moduleId].push(q);
 
-  // By subject
   if (!questionsBySubject[q.subjectId]) questionsBySubject[q.subjectId] = [];
   questionsBySubject[q.subjectId].push(q);
 
-  // By ID
   questionMap.set(q.id, q);
 }
 

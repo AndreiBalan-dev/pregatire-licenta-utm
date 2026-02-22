@@ -55,7 +55,6 @@ export function SubjectSelector({
             key={mod.id}
             className="border border-[var(--color-border)] rounded-[var(--radius-lg)] overflow-hidden bg-[var(--color-bg-secondary)]"
           >
-            {/* Module header */}
             <button
               onClick={() => toggleModule(mod.id)}
               className="w-full flex items-center justify-between p-4 hover:bg-[var(--color-bg-hover)] transition-colors cursor-pointer"
@@ -107,7 +106,6 @@ export function SubjectSelector({
               </div>
             </button>
 
-            {/* Subjects */}
             {isExpanded && (
               <div className="border-t border-[var(--color-border)] px-4 py-2 space-y-1">
                 {mod.subjects.map((subject) => {

@@ -12,7 +12,6 @@ export function checkRateLimit(
 ): { allowed: boolean; remaining: number; resetAt: number } {
   const now = Date.now();
 
-  // Cleanup expired entries (1% chance per call, or forced if too many entries)
   if (Math.random() < 0.01 || rateLimitMap.size > MAX_ENTRIES) {
     for (const [key, val] of rateLimitMap) {
       if (val.resetAt < now) rateLimitMap.delete(key);

@@ -38,7 +38,6 @@ export function QuestionCard({
 
   return (
     <div key={animateKey} className="animate-fade-in">
-      {/* Question header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <span
@@ -67,7 +66,6 @@ export function QuestionCard({
         </button>
       </div>
 
-      {/* Code block - rendered above question text to match PDF layout */}
       {question.code && (
         <div className="mb-4">
           <div className="flex items-center gap-2 mb-2">
@@ -79,14 +77,12 @@ export function QuestionCard({
         </div>
       )}
 
-      {/* Question text */}
       <div className="mb-6">
         <p className="text-base leading-relaxed text-[var(--color-text-primary)] whitespace-pre-wrap">
           {question.text}
         </p>
       </div>
 
-      {/* Options */}
       <div className="space-y-3">
         {(Object.keys(question.options) as AnswerKey[]).map((key) => {
           const isSelected = selectedAnswer === key;
@@ -143,7 +139,6 @@ export function QuestionCard({
         })}
       </div>
 
-      {/* Retry button for wrong answers */}
       {showFeedback && selectedAnswer && selectedAnswer !== question.correctAnswer && onRetry && (
         <button
           onClick={onRetry}

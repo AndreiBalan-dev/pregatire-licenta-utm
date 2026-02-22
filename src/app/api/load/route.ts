@@ -8,7 +8,6 @@ import { validateSaveKey } from "@/lib/validation";
 import { RATE_LIMITS } from "@/lib/constants";
 
 export async function POST(request: NextRequest) {
-  // IP resolution - only trust x-real-ip (set by Vercel edge, not spoofable)
   const ip = request.headers.get("x-real-ip") || "unknown";
   if (ip === "unknown" && process.env.NODE_ENV === "production") {
     return NextResponse.json({ error: "Cerere invalidă." }, { status: 400 });
@@ -23,7 +22,6 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // Parse body
   let body: { key?: unknown };
   try {
     body = await request.json();
@@ -37,7 +35,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Cheie invalidă." }, { status: 400 });
   }
 
-  // Lookup
   try {
     const result = await db
       .select({

@@ -127,7 +127,6 @@ export default function IncarcaPage() {
       </main>
       <MobileNav />
 
-      {/* Confirmation modal */}
       <Modal
         open={showConfirm}
         onClose={() => setShowConfirm(false)}

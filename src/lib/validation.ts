@@ -33,22 +33,18 @@ export function validateSessionData(body: unknown): ValidationResult {
 
   const b = body as Record<string, unknown>;
 
-  // Validate displayName
   if (b.displayName !== undefined && b.displayName !== null) {
     if (typeof b.displayName !== "string" || b.displayName.length > MAX_DISPLAY_NAME_LENGTH) {
       return { success: false, error: `Numele este prea lung (max ${MAX_DISPLAY_NAME_LENGTH} caractere).` };
     }
-    // Reject control characters
     if (/[\x00-\x1f\x7f]/.test(b.displayName)) {
       return { success: false, error: "Numele conține caractere invalide." };
     }
-    // Reject HTML/script tags to prevent stored XSS
     if (/<[^>]*>/.test(b.displayName)) {
       return { success: false, error: "Numele conține caractere invalide." };
     }
   }
 
-  // Validate sessionData
   if (!b.sessionData || typeof b.sessionData !== "object" || Array.isArray(b.sessionData)) {
     return { success: false, error: "Datele sesiunii lipsesc." };
   }
@@ -62,7 +58,6 @@ export function validateSessionData(body: unknown): ValidationResult {
     return { success: false, error: "Versiune incompatibilă." };
   }
 
-  // Validate answers structure if present
   if (sd.answers !== undefined) {
     if (!sd.answers || typeof sd.answers !== "object" || Array.isArray(sd.answers)) {
       return { success: false, error: "Format răspunsuri invalid." };
@@ -102,7 +97,6 @@ export function validateSessionData(body: unknown): ValidationResult {
     }
   }
 
-  // Validate bookmarks if present
   if (sd.bookmarks !== undefined) {
     if (!Array.isArray(sd.bookmarks)) {
       return { success: false, error: "Format marcaje invalid." };
@@ -117,7 +111,6 @@ export function validateSessionData(body: unknown): ValidationResult {
     }
   }
 
-  // Validate stats
   if (typeof b.totalAnswered !== "number" || b.totalAnswered < 0 || b.totalAnswered > MAX_QUESTIONS) {
     return { success: false, error: "Date statistice invalide." };
   }
@@ -128,7 +121,6 @@ export function validateSessionData(body: unknown): ValidationResult {
     return { success: false, error: "Date statistice invalide." };
   }
 
-  // Size check
   const jsonSize = JSON.stringify(b.sessionData).length;
   if (jsonSize > MAX_SESSION_SIZE) {
     return { success: false, error: "Datele sesiunii sunt prea mari." };

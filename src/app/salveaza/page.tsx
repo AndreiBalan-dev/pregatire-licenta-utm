@@ -59,7 +59,6 @@ export default function SalveazaPage() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback
       const input = document.createElement("input");
       input.value = generatedKey;
       document.body.appendChild(input);
@@ -86,7 +85,6 @@ export default function SalveazaPage() {
             Generează o cheie unică pentru a-ți recupera progresul pe orice dispozitiv.
           </p>
 
-          {/* Current stats */}
           <Card className="p-4 mb-6">
             <div className="flex items-center justify-between text-sm">
               <span className="text-[var(--color-text-secondary)]">Progres curent:</span>
@@ -102,7 +100,6 @@ export default function SalveazaPage() {
           </Card>
 
           {generatedKey ? (
-            /* Key display */
             <Card className="p-6 border-[var(--color-accent)] border-2">
               <div className="text-center">
                 <div
@@ -140,7 +137,6 @@ export default function SalveazaPage() {
               </div>
             </Card>
           ) : (
-            /* Save form */
             <Card className="p-6">
               <div className="space-y-4">
                 <Input

@@ -34,7 +34,6 @@ export default function RezultatePage() {
             Rezultate
           </h1>
 
-          {/* Overall stats */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
             <Card className="p-6 flex flex-col items-center text-center">
               <ProgressRing
@@ -74,7 +73,6 @@ export default function RezultatePage() {
             </Card>
           </div>
 
-          {/* Per module breakdown */}
           <h2
             className="text-xl font-bold text-[var(--color-text-primary)] mb-4"
             style={{ fontFamily: "var(--font-display)" }}
@@ -126,7 +124,6 @@ export default function RezultatePage() {
                     )}
                   </div>
 
-                  {/* Subject rows */}
                   <div className="space-y-2">
                     {moduleSubjects.map((subject) => {
                       const questions = questionsBySubject[subject.id] || [];

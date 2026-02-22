@@ -34,7 +34,6 @@ export default function QuizPage() {
 
   const practice = session.currentPractice;
 
-  // Start timer on mount
   useEffect(() => {
     timer.reset();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -45,7 +44,6 @@ export default function QuizPage() {
     return getQuestion(qId) || null;
   }, [practice]);
 
-  // Restore answer only if it was made during this practice session
   useEffect(() => {
     if (!currentQuestion || !practice) return;
     const existingAnswer = session.answers[currentQuestion.id];
@@ -98,7 +96,6 @@ export default function QuizPage() {
   const goToNext = useCallback(() => {
     if (!practice) return;
 
-    // If not in feedback mode yet, submit the answer first
     if (!showFeedback && selectedAnswer && currentQuestion) {
       const isCorrect = selectedAnswer === currentQuestion.correctAnswer;
       const timeSpent = timer.stop();
@@ -113,7 +110,6 @@ export default function QuizPage() {
       return;
     }
 
-    // Move to next question
     if (practice.currentIndex < practice.questionIds.length - 1) {
       updatePracticeIndex(practice.currentIndex + 1);
       setSelectedAnswer(null);
@@ -149,7 +145,6 @@ export default function QuizPage() {
     router.push("/rezultate");
   }, [endPractice, router]);
 
-  // Calculate remaining unanswered for "continue next batch"
   const remainingUnanswered = useMemo(() => {
     if (!practice) return 0;
     const currentSet = new Set(practice.questionIds);
@@ -192,7 +187,6 @@ export default function QuizPage() {
     router.replace(`/practica/${newSessionId}`);
   }, [practice, session.answers, session.settings.shuffleOptions, startPractice, router]);
 
-  // No active session - redirect to practice selection
   useEffect(() => {
     if (isLoaded && !practice) {
       router.replace("/practica");
@@ -222,7 +216,6 @@ export default function QuizPage() {
       <Header />
       <main className="py-6 pb-24 md:pb-8">
         <Container narrow>
-          {/* Progress */}
           <div className="mb-6">
             <ProgressBar
               current={practiceStats.answered}
@@ -232,10 +225,8 @@ export default function QuizPage() {
             />
           </div>
 
-          {/* Timer */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              {/* Question dots - show a few around current */}
               <div className="flex items-center gap-1">
                 {practice.questionIds.slice(
                   Math.max(0, practice.currentIndex - 3),
@@ -272,7 +263,6 @@ export default function QuizPage() {
             </span>
           </div>
 
-          {/* Question Card */}
           <div className="p-6 rounded-[var(--radius-xl)] border-2 border-[var(--color-border)] bg-[var(--color-bg-secondary)]">
             <QuestionCard
               question={currentQuestion}
@@ -287,7 +277,6 @@ export default function QuizPage() {
             />
           </div>
 
-          {/* Controls */}
           <div className="flex items-center justify-between mt-6">
             <Button
               variant="ghost"
@@ -326,7 +315,6 @@ export default function QuizPage() {
       </main>
       <MobileNav />
 
-      {/* Summary Modal */}
       <Modal
         open={showSummary}
         onClose={() => setShowSummary(false)}
@@ -363,7 +351,6 @@ export default function QuizPage() {
             </div>
           )}
 
-          {/* Remaining info */}
           {remainingUnanswered > 0 && (
             <div className="text-center text-xs text-[var(--color-text-tertiary)]">
               Încă {remainingUnanswered} întrebări nerezolvate din aceste materii
@@ -376,7 +363,6 @@ export default function QuizPage() {
           )}
 
           <div className="flex flex-col gap-2 pt-2">
-            {/* Continue next batch - primary action if there are more */}
             {remainingUnanswered > 0 && (
               <Button
                 className="w-full"

@@ -68,7 +68,6 @@ export default function RevizuirePage() {
             Revizuire
           </h1>
 
-          {/* Filter tabs */}
           <div className="flex flex-wrap items-center gap-2 mb-4">
             {([
               { key: "wrong" as Filter, label: "Greșite", count: wrongCount },
@@ -91,7 +90,6 @@ export default function RevizuirePage() {
             ))}
           </div>
 
-          {/* Module filter */}
           <div className="flex flex-wrap items-center gap-2 mb-6">
             <button
               onClick={() => setModuleFilter("all")}
@@ -121,7 +119,6 @@ export default function RevizuirePage() {
             ))}
           </div>
 
-          {/* Questions list */}
           {filteredQuestions.length === 0 ? (
             <div className="text-center py-16">
               <p className="text-[var(--color-text-tertiary)] text-lg">

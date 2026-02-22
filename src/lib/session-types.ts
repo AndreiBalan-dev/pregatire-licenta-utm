@@ -11,7 +11,7 @@ export interface PracticeState {
   currentIndex: number;
   mode: "practice" | "review";
   startedAt: string;
-  batchSize: number | null; // null = "all", otherwise the batch size chosen
+  batchSize: number | null;
 }
 
 export interface SubjectStat {

@@ -21,7 +21,6 @@ export default function OGImage() {
           position: "relative",
         }}
       >
-        {/* Grid pattern */}
         <div
           style={{
             position: "absolute",
@@ -32,7 +31,6 @@ export default function OGImage() {
           }}
         />
 
-        {/* Badge */}
         <div
           style={{
             display: "flex",
@@ -58,7 +56,6 @@ export default function OGImage() {
           </span>
         </div>
 
-        {/* Title */}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
           <span style={{ color: "#E8E6E1", fontSize: "72px", fontWeight: 800, lineHeight: 1.1 }}>
             Pregătire{" "}
@@ -69,12 +66,10 @@ export default function OGImage() {
           </span>
         </div>
 
-        {/* Description */}
         <p style={{ color: "#9B978F", fontSize: "24px", marginTop: "24px", textAlign: "center", maxWidth: "700px" }}>
           665 grile gratuite - Informatică
         </p>
 
-        {/* Module pills */}
         <div style={{ display: "flex", gap: "12px", marginTop: "32px" }}>
           {[
             { name: "Programare", color: "#A78BFA" },
@@ -99,7 +94,6 @@ export default function OGImage() {
           ))}
         </div>
 
-        {/* URL */}
         <span style={{ position: "absolute", bottom: "32px", color: "#6B675F", fontSize: "18px" }}>
           utmlearn.com
         </span>

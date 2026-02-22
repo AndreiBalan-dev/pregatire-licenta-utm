@@ -22,7 +22,6 @@ export default function DesprePage() {
             Cine a creat platforma si de ce.
           </p>
 
-          {/* Creator */}
           <Card className="p-6 mb-6 animate-slide-up">
             <div className="flex items-start gap-4">
               <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0">
@@ -101,7 +100,6 @@ export default function DesprePage() {
             </div>
           </Card>
 
-          {/* Algebo.ai promotion */}
           <Card className="p-6 mb-6 animate-slide-up stagger-1" accent="var(--color-accent)">
             <div className="flex items-center gap-2 mb-3">
               <span
@@ -143,7 +141,6 @@ export default function DesprePage() {
             </a>
           </Card>
 
-          {/* Blog article promotion */}
           <Card className="p-6 mb-6 animate-slide-up stagger-2">
             <h3
               className="text-lg font-bold text-[var(--color-text-primary)] mb-3"
@@ -197,7 +194,6 @@ export default function DesprePage() {
             </div>
           </Card>
 
-          {/* Project info */}
           <Card className="p-6 animate-slide-up stagger-3">
             <h3
               className="text-lg font-bold text-[var(--color-text-primary)] mb-3"
