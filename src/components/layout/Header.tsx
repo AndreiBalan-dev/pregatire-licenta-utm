@@ -56,7 +56,7 @@ export function Header() {
             <Link
               href="/salveaza"
               className={cn(
-                "hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[var(--radius-md)] text-sm font-medium transition-colors",
+                "inline-flex items-center gap-1.5 p-2 sm:px-3 sm:py-1.5 rounded-[var(--radius-md)] text-sm font-medium transition-colors",
                 pathname === "/salveaza"
                   ? "text-[var(--color-accent)] bg-[var(--color-accent-muted)]"
                   : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-hover)]"
@@ -67,7 +67,7 @@ export function Header() {
                 <polyline points="17 21 17 13 7 13 7 21" />
                 <polyline points="7 3 7 8 15 8" />
               </svg>
-              Salvează
+              <span className="hidden sm:inline">Salvează</span>
             </Link>
             <Link
               href="/incarca"
