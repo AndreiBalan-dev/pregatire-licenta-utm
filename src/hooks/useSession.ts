@@ -168,12 +168,12 @@ export function useSession() {
       const sessionId = crypto.randomUUID();
       setSession((prev) => {
         const updated = { ...prev, currentPractice: practice };
-        persistSession(updated);
+        saveSession(updated);
         return updated;
       });
       return sessionId;
     },
-    [persistSession]
+    []
   );
 
   const updatePracticeIndex = useCallback(

@@ -32,37 +32,30 @@ export function QuestionCard({
   return (
     <div key={question.id} className="animate-fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between mb-5 sm:mb-6">
-        <div className="flex items-center gap-2 sm:gap-3">
+      <div className="flex items-center justify-between mb-4 sm:mb-6">
+        <div className="flex items-baseline gap-1.5">
           <span
-            className="inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-[var(--radius-md)] bg-[var(--color-accent-muted)] text-[var(--color-accent)] text-xs sm:text-sm font-bold"
+            className="text-sm sm:text-base font-bold text-[var(--color-accent)]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             {questionNumber}
           </span>
-          <div className="flex flex-col">
-            <span
-              className="text-xs sm:text-sm font-bold text-[var(--color-text-primary)]"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Întrebarea {questionNumber}
-            </span>
-            <span className="text-[10px] sm:text-xs text-[var(--color-text-tertiary)]">
-              din {totalQuestions}
-            </span>
-          </div>
+          <span className="text-[11px] sm:text-xs text-[var(--color-text-tertiary)]">
+            / {totalQuestions}
+          </span>
         </div>
         <button
           onClick={onBookmark}
+          aria-label={isBookmarked ? "Elimină marcajul" : "Marchează întrebarea"}
+          aria-pressed={isBookmarked}
           className={cn(
-            "p-2 rounded-[var(--radius-md)] transition-all cursor-pointer",
+            "p-2 -mr-1 rounded-[var(--radius-md)] transition-all cursor-pointer",
             isBookmarked
               ? "text-[var(--color-accent)] bg-[var(--color-accent-muted)] shadow-[0_0_12px_rgba(232,166,49,0.15)]"
               : "text-[var(--color-text-tertiary)] hover:text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-hover)]"
           )}
-          title={isBookmarked ? "Elimină marcajul" : "Marchează întrebarea"}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill={isBookmarked ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill={isBookmarked ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
           </svg>
         </button>
@@ -70,9 +63,9 @@ export function QuestionCard({
 
       {/* Code block */}
       {question.code && (
-        <div className="mb-5">
-          <div className="flex items-center gap-2 mb-2">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-tertiary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <div className="-mx-4 sm:mx-0 mb-4 sm:mb-5">
+          <div className="flex items-center gap-2 mb-2 mx-4 sm:mx-0">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-tertiary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <polyline points="16 18 22 12 16 6" />
               <polyline points="8 6 2 12 8 18" />
             </svg>
@@ -80,41 +73,56 @@ export function QuestionCard({
               {question.codeLanguage || "Cod"}
             </span>
           </div>
-          <CodeBlock code={question.code} language={question.codeLanguage} />
+          <div className="sm:rounded-[var(--radius-md)] overflow-hidden">
+            <CodeBlock code={question.code} language={question.codeLanguage} className="!rounded-none sm:!rounded-[var(--radius-md)]" />
+          </div>
         </div>
       )}
 
       {/* Question text */}
-      <div className="mb-6">
-        <p className="text-sm sm:text-base leading-relaxed text-[var(--color-text-primary)] whitespace-pre-wrap break-words">
+      <div className="mb-5 sm:mb-6">
+        <p className="text-[13px] sm:text-base leading-relaxed text-[var(--color-text-primary)] whitespace-pre-wrap break-words">
           {question.text}
         </p>
       </div>
 
       {/* Options */}
-      <div className="space-y-2.5 sm:space-y-3">
+      <div className="space-y-2 sm:space-y-3" role="radiogroup" aria-label="Opțiuni de răspuns">
         {(Object.keys(question.options) as AnswerKey[]).map((key) => {
           const isSelected = selectedAnswer === key;
           const isCorrect = key === question.correctAnswer;
           const showCorrect = showFeedback && isCorrect;
           const showWrong = showFeedback && isSelected && !isCorrect;
 
+          const feedbackLabel = showCorrect
+            ? " (corect)"
+            : showWrong
+              ? " (greșit)"
+              : showFeedback && isCorrect
+                ? " (răspuns corect)"
+                : "";
+
           return (
             <button
               key={key}
+              role="radio"
+              aria-checked={isSelected}
+              aria-label={`Opțiunea ${optionLabels[key]}: ${question.options[key]}${feedbackLabel}`}
               onClick={() => !showFeedback && onSelectAnswer(key)}
               disabled={showFeedback}
               className={cn(
-                "option-btn w-full text-left px-3.5 sm:px-4 py-3 sm:py-3.5 rounded-[var(--radius-md)] border-2 border-[var(--color-border)] cursor-pointer",
+                "option-btn w-full text-left px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-[var(--radius-md)] cursor-pointer",
                 "flex items-start gap-2.5 sm:gap-3 min-w-0 overflow-hidden",
+                "border sm:border-2 border-[var(--color-border)]",
                 "disabled:cursor-default",
-                !showFeedback && isSelected && "selected",
-                showCorrect && "correct",
-                showWrong && "wrong",
+                !showFeedback && isSelected && "selected !border-2",
+                showCorrect && "correct !border-2",
+                showWrong && "wrong !border-2",
                 showFeedback && !showCorrect && !showWrong && isCorrect && "was-correct"
               )}
             >
               <span
+                aria-hidden="true"
                 className={cn(
                   "flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold border-2 transition-colors",
                   showCorrect
@@ -130,7 +138,7 @@ export function QuestionCard({
               </span>
               <span
                 className={cn(
-                  "text-xs sm:text-sm leading-relaxed pt-0.5 min-w-0 break-words",
+                  "text-[13px] sm:text-sm leading-relaxed pt-0.5 min-w-0 break-words",
                   showCorrect
                     ? "text-[var(--color-correct)] font-medium"
                     : showWrong
@@ -152,13 +160,14 @@ export function QuestionCard({
       {showFeedback && selectedAnswer && selectedAnswer !== question.correctAnswer && onRetry && (
         <button
           onClick={onRetry}
-          className="mt-4 w-full flex items-center justify-center gap-2 px-4 py-3 rounded-[var(--radius-md)] border-2 border-dashed border-[var(--color-border)] bg-[var(--color-bg-primary)] hover:bg-[var(--color-bg-hover)] hover:border-[var(--color-accent)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-all cursor-pointer"
+          aria-label="Reîncearcă această întrebare"
+          className="mt-3 sm:mt-4 w-full flex items-center justify-center gap-2 px-4 py-2.5 sm:py-3 rounded-[var(--radius-md)] border border-dashed border-[var(--color-border-strong)] bg-[var(--color-bg-primary)] hover:bg-[var(--color-bg-hover)] hover:border-[var(--color-accent)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-all cursor-pointer"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <polyline points="1 4 1 10 7 10" />
             <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
           </svg>
-          <span className="text-sm font-medium">Reîncearcă</span>
+          <span className="text-xs sm:text-sm font-medium">Reîncearcă</span>
         </button>
       )}
     </div>

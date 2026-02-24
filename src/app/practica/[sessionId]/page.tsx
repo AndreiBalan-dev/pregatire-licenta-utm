@@ -32,6 +32,14 @@ export default function QuizPage() {
   const [selectedAnswer, setSelectedAnswer] = useState<AnswerKey | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
+  const [dotRadius, setDotRadius] = useState(3);
+
+  useEffect(() => {
+    const update = () => setDotRadius(window.innerWidth >= 640 ? 5 : 3);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
 
   const practice = session.currentPractice;
 
@@ -196,7 +204,7 @@ export default function QuizPage() {
 
   if (!isLoaded) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" role="status" aria-label="Se încarcă">
         <div className="animate-spin rounded-full h-8 w-8 border-2 border-[var(--color-border-strong)] border-t-[var(--color-accent)]" />
       </div>
     );
@@ -204,7 +212,7 @@ export default function QuizPage() {
 
   if (!practice || !currentQuestion) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" role="status" aria-label="Se încarcă">
         <div className="animate-spin rounded-full h-8 w-8 border-2 border-[var(--color-border-strong)] border-t-[var(--color-accent)]" />
       </div>
     );
@@ -262,49 +270,73 @@ export default function QuizPage() {
             />
           </div>
 
-          {/* Question dot navigation */}
-          <div className="flex items-center justify-center mb-5 sm:mb-6">
-            <div className="flex items-center gap-1.5">
-              {practice.currentIndex > 3 && (
-                <span className="text-[10px] text-[var(--color-text-tertiary)] mr-1">···</span>
-              )}
-              {practice.questionIds.slice(
-                Math.max(0, practice.currentIndex - 3),
-                Math.min(practice.questionIds.length, practice.currentIndex + 7)
-              ).map((qId, i) => {
-                const actualIndex = Math.max(0, practice.currentIndex - 3) + i;
-                const raw = session.answers[qId];
-                const answered = raw && raw.answeredAt >= practice.startedAt ? raw : undefined;
-                const isCurrent = actualIndex === practice.currentIndex;
-                return (
-                  <button
-                    key={qId}
-                    onClick={() => {
-                      updatePracticeIndex(actualIndex);
-                      setSelectedAnswer(null);
-                      setShowFeedback(false);
-                    }}
-                    className={cn(
-                      "rounded-full transition-all duration-200 cursor-pointer",
-                      isCurrent
-                        ? "w-7 h-2.5 bg-[var(--color-accent)] shadow-[0_0_8px_rgba(232,166,49,0.3)]"
-                        : "w-2.5 h-2.5 hover:scale-125",
-                      !isCurrent && answered?.isCorrect && "bg-[var(--color-correct)]",
-                      !isCurrent && answered && !answered.isCorrect && "bg-[var(--color-wrong)]",
-                      !isCurrent && !answered && "bg-[var(--color-border-strong)]"
-                    )}
-                  />
-                );
-              })}
-              {practice.currentIndex + 7 < practice.questionIds.length && (
-                <span className="text-[10px] text-[var(--color-text-tertiary)] ml-1">···</span>
-              )}
-            </div>
-          </div>
+          {/* Question dot navigation — 7 dots on mobile (320px safe), 11 on desktop */}
+          {(() => {
+            const sliceStart = Math.max(0, practice.currentIndex - dotRadius);
+            const sliceEnd = Math.min(practice.questionIds.length, practice.currentIndex + dotRadius + 1);
+            const dotsBefore = sliceStart;
+            const dotsAfter = practice.questionIds.length - sliceEnd;
+
+            return (
+              <nav className="flex items-center justify-center mb-4 sm:mb-6" aria-label="Navigare întrebări">
+                <div className="flex items-center">
+                  {dotsBefore > 0 && (
+                    <span className="text-[10px] sm:text-[11px] text-[var(--color-text-tertiary)] mr-1 font-mono tabular-nums min-w-[22px] text-right" aria-hidden="true">
+                      +{dotsBefore}
+                    </span>
+                  )}
+                  {practice.questionIds.slice(sliceStart, sliceEnd).map((qId, i) => {
+                    const actualIndex = sliceStart + i;
+                    const raw = session.answers[qId];
+                    const answered = raw && raw.answeredAt >= practice.startedAt ? raw : undefined;
+                    const isCurrent = actualIndex === practice.currentIndex;
+                    const statusLabel = isCurrent
+                      ? "curentă"
+                      : answered?.isCorrect
+                        ? "corect"
+                        : answered
+                          ? "greșit"
+                          : "nerezolvată";
+                    return (
+                      <button
+                        key={qId}
+                        aria-label={`Întrebarea ${actualIndex + 1} — ${statusLabel}`}
+                        aria-current={isCurrent ? "step" : undefined}
+                        onClick={() => {
+                          updatePracticeIndex(actualIndex);
+                          setSelectedAnswer(null);
+                          setShowFeedback(false);
+                        }}
+                        className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 cursor-pointer"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className={cn(
+                            "rounded-full transition-all duration-200",
+                            isCurrent
+                              ? "w-7 sm:w-8 h-2.5 sm:h-3 bg-[var(--color-accent)] shadow-[0_0_8px_rgba(232,166,49,0.3)]"
+                              : "w-2.5 h-2.5 sm:w-3 sm:h-3 hover:scale-110",
+                            !isCurrent && answered?.isCorrect && "bg-[var(--color-correct)]",
+                            !isCurrent && answered && !answered.isCorrect && "bg-[var(--color-wrong)]",
+                            !isCurrent && !answered && "bg-[var(--color-border-strong)]"
+                          )}
+                        />
+                      </button>
+                    );
+                  })}
+                  {dotsAfter > 0 && (
+                    <span className="text-[10px] sm:text-[11px] text-[var(--color-text-tertiary)] ml-1 font-mono tabular-nums min-w-[22px]" aria-hidden="true">
+                      +{dotsAfter}
+                    </span>
+                  )}
+                </div>
+              </nav>
+            );
+          })()}
 
           {/* Question card */}
           <div
-            className="relative p-4 sm:p-6 rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] overflow-hidden"
+            className="relative -mx-4 sm:mx-0 px-4 py-4 sm:p-6 sm:rounded-[var(--radius-xl)] border-y sm:border border-[var(--color-border)] bg-[var(--color-bg-secondary)] overflow-hidden"
           >
             {/* Subtle top glow from module color */}
             <div
@@ -330,55 +362,59 @@ export default function QuizPage() {
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center justify-between mt-5 sm:mt-6 gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="sm:text-sm"
+          <div className="flex items-center mt-4 sm:mt-6 gap-2">
+            <button
               onClick={goToPrev}
               disabled={practice.currentIndex <= 0}
+              aria-label="Întrebarea anterioară"
+              className={cn(
+                "flex items-center justify-center gap-1.5 h-11 sm:h-12 px-3 sm:px-5 rounded-[var(--radius-md)] font-medium text-sm transition-all duration-200 cursor-pointer",
+                "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-hover)] active:scale-[0.97]",
+                "disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none",
+              )}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <line x1="19" y1="12" x2="5" y2="12" />
-                <polyline points="12 19 5 12 12 5" />
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <polyline points="15 18 9 12 15 6" />
               </svg>
               <span className="hidden sm:inline">Anterioara</span>
-            </Button>
+            </button>
 
-            <Button
-              variant="ghost"
-              size="sm"
+            <button
               onClick={() => setShowSummary(true)}
-              className="text-[var(--color-text-tertiary)] text-xs sm:text-sm"
+              aria-label="Încheie sesiunea"
+              className="flex items-center justify-center gap-1.5 h-11 sm:h-12 px-3 sm:px-4 rounded-[var(--radius-md)] text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer text-[var(--color-text-tertiary)] hover:text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-hover)] active:scale-[0.97] mx-auto"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:hidden">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <rect x="3" y="3" width="18" height="18" rx="2" />
                 <line x1="8" y1="12" x2="16" y2="12" />
               </svg>
-              Încheie
-            </Button>
+              <span className="hidden sm:inline">Încheie sesiunea</span>
+            </button>
 
-            <Button
-              onClick={goToNext}
-              size="sm"
-              className="sm:text-sm"
-              disabled={!selectedAnswer && !showFeedback}
-            >
-              <span className="hidden sm:inline">
-                {practice.currentIndex < practice.questionIds.length - 1
-                  ? "Următoarea"
-                  : "Finalizează"}
-              </span>
-              <span className="sm:hidden">
-                {practice.currentIndex < practice.questionIds.length - 1
-                  ? "Următoarea"
-                  : "Gata"}
-              </span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </Button>
+            {(() => {
+              const isLast = practice.currentIndex >= practice.questionIds.length - 1;
+              return (
+                <button
+                  onClick={goToNext}
+                  disabled={!selectedAnswer && !showFeedback}
+                  aria-label={isLast ? "Finalizează sesiunea" : "Întrebarea următoare"}
+                  className={cn(
+                    "flex items-center justify-center gap-1.5 h-11 sm:h-12 px-4 sm:px-6 rounded-[var(--radius-md)] font-semibold text-sm transition-all duration-200 cursor-pointer",
+                    "bg-[var(--color-accent)] text-[#0C0C0E] hover:bg-[var(--color-accent-hover)] active:scale-[0.97]",
+                    "shadow-[0_0_20px_rgba(232,166,49,0.1)] hover:shadow-[0_0_30px_rgba(232,166,49,0.2)]",
+                    "disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none disabled:shadow-none",
+                    "ml-auto",
+                  )}
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  <span className="hidden sm:inline">{isLast ? "Finalizează" : "Următoarea"}</span>
+                  <span className="sm:hidden">{isLast ? "Gata" : "Următoarea"}</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polyline points="9 6 15 12 9 18" />
+                  </svg>
+                </button>
+              );
+            })()}
           </div>
         </Container>
       </main>
@@ -464,30 +500,32 @@ export default function QuizPage() {
           )}
 
           {/* Action buttons */}
-          <div className="flex flex-col gap-2 pt-1">
+          <div className="flex flex-col gap-2.5 pt-1">
             {remainingUnanswered > 0 && (
               <Button
-                className="w-full"
+                className="w-full py-3"
                 onClick={handleContinueNextBatch}
               >
-                Următoarele {practice.batchSize ? Math.min(practice.batchSize, remainingUnanswered) : remainingUnanswered} întrebări
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <polyline points="12 5 19 12 12 19" />
+                <span className="hidden sm:inline">Următoarele {practice.batchSize ? Math.min(practice.batchSize, remainingUnanswered) : remainingUnanswered} întrebări</span>
+                <span className="sm:hidden">Încă {practice.batchSize ? Math.min(practice.batchSize, remainingUnanswered) : remainingUnanswered} întrebări</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 6 15 12 9 18" />
                 </svg>
               </Button>
             )}
             <div className="flex gap-2">
               <Button
                 variant="secondary"
-                className="flex-1"
+                size="sm"
+                className="flex-1 py-2.5 sm:py-2.5"
                 onClick={() => setShowSummary(false)}
               >
                 Înapoi
               </Button>
               <Button
                 variant={remainingUnanswered > 0 ? "ghost" : "primary"}
-                className="flex-1"
+                size="sm"
+                className="flex-1 py-2.5 sm:py-2.5"
                 onClick={handleEndPractice}
               >
                 Rezultate
