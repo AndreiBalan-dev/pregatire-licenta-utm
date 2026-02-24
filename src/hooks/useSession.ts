@@ -91,7 +91,7 @@ export function useSession() {
         const existing = prev.answers[questionId];
         if (!existing) return prev;
 
-        const { [questionId]: _, ...remainingAnswers } = prev.answers;
+        const { [questionId]: _removed, ...remainingAnswers } = prev.answers; // eslint-disable-line @typescript-eslint/no-unused-vars
         const prevStat = prev.subjectStats[subjectId] || { attempted: 0, correct: 0, lastPracticedAt: new Date().toISOString() };
 
         const updated: LocalSession = {
@@ -126,7 +126,7 @@ export function useSession() {
           }
         }
 
-        const { [subjectId]: _, ...restStats } = prev.subjectStats;
+        const { [subjectId]: _removed, ...restStats } = prev.subjectStats; // eslint-disable-line @typescript-eslint/no-unused-vars
 
         const updated: LocalSession = {
           ...prev,

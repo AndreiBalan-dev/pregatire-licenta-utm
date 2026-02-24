@@ -6,7 +6,7 @@ import { Container } from "@/components/layout/Container";
 import { ProgressRing } from "@/components/results/ProgressRing";
 import { Card } from "@/components/ui/Card";
 import { useSession } from "@/hooks/useSession";
-import { modules, allSubjects } from "@/data/modules";
+import { modules } from "@/data/modules";
 import { questionsBySubject, allQuestions } from "@/data";
 import { cn, formatPercentage, formatTime } from "@/lib/utils";
 
@@ -85,11 +85,9 @@ export default function RezultatePage() {
               const moduleSubjects = mod.subjects;
               let modAnswered = 0;
               let modCorrect = 0;
-              let modTotal = 0;
 
               moduleSubjects.forEach((s) => {
                 const questions = questionsBySubject[s.id] || [];
-                modTotal += questions.length;
                 questions.forEach((q) => {
                   const a = session.answers[q.id];
                   if (a) {

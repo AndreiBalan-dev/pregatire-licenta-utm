@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Pregatire Licenta UTM - 665 grile informatica";
+export const alt = "Pregatire Licenta UTM - 715 grile informatica";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -67,7 +67,7 @@ export default function OGImage() {
         </div>
 
         <p style={{ color: "#9B978F", fontSize: "24px", marginTop: "24px", textAlign: "center", maxWidth: "700px" }}>
-          665 grile gratuite - Informatică
+          715 grile gratuite - Informatică
         </p>
 
         <div style={{ display: "flex", gap: "12px", marginTop: "32px" }}>

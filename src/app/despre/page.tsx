@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { Header } from "@/components/layout/Header";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Container } from "@/components/layout/Container";
@@ -25,6 +24,7 @@ export default function DesprePage() {
           <Card className="p-6 mb-6 animate-slide-up">
             <div className="flex items-start gap-4">
               <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="https://i.imgur.com/ftA62ZL.jpeg"
                   alt="Bălan Andrei Marian"
@@ -209,11 +209,11 @@ export default function DesprePage() {
               </p>
               <div className="grid grid-cols-2 gap-3 pt-3">
                 <div className="p-3 rounded-[var(--radius-md)] bg-[var(--color-bg-tertiary)]">
-                  <div className="text-2xl font-bold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>665</div>
+                  <div className="text-2xl font-bold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>715</div>
                   <div className="text-xs text-[var(--color-text-tertiary)]">intrebari</div>
                 </div>
                 <div className="p-3 rounded-[var(--radius-md)] bg-[var(--color-bg-tertiary)]">
-                  <div className="text-2xl font-bold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>14</div>
+                  <div className="text-2xl font-bold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>15</div>
                   <div className="text-xs text-[var(--color-text-tertiary)]">discipline</div>
                 </div>
                 <div className="p-3 rounded-[var(--radius-md)] bg-[var(--color-bg-tertiary)]">

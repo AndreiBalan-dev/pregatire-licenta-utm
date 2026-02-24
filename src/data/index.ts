@@ -8,6 +8,7 @@ import { tehniciAvansate } from "./questions/programming/tehnici-avansate";
 import { algoritmiStructuriDate } from "./questions/programming/algoritmi-structuri-date";
 import { bazeDeDate } from "./questions/databases/baze-de-date";
 import { sgbd } from "./questions/databases/sgbd";
+import { sistemeDeOperare } from "./questions/networks/sisteme-de-operare";
 import { reteleCalculatoare } from "./questions/networks/retele-calculatoare";
 import { criptografie } from "./questions/networks/criptografie";
 import { tehnologiiWeb } from "./questions/web/tehnologii-web";
@@ -24,6 +25,7 @@ export const allQuestions: Question[] = [
   ...algoritmiStructuriDate,
   ...bazeDeDate,
   ...sgbd,
+  ...sistemeDeOperare,
   ...reteleCalculatoare,
   ...criptografie,
   ...tehnologiiWeb,

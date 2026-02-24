@@ -6,6 +6,7 @@ import { questionsBySubject } from "@/data";
 import { cn, formatPercentage } from "@/lib/utils";
 import { useSession } from "@/hooks/useSession";
 import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
 import type { Module } from "@/data/types";
 
 interface SubjectSelectorProps {
@@ -38,10 +39,11 @@ export function SubjectSelector({
     mod.subjects.every((s) => selectedSubjects.includes(s.id));
 
   return (
-    <div className="space-y-3">
-      {modules.map((mod) => {
+    <div className="space-y-4">
+      {modules.map((mod, index) => {
         const isExpanded = expandedModules.includes(mod.id);
         const allSelected = allModuleSubjectsSelected(mod);
+        const selectedInModule = mod.subjects.filter((s) => selectedSubjects.includes(s.id)).length;
         const moduleAnswered = mod.subjects.reduce((sum, s) => {
           const questions = questionsBySubject[s.id] || [];
           return sum + questions.filter((q) => session.answers[q.id]).length;
@@ -53,16 +55,23 @@ export function SubjectSelector({
         return (
           <div
             key={mod.id}
-            className="border border-[var(--color-border)] rounded-[var(--radius-lg)] overflow-hidden bg-[var(--color-bg-secondary)]"
+            className="border border-[var(--color-border)] rounded-[var(--radius-lg)] overflow-hidden bg-[var(--color-bg-secondary)] module-card animate-slide-up"
+            style={{
+              "--module-color": mod.color,
+              animationDelay: `${index * 80}ms`,
+            } as React.CSSProperties}
           >
-            <button
+            <div
+              role="button"
+              tabIndex={0}
               onClick={() => toggleModule(mod.id)}
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleModule(mod.id); } }}
               className="w-full flex items-center justify-between p-4 hover:bg-[var(--color-bg-hover)] transition-colors cursor-pointer"
             >
               <div className="flex items-center gap-3">
                 <div
-                  className="w-1 h-8 rounded-full"
-                  style={{ backgroundColor: mod.color }}
+                  className="w-1.5 h-8 rounded-full"
+                  style={{ backgroundColor: mod.color, boxShadow: `0 0 8px ${mod.color}40` }}
                 />
                 <div className="text-left">
                   <h3
@@ -73,18 +82,28 @@ export function SubjectSelector({
                   </h3>
                   <span className="text-xs text-[var(--color-text-tertiary)]">
                     {moduleAnswered}/{moduleTotal} rezolvate
+                    {selectedInModule > 0 && (
+                      <span className="ml-1.5 text-[var(--color-accent)]">
+                        · {selectedInModule}/{mod.subjects.length} selectate
+                      </span>
+                    )}
                   </span>
                 </div>
               </div>
               <div className="flex items-center gap-3">
+                <Badge color={mod.color} className="hidden sm:inline-flex">
+                  {mod.subjects.length} materii
+                </Badge>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={(e) => {
                     e.stopPropagation();
-                    allSelected
-                      ? onDeselectAllModule(mod.id)
-                      : onSelectAllModule(mod.id);
+                    if (allSelected) {
+                      onDeselectAllModule(mod.id);
+                    } else {
+                      onSelectAllModule(mod.id);
+                    }
                   }}
                 >
                   {allSelected ? "Deselectează" : "Selectează tot"}
@@ -97,21 +116,20 @@ export function SubjectSelector({
                   stroke="currentColor"
                   strokeWidth="2"
                   className={cn(
-                    "text-[var(--color-text-tertiary)] transition-transform",
+                    "text-[var(--color-text-tertiary)] transition-transform duration-200",
                     isExpanded && "rotate-180"
                   )}
                 >
                   <polyline points="6 9 12 15 18 9" />
                 </svg>
               </div>
-            </button>
+            </div>
 
             {isExpanded && (
-              <div className="border-t border-[var(--color-border)] px-4 py-2 space-y-1">
-                {mod.subjects.map((subject) => {
+              <div className="border-t border-[var(--color-border)] px-4 py-2 space-y-1 animate-fade-in">
+                {mod.subjects.map((subject, subjectIndex) => {
                   const questions = questionsBySubject[subject.id] || [];
                   const answered = questions.filter((q) => session.answers[q.id]).length;
-                  const correct = questions.filter((q) => session.answers[q.id]?.isCorrect).length;
                   const isSelected = selectedSubjects.includes(subject.id);
                   const pct = formatPercentage(answered, questions.length);
 
@@ -119,11 +137,12 @@ export function SubjectSelector({
                     <label
                       key={subject.id}
                       className={cn(
-                        "flex items-center gap-3 p-3 rounded-[var(--radius-md)] cursor-pointer transition-colors",
+                        "flex items-center gap-3 p-3 rounded-[var(--radius-md)] cursor-pointer transition-colors animate-fade-in",
                         isSelected
                           ? "bg-[var(--color-accent-muted)]"
                           : "hover:bg-[var(--color-bg-hover)]"
                       )}
+                      style={{ animationDelay: `${subjectIndex * 40}ms` }}
                     >
                       <input
                         type="checkbox"

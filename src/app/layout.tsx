@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     template: "%s | Pregătire Licență UTM",
   },
   description:
-    "Platforma gratuita de pregatire pentru examenul de licenta UTM Informatica 2026. 665 grile din programare, baze de date, retele si tehnologii web.",
+    "Platforma gratuita de pregatire pentru examenul de licenta UTM Informatica 2026. 715 grile din programare, baze de date, retele si tehnologii web.",
   keywords: [
     "licență UTM",
     "grile informatică",
@@ -70,14 +70,14 @@ export const metadata: Metadata = {
     siteName: "Pregătire Licență UTM",
     title: "Pregătire Licență UTM | Grile 2026",
     description:
-      "Platforma gratuita de pregatire pentru examenul de licenta UTM Informatica 2026. 665 grile din programare, baze de date, retele si tehnologii web.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pregatire Licenta UTM - 665 grile informatica" }],
+      "Platforma gratuita de pregatire pentru examenul de licenta UTM Informatica 2026. 715 grile din programare, baze de date, retele si tehnologii web.",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pregatire Licenta UTM - 715 grile informatica" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Pregătire Licență UTM | Grile Informatica 2026",
     description:
-      "665 grile gratuite pentru licenta UTM Informatica 2026. Programare, baze de date, retele, web.",
+      "715 grile gratuite pentru licenta UTM Informatica 2026. Programare, baze de date, retele, web.",
     images: ["/og-image.png"],
   },
   robots: {
@@ -120,7 +120,7 @@ export default function RootLayout({
         "@type": "WebApplication",
         name: "Pregătire Licență UTM",
         description:
-          "Platforma gratuita de pregatire pentru examenul de licenta UTM Informatica 2026. 665 grile din programare, baze de date, retele si tehnologii web.",
+          "Platforma gratuita de pregatire pentru examenul de licenta UTM Informatica 2026. 715 grile din programare, baze de date, retele si tehnologii web.",
         url: siteUrl,
         applicationCategory: "EducationalApplication",
         operatingSystem: "Web",
@@ -138,7 +138,7 @@ export default function RootLayout({
       {
         "@type": "Course",
         name: "Grile Licenta UTM Informatica 2026",
-        description: "665 exercitii grila pentru pregatirea examenului de licenta la Facultatea de Informatica, UTM.",
+        description: "715 exercitii grila pentru pregatirea examenului de licenta la Facultatea de Informatica, UTM.",
         provider: {
           "@type": "Organization",
           name: "UTM Learn",

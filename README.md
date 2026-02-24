@@ -2,11 +2,11 @@
 
 **[utmlearn.com](https://utmlearn.com)** - Platforma gratuita de pregatire pentru examenul de licenta la Facultatea de Informatica, Universitatea Tehnica a Moldovei (UTM).
 
-665 de exercitii grila extrase din materialele oficiale de examen, organizate pe module si materii, cu tracking de progres si feedback instant.
+715 de exercitii grila extrase din materialele oficiale de examen, organizate pe module si materii, cu tracking de progres si feedback instant.
 
 ## Functionalitati
 
-- **665 grile** din 14 materii, organizate in 4 module
+- **715 grile** din 15 materii, organizate in 4 module
 - **Practica pe categorii** - alege materiile si rezolva grile in ordine aleatoare
 - **Feedback instant** - vezi raspunsul corect imediat dupa selectie
 - **Progres local** - tot progresul se salveaza automat in browser
@@ -23,7 +23,7 @@
 |-------|---------|-------|
 | **Programare** | Fundamentele Programarii, Programare Python, POO C++, Metode Avansate Java, Tehnici Avansate, Algoritmi si Structuri de Date | 304 |
 | **Baze de Date** | Baze de Date, SGBD | 101 |
-| **Retele** | Retele de Calculatoare, Criptografie | 108 |
+| **Retele** | Sisteme de Operare, Retele de Calculatoare, Criptografie | 158 |
 | **Web** | Tehnologii Web, Comert Electronic, Cloud Computing, Inovare si Transformare Digitala | 152 |
 
 ## Stack Tehnic
@@ -75,7 +75,7 @@ src/
     layout/               # Header, MobileNav, Container
     home/                 # HeroSection, ModuleGrid
     practice/             # QuestionCard, SubjectSelector, etc.
-  data/                   # 665 intrebari in fisiere TypeScript statice
+  data/                   # 715 intrebari in fisiere TypeScript statice
     questions/            # Organizate pe module si materii
   hooks/                  # useSession, useTheme, useTimer, etc.
   lib/                    # Utilitare, crypto, rate-limit, validare

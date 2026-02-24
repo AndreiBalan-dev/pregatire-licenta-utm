@@ -54,7 +54,7 @@ export const modules: Module[] = [
   {
     id: "databases",
     name: "Baze de Date",
-    description: "Baze de date relaționale, SQL, sisteme de operare",
+    description: "Baze de date relaționale, SQL, sisteme de gestiune",
     color: "var(--color-module-databases)",
     subjects: [
       {
@@ -66,7 +66,7 @@ export const modules: Module[] = [
       },
       {
         id: "sgbd",
-        name: "Sisteme de Gestiune / Sisteme de Operare",
+        name: "Sisteme de Gestiune a Bazelor de Date",
         moduleId: "databases",
         questionCount: 50,
         icon: "📦",
@@ -76,9 +76,16 @@ export const modules: Module[] = [
   {
     id: "networks",
     name: "Rețele și Securitate",
-    description: "Rețele de calculatoare, criptografie",
+    description: "Sisteme de operare, rețele de calculatoare, criptografie",
     color: "var(--color-module-networks)",
     subjects: [
+      {
+        id: "sisteme-de-operare",
+        name: "Sisteme de Operare",
+        moduleId: "networks",
+        questionCount: 50,
+        icon: "🖥️",
+      },
       {
         id: "retele-calculatoare",
         name: "Rețele de Calculatoare",

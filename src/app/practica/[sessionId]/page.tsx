@@ -49,7 +49,7 @@ export default function QuizPage() {
     const existingAnswer = session.answers[currentQuestion.id];
     const isFromThisSession = existingAnswer && existingAnswer.answeredAt >= practice.startedAt;
     if (isFromThisSession) {
-      setSelectedAnswer(existingAnswer.selected);
+      setSelectedAnswer(existingAnswer.selected); // eslint-disable-line react-hooks/set-state-in-effect
       setShowFeedback(true);
     } else {
       setSelectedAnswer(null);

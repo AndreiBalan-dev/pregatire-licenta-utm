@@ -9,7 +9,7 @@ export function useTheme() {
 
   useEffect(() => {
     const stored = localStorage.getItem("utm-theme") as Theme | null;
-    if (stored) setThemeState(stored);
+    if (stored) setThemeState(stored); // eslint-disable-line react-hooks/set-state-in-effect
   }, []);
 
   const setTheme = useCallback((t: Theme) => {
@@ -26,7 +26,7 @@ export function useTheme() {
 
   useEffect(() => {
     const stored = (localStorage.getItem("utm-theme") as Theme) || "dark";
-    setTheme(stored);
+    setTheme(stored); // eslint-disable-line react-hooks/set-state-in-effect
 
     if (stored === "system") {
       const mq = window.matchMedia("(prefers-color-scheme: dark)");

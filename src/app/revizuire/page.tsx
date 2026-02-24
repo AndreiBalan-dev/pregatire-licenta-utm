@@ -7,7 +7,7 @@ import { Container } from "@/components/layout/Container";
 import { Card } from "@/components/ui/Card";
 import { CodeBlock } from "@/components/ui/CodeBlock";
 import { useSession } from "@/hooks/useSession";
-import { getQuestion, allQuestions } from "@/data";
+import { getQuestion } from "@/data";
 import { modules } from "@/data/modules";
 import { cn, isCodeLike } from "@/lib/utils";
 import type { AnswerKey } from "@/data/types";

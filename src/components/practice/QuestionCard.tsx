@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { cn, isCodeLike } from "@/lib/utils";
 import { CodeBlock } from "@/components/ui/CodeBlock";
 import type { Question, AnswerKey } from "@/data/types";
@@ -30,14 +29,8 @@ export function QuestionCard({
   onBookmark,
   onRetry,
 }: QuestionCardProps) {
-  const [animateKey, setAnimateKey] = useState(question.id);
-
-  useEffect(() => {
-    setAnimateKey(question.id);
-  }, [question.id]);
-
   return (
-    <div key={animateKey} className="animate-fade-in">
+    <div key={question.id} className="animate-fade-in">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <span
