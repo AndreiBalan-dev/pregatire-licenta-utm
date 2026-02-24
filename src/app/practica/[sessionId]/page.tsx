@@ -214,8 +214,12 @@ export default function QuizPage() {
   return (
     <>
       <Header />
-      <main className="py-6 pb-24 md:pb-8">
-        <Container narrow>
+      <main className="relative py-6 pb-24 md:pb-8 overflow-hidden">
+        <div
+          className="absolute inset-0 grid-pattern opacity-40"
+          aria-hidden="true"
+        />
+        <Container narrow className="relative">
           <div className="mb-6">
             <ProgressBar
               current={practiceStats.answered}
@@ -321,24 +325,24 @@ export default function QuizPage() {
         title="Rezumat Sesiune"
       >
         <div className="space-y-4">
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div className="p-3 rounded-[var(--radius-md)] bg-[var(--color-bg-primary)]">
-              <div className="text-2xl font-bold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
+            <div className="p-2.5 sm:p-3 rounded-[var(--radius-md)] bg-[var(--color-bg-primary)]">
+              <div className="text-xl sm:text-2xl font-bold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
                 {practiceStats.answered}
               </div>
-              <div className="text-xs text-[var(--color-text-tertiary)] mt-1">Rezolvate</div>
+              <div className="text-[10px] sm:text-xs text-[var(--color-text-tertiary)] mt-1">Rezolvate</div>
             </div>
-            <div className="p-3 rounded-[var(--radius-md)] bg-[var(--color-correct-bg)]">
-              <div className="text-2xl font-bold text-[var(--color-correct)]" style={{ fontFamily: "var(--font-display)" }}>
+            <div className="p-2.5 sm:p-3 rounded-[var(--radius-md)] bg-[var(--color-correct-bg)]">
+              <div className="text-xl sm:text-2xl font-bold text-[var(--color-correct)]" style={{ fontFamily: "var(--font-display)" }}>
                 {practiceStats.correct}
               </div>
-              <div className="text-xs text-[var(--color-text-tertiary)] mt-1">Corecte</div>
+              <div className="text-[10px] sm:text-xs text-[var(--color-text-tertiary)] mt-1">Corecte</div>
             </div>
-            <div className="p-3 rounded-[var(--radius-md)] bg-[var(--color-wrong-bg)]">
-              <div className="text-2xl font-bold text-[var(--color-wrong)]" style={{ fontFamily: "var(--font-display)" }}>
+            <div className="p-2.5 sm:p-3 rounded-[var(--radius-md)] bg-[var(--color-wrong-bg)]">
+              <div className="text-xl sm:text-2xl font-bold text-[var(--color-wrong)]" style={{ fontFamily: "var(--font-display)" }}>
                 {practiceStats.wrong}
               </div>
-              <div className="text-xs text-[var(--color-text-tertiary)] mt-1">Greșite</div>
+              <div className="text-[10px] sm:text-xs text-[var(--color-text-tertiary)] mt-1">Greșite</div>
             </div>
           </div>
 

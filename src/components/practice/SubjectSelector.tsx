@@ -191,7 +191,7 @@ export function SubjectSelector({
                                     onResetSubject(subject.id);
                                   }
                                 }}
-                                className="p-0.5 rounded text-[var(--color-text-tertiary)] hover:text-[var(--color-wrong)] hover:bg-[var(--color-wrong-bg)] transition-colors cursor-pointer"
+                                className="p-1.5 -m-1 rounded-[var(--radius-sm)] text-[var(--color-text-tertiary)] hover:text-[var(--color-wrong)] hover:bg-[var(--color-wrong-bg)] transition-colors cursor-pointer"
                                 title="Resetează progresul"
                               >
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

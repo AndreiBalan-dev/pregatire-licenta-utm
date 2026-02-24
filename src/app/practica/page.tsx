@@ -7,8 +7,8 @@ import { Header } from "@/components/layout/Header";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Container } from "@/components/layout/Container";
 import { SubjectSelector } from "@/components/practice/SubjectSelector";
-import { Button } from "@/components/ui/Button";
 import { useSession } from "@/hooks/useSession";
+import { cn } from "@/lib/utils";
 import { modules } from "@/data/modules";
 import { questionsBySubject } from "@/data";
 
@@ -127,166 +127,206 @@ function PracticaContent() {
           />
 
           {selectedSubjects.length > 0 && (
-            <div className="mt-8 animate-slide-up">
-              <div className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] overflow-hidden">
-                {/* Hero stat area */}
-                <div className="relative px-5 pt-6 pb-5 overflow-hidden">
-                  <div
-                    className="absolute inset-0 opacity-[0.04]"
-                    style={{
-                      background:
-                        "radial-gradient(ellipse 80% 60% at 50% 0%, var(--color-accent), transparent)",
-                    }}
-                  />
-                  <div className="relative flex items-end justify-between gap-4">
-                    <div>
-                      <span
-                        className="text-xs font-bold uppercase tracking-widest text-[var(--color-accent)]"
-                        style={{ fontFamily: "var(--font-display)" }}
-                      >
-                        Opțiuni Practică
-                      </span>
-                      <div className="flex items-baseline gap-2.5 mt-2">
-                        <span
-                          className="text-4xl font-extrabold text-[var(--color-text-primary)]"
-                          style={{ fontFamily: "var(--font-display)" }}
-                        >
-                          {onlyUnanswered ? unansweredCount : totalAvailable}
-                        </span>
-                        <span className="text-sm text-[var(--color-text-secondary)]">
-                          {onlyUnanswered ? "nerezolvate" : "întrebări"}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="text-right pb-1">
-                      <span className="text-xs text-[var(--color-text-tertiary)]">
-                        {selectedSubjects.length}{" "}
-                        {selectedSubjects.length === 1 ? "materie" : "materii"}
-                      </span>
-                      {totalAvailable > 0 && (
-                        <div className="mt-1.5 text-xs font-medium text-[var(--color-accent)]">
-                          {Math.round(
-                            ((totalAvailable - unansweredCount) /
-                              totalAvailable) *
-                              100,
-                          )}
-                          % completat
-                        </div>
-                      )}
-                    </div>
+            <div className="mt-10 animate-slide-up">
+              <div
+                className="relative rounded-[var(--radius-xl)] border border-[var(--color-border)] overflow-hidden"
+                style={{ background: "linear-gradient(180deg, var(--color-bg-tertiary) 0%, var(--color-bg-secondary) 40%, var(--color-bg-secondary) 100%)" }}
+              >
+                {/* Atmospheric glow */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background: "radial-gradient(ellipse 70% 40% at 50% 0%, var(--color-accent), transparent)",
+                    opacity: 0.06,
+                  }}
+                />
+
+                {/* Stat centerpiece */}
+                <div className="relative px-6 pt-8 pb-6 text-center">
+                  <span
+                    className="text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--color-accent)]"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    Sesiune Nouă
+                  </span>
+
+                  <div className="mt-3 flex items-baseline justify-center gap-3">
+                    <span
+                      className="text-5xl sm:text-6xl font-extrabold text-[var(--color-text-primary)] tabular-nums"
+                      style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
+                    >
+                      {onlyUnanswered ? unansweredCount : totalAvailable}
+                    </span>
+                    <span className="text-base text-[var(--color-text-tertiary)] font-medium">
+                      {onlyUnanswered ? "nerezolvate" : "întrebări"}
+                    </span>
                   </div>
+
+                  <div className="mt-3 flex items-center justify-center gap-4 text-xs text-[var(--color-text-tertiary)]">
+                    <span>{selectedSubjects.length} {selectedSubjects.length === 1 ? "materie" : "materii"}</span>
+                    {totalAvailable > 0 && unansweredCount < totalAvailable && (
+                      <>
+                        <span className="w-px h-3 bg-[var(--color-border)]" />
+                        <span className="text-[var(--color-accent)] font-medium">
+                          {Math.round(((totalAvailable - unansweredCount) / totalAvailable) * 100)}% completat
+                        </span>
+                      </>
+                    )}
+                  </div>
+
                   {totalAvailable > 0 && (
-                    <div className="relative mt-4 h-1.5 rounded-full bg-[var(--color-bg-primary)] overflow-hidden">
+                    <div className="mt-5 mx-auto max-w-xs h-1 rounded-full bg-[var(--color-bg-primary)] overflow-hidden">
                       <div
-                        className="h-full rounded-full transition-all duration-500"
+                        className="h-full rounded-full transition-all duration-700 ease-out"
                         style={{
                           width: `${Math.round(((totalAvailable - unansweredCount) / totalAvailable) * 100)}%`,
-                          background:
-                            "linear-gradient(90deg, var(--color-accent), var(--color-accent-hover))",
+                          background: "linear-gradient(90deg, var(--color-accent), var(--color-accent-hover))",
                         }}
                       />
                     </div>
                   )}
                 </div>
 
-                <div className="border-t border-[var(--color-border)] px-5 py-4 space-y-4">
-                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                    {unansweredCount < totalAvailable && (
-                      <label className="flex items-center gap-3 px-3 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-bg-primary)] cursor-pointer hover:bg-[var(--color-bg-hover)] transition-colors flex-1">
-                        <button
-                          onClick={() => setOnlyUnanswered(!onlyUnanswered)}
-                          className={`relative w-9 h-5 rounded-full transition-all cursor-pointer flex-shrink-0 ${
-                            onlyUnanswered
-                              ? "bg-[var(--color-accent)] shadow-[0_0_12px_rgba(232,166,49,0.2)]"
-                              : "bg-[var(--color-border-strong)]"
-                          }`}
+                {/* Controls */}
+                <div className="relative px-6 pb-6 space-y-5">
+                  {/* Toggle cards */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {(() => {
+                      const hasProgress = unansweredCount < totalAvailable;
+                      const isDisabled = !hasProgress;
+                      return (
+                        <label
+                          className={cn(
+                            "flex items-center gap-3.5 px-4 py-3.5 rounded-[var(--radius-lg)] transition-all border",
+                            isDisabled
+                              ? "opacity-40 cursor-default bg-[var(--color-bg-primary)] border-[var(--color-border)]"
+                              : onlyUnanswered
+                                ? "cursor-pointer bg-[var(--color-accent-muted)] border-[var(--color-accent)] shadow-[0_0_20px_rgba(232,166,49,0.08)]"
+                                : "cursor-pointer bg-[var(--color-bg-primary)] border-[var(--color-border)] hover:border-[var(--color-border-strong)] hover:bg-[var(--color-bg-hover)]"
+                          )}
                         >
-                          <span
-                            className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform duration-200 ${
-                              onlyUnanswered ? "translate-x-4" : ""
-                            }`}
-                          />
-                        </button>
-                        <div>
-                          <span className="text-xs font-medium text-[var(--color-text-secondary)] block">
-                            Doar nerezolvate
-                          </span>
-                          <span className="text-[10px] text-[var(--color-text-tertiary)]">
-                            {unansweredCount} rămase
-                          </span>
-                        </div>
-                      </label>
-                    )}
+                          <button
+                            role="switch"
+                            aria-checked={!isDisabled && onlyUnanswered}
+                            aria-label="Doar întrebări nerezolvate"
+                            onClick={() => { if (!isDisabled) setOnlyUnanswered(!onlyUnanswered); }}
+                            disabled={isDisabled}
+                            className={cn(
+                              "relative w-10 h-[22px] rounded-full transition-all duration-200 flex-shrink-0",
+                              isDisabled
+                                ? "bg-[var(--color-border)] cursor-default"
+                                : onlyUnanswered
+                                  ? "bg-[var(--color-accent)] cursor-pointer"
+                                  : "bg-[var(--color-border-strong)] cursor-pointer"
+                            )}
+                          >
+                            <span className={cn(
+                              "absolute top-[3px] left-[3px] w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-200",
+                              !isDisabled && onlyUnanswered && "translate-x-[18px]"
+                            )} />
+                          </button>
+                          <div className="min-w-0">
+                            <span className={cn(
+                              "text-sm font-medium block transition-colors",
+                              isDisabled
+                                ? "text-[var(--color-text-tertiary)]"
+                                : onlyUnanswered
+                                  ? "text-[var(--color-text-primary)]"
+                                  : "text-[var(--color-text-secondary)]"
+                            )}>
+                              Doar nerezolvate
+                            </span>
+                            <span className="text-[11px] text-[var(--color-text-tertiary)]">
+                              {hasProgress
+                                ? `${unansweredCount} din ${totalAvailable} rămase`
+                                : "Niciuna rezolvată încă"}
+                            </span>
+                          </div>
+                        </label>
+                      );
+                    })()}
 
-                    <label className="flex items-center gap-3 px-3 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-bg-primary)] cursor-pointer hover:bg-[var(--color-bg-hover)] transition-colors flex-1">
+                    <label
+                      className={cn(
+                        "flex items-center gap-3.5 px-4 py-3.5 rounded-[var(--radius-lg)] cursor-pointer transition-all border",
+                        shuffleQuestions
+                          ? "bg-[var(--color-accent-muted)] border-[var(--color-accent)] shadow-[0_0_20px_rgba(232,166,49,0.08)]"
+                          : "bg-[var(--color-bg-primary)] border-[var(--color-border)] hover:border-[var(--color-border-strong)] hover:bg-[var(--color-bg-hover)]"
+                      )}
+                    >
                       <button
+                        role="switch"
+                        aria-checked={shuffleQuestions}
+                        aria-label="Amestecă ordinea întrebărilor"
                         onClick={() => setShuffleQuestions(!shuffleQuestions)}
-                        className={`relative w-9 h-5 rounded-full transition-all cursor-pointer flex-shrink-0 ${
+                        className={`relative w-10 h-[22px] rounded-full transition-all duration-200 cursor-pointer flex-shrink-0 ${
                           shuffleQuestions
-                            ? "bg-[var(--color-accent)] shadow-[0_0_12px_rgba(232,166,49,0.2)]"
+                            ? "bg-[var(--color-accent)]"
                             : "bg-[var(--color-border-strong)]"
                         }`}
                       >
-                        <span
-                          className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform duration-200 ${
-                            shuffleQuestions ? "translate-x-4" : ""
-                          }`}
-                        />
+                        <span className={`absolute top-[3px] left-[3px] w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-200 ${
+                          shuffleQuestions ? "translate-x-[18px]" : ""
+                        }`} />
                       </button>
-                      <div>
-                        <span className="text-xs font-medium text-[var(--color-text-secondary)] block">
+                      <div className="min-w-0">
+                        <span className={cn(
+                          "text-sm font-medium block transition-colors",
+                          shuffleQuestions ? "text-[var(--color-text-primary)]" : "text-[var(--color-text-secondary)]"
+                        )}>
                           Amestecă ordinea
                         </span>
-                        <span className="text-[10px] text-[var(--color-text-tertiary)]">
-                          Întrebări aleatorii
+                        <span className="text-[11px] text-[var(--color-text-tertiary)]">
+                          Ordine aleatorie
                         </span>
                       </div>
                     </label>
                   </div>
 
+                  {/* Batch size selector */}
                   <div>
-                    <span className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-tertiary)] mb-2 block">
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--color-text-tertiary)] mb-2.5 block">
                       Câte întrebări
                     </span>
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex gap-2">
                       {([10, 25, 50, "all"] as const).map((count) => (
                         <button
                           key={count}
                           onClick={() => setQuestionCount(count)}
-                          className={`px-4 py-1.5 rounded-[var(--radius-md)] text-xs font-medium transition-all cursor-pointer border ${
+                          className={cn(
+                            "flex-1 py-2 rounded-[var(--radius-md)] text-sm font-semibold transition-all duration-200 cursor-pointer border",
                             questionCount === count
-                              ? "bg-[var(--color-accent)] text-[#0C0C0E] border-[var(--color-accent)] shadow-[0_0_16px_rgba(232,166,49,0.15)]"
+                              ? "bg-[var(--color-accent)] text-[#0C0C0E] border-[var(--color-accent)] shadow-[0_0_20px_rgba(232,166,49,0.12)]"
                               : "bg-[var(--color-bg-primary)] text-[var(--color-text-tertiary)] border-[var(--color-border)] hover:text-[var(--color-text-secondary)] hover:border-[var(--color-border-strong)] hover:bg-[var(--color-bg-hover)] active:scale-[0.97]"
-                          }`}
+                          )}
+                          style={{ fontFamily: questionCount === count ? "var(--font-display)" : undefined }}
                         >
                           {count === "all" ? "Toate" : count}
                         </button>
                       ))}
                     </div>
                   </div>
-                </div>
 
-                {/* CTA */}
-                <div className="border-t border-[var(--color-border)] px-5 py-4 bg-[var(--color-bg-tertiary)]/30">
-                  <Button
+                  {/* Launch button */}
+                  <button
                     onClick={handleStart}
-                    size="lg"
                     disabled={onlyUnanswered && unansweredCount === 0}
-                    className="w-full"
+                    className={cn(
+                      "w-full py-4 rounded-[var(--radius-lg)] text-base font-bold transition-all duration-200 cursor-pointer",
+                      "flex items-center justify-center gap-2.5",
+                      "disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none",
+                      "bg-[var(--color-accent)] text-[#0C0C0E] hover:bg-[var(--color-accent-hover)]",
+                      "shadow-[0_0_30px_rgba(232,166,49,0.15)] hover:shadow-[0_0_40px_rgba(232,166,49,0.25)]",
+                      "active:scale-[0.98]"
+                    )}
+                    style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}
                   >
                     Începe Practica
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                    >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <line x1="5" y1="12" x2="19" y2="12" />
                       <polyline points="12 5 19 12 12 19" />
                     </svg>
-                  </Button>
+                  </button>
                 </div>
               </div>
             </div>

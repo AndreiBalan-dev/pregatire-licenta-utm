@@ -10,21 +10,21 @@ export function ModuleGrid() {
   const { session } = useSession();
 
   return (
-    <section className="py-12">
+    <section className="py-12 sm:py-16">
       <Container>
-        <div className="flex items-center gap-3 mb-8">
+        <div className="flex items-center gap-3 mb-8 animate-fade-in">
           <h2
             className="text-2xl font-bold text-[var(--color-text-primary)]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Module
           </h2>
-          <span className="text-sm text-[var(--color-text-tertiary)]">
+          <span className="text-xs font-medium text-[var(--color-accent)] bg-[var(--color-accent-muted)] px-2.5 py-0.5 rounded-full uppercase tracking-wider">
             {allQuestions.length} întrebări
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 md:[grid-auto-rows:1fr] gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 md:[grid-auto-rows:1fr] gap-4 sm:gap-5">
           {modules.map((mod, i) => {
             const moduleQuestions = questionsByModule[mod.id] || [];
             const answeredCount = moduleQuestions.filter(

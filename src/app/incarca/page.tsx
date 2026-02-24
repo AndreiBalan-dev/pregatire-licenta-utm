@@ -79,50 +79,85 @@ export default function IncarcaPage() {
   return (
     <>
       <Header />
-      <main className="py-8 pb-24 md:pb-8">
-        <Container narrow>
-          <h1
-            className="text-3xl font-bold text-[var(--color-text-primary)] mb-2"
-            style={{ fontFamily: "var(--font-display)" }}
+      <main className="relative py-8 pb-24 md:pb-8 overflow-hidden">
+        <div
+          className="absolute inset-0 grid-pattern opacity-40"
+          aria-hidden="true"
+        />
+        <Container narrow className="relative">
+          <div className="mb-10">
+            <h1
+              className="text-3xl font-bold text-[var(--color-text-primary)] mb-2 animate-fade-in"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Încarcă Sesiune
+            </h1>
+            <p className="text-[var(--color-text-secondary)] animate-fade-in stagger-1">
+              Introdu cheia de salvare pentru a-ți recupera progresul.
+            </p>
+          </div>
+
+          <div
+            className="relative rounded-[var(--radius-xl)] border border-[var(--color-border)] overflow-hidden animate-slide-up stagger-2"
+            style={{ background: "linear-gradient(180deg, var(--color-bg-tertiary) 0%, var(--color-bg-secondary) 40%, var(--color-bg-secondary) 100%)" }}
           >
-            Încarcă Sesiune
-          </h1>
-          <p className="text-[var(--color-text-secondary)] mb-8">
-            Introdu cheia de salvare pentru a-ți recupera progresul.
-          </p>
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: "radial-gradient(ellipse 70% 40% at 50% 0%, var(--color-accent), transparent)",
+                opacity: 0.06,
+              }}
+            />
 
-          <Card className="p-6">
-            <div className="space-y-4">
-              <Input
-                label="Cheie de salvare"
-                placeholder="ex. aBcDeFgHiJkL"
-                value={key}
-                onChange={(e) => {
-                  setKey(e.target.value);
-                  setError(null);
-                }}
-                error={error || undefined}
-                style={{ fontFamily: "var(--font-code)" }}
-                className="text-lg tracking-wider"
-              />
-
-              <Button
-                onClick={handleLoad}
-                disabled={loading || !key.trim()}
-                size="lg"
-                className="w-full"
+            <div className="relative px-6 pt-8 pb-2 text-center">
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-[var(--color-accent-muted)] mb-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="17 8 12 3 7 8" />
+                  <line x1="12" y1="3" x2="12" y2="15" />
+                </svg>
+              </div>
+              <span
+                className="text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--color-accent)] block"
+                style={{ fontFamily: "var(--font-display)" }}
               >
-                {loading ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-[#0C0C0E]/30 border-t-[#0C0C0E]" />
-                    Se încarcă...
-                  </>
-                ) : (
-                  "Încarcă Sesiunea"
-                )}
-              </Button>
+                Recuperează Progresul
+              </span>
             </div>
-          </Card>
+
+            <div className="relative px-6 pb-6 pt-4">
+              <div className="space-y-4">
+                <Input
+                  label="Cheie de salvare"
+                  placeholder="ex. aBcDeFgHiJkL"
+                  value={key}
+                  onChange={(e) => {
+                    setKey(e.target.value);
+                    setError(null);
+                  }}
+                  error={error || undefined}
+                  style={{ fontFamily: "var(--font-code)" }}
+                  className="text-lg tracking-wider"
+                />
+
+                <Button
+                  onClick={handleLoad}
+                  disabled={loading || !key.trim()}
+                  size="lg"
+                  className="w-full"
+                >
+                  {loading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-2 border-[#0C0C0E]/30 border-t-[#0C0C0E]" />
+                      Se încarcă...
+                    </>
+                  ) : (
+                    "Încarcă Sesiunea"
+                  )}
+                </Button>
+              </div>
+            </div>
+          </div>
         </Container>
       </main>
       <MobileNav />

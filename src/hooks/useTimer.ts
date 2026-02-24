@@ -25,10 +25,10 @@ export function useTimer() {
 
   const stop = useCallback(() => {
     setIsRunning(false);
-    const final = elapsed;
+    const final = Date.now() - startTimeRef.current;
     setElapsed(0);
     return final;
-  }, [elapsed]);
+  }, []);
 
   useEffect(() => {
     if (isRunning) {
