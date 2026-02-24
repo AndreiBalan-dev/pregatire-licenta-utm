@@ -28,14 +28,7 @@ export function ModuleCard({ module, totalQuestions, answeredCount, correctCount
           animationDelay: `${delay}ms`,
         } as React.CSSProperties}
       >
-        {/* Atmospheric top glow */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          style={{
-            background: `radial-gradient(ellipse 80% 50% at 50% 0%, ${module.color}, transparent)`,
-            opacity: undefined,
-          }}
-        />
+        {/* Subtle static top glow — hover glow handled by .module-card::before in CSS */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
