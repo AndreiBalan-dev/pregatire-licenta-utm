@@ -66,67 +66,89 @@ export function SubjectSelector({
               tabIndex={0}
               onClick={() => toggleModule(mod.id)}
               onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleModule(mod.id); } }}
-              className="w-full flex items-center justify-between p-4 hover:bg-[var(--color-bg-hover)] transition-colors cursor-pointer"
+              className="w-full flex items-center gap-3 p-3 sm:p-4 hover:bg-[var(--color-bg-hover)] transition-colors cursor-pointer"
             >
-              <div className="flex items-center gap-3">
-                <div
-                  className="w-1.5 h-8 rounded-full"
-                  style={{ backgroundColor: mod.color, boxShadow: `0 0 8px ${mod.color}40` }}
-                />
-                <div className="text-left">
-                  <h3
-                    className="text-base font-bold text-[var(--color-text-primary)]"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    {mod.name}
-                  </h3>
-                  <span className="text-xs text-[var(--color-text-tertiary)]">
+              <div
+                className="w-1.5 self-stretch rounded-full flex-shrink-0"
+                style={{ backgroundColor: mod.color, boxShadow: `0 0 8px ${mod.color}40` }}
+              />
+              <div className="flex-1 min-w-0">
+                {/* Title row */}
+                <div className="flex items-center justify-between gap-2 mb-0.5">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <h3
+                      className="text-sm sm:text-base font-bold text-[var(--color-text-primary)] truncate"
+                      style={{ fontFamily: "var(--font-display)" }}
+                    >
+                      {mod.name}
+                    </h3>
+                    <Badge color={mod.color} className="hidden sm:inline-flex flex-shrink-0">
+                      {mod.subjects.length} materii
+                    </Badge>
+                  </div>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="hidden sm:inline-flex"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (allSelected) {
+                          onDeselectAllModule(mod.id);
+                        } else {
+                          onSelectAllModule(mod.id);
+                        }
+                      }}
+                    >
+                      {allSelected ? "Deselectează" : "Selectează tot"}
+                    </Button>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      className={cn(
+                        "text-[var(--color-text-tertiary)] transition-transform duration-200",
+                        isExpanded && "rotate-180"
+                      )}
+                    >
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  </div>
+                </div>
+                {/* Stats row */}
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[11px] sm:text-xs text-[var(--color-text-tertiary)]">
                     {moduleAnswered}/{moduleTotal} rezolvate
                     {selectedInModule > 0 && (
-                      <span className="ml-1.5 text-[var(--color-accent)]">
-                        · {selectedInModule}/{mod.subjects.length} selectate
+                      <span className="ml-1 text-[var(--color-accent)]">
+                        · {selectedInModule} selectate
                       </span>
                     )}
                   </span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="sm:hidden px-2 py-0.5 text-[11px]"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (allSelected) {
+                        onDeselectAllModule(mod.id);
+                      } else {
+                        onSelectAllModule(mod.id);
+                      }
+                    }}
+                  >
+                    {allSelected ? "Deselectează" : "Selectează tot"}
+                  </Button>
                 </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <Badge color={mod.color} className="hidden sm:inline-flex">
-                  {mod.subjects.length} materii
-                </Badge>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (allSelected) {
-                      onDeselectAllModule(mod.id);
-                    } else {
-                      onSelectAllModule(mod.id);
-                    }
-                  }}
-                >
-                  {allSelected ? "Deselectează" : "Selectează tot"}
-                </Button>
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  className={cn(
-                    "text-[var(--color-text-tertiary)] transition-transform duration-200",
-                    isExpanded && "rotate-180"
-                  )}
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
               </div>
             </div>
 
             {isExpanded && (
-              <div className="border-t border-[var(--color-border)] px-4 py-2 space-y-1 animate-fade-in">
+              <div className="border-t border-[var(--color-border)] px-3 sm:px-4 py-2 space-y-0.5 sm:space-y-1 animate-fade-in">
                 {mod.subjects.map((subject, subjectIndex) => {
                   const questions = questionsBySubject[subject.id] || [];
                   const answered = questions.filter((q) => session.answers[q.id]).length;
@@ -137,7 +159,7 @@ export function SubjectSelector({
                     <label
                       key={subject.id}
                       className={cn(
-                        "flex items-center gap-3 p-3 rounded-[var(--radius-md)] cursor-pointer transition-colors animate-fade-in",
+                        "flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-[var(--radius-md)] cursor-pointer transition-colors animate-fade-in",
                         isSelected
                           ? "bg-[var(--color-accent-muted)]"
                           : "hover:bg-[var(--color-bg-hover)]"
@@ -168,7 +190,7 @@ export function SubjectSelector({
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-2">
                           <span className={cn(
-                            "text-sm font-medium truncate",
+                            "text-xs sm:text-sm font-medium truncate",
                             isSelected ? "text-[var(--color-text-primary)]" : "text-[var(--color-text-secondary)]"
                           )}>
                             {subject.icon} {subject.name}
