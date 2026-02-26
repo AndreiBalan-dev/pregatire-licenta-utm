@@ -1,6 +1,6 @@
 # Pregatire Licenta UTM - Grile Informatica 2026
 
-**[utmlearn.com](https://utmlearn.com)** - Platforma gratuita de pregatire pentru examenul de licenta la Facultatea de Informatica, Universitatea Tehnica a Moldovei (UTM).
+**[utmlearn.com](https://utmlearn.com)** - Platforma gratuita de pregatire pentru examenul de licenta la Facultatea de Informatica, Universitatea Titu Maiorescu (UTM).
 
 715 de exercitii grila extrase din materialele oficiale de examen, organizate pe module si materii, cu tracking de progres si feedback instant.
 
