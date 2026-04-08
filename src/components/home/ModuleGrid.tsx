@@ -10,7 +10,7 @@ export function ModuleGrid() {
   const { session } = useSession();
 
   return (
-    <section className="py-12 sm:py-16">
+    <section className="py-8 sm:py-10">
       <Container>
         <div className="flex items-center gap-3 mb-8 animate-fade-in">
           <h2

@@ -12,7 +12,7 @@ interface HeroSectionProps {
 
 export function HeroSection({ hasExistingSession, totalAnswered, accuracy }: HeroSectionProps) {
   return (
-    <section className="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28">
+    <section className="relative overflow-hidden pt-16 pb-12 md:pt-24 md:pb-16">
       <div className="absolute inset-0 grid-pattern opacity-40" />
 
       <Container className="relative">

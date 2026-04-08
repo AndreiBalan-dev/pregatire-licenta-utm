@@ -11,7 +11,7 @@ const recentChanges = [
 
 export function ChangelogBanner() {
   return (
-    <section className="py-8 sm:py-12 pb-24 md:pb-12">
+    <section className="pt-2 sm:pt-4 pb-24 md:pb-12">
       <Container>
         <Link
           href="/noutati"
