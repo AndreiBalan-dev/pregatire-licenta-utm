@@ -4,6 +4,7 @@ import { Header } from "@/components/layout/Header";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { HeroSection } from "@/components/home/HeroSection";
 import { ModuleGrid } from "@/components/home/ModuleGrid";
+import { ChangelogBanner } from "@/components/home/ChangelogBanner";
 import { useSession } from "@/hooks/useSession";
 import { useToast } from "@/hooks/useToast";
 import { ToastContainer } from "@/components/ui/Toast";
@@ -32,7 +33,7 @@ export default function HomePage() {
           accuracy={stats.accuracy}
         />
         <ModuleGrid />
-
+        <ChangelogBanner />
       </main>
       <MobileNav />
       <ToastContainer toasts={toasts} onRemove={removeToast} />

@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/practica", label: "Practică" },
   { href: "/rezultate", label: "Rezultate" },
   { href: "/revizuire", label: "Revizuire" },
+  { href: "/noutati", label: "Noutăți" },
   { href: "/despre", label: "Despre" },
 ];
 
@@ -32,6 +33,9 @@ export function Header() {
             </span>
             <span className="text-xs font-medium text-[var(--color-accent)] bg-[var(--color-accent-muted)] px-2 py-0.5 rounded-full">
               2026
+            </span>
+            <span className="hidden sm:inline text-[10px] font-medium text-[var(--color-text-tertiary)] bg-[var(--color-bg-hover)] px-1.5 py-0.5 rounded-full">
+              v1.3.1
             </span>
           </Link>
 
