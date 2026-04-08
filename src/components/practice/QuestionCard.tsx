@@ -79,6 +79,19 @@ export function QuestionCard({
         </div>
       )}
 
+      {/* Figure */}
+      {question.figure && (
+        <div className="-mx-4 sm:mx-0 mb-4 sm:mb-5">
+          <div className="sm:rounded-[var(--radius-md)] overflow-hidden bg-white p-3 sm:p-4 flex justify-center">
+            <img
+              src={question.figure}
+              alt="Figură pentru întrebare"
+              className="max-w-full h-auto max-h-[280px] object-contain"
+            />
+          </div>
+        </div>
+      )}
+
       {/* Question text */}
       <div className="mb-5 sm:mb-6">
         <p className="text-[13px] sm:text-base leading-relaxed text-[var(--color-text-primary)] whitespace-pre-wrap break-words">

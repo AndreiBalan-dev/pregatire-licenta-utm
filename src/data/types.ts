@@ -5,6 +5,7 @@ export interface Question {
   text: string;
   code?: string;
   codeLanguage?: "c" | "cpp" | "python" | "java" | "js" | "php" | "sql";
+  figure?: string;
   options: {
     a: string;
     b: string;

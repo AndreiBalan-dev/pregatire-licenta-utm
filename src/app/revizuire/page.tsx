@@ -220,6 +220,16 @@ export default function RevizuirePage() {
                       </div>
                     )}
 
+                    {question.figure && (
+                      <div className="mb-3 rounded-[var(--radius-sm)] overflow-hidden bg-white p-2 flex justify-center">
+                        <img
+                          src={question.figure}
+                          alt="Figură pentru întrebare"
+                          className="max-w-full h-auto max-h-[200px] object-contain"
+                        />
+                      </div>
+                    )}
+
                     <p className="text-sm text-[var(--color-text-primary)] leading-relaxed whitespace-pre-wrap mb-3">
                       {question.text}
                     </p>

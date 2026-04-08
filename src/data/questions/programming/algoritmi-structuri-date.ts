@@ -73,11 +73,10 @@ endfor`,
     id: 258,
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
-    text: `Parcurgerea in preordine a arborelui binar din Fig. 1 va afisa
-
-Fig. 1`,
+    text: `Parcurgerea in preordine a arborelui binar din Fig. 1 va afisa`,
     code: undefined,
     codeLanguage: undefined,
+    figure: "/figures/fig1.png",
     options: {
       a: `10, 4, 1, 9, 21, 15, 28, 23`,
       b: `10, 4, 1, 9, 21, 15, 23, 28`,
@@ -93,6 +92,7 @@ Fig. 1`,
     text: `Parcurgerea in inordine a arborelui binar din Fig. 1 va afisa`,
     code: undefined,
     codeLanguage: undefined,
+    figure: "/figures/fig1.png",
     options: {
       a: `1, 4, 9, 10, 15, 21, 28, 23`,
       b: `1, 4, 9, 10, 21, 23, 28, 15`,
@@ -108,6 +108,7 @@ Fig. 1`,
     text: `Parcurgerea in postordine a arborelui binar din Fig. 1 va afisa`,
     code: undefined,
     codeLanguage: undefined,
+    figure: "/figures/fig1.png",
     options: {
       a: `1, 9, 4, 15, 23, 28, 21, 10`,
       b: `1, 4, 9, 10, 15, 21, 28, 23`,
@@ -446,9 +447,8 @@ endfor`,
     id: 280,
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
-    text: `Se considera lista inlantuita cu elemente numere intregi din Fig. 2. Data urmatoarea definitie a tipului de date ce corespunde unui nod al listei, ce va afisa urmatoarea functie, daca este apelata prin print(HEAD)?
-
-Fig. 2`,
+    text: `Se considera lista inlantuita cu elemente numere intregi din Fig. 2. Data urmatoarea definitie a tipului de date ce corespunde unui nod al listei, ce va afisa urmatoarea functie, daca este apelata prin print(HEAD)?`,
+    figure: "/figures/fig2.png",
     code: `struct NOD
 {
   int info;
@@ -478,6 +478,7 @@ void print(NOD *head)
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
     text: `Se considera lista inlantuita cu elemente numere intregi din Fig. 2. Data urmatoarea definitie a tipului de date ce corespunde unui nod al listei, ce va afisa urmatoarea functie, daca este apelata prin print(HEAD)?`,
+    figure: "/figures/fig2.png",
     code: `struct NOD
 {
   int info;
@@ -507,6 +508,7 @@ void print(NOD *head)
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
     text: `Se considera lista inlantuita cu elemente numere intregi din Fig. 2. Data urmatoarea definitie a tipului de date ce corespunde unui nod al listei, ce va afisa urmatoarea functie, daca este apelata prin print(HEAD)?`,
+    figure: "/figures/fig2.png",
     code: `struct NOD
 {
   int info;
@@ -843,11 +845,10 @@ void print(NOD *head)
     id: 301,
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
-    text: `Care din urmatoarele afirmatii sunt adevarate?
-
-Fig. 3`,
+    text: `Care din urmatoarele afirmatii sunt adevarate?`,
     code: undefined,
     codeLanguage: undefined,
+    figure: "/figures/fig1.png",
     options: {
       a: `Arborele din figura Fig. 3 este vid.`,
       b: `Arborele din figura Fig. 3 este un arbore binar de cautare.`,
@@ -860,11 +861,10 @@ Fig. 3`,
     id: 302,
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
-    text: `Parcurgerea in preordine a arborelui din Fig. 4 va afisa
-
-Fig. 4`,
+    text: `Parcurgerea in preordine a arborelui din Fig. 4 va afisa`,
     code: undefined,
     codeLanguage: undefined,
+    figure: "/figures/fig3.png",
     options: {
       a: `50, +, 25, *, 3, 8, -, 3, /`,
       b: `/, +, 50, *, 25, 3, -, 8, 3`,
@@ -880,6 +880,7 @@ Fig. 4`,
     text: `Parcurgerea in inordine a arborelui din Fig. 4 va afisa`,
     code: undefined,
     codeLanguage: undefined,
+    figure: "/figures/fig3.png",
     options: {
       a: `50, /, +, *, 25, 3, -, 8, 3`,
       b: `50, +, 25, *, 3, 8, -, 3, /`,
@@ -895,6 +896,7 @@ Fig. 4`,
     text: `Parcurgerea in postordine a arborelui din Fig. 4 va afisa`,
     code: undefined,
     codeLanguage: undefined,
+    figure: "/figures/fig3.png",
     options: {
       a: `50, +, 25, *, 3, 8, -, 3, /`,
       b: `/, 50, +, *, 3, 25, 8, -, 3`,
