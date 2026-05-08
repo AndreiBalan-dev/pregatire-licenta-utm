@@ -13,6 +13,7 @@ export interface Question {
     d: string;
   };
   correctAnswer: "a" | "b" | "c" | "d";
+  lockOptions?: boolean;
 }
 
 export interface Subject {

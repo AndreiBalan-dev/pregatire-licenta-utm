@@ -43,6 +43,15 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "1.3.2",
+    date: "8 Mai 2026",
+    title: "Corectii la raspunsuri pozitionate",
+    changes: [
+      { text: "Raspunsurile de tip 'a) si c)' au fost rescrise sa contina textul real al variantelor, nu referinte la litere", type: "fix" },
+      { text: "Variantele 'toate cele de mai sus' au fost mutate mereu la pozitia D pentru consistenta", type: "fix" },
+    ],
+  },
+  {
     version: "1.3.1",
     date: "8 Aprilie 2026",
     title: "Figuri si pagina noutati",
