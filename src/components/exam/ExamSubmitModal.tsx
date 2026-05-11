@@ -16,48 +16,26 @@ export function ExamSubmitModal({ open, answeredCount, total, onConfirm, onCance
   const allDone = unanswered === 0;
 
   return (
-    <Modal open={open} onClose={onCancel} title={allDone ? "Finalizează examenul?" : "Mai ai întrebări fără răspuns"}>
+    <Modal open={open} onClose={onCancel} title={allDone ? "Trimite examenul?" : "Mai ai răspunsuri lipsă"}>
       <div className="space-y-5">
         {allDone ? (
           <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
-            Ai răspuns la toate{" "}
-            <span className="font-semibold text-[var(--color-text-primary)]">{total}</span> întrebările.
-            După ce trimiți, nu mai poți schimba răspunsurile.
+            Ai răspuns la toate cele{" "}
+            <span className="font-semibold text-[var(--color-text-primary)]">{total}</span> întrebări. După submit, răspunsurile devin definitive.
           </p>
         ) : (
-          <div className="space-y-3">
-            <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
-              Ai răspuns la{" "}
-              <span className="font-semibold text-[var(--color-text-primary)]">
-                {answeredCount} din {total}
-              </span>{" "}
-              întrebări.{" "}
-              <span className="text-[var(--color-wrong)] font-medium">
-                {unanswered} {unanswered === 1 ? "întrebare rămasă" : "întrebări rămase"}
-              </span>{" "}
-              fără răspuns vor fi marcate ca greșite.
-            </p>
-            <div className="rounded-[var(--radius-md)] bg-[var(--color-bg-primary)] border border-[var(--color-border)] p-3">
-              <div className="flex items-start gap-2.5">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-tertiary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 mt-0.5" aria-hidden="true">
-                  <circle cx="12" cy="12" r="10" />
-                  <line x1="12" y1="8" x2="12" y2="12" />
-                  <line x1="12" y1="16" x2="12.01" y2="16" />
-                </svg>
-                <p className="text-xs text-[var(--color-text-tertiary)] leading-relaxed">
-                  Pierzi {(unanswered * 0.25).toFixed(2)}p din maxim. Mai bine te întorci și răspunzi?
-                </p>
-              </div>
-            </div>
-          </div>
+          <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            <span className="font-semibold text-[var(--color-text-primary)] tabular-nums">{answeredCount}/{total}</span> răspunse.
+            Cele <span className="text-[var(--color-wrong)] font-semibold">{unanswered}</span> rămase intră ca greșite.
+          </p>
         )}
 
         <div className="flex gap-2.5 flex-col-reverse sm:flex-row">
           <Button variant="secondary" size="md" className="flex-1" onClick={onCancel}>
-            {allDone ? "Înapoi" : "Mă întorc la întrebări"}
+            {allDone ? "Înapoi" : "Mai răspund"}
           </Button>
           <Button variant="primary" size="md" className="flex-1" onClick={onConfirm}>
-            {allDone ? "Trimite Examenul" : "Trimite Oricum"}
+            {allDone ? "Trimit examenul" : "Trimit oricum"}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <polyline points="9 6 15 12 9 18" />
             </svg>

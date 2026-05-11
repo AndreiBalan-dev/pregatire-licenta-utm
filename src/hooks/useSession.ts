@@ -11,7 +11,7 @@ import {
 } from "@/lib/session-types";
 import { STORAGE_KEY } from "@/lib/constants";
 import { shuffleArray } from "@/lib/utils";
-import { questionsBySubject, questionsByModule, getQuestion } from "@/data";
+import { questionsBySubject, getQuestion } from "@/data";
 import { modules } from "@/data/modules";
 import { pickExamQuestions, computeScore } from "@/lib/exam";
 import type { AnswerKey } from "@/data/types";
@@ -265,7 +265,7 @@ export function useSession() {
 
   const startExam = useCallback((): string => {
     const examId = crypto.randomUUID();
-    const questionIds = pickExamQuestions(modules, questionsByModule);
+    const questionIds = pickExamQuestions(modules, questionsBySubject);
     const exam: ExamState = {
       examId,
       questionIds,
@@ -351,12 +351,15 @@ export function useSession() {
     let correctCount = 0;
     let answeredCount = 0;
     const perModule: Record<string, { correct: number; total: number }> = {};
+    const perSubject: Record<string, { correct: number; total: number }> = {};
 
     for (const qId of exam.questionIds) {
       const q = getQuestion(qId);
       if (!q) continue;
       if (!perModule[q.moduleId]) perModule[q.moduleId] = { correct: 0, total: 0 };
+      if (!perSubject[q.subjectId]) perSubject[q.subjectId] = { correct: 0, total: 0 };
       perModule[q.moduleId].total += 1;
+      perSubject[q.subjectId].total += 1;
 
       const ans = exam.answers[qId];
       if (ans) {
@@ -364,6 +367,7 @@ export function useSession() {
         if (ans === q.correctAnswer) {
           correctCount += 1;
           perModule[q.moduleId].correct += 1;
+          perSubject[q.subjectId].correct += 1;
         }
       }
     }
@@ -376,6 +380,7 @@ export function useSession() {
       wrongCount: answeredCount - correctCount,
       score: computeScore(correctCount),
       perModule,
+      perSubject,
       durationMs: exam.durationMs,
     };
   }, [session.currentExam]);

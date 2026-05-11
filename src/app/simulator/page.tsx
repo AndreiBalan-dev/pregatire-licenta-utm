@@ -11,9 +11,6 @@ import { useSession } from "@/hooks/useSession";
 import { useResolvedTheme } from "@/hooks/useResolvedTheme";
 import {
   EXAM_TOTAL_QUESTIONS,
-  EXAM_QUESTIONS_PER_MODULE,
-  OFFICIO_POINTS,
-  POINTS_PER_QUESTION,
   scoreGradientCss,
   scoreToColor,
   scorePositionPct,
@@ -35,8 +32,9 @@ export default function SimulatorLandingPage() {
   const theme = useResolvedTheme();
   const { session, isLoaded, startExam, discardExam, getExamSummary } = useSession();
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [navigating, setNavigating] = useState(false);
 
-  if (!isLoaded) {
+  if (!isLoaded || navigating) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-2 border-[var(--color-border-strong)] border-t-[var(--color-accent)]" />
@@ -54,24 +52,26 @@ export default function SimulatorLandingPage() {
       setConfirmOpen(true);
       return;
     }
+    setNavigating(true);
     const examId = startExam();
     router.push(`/simulator/${examId}`);
   };
 
   const handleConfirmNew = () => {
+    setNavigating(true);
+    setConfirmOpen(false);
     discardExam();
     const examId = startExam();
-    setConfirmOpen(false);
     router.push(`/simulator/${examId}`);
   };
 
   const handleResume = () => {
-    if (exam) router.push(`/simulator/${exam.examId}`);
+    if (!exam) return;
+    setNavigating(true);
+    router.push(`/simulator/${exam.examId}`);
   };
 
-  const answeredCount = isActive
-    ? Object.keys(exam.answers).length
-    : 0;
+  const answeredCount = isActive ? Object.keys(exam.answers).length : 0;
 
   return (
     <>
@@ -92,8 +92,7 @@ export default function SimulatorLandingPage() {
               Examen <span className="text-[var(--color-accent)]">Licență</span>
             </h1>
             <p className="text-[var(--color-text-secondary)] max-w-xl leading-relaxed animate-fade-in stagger-2">
-              Reprodu experiența examenului scris: 36 grile, 9 din fiecare modul,
-              fără feedback până la submit. Vezi nota pe scala oficială 1-10.
+              36 de grile, ca la examenul real. Vezi cât ai lua pe scala 1-10.
             </p>
           </div>
 
@@ -109,16 +108,16 @@ export default function SimulatorLandingPage() {
                 aria-hidden="true"
               />
               <div className="relative p-6 sm:p-10 text-center">
-                <div className="grid grid-cols-3 gap-3 sm:gap-4 mb-6 max-w-md mx-auto">
+                <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6 max-w-md mx-auto">
                   <div className="p-3 rounded-[var(--radius-md)] bg-[var(--color-bg-primary)] border border-[var(--color-border)]">
                     <div className="text-2xl font-extrabold text-[var(--color-accent)] tabular-nums" style={{ fontFamily: "var(--font-display)" }}>
-                      {EXAM_TOTAL_QUESTIONS}
+                      36
                     </div>
                     <div className="text-[10px] sm:text-xs text-[var(--color-text-tertiary)] uppercase tracking-wider mt-1">Grile</div>
                   </div>
                   <div className="p-3 rounded-[var(--radius-md)] bg-[var(--color-bg-primary)] border border-[var(--color-border)]">
                     <div className="text-2xl font-extrabold text-[var(--color-accent)] tabular-nums" style={{ fontFamily: "var(--font-display)" }}>
-                      {EXAM_QUESTIONS_PER_MODULE}
+                      9
                     </div>
                     <div className="text-[10px] sm:text-xs text-[var(--color-text-tertiary)] uppercase tracking-wider mt-1">Per modul</div>
                   </div>
@@ -132,7 +131,7 @@ export default function SimulatorLandingPage() {
 
                 <button
                   onClick={handleStart}
-                  className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-[var(--radius-lg)] text-base font-bold transition-all duration-200 cursor-pointer bg-[var(--color-accent)] text-[#0C0C0E] hover:bg-[var(--color-accent-hover)] shadow-[0_0_30px_rgba(232,166,49,0.2)] hover:shadow-[0_0_40px_rgba(232,166,49,0.35)] active:scale-[0.98]"
+                  className="inline-flex items-center justify-center gap-2.5 px-7 sm:px-8 py-3.5 sm:py-4 rounded-[var(--radius-lg)] text-sm sm:text-base font-bold transition-all duration-200 cursor-pointer bg-[var(--color-accent)] text-[#0C0C0E] hover:bg-[var(--color-accent-hover)] shadow-[0_0_30px_rgba(232,166,49,0.2)] hover:shadow-[0_0_40px_rgba(232,166,49,0.35)] active:scale-[0.98]"
                   style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}
                 >
                   Începe Simulator
@@ -145,35 +144,34 @@ export default function SimulatorLandingPage() {
           )}
 
           {isActive && (
-            <div className="relative overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-accent)] bg-[var(--color-bg-secondary)] animate-slide-up" style={{ borderColor: "rgba(232, 166, 49, 0.4)" }}>
+            <div className="relative overflow-hidden rounded-[var(--radius-xl)] bg-[var(--color-bg-secondary)] animate-slide-up" style={{ borderColor: "rgba(232, 166, 49, 0.4)", borderWidth: 1, borderStyle: "solid" }}>
               <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 70% 50% at 50% 0%, var(--color-accent), transparent 60%)", opacity: 0.1 }} aria-hidden="true" />
               <div className="relative p-6 sm:p-8">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-pulse" aria-hidden="true" />
                   <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-accent)]" style={{ fontFamily: "var(--font-display)" }}>
-                    Examen în progres
+                    În progres
                   </span>
                 </div>
                 <h2 className="text-xl sm:text-2xl font-bold text-[var(--color-text-primary)] mb-2" style={{ fontFamily: "var(--font-display)" }}>
-                  Continuă unde ai rămas
+                  Continuă de unde ai rămas
                 </h2>
                 <p className="text-sm text-[var(--color-text-secondary)] mb-5">
-                  Ai răspuns la{" "}
                   <span className="font-semibold text-[var(--color-text-primary)] tabular-nums">
                     {answeredCount}/{EXAM_TOTAL_QUESTIONS}
                   </span>{" "}
-                  întrebări. Început {timeAgo(exam.startedAt)}.
+                  răspunse · început {timeAgo(exam.startedAt)}
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-2.5">
                   <Button variant="primary" size="lg" className="flex-1" onClick={handleResume}>
-                    Continuă Examenul
+                    Continuă
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <polyline points="9 6 15 12 9 18" />
                     </svg>
                   </Button>
                   <Button variant="ghost" size="lg" onClick={() => setConfirmOpen(true)}>
-                    Renunță și începe altul
+                    Renunță, începe altul
                   </Button>
                 </div>
               </div>
@@ -191,12 +189,13 @@ export default function SimulatorLandingPage() {
                 aria-hidden="true"
               />
               <div className="relative p-6 sm:p-8">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-                  <div className="min-w-0">
+                {/* Score + mini-bar — centered on mobile, side-by-side on desktop */}
+                <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 sm:gap-8 mb-6">
+                  <div className="text-center sm:text-left">
                     <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]" style={{ fontFamily: "var(--font-display)" }}>
                       Ultimul rezultat
                     </span>
-                    <div className="mt-2 flex items-baseline gap-1.5">
+                    <div className="mt-2 flex items-baseline justify-center sm:justify-start gap-1.5">
                       <span
                         className="text-5xl sm:text-6xl font-extrabold leading-none tabular-nums"
                         style={{
@@ -211,12 +210,12 @@ export default function SimulatorLandingPage() {
                       <span className="text-xl font-bold text-[var(--color-text-tertiary)]">/10</span>
                     </div>
                     <p className="text-xs text-[var(--color-text-tertiary)] mt-2">
-                      {summary.correctCount}/{summary.total} corecte · finalizat {timeAgo(exam.submittedAt!)}
+                      {summary.correctCount}/{summary.total} corecte · {timeAgo(exam.submittedAt!)}
                     </p>
                   </div>
 
                   {/* Mini gradient indicator */}
-                  <div className="w-full sm:w-32 flex-shrink-0">
+                  <div className="w-full sm:w-40 flex-shrink-0">
                     <div className="relative">
                       <div
                         className="h-1.5 rounded-full overflow-hidden border border-[var(--color-border)]"
@@ -224,7 +223,7 @@ export default function SimulatorLandingPage() {
                         aria-hidden="true"
                       />
                       <div
-                        className="absolute -top-0.5 w-2.5 h-2.5 rounded-full"
+                        className="absolute top-1/2 w-2.5 h-2.5 rounded-full"
                         style={{
                           left: `${scorePositionPct(summary.score)}%`,
                           transform: "translate(-50%, -50%)",
@@ -234,59 +233,27 @@ export default function SimulatorLandingPage() {
                         aria-hidden="true"
                       />
                     </div>
+                    <div className="mt-1.5 flex justify-between text-[9px] font-mono text-[var(--color-text-tertiary)] tabular-nums">
+                      <span>1.00</span>
+                      <span>10.00</span>
+                    </div>
                   </div>
                 </div>
 
-                <div className="mt-6 flex flex-col sm:flex-row gap-2.5">
+                <div className="flex flex-col sm:flex-row gap-2.5">
                   <Button variant="primary" size="lg" className="flex-1" onClick={handleResume}>
                     Vezi Rezultatul
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <polyline points="9 6 15 12 9 18" />
                     </svg>
                   </Button>
-                  <Button variant="secondary" size="lg" onClick={() => setConfirmOpen(true)}>
+                  <Button variant="secondary" size="lg" className="flex-1 sm:flex-initial" onClick={() => setConfirmOpen(true)}>
                     Examen Nou
                   </Button>
                 </div>
               </div>
             </div>
           )}
-
-          {/* "How it works" info section */}
-          <div className="mt-10 sm:mt-12 animate-fade-in stagger-3">
-            <h3
-              className="text-lg font-bold text-[var(--color-text-primary)] mb-4"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Cum funcționează nota?
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-4">
-                <div className="text-2xl font-extrabold text-[var(--color-accent)] tabular-nums" style={{ fontFamily: "var(--font-display)" }}>
-                  {OFFICIO_POINTS.toFixed(2)}p
-                </div>
-                <div className="text-xs text-[var(--color-text-secondary)] mt-1 leading-relaxed">
-                  Din oficiu, automat
-                </div>
-              </div>
-              <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-4">
-                <div className="text-2xl font-extrabold text-[var(--color-accent)] tabular-nums" style={{ fontFamily: "var(--font-display)" }}>
-                  {POINTS_PER_QUESTION.toFixed(2)}p
-                </div>
-                <div className="text-xs text-[var(--color-text-secondary)] mt-1 leading-relaxed">
-                  Per întrebare corectă (× {EXAM_TOTAL_QUESTIONS})
-                </div>
-              </div>
-              <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-4">
-                <div className="text-2xl font-extrabold text-[var(--color-correct)] tabular-nums" style={{ fontFamily: "var(--font-display)" }}>
-                  10.00p
-                </div>
-                <div className="text-xs text-[var(--color-text-secondary)] mt-1 leading-relaxed">
-                  Maxim posibil
-                </div>
-              </div>
-            </div>
-          </div>
         </Container>
       </main>
       <MobileNav />
@@ -300,14 +267,14 @@ export default function SimulatorLandingPage() {
           <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
             {isActive ? (
               <>
-                Vei pierde toate răspunsurile date{" "}
+                Pierzi cele{" "}
                 <span className="font-semibold text-[var(--color-text-primary)]">
-                  ({answeredCount}/{EXAM_TOTAL_QUESTIONS})
-                </span>
-                . Sigur?
+                  {answeredCount} răspunsuri
+                </span>{" "}
+                date până acum.
               </>
             ) : (
-              <>Vei suprascrie rezultatul anterior cu un examen nou cu alte 36 de întrebări. Continui?</>
+              <>Suprascrie rezultatul anterior. Continui?</>
             )}
           </p>
           <div className="flex gap-2.5 flex-col-reverse sm:flex-row">

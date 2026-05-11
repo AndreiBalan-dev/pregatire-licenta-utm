@@ -36,7 +36,8 @@ export function ExamHeader({ currentIndex, total, startedAt, onFinish }: ExamHea
           className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--color-accent)] truncate"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          Simulator Examen
+          <span className="sm:hidden">Examen</span>
+          <span className="hidden sm:inline">Simulator Examen</span>
         </span>
       </div>
 
@@ -68,8 +69,7 @@ export function ExamHeader({ currentIndex, total, startedAt, onFinish }: ExamHea
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <polyline points="20 6 9 17 4 12" />
           </svg>
-          <span className="hidden xs:inline sm:inline">Finalizează</span>
-          <span className="xs:hidden sm:hidden">Gata</span>
+          <span>Finalizează</span>
         </button>
       </div>
     </div>

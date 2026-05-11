@@ -105,17 +105,6 @@ export function ExamScore({ score, correctCount, total, durationMs }: ExamScoreP
               }}
             />
           </div>
-          {/* Marker dot below the bar */}
-          <div
-            className="absolute -bottom-1 w-3 h-3 rounded-full transition-all duration-700"
-            style={{
-              left: `${positionPct}%`,
-              transform: "translate(-50%, 50%)",
-              background: color,
-              boxShadow: `0 0 8px ${color}AA, 0 0 0 3px var(--color-bg-secondary)`,
-            }}
-            aria-hidden="true"
-          />
           {/* Scale endpoints */}
           <div className="mt-3 flex items-center justify-between text-[10px] font-mono text-[var(--color-text-tertiary)] tabular-nums">
             <span>{EXAM_MIN_SCORE.toFixed(2)}</span>

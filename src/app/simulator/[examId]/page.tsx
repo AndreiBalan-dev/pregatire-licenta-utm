@@ -37,15 +37,16 @@ export default function SimulatorExamPage() {
 
   const [submitOpen, setSubmitOpen] = useState(false);
   const [restartOpen, setRestartOpen] = useState(false);
+  const [navigating, setNavigating] = useState(false);
 
   const exam = session.currentExam;
   const validExam = exam && exam.examId === examIdParam;
 
   useEffect(() => {
-    if (isLoaded && !validExam) {
+    if (isLoaded && !validExam && !navigating) {
       router.replace("/simulator");
     }
-  }, [isLoaded, validExam, router]);
+  }, [isLoaded, validExam, router, navigating]);
 
   const isReviewMode = validExam && exam.submittedAt !== null;
   const isActiveMode = validExam && exam.submittedAt === null;
@@ -86,13 +87,14 @@ export default function SimulatorExamPage() {
   }, [submitExam]);
 
   const handleNewExam = useCallback(() => {
+    setNavigating(true);
+    setRestartOpen(false);
     discardExam();
     const newId = startExam();
-    setRestartOpen(false);
     router.push(`/simulator/${newId}`);
   }, [discardExam, startExam, router]);
 
-  if (!isLoaded || !validExam) {
+  if (!isLoaded || !validExam || navigating) {
     return (
       <div className="min-h-screen flex items-center justify-center" role="status" aria-label="Se încarcă">
         <div className="animate-spin rounded-full h-8 w-8 border-2 border-[var(--color-border-strong)] border-t-[var(--color-accent)]" />
@@ -224,7 +226,7 @@ export default function SimulatorExamPage() {
             {answeredCount < exam.questionIds.length && (
               <div className="mt-6 text-center">
                 <span className="text-[11px] text-[var(--color-text-tertiary)]">
-                  Răspunzi când vrei. Poți reveni la orice întrebare. Nimic nu se înregistrează până la <strong>Finalizează</strong>.
+                  Poți reveni la orice întrebare. Nimic nu e definitiv până la <strong>Finalizează</strong>.
                 </span>
               </div>
             )}
@@ -278,7 +280,7 @@ export default function SimulatorExamPage() {
             </div>
 
             <div className="animate-fade-in stagger-2">
-              <ExamModuleBreakdown perModule={summary.perModule} />
+              <ExamModuleBreakdown perModule={summary.perModule} perSubject={summary.perSubject} />
             </div>
 
             <div className="animate-fade-in stagger-3">
@@ -295,7 +297,7 @@ export default function SimulatorExamPage() {
         >
           <div className="space-y-5">
             <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
-              Vei suprascrie rezultatul actual cu un examen nou cu alte 36 de întrebări selectate aleator. Continui?
+              Suprascrie rezultatul actual cu un examen nou. Alte 36 de grile, selectate aleator.
             </p>
             <div className="flex gap-2.5 flex-col-reverse sm:flex-row">
               <Button variant="secondary" size="md" className="flex-1" onClick={() => setRestartOpen(false)}>
