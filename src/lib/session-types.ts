@@ -25,6 +25,16 @@ export interface SessionSettings {
   shuffleOptions: boolean;
 }
 
+export interface ExamState {
+  examId: string;
+  questionIds: number[];
+  answers: Record<number, "a" | "b" | "c" | "d">;
+  currentIndex: number;
+  startedAt: string;
+  submittedAt: string | null;
+  durationMs: number | null;
+}
+
 export interface LocalSession {
   version: 1;
   startedAt: string;
@@ -32,6 +42,7 @@ export interface LocalSession {
   answers: Record<number, AnswerRecord>;
   bookmarks: number[];
   currentPractice: PracticeState | null;
+  currentExam: ExamState | null;
   subjectStats: Record<string, SubjectStat>;
   settings: SessionSettings;
   savedKey: string | null;
@@ -45,6 +56,7 @@ export function createDefaultSession(): LocalSession {
     answers: {},
     bookmarks: [],
     currentPractice: null,
+    currentExam: null,
     subjectStats: {},
     settings: {
       showImmediateFeedback: true,

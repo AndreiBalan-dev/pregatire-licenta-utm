@@ -43,6 +43,18 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "1.4.0",
+    date: "11 Mai 2026",
+    title: "Simulator examen licenta",
+    changes: [
+      { text: "Simulator examen complet - 36 grile balansate (9 din fiecare modul), 1p din oficiu + 0.25p per corect", type: "feature" },
+      { text: "Nota afisata cu gradient smooth rosu-galben-verde pe scala 1-10, fara pass/fail", type: "feature" },
+      { text: "Revizuire completa dupa examen - toate raspunsurile date vs cele corecte, jump-to-modul", type: "feature" },
+      { text: "Auto-save in localStorage: examenul continua de unde ai ramas chiar daca dai refresh", type: "feature" },
+      { text: "Card prominent pe pagina principala cu preview vizual al gradientului", type: "feature" },
+    ],
+  },
+  {
     version: "1.3.2",
     date: "8 Mai 2026",
     title: "Corectii la raspunsuri pozitionate",

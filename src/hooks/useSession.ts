@@ -5,12 +5,16 @@ import {
   LocalSession,
   createDefaultSession,
   type AnswerRecord,
+  type ExamState,
   type PracticeState,
   type SessionSettings,
 } from "@/lib/session-types";
 import { STORAGE_KEY } from "@/lib/constants";
 import { shuffleArray } from "@/lib/utils";
-import { questionsBySubject } from "@/data";
+import { questionsBySubject, questionsByModule, getQuestion } from "@/data";
+import { modules } from "@/data/modules";
+import { pickExamQuestions, computeScore } from "@/lib/exam";
+import type { AnswerKey } from "@/data/types";
 
 function loadSession(): LocalSession {
   if (typeof window === "undefined") return createDefaultSession();
@@ -19,7 +23,7 @@ function loadSession(): LocalSession {
     if (!raw) return createDefaultSession();
     const parsed = JSON.parse(raw);
     if (parsed.version !== 1) return createDefaultSession();
-    return parsed as LocalSession;
+    return { ...createDefaultSession(), ...parsed } as LocalSession;
   } catch {
     return createDefaultSession();
   }
@@ -259,6 +263,123 @@ export function useSession() {
     persistSession(fresh);
   }, [persistSession]);
 
+  const startExam = useCallback((): string => {
+    const examId = crypto.randomUUID();
+    const questionIds = pickExamQuestions(modules, questionsByModule);
+    const exam: ExamState = {
+      examId,
+      questionIds,
+      answers: {},
+      currentIndex: 0,
+      startedAt: new Date().toISOString(),
+      submittedAt: null,
+      durationMs: null,
+    };
+    setSession((prev) => {
+      const updated = { ...prev, currentExam: exam };
+      saveSession(updated);
+      return updated;
+    });
+    return examId;
+  }, []);
+
+  const setExamAnswer = useCallback(
+    (questionId: number, answer: AnswerKey) => {
+      setSession((prev) => {
+        if (!prev.currentExam || prev.currentExam.submittedAt) return prev;
+        const updated: LocalSession = {
+          ...prev,
+          currentExam: {
+            ...prev.currentExam,
+            answers: { ...prev.currentExam.answers, [questionId]: answer },
+          },
+        };
+        persistSession(updated);
+        return updated;
+      });
+    },
+    [persistSession],
+  );
+
+  const setExamIndex = useCallback(
+    (index: number) => {
+      setSession((prev) => {
+        if (!prev.currentExam) return prev;
+        const max = prev.currentExam.questionIds.length - 1;
+        const clamped = Math.max(0, Math.min(max, index));
+        const updated: LocalSession = {
+          ...prev,
+          currentExam: { ...prev.currentExam, currentIndex: clamped },
+        };
+        persistSession(updated);
+        return updated;
+      });
+    },
+    [persistSession],
+  );
+
+  const submitExam = useCallback(() => {
+    setSession((prev) => {
+      if (!prev.currentExam || prev.currentExam.submittedAt) return prev;
+      const now = new Date();
+      const durationMs = now.getTime() - new Date(prev.currentExam.startedAt).getTime();
+      const updated: LocalSession = {
+        ...prev,
+        currentExam: {
+          ...prev.currentExam,
+          submittedAt: now.toISOString(),
+          durationMs,
+        },
+      };
+      persistSession(updated);
+      return updated;
+    });
+  }, [persistSession]);
+
+  const discardExam = useCallback(() => {
+    setSession((prev) => {
+      const updated = { ...prev, currentExam: null };
+      persistSession(updated);
+      return updated;
+    });
+  }, [persistSession]);
+
+  const getExamSummary = useCallback(() => {
+    const exam = session.currentExam;
+    if (!exam) return null;
+
+    let correctCount = 0;
+    let answeredCount = 0;
+    const perModule: Record<string, { correct: number; total: number }> = {};
+
+    for (const qId of exam.questionIds) {
+      const q = getQuestion(qId);
+      if (!q) continue;
+      if (!perModule[q.moduleId]) perModule[q.moduleId] = { correct: 0, total: 0 };
+      perModule[q.moduleId].total += 1;
+
+      const ans = exam.answers[qId];
+      if (ans) {
+        answeredCount += 1;
+        if (ans === q.correctAnswer) {
+          correctCount += 1;
+          perModule[q.moduleId].correct += 1;
+        }
+      }
+    }
+
+    return {
+      total: exam.questionIds.length,
+      answeredCount,
+      unansweredCount: exam.questionIds.length - answeredCount,
+      correctCount,
+      wrongCount: answeredCount - correctCount,
+      score: computeScore(correctCount),
+      perModule,
+      durationMs: exam.durationMs,
+    };
+  }, [session.currentExam]);
+
   const hasExistingSession = isLoaded && Object.keys(session.answers).length > 0;
 
   return {
@@ -279,5 +400,11 @@ export function useSession() {
     exportSession,
     setSavedKey,
     resetProgress,
+    startExam,
+    setExamAnswer,
+    setExamIndex,
+    submitExam,
+    discardExam,
+    getExamSummary,
   };
 }

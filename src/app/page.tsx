@@ -3,6 +3,7 @@
 import { Header } from "@/components/layout/Header";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { HeroSection } from "@/components/home/HeroSection";
+import { ExamSimulatorCTA } from "@/components/home/ExamSimulatorCTA";
 import { ModuleGrid } from "@/components/home/ModuleGrid";
 import { ChangelogBanner } from "@/components/home/ChangelogBanner";
 import { useSession } from "@/hooks/useSession";
@@ -32,6 +33,7 @@ export default function HomePage() {
           totalAnswered={stats.totalAnswered}
           accuracy={stats.accuracy}
         />
+        <ExamSimulatorCTA />
         <ModuleGrid />
         <ChangelogBanner />
       </main>

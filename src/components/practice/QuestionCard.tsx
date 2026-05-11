@@ -12,7 +12,7 @@ interface QuestionCardProps {
   showFeedback: boolean;
   isBookmarked: boolean;
   onSelectAnswer: (answer: AnswerKey) => void;
-  onBookmark: () => void;
+  onBookmark?: () => void;
   onRetry?: () => void;
 }
 
@@ -44,21 +44,23 @@ export function QuestionCard({
             / {totalQuestions}
           </span>
         </div>
-        <button
-          onClick={onBookmark}
-          aria-label={isBookmarked ? "Elimină marcajul" : "Marchează întrebarea"}
-          aria-pressed={isBookmarked}
-          className={cn(
-            "p-2 -mr-1 rounded-[var(--radius-md)] transition-all cursor-pointer",
-            isBookmarked
-              ? "text-[var(--color-accent)] bg-[var(--color-accent-muted)] shadow-[0_0_12px_rgba(232,166,49,0.15)]"
-              : "text-[var(--color-text-tertiary)] hover:text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-hover)]"
-          )}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill={isBookmarked ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-          </svg>
-        </button>
+        {onBookmark && (
+          <button
+            onClick={onBookmark}
+            aria-label={isBookmarked ? "Elimină marcajul" : "Marchează întrebarea"}
+            aria-pressed={isBookmarked}
+            className={cn(
+              "p-2 -mr-1 rounded-[var(--radius-md)] transition-all cursor-pointer",
+              isBookmarked
+                ? "text-[var(--color-accent)] bg-[var(--color-accent-muted)] shadow-[0_0_12px_rgba(232,166,49,0.15)]"
+                : "text-[var(--color-text-tertiary)] hover:text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-hover)]"
+            )}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill={isBookmarked ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+            </svg>
+          </button>
+        )}
       </div>
 
       {/* Code block */}

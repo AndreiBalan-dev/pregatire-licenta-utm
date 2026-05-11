@@ -4,9 +4,9 @@ import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 
 const recentChanges = [
-  "Figuri adaugate la intrebarile care necesita imagini",
-  "Pagina Noutati cu istoricul tuturor actualizarilor",
-  "Design nou pe pagina de sesiune practica",
+  "Simulator examen licenta cu 36 grile si nota pe scala 1-10",
+  "Nota afisata cu gradient smooth rosu-galben-verde",
+  "Revizuire completa a raspunsurilor dupa examen",
 ];
 
 export function ChangelogBanner() {
@@ -42,7 +42,7 @@ export function ChangelogBanner() {
                 <span
                   className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[var(--color-accent-muted)] text-[var(--color-accent)]"
                 >
-                  v1.3.1
+                  v1.4.0
                 </span>
               </div>
               <span className="text-xs text-[var(--color-text-tertiary)] group-hover:text-[var(--color-accent)] transition-colors flex items-center gap-1">

@@ -35,7 +35,7 @@ export function Header() {
               2026
             </span>
             <span className="hidden sm:inline text-[10px] font-medium text-[var(--color-text-tertiary)] bg-[var(--color-bg-hover)] px-1.5 py-0.5 rounded-full">
-              v1.3.1
+              v1.4.0
             </span>
           </Link>
 
