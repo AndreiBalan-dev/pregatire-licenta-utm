@@ -4,9 +4,9 @@ import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 
 const recentChanges = [
-  "Simulator examen licenta cu 36 grile si nota pe scala 1-10",
-  "Nota afisata cu gradient smooth rosu-galben-verde",
-  "Revizuire completa a raspunsurilor dupa examen",
+  "Simulator de examen cu 36 de grile, ca la examenul real",
+  "Vezi nota pe scala 1-10 si revizuieste raspunsurile",
+  "Performanta pe module si pe materii dupa fiecare examen",
 ];
 
 export function ChangelogBanner() {

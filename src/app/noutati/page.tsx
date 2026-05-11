@@ -47,11 +47,11 @@ const changelog: Version[] = [
     date: "11 Mai 2026",
     title: "Simulator examen licenta",
     changes: [
-      { text: "Simulator examen complet - 36 grile balansate (9 din fiecare modul), 1p din oficiu + 0.25p per corect", type: "feature" },
-      { text: "Nota afisata cu gradient smooth rosu-galben-verde pe scala 1-10, fara pass/fail", type: "feature" },
-      { text: "Revizuire completa dupa examen - toate raspunsurile date vs cele corecte, jump-to-modul", type: "feature" },
-      { text: "Auto-save in localStorage: examenul continua de unde ai ramas chiar daca dai refresh", type: "feature" },
-      { text: "Card prominent pe pagina principala cu preview vizual al gradientului", type: "feature" },
+      { text: "Simulator de examen cu 36 de grile, ca la examenul real (9 din fiecare modul)", type: "feature" },
+      { text: "Vezi nota pe scala 1-10, cu sistemul oficial de notare (1p din oficiu + 0.25p per raspuns corect)", type: "feature" },
+      { text: "Dupa submit poti revedea toate raspunsurile - vezi unde ai gresit si care era corect", type: "feature" },
+      { text: "Performanta pe module si pe materii in parte, ca sa stii unde sa te concentrezi", type: "feature" },
+      { text: "Continui de unde ai ramas - examenul se salveaza automat si nu se pierde la refresh", type: "feature" },
     ],
   },
   {
