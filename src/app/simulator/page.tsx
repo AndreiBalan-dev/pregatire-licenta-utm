@@ -180,44 +180,6 @@ export default function SimulatorLandingPage() {
             </div>
           )}
 
-          {/* "How it works" info section — shown when no exam exists */}
-          {!exam && (
-            <div className="mt-10 sm:mt-12 animate-fade-in stagger-3">
-              <h3
-                className="text-lg font-bold text-[var(--color-text-primary)] mb-4"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Cum funcționează nota?
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-4">
-                  <div className="text-2xl font-extrabold text-[var(--color-accent)] tabular-nums" style={{ fontFamily: "var(--font-display)" }}>
-                    {OFFICIO_POINTS.toFixed(2)}p
-                  </div>
-                  <div className="text-xs text-[var(--color-text-secondary)] mt-1 leading-relaxed">
-                    Din oficiu, automat
-                  </div>
-                </div>
-                <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-4">
-                  <div className="text-2xl font-extrabold text-[var(--color-accent)] tabular-nums" style={{ fontFamily: "var(--font-display)" }}>
-                    {POINTS_PER_QUESTION.toFixed(2)}p
-                  </div>
-                  <div className="text-xs text-[var(--color-text-secondary)] mt-1 leading-relaxed">
-                    Per întrebare corectă (× {EXAM_TOTAL_QUESTIONS})
-                  </div>
-                </div>
-                <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-4">
-                  <div className="text-2xl font-extrabold text-[var(--color-correct)] tabular-nums" style={{ fontFamily: "var(--font-display)" }}>
-                    10.00p
-                  </div>
-                  <div className="text-xs text-[var(--color-text-secondary)] mt-1 leading-relaxed">
-                    Maxim posibil
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
           {isSubmitted && summary && (
             <div className="relative overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] animate-slide-up">
               <div
@@ -294,6 +256,42 @@ export default function SimulatorLandingPage() {
               </div>
             </div>
           )}
+
+          {/* "How it works" info section — always visible */}
+          <div className="mt-10 sm:mt-12 animate-fade-in stagger-3">
+            <h3
+              className="text-lg font-bold text-[var(--color-text-primary)] mb-4"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Cum funcționează nota?
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-4">
+                <div className="text-2xl font-extrabold text-[var(--color-accent)] tabular-nums" style={{ fontFamily: "var(--font-display)" }}>
+                  {OFFICIO_POINTS.toFixed(2)}p
+                </div>
+                <div className="text-xs text-[var(--color-text-secondary)] mt-1 leading-relaxed">
+                  Din oficiu, automat
+                </div>
+              </div>
+              <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-4">
+                <div className="text-2xl font-extrabold text-[var(--color-accent)] tabular-nums" style={{ fontFamily: "var(--font-display)" }}>
+                  {POINTS_PER_QUESTION.toFixed(2)}p
+                </div>
+                <div className="text-xs text-[var(--color-text-secondary)] mt-1 leading-relaxed">
+                  Per întrebare corectă (× {EXAM_TOTAL_QUESTIONS})
+                </div>
+              </div>
+              <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-4">
+                <div className="text-2xl font-extrabold text-[var(--color-correct)] tabular-nums" style={{ fontFamily: "var(--font-display)" }}>
+                  10.00p
+                </div>
+                <div className="text-xs text-[var(--color-text-secondary)] mt-1 leading-relaxed">
+                  Maxim posibil
+                </div>
+              </div>
+            </div>
+          </div>
         </Container>
       </main>
       <MobileNav />
