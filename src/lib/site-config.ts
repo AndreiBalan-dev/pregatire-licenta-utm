@@ -13,7 +13,7 @@
  * keep them in sync.
  */
 
-export const APP_VERSION = "1.4.4";
+export const APP_VERSION = "1.4.5";
 
 export const EXAM_SESSION_YEAR = "2026";
 

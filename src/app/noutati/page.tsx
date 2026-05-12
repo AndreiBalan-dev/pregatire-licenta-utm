@@ -44,6 +44,17 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "1.4.5",
+    date: "12 Mai 2026",
+    title: "Bookmark in simulator si revizuire unita",
+    changes: [
+      { text: "Marcheaza intrebari direct din simulator, sa le revizui mai tarziu. Marcajele se vad si in Revizuire", type: "feature" },
+      { text: "Pagina Revizuire afiseaza acum greselile, raspunsurile corecte si marcajele din toate sursele: practica, simulator si examene anterioare", type: "feature" },
+      { text: "Pop-up-urile se inchid cu click in afara ferestrei sau prin butonul X din colt", type: "fix" },
+      { text: "Acelasi 'X' apare pe toate pop-up-urile pentru o experienta consistenta", type: "improvement" },
+    ],
+  },
+  {
     version: "1.4.4",
     date: "12 Mai 2026",
     title: "Iconite noi, peste tot",

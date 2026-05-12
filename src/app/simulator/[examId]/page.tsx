@@ -78,6 +78,7 @@ export default function SimulatorExamPage() {
     startExam,
     restartSameExam,
     getExamSummary,
+    toggleBookmark,
   } = useSession();
 
   const [submitOpen, setSubmitOpen] = useState(false);
@@ -256,8 +257,9 @@ export default function SimulatorExamPage() {
                   totalQuestions={exam.questionIds.length}
                   selectedAnswer={selectedAnswer}
                   showFeedback={showQuestionFeedback}
-                  isBookmarked={false}
+                  isBookmarked={session.bookmarks.includes(currentQuestion.id)}
                   onSelectAnswer={handleSelectAnswer}
+                  onBookmark={() => toggleBookmark(currentQuestion.id)}
                 />
               </div>
             </div>
@@ -467,7 +469,14 @@ export default function SimulatorExamPage() {
             </div>
 
             <div className="animate-fade-in stagger-3">
-              <ExamReview questionIds={exam.questionIds} answers={exam.answers} isRepeat={isRepeatSession} repeatShuffled={exam.repeatShuffled} />
+              <ExamReview
+                questionIds={exam.questionIds}
+                answers={exam.answers}
+                isRepeat={isRepeatSession}
+                repeatShuffled={exam.repeatShuffled}
+                bookmarks={session.bookmarks}
+                onToggleBookmark={toggleBookmark}
+              />
             </div>
           </Container>
         </main>

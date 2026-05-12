@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Iconite curate peste tot in loc de emoji",
-  "Istoric complet al examenelor: vezi toate examenele anterioare cu un click",
-  "Cand re-faci grile la simulator, statisticile pe module includ si raspunsurile date acolo",
+  "Marcheaza intrebari direct in simulator, nu doar la practica",
+  "Pagina Revizuire arata acum si greselile din simulator, nu doar pe cele de la practica",
+  "Pop-up-urile se inchid cu click in afara sau cu butonul X",
 ];
 
 export function ChangelogBanner() {

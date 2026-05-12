@@ -14,13 +14,16 @@ interface ExamReviewProps {
   answers: Record<number, "a" | "b" | "c" | "d">;
   isRepeat?: boolean;
   repeatShuffled?: boolean;
+  bookmarks?: number[];
+  onToggleBookmark?: (id: number) => void;
 }
 
 function anchorIdFor(moduleId: string): string {
   return `exam-review-${moduleId}`;
 }
 
-export function ExamReview({ questionIds, answers, isRepeat, repeatShuffled }: ExamReviewProps) {
+export function ExamReview({ questionIds, answers, isRepeat, repeatShuffled, bookmarks, onToggleBookmark }: ExamReviewProps) {
+  const bookmarkSet = useMemo(() => new Set(bookmarks ?? []), [bookmarks]);
   const items = useMemo(() => {
     const seenModules = new Set<string>();
     return questionIds.map((qId, index) => {
@@ -140,8 +143,9 @@ export function ExamReview({ questionIds, answers, isRepeat, repeatShuffled }: E
                   totalQuestions={questionIds.length}
                   selectedAnswer={selected}
                   showFeedback={true}
-                  isBookmarked={false}
+                  isBookmarked={bookmarkSet.has(q.id)}
                   onSelectAnswer={() => {}}
+                  onBookmark={onToggleBookmark ? () => onToggleBookmark(q.id) : undefined}
                 />
               </div>
             </div>

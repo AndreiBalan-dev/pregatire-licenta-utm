@@ -14,7 +14,49 @@ import { getQuestion } from "@/data";
 import { modules } from "@/data/modules";
 import { cn, isCodeLike } from "@/lib/utils";
 import { scoreToColor, EXAM_TOTAL_QUESTIONS } from "@/lib/exam";
-import type { AnswerKey } from "@/data/types";
+import { buildMergedAnswerMap } from "@/lib/answer-merge";
+import type { AnswerKey, Question } from "@/data/types";
+import type { LocalSession } from "@/lib/session-types";
+
+interface DisplayAnswer {
+  selected: AnswerKey;
+  isCorrect: boolean;
+  sources: Array<"practica" | "simulator">;
+}
+
+function getDisplayAnswerFor(session: LocalSession, qId: number, prefer: "any" | "wrong" | "correct"): DisplayAnswer | null {
+  const candidates: DisplayAnswer[] = [];
+  const practica = session.answers[qId];
+  if (practica) {
+    candidates.push({
+      selected: practica.selected,
+      isCorrect: practica.isCorrect,
+      sources: ["practica"],
+    });
+  }
+  const examSources = [session.currentExam, ...(session.examHistory ?? [])];
+  for (const ex of examSources) {
+    if (!ex?.submittedAt) continue;
+    const sel = ex.answers[qId];
+    if (!sel) continue;
+    const q = getQuestion(qId);
+    candidates.push({
+      selected: sel,
+      isCorrect: q ? sel === q.correctAnswer : false,
+      sources: ["simulator"],
+    });
+  }
+  if (candidates.length === 0) return null;
+  if (prefer === "correct") {
+    const c = candidates.find((a) => a.isCorrect);
+    if (c) return c;
+  }
+  if (prefer === "wrong") {
+    const w = candidates.find((a) => !a.isCorrect);
+    if (w) return w;
+  }
+  return candidates[0];
+}
 
 type Filter = "wrong" | "correct" | "bookmarked" | "all";
 
@@ -46,28 +88,30 @@ export default function RevizuirePage() {
     return mod ? { mod, wrong: worstWrong } : null;
   }, [examSummary]);
 
+  const mergedAnswers = useMemo(() => buildMergedAnswerMap(session), [session]);
+
   const filteredQuestions = useMemo(() => {
     let questionIds: number[] = [];
 
     if (filter === "wrong") {
-      questionIds = Object.entries(session.answers)
+      questionIds = Array.from(mergedAnswers.entries())
         .filter(([, a]) => !a.isCorrect)
-        .map(([id]) => Number(id));
+        .map(([id]) => id);
     } else if (filter === "correct") {
-      questionIds = Object.entries(session.answers)
+      questionIds = Array.from(mergedAnswers.entries())
         .filter(([, a]) => a.isCorrect)
-        .map(([id]) => Number(id));
+        .map(([id]) => id);
     } else if (filter === "bookmarked") {
       questionIds = session.bookmarks;
     } else {
-      questionIds = Object.keys(session.answers).map(Number);
+      questionIds = Array.from(mergedAnswers.keys());
     }
 
     return questionIds
       .map((id) => getQuestion(id))
-      .filter((q) => q !== undefined)
+      .filter((q): q is Question => q !== undefined)
       .filter((q) => moduleFilter === "all" || q.moduleId === moduleFilter);
-  }, [filter, moduleFilter, session.answers, session.bookmarks]);
+  }, [filter, moduleFilter, mergedAnswers, session.bookmarks]);
 
   if (!isLoaded) {
     return (
@@ -77,8 +121,12 @@ export default function RevizuirePage() {
     );
   }
 
-  const wrongCount = Object.values(session.answers).filter((a) => !a.isCorrect).length;
-  const correctCount = Object.values(session.answers).filter((a) => a.isCorrect).length;
+  let wrongCount = 0;
+  let correctCount = 0;
+  for (const v of mergedAnswers.values()) {
+    if (v.isCorrect) correctCount++;
+    else wrongCount++;
+  }
   const bookmarkCount = session.bookmarks.length;
 
   return (
@@ -295,7 +343,8 @@ export default function RevizuirePage() {
           ) : (
             <div className="space-y-4">
               {filteredQuestions.map((question, index) => {
-                const answer = session.answers[question.id];
+                const prefer = filter === "wrong" ? "wrong" : filter === "correct" ? "correct" : "any";
+                const answer = getDisplayAnswerFor(session, question.id, prefer);
                 const isBookmarked = session.bookmarks.includes(question.id);
 
                 return (
@@ -308,6 +357,8 @@ export default function RevizuirePage() {
                       <div className="flex-1 min-w-0" />
                       <button
                         onClick={() => toggleBookmark(question.id)}
+                        aria-label={isBookmarked ? "Elimină marcajul" : "Marchează întrebarea"}
+                        aria-pressed={isBookmarked}
                         className={cn(
                           "flex-shrink-0 p-2 rounded-[var(--radius-md)] transition-all duration-200 cursor-pointer",
                           isBookmarked
