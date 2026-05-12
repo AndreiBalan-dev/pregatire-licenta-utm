@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { Container } from "./Container";
+import { APP_VERSION, EXAM_SESSION_YEAR, SITE_NAME_SHORT } from "@/lib/site-config";
 
 const navLinks = [
   { href: "/practica", label: "Practică" },
@@ -29,13 +30,13 @@ export function Header() {
               className="text-lg font-bold tracking-tight text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Licență UTM
+              {SITE_NAME_SHORT}
             </span>
             <span className="text-xs font-medium text-[var(--color-accent)] bg-[var(--color-accent-muted)] px-2 py-0.5 rounded-full">
-              2026
+              {EXAM_SESSION_YEAR}
             </span>
             <span className="hidden sm:inline text-[10px] font-medium text-[var(--color-text-tertiary)] bg-[var(--color-bg-hover)] px-1.5 py-0.5 rounded-full">
-              v1.4.1
+              v{APP_VERSION}
             </span>
           </Link>
 

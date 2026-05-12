@@ -3,6 +3,13 @@ import { Syne, IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
+import {
+  SITE_URL,
+  SITE_NAME,
+  AUTHOR_NAME,
+  TOTAL_QUESTIONS,
+  EXAM_SESSION_YEAR,
+} from "@/lib/site-config";
 
 const syne = Syne({
   variable: "--font-syne",
@@ -25,7 +32,9 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
-const siteUrl = "https://utmlearn.com";
+const siteUrl = SITE_URL;
+const metaDescription = `Platforma gratuita de pregatire pentru examenul de licenta UTM Informatica ${EXAM_SESSION_YEAR}. ${TOTAL_QUESTIONS} grile din programare, baze de date, retele si tehnologii web.`;
+const metaTitle = `${SITE_NAME} | Grile ${EXAM_SESSION_YEAR}`;
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -39,16 +48,15 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Pregătire Licență UTM | Grile 2026",
-    template: "%s | Pregătire Licență UTM",
+    default: metaTitle,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "Platforma gratuita de pregatire pentru examenul de licenta UTM Informatica 2026. 715 grile din programare, baze de date, retele si tehnologii web.",
+  description: metaDescription,
   keywords: [
     "licență UTM",
     "grile informatică",
     "pregătire examen UTM",
-    "grile licență 2026",
+    `grile licență ${EXAM_SESSION_YEAR}`,
     "programare grile",
     "baze de date grile",
     "rețele calculatoare grile",
@@ -61,23 +69,21 @@ export const metadata: Metadata = {
     "grile SQL",
     "pregătire licență informatică",
   ],
-  authors: [{ name: "Bălan Andrei Marian" }],
-  creator: "Bălan Andrei Marian",
+  authors: [{ name: AUTHOR_NAME }],
+  creator: AUTHOR_NAME,
   openGraph: {
     type: "website",
     locale: "ro_RO",
     url: siteUrl,
-    siteName: "Pregătire Licență UTM",
-    title: "Pregătire Licență UTM | Grile 2026",
-    description:
-      "Platforma gratuita de pregatire pentru examenul de licenta UTM Informatica 2026. 715 grile din programare, baze de date, retele si tehnologii web.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pregatire Licenta UTM - 715 grile informatica" }],
+    siteName: SITE_NAME,
+    title: metaTitle,
+    description: metaDescription,
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: `Pregatire Licenta UTM - ${TOTAL_QUESTIONS} grile informatica` }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pregătire Licență UTM | Grile Informatica 2026",
-    description:
-      "715 grile gratuite pentru licenta UTM Informatica 2026. Programare, baze de date, retele, web.",
+    title: `${SITE_NAME} | Grile Informatica ${EXAM_SESSION_YEAR}`,
+    description: `${TOTAL_QUESTIONS} grile gratuite pentru licenta UTM Informatica ${EXAM_SESSION_YEAR}. Programare, baze de date, retele, web.`,
     images: ["/og-image.png"],
   },
   robots: {
@@ -118,15 +124,14 @@ export default function RootLayout({
     "@graph": [
       {
         "@type": "WebApplication",
-        name: "Pregătire Licență UTM",
-        description:
-          "Platforma gratuita de pregatire pentru examenul de licenta UTM Informatica 2026. 715 grile din programare, baze de date, retele si tehnologii web.",
+        name: SITE_NAME,
+        description: metaDescription,
         url: siteUrl,
         applicationCategory: "EducationalApplication",
         operatingSystem: "Web",
         author: {
           "@type": "Person",
-          name: "Bălan Andrei Marian",
+          name: AUTHOR_NAME,
         },
         offers: {
           "@type": "Offer",
@@ -137,8 +142,8 @@ export default function RootLayout({
       },
       {
         "@type": "Course",
-        name: "Grile Licenta UTM Informatica 2026",
-        description: "715 exercitii grila pentru pregatirea examenului de licenta la Facultatea de Informatica, UTM.",
+        name: `Grile Licenta UTM Informatica ${EXAM_SESSION_YEAR}`,
+        description: `${TOTAL_QUESTIONS} exercitii grila pentru pregatirea examenului de licenta la Facultatea de Informatica, UTM.`,
         provider: {
           "@type": "Organization",
           name: "UTM Learn",

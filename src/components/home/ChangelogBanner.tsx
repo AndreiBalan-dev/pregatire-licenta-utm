@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Container } from "@/components/layout/Container";
+import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
   "Optiune noua: vezi daca raspunsul e corect sau gresit chiar pe parcursul examenului",
@@ -42,7 +43,7 @@ export function ChangelogBanner() {
                 <span
                   className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[var(--color-accent-muted)] text-[var(--color-accent)]"
                 >
-                  v1.4.1
+                  v{APP_VERSION}
                 </span>
               </div>
               <span className="text-xs text-[var(--color-text-tertiary)] group-hover:text-[var(--color-accent)] transition-colors flex items-center gap-1">

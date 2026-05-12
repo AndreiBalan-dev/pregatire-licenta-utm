@@ -3,6 +3,7 @@
 import { Header } from "@/components/layout/Header";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Container } from "@/components/layout/Container";
+import { APP_VERSION } from "@/lib/site-config";
 
 type ChangeType = "feature" | "fix" | "improvement" | "docs";
 
@@ -183,7 +184,7 @@ export default function NoutatiPage() {
               className="text-xs font-bold px-3 py-1.5 rounded-full bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)]"
               style={{ borderColor: "rgba(232, 166, 49, 0.3)" }}
             >
-              Versiune curenta: v{changelog[0].version}
+              Versiune curenta: v{APP_VERSION}
             </span>
           </div>
 

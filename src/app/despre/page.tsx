@@ -3,6 +3,12 @@
 import { Header } from "@/components/layout/Header";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Container } from "@/components/layout/Container";
+import {
+  TOTAL_QUESTIONS,
+  TOTAL_MODULES,
+  TOTAL_SUBJECTS,
+  EXAM_SESSION_YEAR,
+} from "@/lib/site-config";
 
 export default function DesprePage() {
   return (
@@ -264,15 +270,15 @@ export default function DesprePage() {
               </h3>
               <p className="text-sm text-[var(--color-text-secondary)] mb-5">
                 Platforma contine exercitii grilă extrase din materialele oficiale
-                pentru examenul de licenta UTM, sesiunea 2026. Intrebarile acopera
-                toate cele 4 module de examen.
+                pentru examenul de licenta UTM, sesiunea {EXAM_SESSION_YEAR}. Intrebarile acopera
+                toate cele {TOTAL_MODULES} module de examen.
               </p>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {[
-                  { value: "715", label: "întrebări", color: "var(--color-accent)" },
-                  { value: "15", label: "discipline", color: "var(--color-module-programming)" },
-                  { value: "4", label: "module", color: "var(--color-module-databases)" },
+                  { value: TOTAL_QUESTIONS.toString(), label: "întrebări", color: "var(--color-accent)" },
+                  { value: TOTAL_SUBJECTS.toString(), label: "discipline", color: "var(--color-module-programming)" },
+                  { value: TOTAL_MODULES.toString(), label: "module", color: "var(--color-module-databases)" },
                   { value: "100%", label: "gratuit", color: "var(--color-correct)" },
                 ].map((stat) => (
                   <div key={stat.label} className="relative p-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] overflow-hidden text-center">

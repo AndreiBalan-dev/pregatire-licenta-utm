@@ -1,7 +1,8 @@
 import { ImageResponse } from "next/og";
+import { TOTAL_QUESTIONS, EXAM_SESSION_YEAR, SITE_DOMAIN } from "@/lib/site-config";
 
 export const runtime = "edge";
-export const alt = "Pregatire Licenta UTM - 715 grile informatica";
+export const alt = `Pregatire Licenta UTM - ${TOTAL_QUESTIONS} grile informatica`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -52,7 +53,7 @@ export default function OGImage() {
             }}
           />
           <span style={{ color: "#9B978F", fontSize: "16px", letterSpacing: "2px", textTransform: "uppercase" }}>
-            Sesiunea 2026
+            Sesiunea {EXAM_SESSION_YEAR}
           </span>
         </div>
 
@@ -67,7 +68,7 @@ export default function OGImage() {
         </div>
 
         <p style={{ color: "#9B978F", fontSize: "24px", marginTop: "24px", textAlign: "center", maxWidth: "700px" }}>
-          715 grile gratuite - Informatică
+          {TOTAL_QUESTIONS} grile gratuite - Informatică
         </p>
 
         <div style={{ display: "flex", gap: "12px", marginTop: "32px" }}>
@@ -95,7 +96,7 @@ export default function OGImage() {
         </div>
 
         <span style={{ position: "absolute", bottom: "32px", color: "#6B675F", fontSize: "18px" }}>
-          utmlearn.com
+          {SITE_DOMAIN}
         </span>
       </div>
     ),

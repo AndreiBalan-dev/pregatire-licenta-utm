@@ -266,10 +266,10 @@ export default function SimulatorExamPage() {
 
             {/* Hint about unanswered */}
             {answeredCount < exam.questionIds.length && (
-              <div className="mt-6 text-center">
-                <span className="text-[11px] text-[var(--color-text-tertiary)]">
+              <div className="mt-6 text-center px-2">
+                <span className="text-[11px] text-[var(--color-text-tertiary)] leading-relaxed">
                   {liveFeedbackEnabled ? (
-                    <>Răspunsul se blochează imediat ce îl alegi. Nimic nu e definitiv până la <strong>Finalizează</strong>.</>
+                    <>Răspunsul se blochează când îl alegi. Trimite cu <strong>Finalizează</strong> când ai răspuns la toate.</>
                   ) : (
                     <>Poți reveni la orice întrebare. Nimic nu e definitiv până la <strong>Finalizează</strong>.</>
                   )}

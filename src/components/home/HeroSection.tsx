@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/layout/Container";
+import { EXAM_SESSION_YEAR, TOTAL_QUESTIONS } from "@/lib/site-config";
 
 interface HeroSectionProps {
   hasExistingSession: boolean;
@@ -20,7 +21,7 @@ export function HeroSection({ hasExistingSession, totalAnswered, accuracy }: Her
           <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)] animate-fade-in">
             <span className="w-2 h-2 rounded-full bg-[var(--color-correct)] animate-pulse" />
             <span className="text-xs font-medium text-[var(--color-text-secondary)] uppercase tracking-wider">
-              Sesiunea 2026
+              Sesiunea {EXAM_SESSION_YEAR}
             </span>
           </div>
 
@@ -35,7 +36,7 @@ export function HeroSection({ hasExistingSession, totalAnswered, accuracy }: Her
           </h1>
 
           <p className="text-lg text-[var(--color-text-secondary)] mb-10 max-w-xl leading-relaxed animate-fade-in stagger-2">
-            715 de grile pentru examenul de licență la Informatică UTM. Programare, baze de date, rețele și tehnologii web - totul într-un singur loc.
+            {TOTAL_QUESTIONS} de grile pentru examenul de licență la Informatică UTM. Programare, baze de date, rețele și tehnologii web - totul într-un singur loc.
           </p>
 
           <div className="flex flex-wrap items-center gap-4 animate-fade-in stagger-3">
