@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { MobileNav } from "@/components/layout/MobileNav";
@@ -10,11 +10,63 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
 import { useSession } from "@/hooks/useSession";
-import type { LocalSession } from "@/lib/session-types";
+import { useResolvedTheme } from "@/hooks/useResolvedTheme";
+import { computeScore, scoreToColor } from "@/lib/exam";
+import { getQuestion } from "@/data";
+import type { LocalSession, ExamState } from "@/lib/session-types";
+
+interface IncomingExamSummary {
+  score: number;
+  correctCount: number;
+  total: number;
+  inProgress: boolean;
+  answered: number;
+  isRepeat: boolean;
+  repeatShuffled: boolean;
+}
+
+function summarizeIncomingExam(exam: ExamState | null | undefined): IncomingExamSummary | null {
+  if (!exam) return null;
+  const total = Array.isArray(exam.questionIds) ? exam.questionIds.length : 0;
+  if (total === 0) return null;
+  const answers = exam.answers || {};
+  const answered = Object.keys(answers).length;
+
+  if (!exam.submittedAt) {
+    return {
+      score: 0,
+      correctCount: 0,
+      total,
+      inProgress: true,
+      answered,
+      isRepeat: !!exam.isRepeat,
+      repeatShuffled: !!exam.repeatShuffled,
+    };
+  }
+
+  let correctCount = 0;
+  for (const qIdStr of Object.keys(answers)) {
+    const qId = Number(qIdStr);
+    const q = getQuestion(qId);
+    if (!q) continue;
+    if (answers[qId] === q.correctAnswer) correctCount += 1;
+  }
+
+  return {
+    score: computeScore(correctCount),
+    correctCount,
+    total,
+    inProgress: false,
+    answered,
+    isRepeat: !!exam.isRepeat,
+    repeatShuffled: !!exam.repeatShuffled,
+  };
+}
 
 export default function IncarcaPage() {
   const router = useRouter();
   const { hasExistingSession, importSession, setSavedKey } = useSession();
+  const theme = useResolvedTheme();
   const [key, setKey] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -26,6 +78,11 @@ export default function IncarcaPage() {
     sessionData: LocalSession;
   } | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
+
+  const previewExamSummary = useMemo<IncomingExamSummary | null>(
+    () => summarizeIncomingExam(preview?.sessionData?.currentExam ?? null),
+    [preview],
+  );
 
   const handleLoad = async () => {
     if (!key.trim()) return;
@@ -176,19 +233,38 @@ export default function IncarcaPage() {
             <Card className="p-4">
               <div className="space-y-2 text-sm">
                 {preview.displayName && (
-                  <div className="flex justify-between">
+                  <div className="flex justify-between gap-3">
                     <span className="text-[var(--color-text-tertiary)]">Nume:</span>
-                    <span className="text-[var(--color-text-primary)] font-medium">{preview.displayName}</span>
+                    <span className="text-[var(--color-text-primary)] font-medium truncate">{preview.displayName}</span>
                   </div>
                 )}
-                <div className="flex justify-between">
+                <div className="flex justify-between gap-3">
                   <span className="text-[var(--color-text-tertiary)]">Rezolvate:</span>
-                  <span className="text-[var(--color-text-primary)] font-medium">{preview.totalAnswered}</span>
+                  <span className="text-[var(--color-text-primary)] font-medium tabular-nums">{preview.totalAnswered}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between gap-3">
                   <span className="text-[var(--color-text-tertiary)]">Acuratețe:</span>
-                  <span className="text-[var(--color-accent)] font-medium">{accuracy}%</span>
+                  <span className="text-[var(--color-accent)] font-medium tabular-nums">{accuracy}%</span>
                 </div>
+                {previewExamSummary && (
+                  <div className="flex justify-between gap-3 pt-2 border-t border-[var(--color-border)]">
+                    <span className="text-[var(--color-text-tertiary)]">Examen simulator:</span>
+                    {previewExamSummary.inProgress ? (
+                      <span className="text-[var(--color-text-secondary)] font-medium text-right">
+                        în progres ({previewExamSummary.answered}/{previewExamSummary.total})
+                      </span>
+                    ) : (
+                      <span className="font-bold tabular-nums text-right" style={{ color: scoreToColor(previewExamSummary.score, theme) }}>
+                        {previewExamSummary.score.toFixed(2)}/10
+                        {previewExamSummary.isRepeat && (
+                          <span className="ml-1.5 text-[9px] font-semibold uppercase tracking-wider text-[var(--color-accent)] align-middle">
+                            · repetat
+                          </span>
+                        )}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
             </Card>
           )}

@@ -7,9 +7,14 @@ import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { useSession } from "@/hooks/useSession";
+import { useResolvedTheme } from "@/hooks/useResolvedTheme";
+import { scoreToColor } from "@/lib/exam";
 
 export default function SalveazaPage() {
-  const { session, getOverallStats, exportSession, setSavedKey } = useSession();
+  const { session, getOverallStats, exportSession, setSavedKey, getExamSummary } = useSession();
+  const theme = useResolvedTheme();
+  const exam = session.currentExam;
+  const examSummary = exam && exam.submittedAt ? getExamSummary() : null;
   const [displayName, setDisplayName] = useState("");
   const [generatedKey, setGeneratedKey] = useState<string | null>(session.savedKey);
   const [loading, setLoading] = useState(false);
@@ -123,6 +128,66 @@ export default function SalveazaPage() {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* What's included card */}
+          <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-3.5 sm:p-4 mb-8 animate-slide-up stagger-1">
+            <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--color-text-tertiary)] mb-2.5 block" style={{ fontFamily: "var(--font-display)" }}>
+              Ce e inclus în cheie
+            </span>
+            <ul className="space-y-1.5">
+              <li className="flex items-center gap-2 text-xs sm:text-sm">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-correct)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span className="text-[var(--color-text-secondary)]">
+                  <span className="font-medium text-[var(--color-text-primary)]">{stats.totalAnswered}</span> răspunsuri și marcaje din practică
+                </span>
+              </li>
+              <li className="flex items-center gap-2 text-xs sm:text-sm">
+                {examSummary ? (
+                  <>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-correct)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0" aria-hidden="true">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    <span className="text-[var(--color-text-secondary)]">
+                      Ultimul examen simulator:{" "}
+                      <span
+                        className="font-bold tabular-nums"
+                        style={{ color: scoreToColor(examSummary.score, theme) }}
+                      >
+                        {examSummary.score.toFixed(2)}/10
+                      </span>
+                      {exam?.isRepeat && (
+                        <span className="ml-1.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+                          · repetat
+                        </span>
+                      )}
+                    </span>
+                  </>
+                ) : exam && !exam.submittedAt ? (
+                  <>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0" aria-hidden="true">
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <span className="text-[var(--color-text-secondary)]">
+                      Examen simulator în progres ({Object.keys(exam.answers).length} răspunse)
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-tertiary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 opacity-60" aria-hidden="true">
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
+                    </svg>
+                    <span className="text-[var(--color-text-tertiary)]">
+                      Niciun examen simulator dat încă
+                    </span>
+                  </>
+                )}
+              </li>
+            </ul>
           </div>
 
           {generatedKey ? (
@@ -240,7 +305,7 @@ export default function SalveazaPage() {
 
                   <Button
                     onClick={handleSave}
-                    disabled={loading || stats.totalAnswered === 0}
+                    disabled={loading || (stats.totalAnswered === 0 && !exam)}
                     size="lg"
                     className="w-full"
                   >
@@ -254,9 +319,9 @@ export default function SalveazaPage() {
                     )}
                   </Button>
 
-                  {stats.totalAnswered === 0 && (
+                  {stats.totalAnswered === 0 && !exam && (
                     <p className="text-xs text-[var(--color-text-tertiary)] text-center">
-                      Rezolvă cel puțin o întrebare înainte de a salva.
+                      Rezolvă cel puțin o întrebare sau dă un examen simulator înainte de a salva.
                     </p>
                   )}
                 </div>

@@ -44,6 +44,18 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "1.4.2",
+    date: "12 Mai 2026",
+    title: "Simulatorul intra in Rezultate",
+    changes: [
+      { text: "Pagina Rezultate are acum o sectiune dedicata pentru simulator: nota ta, acuratete, timp si performanta pe fiecare modul", type: "feature" },
+      { text: "Dintr-o privire vezi unde ai stat cel mai bine si ce modul ai de exersat mai mult dupa ultimul examen", type: "feature" },
+      { text: "Daca nu ai dat inca un examen, primesti un buton clar care te invita sa incerci unul", type: "improvement" },
+      { text: "Cheia ta de salvare include automat si examenul de simulator - vezi din preview ce contine cand incarci o cheie", type: "feature" },
+      { text: "Marcarea 'sesiune repetata' apare acum si pe Rezultate, Salveaza si Incarca, nu doar pe Simulator", type: "improvement" },
+    ],
+  },
+  {
     version: "1.4.1",
     date: "12 Mai 2026",
     title: "Mai mult control pe simulator",

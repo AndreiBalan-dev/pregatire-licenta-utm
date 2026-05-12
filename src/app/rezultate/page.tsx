@@ -5,14 +5,17 @@ import { Header } from "@/components/layout/Header";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Container } from "@/components/layout/Container";
 import { ProgressRing } from "@/components/results/ProgressRing";
+import { SimulatorResultCard } from "@/components/results/SimulatorResultCard";
 import { useSession } from "@/hooks/useSession";
 import { modules } from "@/data/modules";
 import { questionsBySubject, allQuestions } from "@/data";
 import { cn, formatPercentage, formatTime } from "@/lib/utils";
 
 export default function RezultatePage() {
-  const { session, isLoaded, getOverallStats } = useSession();
+  const { session, isLoaded, getOverallStats, getExamSummary } = useSession();
   const stats = getOverallStats();
+  const exam = session.currentExam;
+  const examSummary = exam && exam.submittedAt ? getExamSummary() : null;
 
   if (!isLoaded) {
     return (
@@ -31,7 +34,7 @@ export default function RezultatePage() {
           aria-hidden="true"
         />
         <Container narrow className="relative">
-          <div className="mb-10">
+          <div className="mb-8 sm:mb-10">
             <h1
               className="text-3xl font-bold text-[var(--color-text-primary)] mb-2 animate-fade-in"
               style={{ fontFamily: "var(--font-display)" }}
@@ -39,8 +42,26 @@ export default function RezultatePage() {
               Rezultate
             </h1>
             <p className="text-[var(--color-text-secondary)] animate-fade-in stagger-1">
-              Progresul tău general și pe module.
+              Examen simulator și progresul pe practică.
             </p>
+          </div>
+
+          {/* Simulator section */}
+          <section className="mb-10 sm:mb-12 animate-fade-in stagger-1">
+            <SimulatorResultCard exam={exam} summary={examSummary} />
+          </section>
+
+          {/* Practica section header */}
+          <div className="flex items-center gap-3 mb-5 sm:mb-6 animate-fade-in stagger-2">
+            <h2
+              className="text-xl sm:text-2xl font-bold text-[var(--color-text-primary)]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Practică
+            </h2>
+            <span className="text-xs text-[var(--color-text-tertiary)]">
+              statistici cumulative din toate sesiunile
+            </span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
@@ -87,12 +108,12 @@ export default function RezultatePage() {
             </div>
           </div>
 
-          <h2
-            className="text-xl font-bold text-[var(--color-text-primary)] mb-5 animate-fade-in stagger-3"
+          <h3
+            className="text-lg font-bold text-[var(--color-text-primary)] mb-5 animate-fade-in stagger-3"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Pe Module
-          </h2>
+            Practică pe Module
+          </h3>
 
           <div className="space-y-4">
             {modules.map((mod, index) => {

@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Optiune noua: vezi daca raspunsul e corect sau gresit chiar pe parcursul examenului",
-  "Buton 'Re-fa acest examen' - aceleasi grile, sa-ti corectezi exact ce ai gresit",
-  "Optiune sa schimbi ordinea cand re-faci examenul, ca sa nu memorezi pozitia",
+  "Pagina Rezultate include acum si ultimul examen simulator, cu nota si stats pe module",
+  "Cand salvezi cu cheia ta unica, examenul de simulator e inclus automat",
+  "La incarcarea unei chei vezi din preview daca include si un examen",
 ];
 
 export function ChangelogBanner() {

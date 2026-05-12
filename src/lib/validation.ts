@@ -111,6 +111,82 @@ export function validateSessionData(body: unknown): ValidationResult {
     }
   }
 
+  if (sd.currentExam !== undefined && sd.currentExam !== null) {
+    if (typeof sd.currentExam !== "object" || Array.isArray(sd.currentExam)) {
+      return { success: false, error: "Format examen invalid." };
+    }
+    if (hasForbiddenKeys(sd.currentExam)) {
+      return { success: false, error: "Date invalide." };
+    }
+    const e = sd.currentExam as Record<string, unknown>;
+
+    if (typeof e.examId !== "string" || e.examId.length === 0 || e.examId.length > 64) {
+      return { success: false, error: "ID examen invalid." };
+    }
+
+    if (!Array.isArray(e.questionIds) || e.questionIds.length === 0 || e.questionIds.length > 100) {
+      return { success: false, error: "Lista de întrebări examen invalidă." };
+    }
+    for (const qId of e.questionIds) {
+      if (!Number.isInteger(qId) || (qId as number) < 0 || (qId as number) > 100_000) {
+        return { success: false, error: "ID întrebare examen invalid." };
+      }
+    }
+
+    if (!e.answers || typeof e.answers !== "object" || Array.isArray(e.answers)) {
+      return { success: false, error: "Format răspunsuri examen invalid." };
+    }
+    if (hasForbiddenKeys(e.answers)) {
+      return { success: false, error: "Date invalide." };
+    }
+    const examAnswers = e.answers as Record<string, unknown>;
+    if (Object.keys(examAnswers).length > 100) {
+      return { success: false, error: "Prea multe răspunsuri în examen." };
+    }
+    for (const qIdStr of Object.keys(examAnswers)) {
+      const qId = Number(qIdStr);
+      if (!Number.isInteger(qId) || qId < 0 || qId > 100_000) {
+        return { success: false, error: "ID întrebare examen invalid." };
+      }
+      if (!VALID_ANSWER_KEYS.has(examAnswers[qIdStr] as string)) {
+        return { success: false, error: "Răspuns examen invalid." };
+      }
+    }
+
+    if (
+      !Number.isInteger(e.currentIndex) ||
+      (e.currentIndex as number) < 0 ||
+      (e.currentIndex as number) >= e.questionIds.length
+    ) {
+      return { success: false, error: "Index examen invalid." };
+    }
+
+    if (typeof e.startedAt !== "string" || e.startedAt.length > 64) {
+      return { success: false, error: "Data examen invalidă." };
+    }
+
+    if (e.submittedAt !== null && (typeof e.submittedAt !== "string" || e.submittedAt.length > 64)) {
+      return { success: false, error: "Data submit examen invalidă." };
+    }
+
+    if (
+      e.durationMs !== null &&
+      (typeof e.durationMs !== "number" || (e.durationMs as number) < 0 || (e.durationMs as number) > 365 * 24 * 3_600_000)
+    ) {
+      return { success: false, error: "Durată examen invalidă." };
+    }
+
+    if (e.showFeedback !== undefined && typeof e.showFeedback !== "boolean") {
+      return { success: false, error: "Format examen invalid." };
+    }
+    if (e.isRepeat !== undefined && typeof e.isRepeat !== "boolean") {
+      return { success: false, error: "Format examen invalid." };
+    }
+    if (e.repeatShuffled !== undefined && typeof e.repeatShuffled !== "boolean") {
+      return { success: false, error: "Format examen invalid." };
+    }
+  }
+
   if (typeof b.totalAnswered !== "number" || b.totalAnswered < 0 || b.totalAnswered > MAX_QUESTIONS) {
     return { success: false, error: "Date statistice invalide." };
   }
