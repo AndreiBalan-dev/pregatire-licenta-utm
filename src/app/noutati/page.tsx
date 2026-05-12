@@ -44,6 +44,27 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "1.4.4",
+    date: "12 Mai 2026",
+    title: "Iconite noi, peste tot",
+    changes: [
+      { text: "Iconite curate, vectoriale, in loc de emoji pentru toate materiile. Arata clar pe orice ecran si la orice marime", type: "improvement" },
+      { text: "Mici imbunatatiri de text pentru a fi mai natural si mai usor de citit", type: "improvement" },
+    ],
+  },
+  {
+    version: "1.4.3",
+    date: "12 Mai 2026",
+    title: "Istoric examene si statistici unite",
+    changes: [
+      { text: "Vezi acum istoricul tuturor examenelor anterioare. Apasa pe oricare ca sa vezi cum ai stat pe module sau review-ul complet", type: "feature" },
+      { text: "Statisticile pe module includ si raspunsurile date in simulator, nu doar din practica. O imagine completa a progresului", type: "feature" },
+      { text: "Pagina Revizuire iti arata si cate ai gresit la ultimul simulator, cu un click pe greseli", type: "feature" },
+      { text: "Mesajele de la sfarsitul examenului sunt mai inteligente: nu mai zice 'cel mai bine ai stat la X' daca de fapt ai gresit la toate", type: "improvement" },
+      { text: "Reluare exact de unde ai ramas dupa import: examenul si toate datele se pastreaza intacte", type: "improvement" },
+    ],
+  },
+  {
     version: "1.4.2",
     date: "12 Mai 2026",
     title: "Simulatorul intra in Rezultate",

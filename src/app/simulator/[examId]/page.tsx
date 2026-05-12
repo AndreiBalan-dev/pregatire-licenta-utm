@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import { Header } from "@/components/layout/Header";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Container } from "@/components/layout/Container";
@@ -16,11 +17,52 @@ import { ExamModuleBreakdown } from "@/components/exam/ExamModuleBreakdown";
 import { ExamReview } from "@/components/exam/ExamReview";
 import { ExamRestartModal } from "@/components/exam/ExamRestartModal";
 import { ExamRepeatBadge } from "@/components/exam/ExamRepeatBadge";
+import { SubjectIcon } from "@/components/ui/SubjectIcon";
 import { useSession } from "@/hooks/useSession";
 import { getQuestion } from "@/data";
 import { modules } from "@/data/modules";
 import { cn } from "@/lib/utils";
+import { computeScore } from "@/lib/exam";
 import type { AnswerKey } from "@/data/types";
+import type { ExamState } from "@/lib/session-types";
+
+function summarizeExam(exam: ExamState) {
+  let correctCount = 0;
+  let answeredCount = 0;
+  const perModule: Record<string, { correct: number; total: number }> = {};
+  const perSubject: Record<string, { correct: number; total: number }> = {};
+
+  for (const qId of exam.questionIds) {
+    const q = getQuestion(qId);
+    if (!q) continue;
+    if (!perModule[q.moduleId]) perModule[q.moduleId] = { correct: 0, total: 0 };
+    if (!perSubject[q.subjectId]) perSubject[q.subjectId] = { correct: 0, total: 0 };
+    perModule[q.moduleId].total += 1;
+    perSubject[q.subjectId].total += 1;
+
+    const ans = exam.answers[qId];
+    if (ans) {
+      answeredCount += 1;
+      if (ans === q.correctAnswer) {
+        correctCount += 1;
+        perModule[q.moduleId].correct += 1;
+        perSubject[q.subjectId].correct += 1;
+      }
+    }
+  }
+
+  return {
+    total: exam.questionIds.length,
+    answeredCount,
+    unansweredCount: exam.questionIds.length - answeredCount,
+    correctCount,
+    wrongCount: answeredCount - correctCount,
+    score: computeScore(correctCount),
+    perModule,
+    perSubject,
+    durationMs: exam.durationMs,
+  };
+}
 
 export default function SimulatorExamPage() {
   const router = useRouter();
@@ -43,8 +85,18 @@ export default function SimulatorExamPage() {
   const [redoOpen, setRedoOpen] = useState(false);
   const [navigating, setNavigating] = useState(false);
 
-  const exam = session.currentExam;
-  const validExam = exam && exam.examId === examIdParam;
+  const { exam, isHistorical } = useMemo(() => {
+    const current = session.currentExam;
+    if (current && current.examId === examIdParam) {
+      return { exam: current, isHistorical: false };
+    }
+    const hist = (session.examHistory ?? []).find((e) => e.examId === examIdParam);
+    if (hist) {
+      return { exam: hist, isHistorical: true };
+    }
+    return { exam: null as ExamState | null, isHistorical: false };
+  }, [session.currentExam, session.examHistory, examIdParam]);
+  const validExam = exam !== null;
 
   useEffect(() => {
     if (isLoaded && !validExam && !navigating) {
@@ -53,8 +105,8 @@ export default function SimulatorExamPage() {
   }, [isLoaded, validExam, router, navigating]);
 
   const isReviewMode = validExam && exam.submittedAt !== null;
-  const isActiveMode = validExam && exam.submittedAt === null;
-  const liveFeedbackEnabled = !!(validExam && exam.showFeedback);
+  const isActiveMode = validExam && !isHistorical && exam.submittedAt === null;
+  const liveFeedbackEnabled = !!(validExam && !isHistorical && exam.showFeedback);
   const isRepeatSession = !!(validExam && exam.isRepeat);
 
   const currentQuestion = useMemo(() => {
@@ -180,8 +232,9 @@ export default function SimulatorExamPage() {
                   style={{ backgroundColor: moduleColor }}
                   aria-hidden="true"
                 />
-                <span className="text-xs text-[var(--color-text-tertiary)] truncate">
-                  {currentSubject.icon} {currentSubject.name.split("(")[0].trim()}
+                <span className="text-xs text-[var(--color-text-tertiary)] inline-flex items-center gap-1.5 truncate">
+                  <SubjectIcon subjectId={currentSubject.id} size={12} />
+                  <span className="truncate">{currentSubject.name.split("(")[0].trim()}</span>
                 </span>
               </div>
             )}
@@ -293,7 +346,7 @@ export default function SimulatorExamPage() {
 
   // ============= REVIEW / RESULT MODE =============
   if (isReviewMode) {
-    const summary = getExamSummary();
+    const summary = isHistorical ? summarizeExam(exam) : getExamSummary();
     if (!summary) return null;
 
     return (
@@ -302,6 +355,35 @@ export default function SimulatorExamPage() {
         <main id="top" className="relative py-6 sm:py-8 pb-24 md:pb-8 overflow-hidden">
           <div className="absolute inset-0 grid-pattern opacity-40" aria-hidden="true" />
           <Container narrow className="relative space-y-6 sm:space-y-8">
+            {/* Historical banner */}
+            {isHistorical && (
+              <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-3 sm:p-3.5 flex items-center gap-3 animate-fade-in">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[var(--color-bg-primary)] border border-[var(--color-border)] flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-tertiary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs sm:text-sm font-medium text-[var(--color-text-primary)]">
+                    Examen din istoric
+                  </p>
+                  <p className="text-[10px] sm:text-[11px] text-[var(--color-text-tertiary)]">
+                    Vezi rezultatele unui examen mai vechi. Acțiunile de mai jos pornesc un examen nou.
+                  </p>
+                </div>
+                <Link
+                  href="/rezultate"
+                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[var(--radius-md)] text-xs font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-hover)] transition-colors"
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polyline points="15 18 9 12 15 6" />
+                  </svg>
+                  Rezultate
+                </Link>
+              </div>
+            )}
+
             <div className="animate-fade-in">
               <ExamScore
                 score={summary.score}
@@ -316,22 +398,40 @@ export default function SimulatorExamPage() {
             {/* Actions */}
             <div className="space-y-2.5 animate-fade-in stagger-1">
               <div className="flex flex-col sm:flex-row gap-2.5">
-                <Button variant="primary" size="lg" className="flex-1" onClick={() => setRedoOpen(true)}>
-                  Re-fă acest examen
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <polyline points="1 4 1 10 7 10" />
-                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
-                  </svg>
-                </Button>
-                <Button variant="secondary" size="lg" className="flex-1" onClick={() => setRestartOpen(true)}>
-                  Examen Nou
+                {!isHistorical && (
+                  <Button variant="primary" size="lg" className="flex-1" onClick={() => setRedoOpen(true)}>
+                    Re-fă acest examen
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <polyline points="1 4 1 10 7 10" />
+                      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                    </svg>
+                  </Button>
+                )}
+                <Button
+                  variant={isHistorical ? "primary" : "secondary"}
+                  size="lg"
+                  className="flex-1"
+                  onClick={() => setRestartOpen(true)}
+                >
+                  {isHistorical ? "Pornește un Simulator Nou" : "Examen Nou"}
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <line x1="5" y1="12" x2="19" y2="12" />
                     <polyline points="12 5 19 12 12 19" />
                   </svg>
                 </Button>
               </div>
-              <div className="flex justify-center">
+              <div className="flex justify-center gap-3">
+                <button
+                  onClick={() => router.push("/rezultate")}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[var(--radius-md)] text-xs font-medium text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-hover)] transition-colors cursor-pointer"
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <line x1="18" y1="20" x2="18" y2="10" />
+                    <line x1="12" y1="20" x2="12" y2="4" />
+                    <line x1="6" y1="20" x2="6" y2="14" />
+                  </svg>
+                  Rezultate
+                </button>
                 <button
                   onClick={() => router.push("/")}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[var(--radius-md)] text-xs font-medium text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-hover)] transition-colors cursor-pointer"
@@ -345,20 +445,22 @@ export default function SimulatorExamPage() {
               </div>
             </div>
 
-            {/* Helpful explanation for "Re-fă acest examen" */}
-            <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-3.5 sm:p-4 animate-fade-in stagger-1">
-              <div className="flex items-start gap-2.5">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 mt-0.5" aria-hidden="true">
-                  <circle cx="12" cy="12" r="10" />
-                  <line x1="12" y1="16" x2="12" y2="12" />
-                  <line x1="12" y1="8" x2="12.01" y2="8" />
-                </svg>
-                <p className="text-[11px] sm:text-xs leading-relaxed text-[var(--color-text-tertiary)]">
-                  <span className="text-[var(--color-text-secondary)] font-medium">Re-fă acest examen</span> îți dă aceleași 36 de grile, ca să corectezi exact ce ai greșit.
-                  <span className="text-[var(--color-text-secondary)] font-medium"> Examen Nou</span> alege alte 36 de grile, balansate din toate modulele.
-                </p>
+            {/* Helpful explanation for "Re-fă acest examen" - only for current submitted exam */}
+            {!isHistorical && (
+              <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-3.5 sm:p-4 animate-fade-in stagger-1">
+                <div className="flex items-start gap-2.5">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 mt-0.5" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                  </svg>
+                  <p className="text-[11px] sm:text-xs leading-relaxed text-[var(--color-text-tertiary)]">
+                    <span className="text-[var(--color-text-secondary)] font-medium">Re-fă acest examen</span> îți dă aceleași 36 de grile, ca să corectezi exact ce ai greșit.
+                    <span className="text-[var(--color-text-secondary)] font-medium"> Examen Nou</span> alege alte 36 de grile, balansate din toate modulele.
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="animate-fade-in stagger-2">
               <ExamModuleBreakdown perModule={summary.perModule} perSubject={summary.perSubject} />

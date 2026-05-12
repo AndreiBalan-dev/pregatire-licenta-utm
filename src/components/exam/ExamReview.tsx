@@ -5,6 +5,7 @@ import { modules } from "@/data/modules";
 import { getQuestion } from "@/data";
 import { QuestionCard } from "@/components/practice/QuestionCard";
 import { ExamRepeatBadge } from "@/components/exam/ExamRepeatBadge";
+import { SubjectIcon } from "@/components/ui/SubjectIcon";
 import { cn } from "@/lib/utils";
 import type { AnswerKey } from "@/data/types";
 
@@ -113,8 +114,9 @@ export function ExamReview({ questionIds, answers, isRepeat, repeatShuffled }: E
                     className="w-1 h-4 rounded-full flex-shrink-0"
                     style={{ backgroundColor: moduleColor }}
                   />
-                  <span className="text-[11px] sm:text-xs text-[var(--color-text-tertiary)] truncate">
-                    {subject?.icon} {subject?.name.split("(")[0].trim()}
+                  <span className="text-[11px] sm:text-xs text-[var(--color-text-tertiary)] inline-flex items-center gap-1.5 truncate">
+                    {subject && <SubjectIcon subjectId={subject.id} size={12} />}
+                    <span className="truncate">{subject?.name.split("(")[0].trim()}</span>
                   </span>
                 </div>
                 <span

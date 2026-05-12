@@ -51,7 +51,7 @@ export function ExamProgress({ questionIds, answers, currentIndex, onJump }: Exa
         )}
       </div>
 
-      {/* Dot navigation — full grid of 36 */}
+      {/* Dot navigation - full grid of 36 */}
       <nav aria-label="Navigare întrebări" className="flex flex-wrap gap-1 sm:gap-1.5 justify-center">
         {questionIds.map((qId, i) => {
           const isAnswered = !!answers[qId];
@@ -61,7 +61,7 @@ export function ExamProgress({ questionIds, answers, currentIndex, onJump }: Exa
             <button
               key={qId}
               onClick={() => onJump(i)}
-              aria-label={`Întrebarea ${i + 1} — ${status}`}
+              aria-label={`Întrebarea ${i + 1} - ${status}`}
               aria-current={isCurrent ? "step" : undefined}
               className={cn(
                 "relative flex items-center justify-center transition-all duration-200 rounded-full cursor-pointer",

@@ -38,7 +38,7 @@ export function ExamSimulatorCTA() {
           href="/simulator"
           className="group relative block overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] transition-all duration-300 hover:border-[var(--color-accent)] animate-slide-up"
         >
-          {/* Live atmospheric glow — shifts with demo score color */}
+          {/* Live atmospheric glow - shifts with demo score color */}
           <div
             className="absolute inset-0 pointer-events-none transition-all"
             style={{
@@ -130,7 +130,7 @@ export function ExamSimulatorCTA() {
               {/* Scale endpoints */}
               <div className="mt-2.5 flex items-center justify-between text-[10px] font-mono text-[var(--color-text-tertiary)] tabular-nums">
                 <span>{EXAM_MIN_SCORE.toFixed(2)}</span>
-                <span className="text-[var(--color-text-tertiary)]">scala 1 — 10</span>
+                <span className="text-[var(--color-text-tertiary)]">scala 1 - 10</span>
                 <span>{EXAM_MAX_SCORE.toFixed(2)}</span>
               </div>
             </div>

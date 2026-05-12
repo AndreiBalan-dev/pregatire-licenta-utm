@@ -1,15 +1,19 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { Header } from "@/components/layout/Header";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Container } from "@/components/layout/Container";
 import { Card } from "@/components/ui/Card";
 import { CodeBlock } from "@/components/ui/CodeBlock";
+import { ExamRepeatBadge } from "@/components/exam/ExamRepeatBadge";
 import { useSession } from "@/hooks/useSession";
+import { useResolvedTheme } from "@/hooks/useResolvedTheme";
 import { getQuestion } from "@/data";
 import { modules } from "@/data/modules";
 import { cn, isCodeLike } from "@/lib/utils";
+import { scoreToColor, EXAM_TOTAL_QUESTIONS } from "@/lib/exam";
 import type { AnswerKey } from "@/data/types";
 
 type Filter = "wrong" | "correct" | "bookmarked" | "all";
@@ -17,9 +21,30 @@ type Filter = "wrong" | "correct" | "bookmarked" | "all";
 const optionLabels: Record<AnswerKey, string> = { a: "A", b: "B", c: "C", d: "D" };
 
 export default function RevizuirePage() {
-  const { session, isLoaded, toggleBookmark } = useSession();
+  const { session, isLoaded, toggleBookmark, getExamSummary } = useSession();
+  const theme = useResolvedTheme();
   const [filter, setFilter] = useState<Filter>("wrong");
   const [moduleFilter, setModuleFilter] = useState<string>("all");
+
+  const exam = session.currentExam;
+  const examSummary = exam && exam.submittedAt ? getExamSummary() : null;
+
+  // Find the module(s) with the most simulator mistakes
+  const examTroubleModule = useMemo(() => {
+    if (!examSummary) return null;
+    let worstModuleId: string | null = null;
+    let worstWrong = 0;
+    for (const [modId, stats] of Object.entries(examSummary.perModule)) {
+      const wrong = stats.total - stats.correct;
+      if (wrong > worstWrong) {
+        worstWrong = wrong;
+        worstModuleId = modId;
+      }
+    }
+    if (!worstModuleId || worstWrong === 0) return null;
+    const mod = modules.find((m) => m.id === worstModuleId);
+    return mod ? { mod, wrong: worstWrong } : null;
+  }, [examSummary]);
 
   const filteredQuestions = useMemo(() => {
     let questionIds: number[] = [];
@@ -76,6 +101,88 @@ export default function RevizuirePage() {
               Analizează răspunsurile și învață din greșeli.
             </p>
           </div>
+
+          {/* Simulator wrong-answers card */}
+          {examSummary && exam && (
+            <Link
+              href={`/simulator/${exam.examId}`}
+              className="group relative block overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] transition-all duration-200 hover:border-[var(--color-border-strong)] mb-6 sm:mb-8 animate-slide-up"
+            >
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: `radial-gradient(ellipse 60% 50% at 0% 50%, ${scoreToColor(examSummary.score, theme)}, transparent 60%)`,
+                  opacity: 0.08,
+                }}
+                aria-hidden="true"
+              />
+              <div className="relative p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+                {/* Visual mark */}
+                <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
+                  <div
+                    className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-[var(--radius-md)] flex items-center justify-center font-extrabold tabular-nums"
+                    style={{
+                      background: "var(--color-bg-primary)",
+                      border: `1px solid ${scoreToColor(examSummary.score, theme)}40`,
+                      color: scoreToColor(examSummary.score, theme),
+                      fontFamily: "var(--font-display)",
+                      fontSize: examSummary.score >= 10 ? "16px" : "18px",
+                      letterSpacing: "-0.02em",
+                    }}
+                    aria-hidden="true"
+                  >
+                    {examSummary.score.toFixed(1)}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <span
+                        className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--color-text-tertiary)]"
+                        style={{ fontFamily: "var(--font-display)" }}
+                      >
+                        Ultimul Simulator
+                      </span>
+                      {exam.isRepeat && <ExamRepeatBadge size="sm" shuffled={exam.repeatShuffled} />}
+                    </div>
+                    {examSummary.correctCount === examSummary.total ? (
+                      <p className="text-sm sm:text-base text-[var(--color-text-primary)] leading-snug">
+                        <span className="font-bold text-[var(--color-correct)]">Niciuna greșită!</span>{" "}
+                        <span className="text-[var(--color-text-tertiary)]">Toate {EXAM_TOTAL_QUESTIONS} corecte la simulator.</span>
+                      </p>
+                    ) : (
+                      <p className="text-sm sm:text-base text-[var(--color-text-primary)] leading-snug">
+                        <span className="font-bold text-[var(--color-wrong)] tabular-nums">{examSummary.wrongCount}</span>{" "}
+                        <span className="text-[var(--color-text-secondary)]">greșite</span>
+                        {examSummary.unansweredCount > 0 && (
+                          <>
+                            <span className="text-[var(--color-text-tertiary)]"> · </span>
+                            <span className="font-bold tabular-nums text-[var(--color-text-secondary)]">{examSummary.unansweredCount}</span>
+                            <span className="text-[var(--color-text-secondary)]"> fără răspuns</span>
+                          </>
+                        )}
+                        {examTroubleModule && (
+                          <>
+                            <span className="hidden sm:inline text-[var(--color-text-tertiary)]"> · </span>
+                            <span className="block sm:inline text-xs sm:text-sm text-[var(--color-text-tertiary)] mt-0.5 sm:mt-0">
+                              mai ales la <span className="font-semibold" style={{ color: examTroubleModule.mod.color }}>{examTroubleModule.mod.name}</span>
+                            </span>
+                          </>
+                        )}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <span
+                  className="inline-flex items-center gap-1.5 px-3 py-2 sm:px-4 sm:py-2.5 rounded-[var(--radius-md)] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-40 text-xs sm:text-sm font-semibold transition-all group-hover:bg-[var(--color-accent)] group-hover:text-[#0C0C0E] group-hover:gap-2 flex-shrink-0 justify-center sm:justify-start"
+                  style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}
+                >
+                  {examSummary.correctCount === examSummary.total ? "Vezi review" : "Vezi greșelile"}
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polyline points="9 6 15 12 9 18" />
+                  </svg>
+                </span>
+              </div>
+            </Link>
+          )}
 
           {/* Stats overview */}
           <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-8 animate-slide-up stagger-1">

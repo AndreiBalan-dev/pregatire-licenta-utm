@@ -7,6 +7,7 @@ import { cn, formatPercentage } from "@/lib/utils";
 import { useSession } from "@/hooks/useSession";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
+import { SubjectIcon } from "@/components/ui/SubjectIcon";
 import type { Module } from "@/data/types";
 
 interface SubjectSelectorProps {
@@ -190,10 +191,11 @@ export function SubjectSelector({
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-2">
                           <span className={cn(
-                            "text-xs sm:text-sm font-medium truncate",
+                            "text-xs sm:text-sm font-medium truncate inline-flex items-center gap-1.5",
                             isSelected ? "text-[var(--color-text-primary)]" : "text-[var(--color-text-secondary)]"
                           )}>
-                            {subject.icon} {subject.name}
+                            <SubjectIcon subjectId={subject.id} size={14} />
+                            {subject.name}
                           </span>
                           <span className="flex items-center gap-1.5 flex-shrink-0">
                             <span className="text-xs text-[var(--color-text-tertiary)]">

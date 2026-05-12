@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { modules } from "@/data/modules";
+import { SubjectIcon } from "@/components/ui/SubjectIcon";
 import { cn } from "@/lib/utils";
 
 interface ExamModuleBreakdownProps {
@@ -127,8 +128,8 @@ export function ExamModuleBreakdown({ perModule, perSubject }: ExamModuleBreakdo
                     const subPct = s.stat.total > 0 ? (s.stat.correct / s.stat.total) * 100 : 0;
                     return (
                       <div key={s.id} className="flex items-center gap-2.5">
-                        <span className="text-sm flex-shrink-0 w-5 text-center" aria-hidden="true">
-                          {s.icon}
+                        <span className="flex-shrink-0 w-5 flex items-center justify-center text-[var(--color-text-tertiary)]" aria-hidden="true">
+                          <SubjectIcon subjectId={s.id} size={13} />
                         </span>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between gap-2 mb-1">

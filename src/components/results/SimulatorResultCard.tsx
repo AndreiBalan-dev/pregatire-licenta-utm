@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { useResolvedTheme } from "@/hooks/useResolvedTheme";
 import { ExamRepeatBadge } from "@/components/exam/ExamRepeatBadge";
@@ -37,7 +38,7 @@ function timeAgo(iso: string): string {
 }
 
 function formatDuration(ms: number | null): string {
-  if (!ms || ms <= 0) return "—";
+  if (!ms || ms <= 0) return "-";
   const totalSec = Math.floor(ms / 1000);
   const hours = Math.floor(totalSec / 3600);
   const min = Math.floor((totalSec % 3600) / 60);
@@ -45,6 +46,107 @@ function formatDuration(ms: number | null): string {
   if (hours > 0) return `${hours}h ${min}m`;
   if (min > 0) return `${min}m ${sec}s`;
   return `${sec}s`;
+}
+
+type InsightTone = "success" | "info" | "warning";
+
+interface Insight {
+  tone: InsightTone;
+  text: ReactNode;
+}
+
+interface ModuleStat {
+  mod: { id: string; name: string; color: string };
+  correct: number;
+  total: number;
+  pct: number;
+}
+
+function buildInsight(moduleStats: ModuleStat[], totalCorrect: number, total: number): Insight | null {
+  if (moduleStats.length === 0 || total === 0) return null;
+
+  // PERFECT: all correct
+  if (totalCorrect === total) {
+    return { tone: "success", text: <>Toate cele {total} corecte. Performanță maximă!</> };
+  }
+
+  // ZERO: nothing correct
+  if (totalCorrect === 0) {
+    return {
+      tone: "warning",
+      text: <>Niciun răspuns corect de data asta. Începe cu Practică pe orice modul ca să prinzi conceptele - primul examen e mereu cel mai greu.</>,
+    };
+  }
+
+  const sorted = [...moduleStats].sort((a, b) => b.pct - a.pct);
+  const best = sorted[0];
+  const worst = sorted[sorted.length - 1];
+
+  // SINGLE MODULE: no comparison possible
+  if (moduleStats.length === 1) {
+    return {
+      tone: best.pct === 100 ? "success" : "info",
+      text: <>{best.correct} din {best.total} la <span className="font-semibold" style={{ color: best.mod.color }}>{best.mod.name}</span>.</>,
+    };
+  }
+
+  // ALL TIED at same pct
+  if (best.pct === worst.pct) {
+    if (best.pct === 100) {
+      return { tone: "success", text: <>Toate modulele la maximum. Felicitări!</> };
+    }
+    return {
+      tone: "info",
+      text: <>Stat egal pe toate modulele ({Math.round(best.pct)}%). Continuă cu Practică pe materiile preferate.</>,
+    };
+  }
+
+  const overallPct = (totalCorrect / total) * 100;
+  const variance = best.pct - worst.pct;
+
+  // LOW OVERALL (under 25%): focus on what to study, not what's "best"
+  if (overallPct < 25) {
+    if (worst.pct === 0) {
+      return {
+        tone: "warning",
+        text: <>Multe greșeli per total. Începe cu <span className="font-semibold" style={{ color: worst.mod.color }}>{worst.mod.name}</span> - n-ai răspuns corect la nimic acolo.</>,
+      };
+    }
+    return {
+      tone: "warning",
+      text: <>Cele mai multe greșeli la <span className="font-semibold" style={{ color: worst.mod.color }}>{worst.mod.name}</span>. Începe practica de acolo.</>,
+    };
+  }
+
+  // BALANCED: small variance (<15 pp) - no clear weak point
+  if (variance < 15) {
+    return {
+      tone: "info",
+      text: <>Stat echilibrat - între {Math.round(worst.pct)}% și {Math.round(best.pct)}% pe module. Exersează puțin la toate.</>,
+    };
+  }
+
+  // VERY HIGH (>= 90%): celebrate but suggest the finishing touch
+  if (overallPct >= 90) {
+    return {
+      tone: "success",
+      text: <>Aproape perfect! Mai exersează <span className="font-semibold" style={{ color: worst.mod.color }}>{worst.mod.name}</span> ca să prinzi maximul.</>,
+    };
+  }
+
+  // WORST AT 0%: emphasize that module as priority
+  if (worst.pct === 0) {
+    return {
+      tone: "warning",
+      text: <>Bun la <span className="font-semibold" style={{ color: best.mod.color }}>{best.mod.name}</span>. La <span className="font-semibold" style={{ color: worst.mod.color }}>{worst.mod.name}</span> n-ai răspuns corect la nimic - e prima prioritate.</>,
+    };
+  }
+
+  // NORMAL: best vs worst with clear gap
+  return {
+    tone: "info",
+    text: <>Cel mai bine la <span className="font-semibold" style={{ color: best.mod.color }}>{best.mod.name}</span>. Pentru cea mai mare creștere de punctaj, concentrează-te pe <span className="font-semibold" style={{ color: worst.mod.color }}>{worst.mod.name}</span>.</>,
+  };
 }
 
 export function SimulatorResultCard({ exam, summary }: SimulatorResultCardProps) {
@@ -101,7 +203,7 @@ export function SimulatorResultCard({ exam, summary }: SimulatorResultCardProps)
               Curios cât ai lua la examen?
             </h3>
             <p className="text-xs sm:text-sm text-[var(--color-text-secondary)] leading-relaxed mb-4 max-w-md">
-              Dă un simulator complet — {EXAM_TOTAL_QUESTIONS} de grile, balansate ca la examenul real, și află nota ta pe scala 1-10.
+              Dă un simulator complet - {EXAM_TOTAL_QUESTIONS} de grile, balansate ca la examenul real, și află nota ta pe scala 1-10.
             </p>
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-[var(--radius-md)] bg-[var(--color-accent)] text-[#0C0C0E] font-bold text-sm transition-all duration-200 group-hover:bg-[var(--color-accent-hover)] group-hover:shadow-[0_0_22px_rgba(232,166,49,0.3)]" style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}>
               Pornește Simulatorul
@@ -191,10 +293,25 @@ export function SimulatorResultCard({ exam, summary }: SimulatorResultCardProps)
       })
       .filter((m) => m.total > 0);
 
-    const sortedByPct = [...moduleStats].sort((a, b) => b.pct - a.pct);
-    const best = sortedByPct[0];
-    const worst = sortedByPct[sortedByPct.length - 1];
-    const hasVariance = best && worst && best.mod.id !== worst.mod.id;
+    const insight = buildInsight(moduleStats, summary.correctCount, summary.total);
+    const insightColor =
+      insight?.tone === "success"
+        ? "var(--color-correct)"
+        : insight?.tone === "warning"
+          ? "var(--color-wrong)"
+          : "var(--color-accent)";
+    const insightBg =
+      insight?.tone === "success"
+        ? "var(--color-correct-bg)"
+        : insight?.tone === "warning"
+          ? "var(--color-wrong-bg)"
+          : "var(--color-bg-primary)";
+    const insightBorder =
+      insight?.tone === "success"
+        ? "var(--color-correct-border)"
+        : insight?.tone === "warning"
+          ? "var(--color-wrong-border)"
+          : "var(--color-border)";
 
     return (
       <div className="relative overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)]">
@@ -349,14 +466,44 @@ export function SimulatorResultCard({ exam, summary }: SimulatorResultCardProps)
             </div>
           )}
 
-          {/* Insight + CTA */}
-          {hasVariance && (
-            <div className="flex items-start gap-2 mb-4 sm:mb-5 px-3 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-bg-primary)] border border-[var(--color-border)]">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 mt-0.5" aria-hidden="true">
-                <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" />
+          {/* Insight callout - context-aware */}
+          {insight && (
+            <div
+              className="flex items-start gap-2 mb-4 sm:mb-5 px-3 py-2.5 rounded-[var(--radius-md)] border"
+              style={{ background: insightBg, borderColor: insightBorder }}
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={insightColor}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="flex-shrink-0 mt-0.5"
+                aria-hidden="true"
+              >
+                {insight.tone === "success" ? (
+                  <>
+                    <polyline points="20 6 9 17 4 12" />
+                  </>
+                ) : insight.tone === "warning" ? (
+                  <>
+                    <path d="M12 9v4" />
+                    <path d="M12 17h.01" />
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                  </>
+                ) : (
+                  <>
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 16v-4" />
+                    <path d="M12 8h.01" />
+                  </>
+                )}
               </svg>
-              <p className="text-[11px] sm:text-xs leading-relaxed text-[var(--color-text-tertiary)]">
-                Cel mai bine ai stat la <span className="font-semibold" style={{ color: best.mod.color }}>{best.mod.name}</span>. Concentrează-te pe <span className="font-semibold" style={{ color: worst.mod.color }}>{worst.mod.name}</span> pentru cea mai mare creștere de punctaj.
+              <p className="text-[11px] sm:text-xs leading-relaxed text-[var(--color-text-secondary)]">
+                {insight.text}
               </p>
             </div>
           )}

@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Pagina Rezultate include acum si ultimul examen simulator, cu nota si stats pe module",
-  "Cand salvezi cu cheia ta unica, examenul de simulator e inclus automat",
-  "La incarcarea unei chei vezi din preview daca include si un examen",
+  "Iconite curate peste tot in loc de emoji",
+  "Istoric complet al examenelor: vezi toate examenele anterioare cu un click",
+  "Cand re-faci grile la simulator, statisticile pe module includ si raspunsurile date acolo",
 ];
 
 export function ChangelogBanner() {

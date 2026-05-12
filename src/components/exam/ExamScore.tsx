@@ -21,7 +21,7 @@ interface ExamScoreProps {
 }
 
 function formatDuration(ms: number | null): string {
-  if (!ms) return "—";
+  if (!ms) return "-";
   const totalSec = Math.floor(ms / 1000);
   const hours = Math.floor(totalSec / 3600);
   const min = Math.floor((totalSec % 3600) / 60);

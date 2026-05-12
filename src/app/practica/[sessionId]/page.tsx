@@ -9,6 +9,7 @@ import { QuestionCard } from "@/components/practice/QuestionCard";
 import { ProgressBar } from "@/components/practice/ProgressBar";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
+import { SubjectIcon } from "@/components/ui/SubjectIcon";
 import { useSession } from "@/hooks/useSession";
 import { useTimer } from "@/hooks/useTimer";
 import { getQuestion, questionsBySubject } from "@/data";
@@ -244,8 +245,9 @@ export default function QuizPage() {
                   className="w-1.5 h-5 rounded-full flex-shrink-0"
                   style={{ backgroundColor: moduleColor }}
                 />
-                <span className="text-xs sm:text-sm text-[var(--color-text-secondary)] truncate">
-                  {currentSubject.icon} {currentSubject.name.split("(")[0].trim()}
+                <span className="text-xs sm:text-sm text-[var(--color-text-secondary)] inline-flex items-center gap-1.5 truncate">
+                  <SubjectIcon subjectId={currentSubject.id} size={13} />
+                  <span className="truncate">{currentSubject.name.split("(")[0].trim()}</span>
                 </span>
               </div>
             )}
@@ -270,7 +272,7 @@ export default function QuizPage() {
             />
           </div>
 
-          {/* Question dot navigation — 7 dots on mobile (320px safe), 11 on desktop */}
+          {/* Question dot navigation - 7 dots on mobile (320px safe), 11 on desktop */}
           {(() => {
             const sliceStart = Math.max(0, practice.currentIndex - dotRadius);
             const sliceEnd = Math.min(practice.questionIds.length, practice.currentIndex + dotRadius + 1);
@@ -300,7 +302,7 @@ export default function QuizPage() {
                     return (
                       <button
                         key={qId}
-                        aria-label={`Întrebarea ${actualIndex + 1} — ${statusLabel}`}
+                        aria-label={`Întrebarea ${actualIndex + 1} - ${statusLabel}`}
                         aria-current={isCurrent ? "step" : undefined}
                         onClick={() => {
                           updatePracticeIndex(actualIndex);

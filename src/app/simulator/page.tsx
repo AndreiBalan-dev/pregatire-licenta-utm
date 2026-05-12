@@ -102,7 +102,7 @@ export default function SimulatorLandingPage() {
             </p>
           </div>
 
-          {/* Main action card — depends on state */}
+          {/* Main action card - depends on state */}
           {!exam && (
             <div className="relative overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] animate-slide-up">
               <div
@@ -202,7 +202,7 @@ export default function SimulatorLandingPage() {
                 aria-hidden="true"
               />
               <div className="relative p-6 sm:p-8">
-                {/* Score + mini-bar — centered on mobile, side-by-side on desktop */}
+                {/* Score + mini-bar - centered on mobile, side-by-side on desktop */}
                 <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 sm:gap-8 mb-6">
                   <div className="text-center sm:text-left">
                     <div className="flex items-center gap-2 justify-center sm:justify-start flex-wrap">
@@ -271,7 +271,7 @@ export default function SimulatorLandingPage() {
             </div>
           )}
 
-          {/* Feedback toggle — shown when exam is not active (so user can decide before next start) */}
+          {/* Feedback toggle - shown when exam is not active (so user can decide before next start) */}
           {!isActive && (
             <div className="mt-5 animate-fade-in stagger-2">
               <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-text-tertiary)] mb-2.5" style={{ fontFamily: "var(--font-display)" }}>
@@ -289,7 +289,7 @@ export default function SimulatorLandingPage() {
             </div>
           )}
 
-          {/* "How it works" info section — always visible */}
+          {/* "How it works" info section - always visible */}
           <div className="mt-10 sm:mt-12 animate-fade-in stagger-3">
             <h3
               className="text-lg font-bold text-[var(--color-text-primary)] mb-4"

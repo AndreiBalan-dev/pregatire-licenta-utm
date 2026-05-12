@@ -47,10 +47,13 @@ export interface LocalSession {
   bookmarks: number[];
   currentPractice: PracticeState | null;
   currentExam: ExamState | null;
+  examHistory: ExamState[];
   subjectStats: Record<string, SubjectStat>;
   settings: SessionSettings;
   savedKey: string | null;
 }
+
+export const MAX_EXAM_HISTORY = 20;
 
 export function createDefaultSession(): LocalSession {
   return {
@@ -61,6 +64,7 @@ export function createDefaultSession(): LocalSession {
     bookmarks: [],
     currentPractice: null,
     currentExam: null,
+    examHistory: [],
     subjectStats: {},
     settings: {
       showImmediateFeedback: true,

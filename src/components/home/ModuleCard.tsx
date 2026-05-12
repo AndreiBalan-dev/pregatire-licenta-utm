@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
+import { SubjectIcon } from "@/components/ui/SubjectIcon";
 import { cn, formatPercentage } from "@/lib/utils";
 import type { Module } from "@/data/types";
 
@@ -28,7 +29,7 @@ export function ModuleCard({ module, totalQuestions, answeredCount, correctCount
           animationDelay: `${delay}ms`,
         } as React.CSSProperties}
       >
-        {/* Subtle static top glow — hover glow handled by .module-card::before in CSS */}
+        {/* Subtle static top glow - hover glow handled by .module-card::before in CSS */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -88,9 +89,10 @@ export function ModuleCard({ module, totalQuestions, answeredCount, correctCount
             {module.subjects.map((s) => (
               <span
                 key={s.id}
-                className="text-xs text-[var(--color-text-tertiary)] bg-[var(--color-bg-primary)] px-2 py-0.5 rounded-[var(--radius-sm)] border border-transparent group-hover:border-[var(--color-border)] transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs text-[var(--color-text-tertiary)] bg-[var(--color-bg-primary)] px-2 py-0.5 rounded-[var(--radius-sm)] border border-transparent group-hover:border-[var(--color-border)] transition-colors"
               >
-                {s.icon} {s.name.split("(")[0].trim()}
+                <SubjectIcon subjectId={s.id} size={11} />
+                {s.name.split("(")[0].trim()}
               </span>
             ))}
           </div>

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import {
   LocalSession,
   createDefaultSession,
+  MAX_EXAM_HISTORY,
   type AnswerRecord,
   type ExamState,
   type PracticeState,
@@ -14,7 +15,76 @@ import { shuffleArray } from "@/lib/utils";
 import { questionsBySubject, getQuestion } from "@/data";
 import { modules } from "@/data/modules";
 import { pickExamQuestions, computeScore } from "@/lib/exam";
+import { buildMergedAnswerMap } from "@/lib/answer-merge";
 import type { AnswerKey } from "@/data/types";
+
+export interface ExamSummaryData {
+  examId: string;
+  total: number;
+  answeredCount: number;
+  unansweredCount: number;
+  correctCount: number;
+  wrongCount: number;
+  score: number;
+  perModule: Record<string, { correct: number; total: number }>;
+  perSubject: Record<string, { correct: number; total: number }>;
+  durationMs: number | null;
+  submittedAt: string | null;
+  startedAt: string;
+  isRepeat: boolean;
+  repeatShuffled: boolean;
+}
+
+function computeExamSummary(exam: ExamState): ExamSummaryData {
+  let correctCount = 0;
+  let answeredCount = 0;
+  const perModule: Record<string, { correct: number; total: number }> = {};
+  const perSubject: Record<string, { correct: number; total: number }> = {};
+
+  for (const qId of exam.questionIds) {
+    const q = getQuestion(qId);
+    if (!q) continue;
+    if (!perModule[q.moduleId]) perModule[q.moduleId] = { correct: 0, total: 0 };
+    if (!perSubject[q.subjectId]) perSubject[q.subjectId] = { correct: 0, total: 0 };
+    perModule[q.moduleId].total += 1;
+    perSubject[q.subjectId].total += 1;
+
+    const ans = exam.answers[qId];
+    if (ans) {
+      answeredCount += 1;
+      if (ans === q.correctAnswer) {
+        correctCount += 1;
+        perModule[q.moduleId].correct += 1;
+        perSubject[q.subjectId].correct += 1;
+      }
+    }
+  }
+
+  return {
+    examId: exam.examId,
+    total: exam.questionIds.length,
+    answeredCount,
+    unansweredCount: exam.questionIds.length - answeredCount,
+    correctCount,
+    wrongCount: answeredCount - correctCount,
+    score: computeScore(correctCount),
+    perModule,
+    perSubject,
+    durationMs: exam.durationMs,
+    submittedAt: exam.submittedAt,
+    startedAt: exam.startedAt,
+    isRepeat: !!exam.isRepeat,
+    repeatShuffled: !!exam.repeatShuffled,
+  };
+}
+
+function archiveExamIfSubmitted(prev: LocalSession): ExamState[] {
+  const current = prev.currentExam;
+  if (current?.submittedAt) {
+    return [current, ...(prev.examHistory ?? [])].slice(0, MAX_EXAM_HISTORY);
+  }
+  return prev.examHistory ?? [];
+}
 
 function loadSession(): LocalSession {
   if (typeof window === "undefined") return createDefaultSession();
@@ -23,7 +93,13 @@ function loadSession(): LocalSession {
     if (!raw) return createDefaultSession();
     const parsed = JSON.parse(raw);
     if (parsed.version !== 1) return createDefaultSession();
-    return { ...createDefaultSession(), ...parsed } as LocalSession;
+    const defaults = createDefaultSession();
+    return {
+      ...defaults,
+      ...parsed,
+      settings: { ...defaults.settings, ...(parsed.settings ?? {}) },
+      examHistory: Array.isArray(parsed.examHistory) ? parsed.examHistory : [],
+    } as LocalSession;
   } catch {
     return createDefaultSession();
   }
@@ -225,16 +301,34 @@ export function useSession() {
   );
 
   const getOverallStats = useCallback(() => {
-    const answers = Object.values(session.answers);
+    const merged = buildMergedAnswerMap(session);
+    const totalAnswered = merged.size;
+    let totalCorrect = 0;
+    for (const v of merged.values()) {
+      if (v.isCorrect) totalCorrect += 1;
+    }
+
+    // Time: per-question time from practica + total duration of submitted exams
+    let totalTimeMs = 0;
+    for (const a of Object.values(session.answers)) {
+      totalTimeMs += a.timeSpentMs;
+    }
+    if (session.currentExam?.submittedAt && session.currentExam.durationMs) {
+      totalTimeMs += session.currentExam.durationMs;
+    }
+    for (const hist of session.examHistory ?? []) {
+      if (hist.submittedAt && hist.durationMs) totalTimeMs += hist.durationMs;
+    }
+
     return {
-      totalAnswered: answers.length,
-      totalCorrect: answers.filter((a) => a.isCorrect).length,
-      accuracy: answers.length > 0
-        ? Math.round((answers.filter((a) => a.isCorrect).length / answers.length) * 100)
+      totalAnswered,
+      totalCorrect,
+      accuracy: totalAnswered > 0
+        ? Math.round((totalCorrect / totalAnswered) * 100)
         : 0,
-      totalTimeMs: answers.reduce((sum, a) => sum + a.timeSpentMs, 0),
+      totalTimeMs,
     };
-  }, [session.answers]);
+  }, [session]);
 
   const getSubjectStats = useCallback(
     (subjectId: string) => {
@@ -285,7 +379,12 @@ export function useSession() {
       showFeedback: snapshotFeedback,
       isRepeat: false,
     };
-    const updated: LocalSession = { ...sessionRef.current, currentExam: exam };
+    const newHistory = archiveExamIfSubmitted(sessionRef.current);
+    const updated: LocalSession = {
+      ...sessionRef.current,
+      currentExam: exam,
+      examHistory: newHistory,
+    };
     sessionRef.current = updated;
     setSession(updated);
     saveSession(updated);
@@ -311,7 +410,12 @@ export function useSession() {
       isRepeat: true,
       repeatShuffled: shuffleOrder,
     };
-    const updated: LocalSession = { ...sessionRef.current, currentExam: exam };
+    const newHistory = archiveExamIfSubmitted(sessionRef.current);
+    const updated: LocalSession = {
+      ...sessionRef.current,
+      currentExam: exam,
+      examHistory: newHistory,
+    };
     sessionRef.current = updated;
     setSession(updated);
     saveSession(updated);
@@ -373,11 +477,24 @@ export function useSession() {
 
   const discardExam = useCallback(() => {
     setSession((prev) => {
-      const updated = { ...prev, currentExam: null };
+      const newHistory = archiveExamIfSubmitted(prev);
+      const updated = { ...prev, currentExam: null, examHistory: newHistory };
       persistSession(updated);
       return updated;
     });
   }, [persistSession]);
+
+  const clearExamHistory = useCallback(() => {
+    setSession((prev) => {
+      const updated = { ...prev, examHistory: [] };
+      persistSession(updated);
+      return updated;
+    });
+  }, [persistSession]);
+
+  const getExamHistorySummaries = useCallback((): ExamSummaryData[] => {
+    return (session.examHistory ?? []).map((e) => computeExamSummary(e));
+  }, [session.examHistory]);
 
   const getExamSummary = useCallback(() => {
     const exam = session.currentExam;
@@ -446,6 +563,8 @@ export function useSession() {
     setExamIndex,
     submitExam,
     discardExam,
+    clearExamHistory,
     getExamSummary,
+    getExamHistorySummaries,
   };
 }
