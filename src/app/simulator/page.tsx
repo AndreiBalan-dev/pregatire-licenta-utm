@@ -7,6 +7,8 @@ import { MobileNav } from "@/components/layout/MobileNav";
 import { Container } from "@/components/layout/Container";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
+import { ExamFeedbackToggle } from "@/components/exam/ExamFeedbackToggle";
+import { ExamRepeatBadge } from "@/components/exam/ExamRepeatBadge";
 import { useSession } from "@/hooks/useSession";
 import { useResolvedTheme } from "@/hooks/useResolvedTheme";
 import {
@@ -32,7 +34,7 @@ function timeAgo(iso: string): string {
 export default function SimulatorLandingPage() {
   const router = useRouter();
   const theme = useResolvedTheme();
-  const { session, isLoaded, startExam, discardExam, getExamSummary } = useSession();
+  const { session, isLoaded, startExam, discardExam, getExamSummary, updateSettings } = useSession();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [navigating, setNavigating] = useState(false);
 
@@ -48,6 +50,8 @@ export default function SimulatorLandingPage() {
   const isActive = exam && exam.submittedAt === null;
   const isSubmitted = exam && exam.submittedAt !== null;
   const summary = isSubmitted ? getExamSummary() : null;
+  const feedbackEnabled = !!session.settings.simulatorShowFeedback;
+  const lastWasRepeat = !!(exam?.isRepeat);
 
   const handleStart = () => {
     if (exam) {
@@ -149,11 +153,12 @@ export default function SimulatorLandingPage() {
             <div className="relative overflow-hidden rounded-[var(--radius-xl)] bg-[var(--color-bg-secondary)] animate-slide-up" style={{ borderColor: "rgba(232, 166, 49, 0.4)", borderWidth: 1, borderStyle: "solid" }}>
               <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 70% 50% at 50% 0%, var(--color-accent), transparent 60%)", opacity: 0.1 }} aria-hidden="true" />
               <div className="relative p-6 sm:p-8">
-                <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-center gap-2 mb-3 flex-wrap">
                   <span className="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-pulse" aria-hidden="true" />
                   <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-accent)]" style={{ fontFamily: "var(--font-display)" }}>
                     În progres
                   </span>
+                  {exam.isRepeat && <ExamRepeatBadge size="sm" shuffled={exam.repeatShuffled} />}
                 </div>
                 <h2 className="text-xl sm:text-2xl font-bold text-[var(--color-text-primary)] mb-2" style={{ fontFamily: "var(--font-display)" }}>
                   Continuă de unde ai rămas
@@ -163,6 +168,12 @@ export default function SimulatorLandingPage() {
                     {answeredCount}/{EXAM_TOTAL_QUESTIONS}
                   </span>{" "}
                   răspunse · început {timeAgo(exam.startedAt)}
+                  {exam.showFeedback && (
+                    <>
+                      {" · "}
+                      <span className="text-[var(--color-accent)] font-medium">cu feedback instant</span>
+                    </>
+                  )}
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-2.5">
@@ -194,9 +205,12 @@ export default function SimulatorLandingPage() {
                 {/* Score + mini-bar — centered on mobile, side-by-side on desktop */}
                 <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 sm:gap-8 mb-6">
                   <div className="text-center sm:text-left">
-                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]" style={{ fontFamily: "var(--font-display)" }}>
-                      Ultimul rezultat
-                    </span>
+                    <div className="flex items-center gap-2 justify-center sm:justify-start flex-wrap">
+                      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]" style={{ fontFamily: "var(--font-display)" }}>
+                        Ultimul rezultat
+                      </span>
+                      {lastWasRepeat && <ExamRepeatBadge size="sm" shuffled={exam.repeatShuffled} />}
+                    </div>
                     <div className="mt-2 flex items-baseline justify-center sm:justify-start gap-1.5">
                       <span
                         className="text-5xl sm:text-6xl font-extrabold leading-none tabular-nums"
@@ -254,6 +268,24 @@ export default function SimulatorLandingPage() {
                   </Button>
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* Feedback toggle — shown when exam is not active (so user can decide before next start) */}
+          {!isActive && (
+            <div className="mt-5 animate-fade-in stagger-2">
+              <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-text-tertiary)] mb-2.5" style={{ fontFamily: "var(--font-display)" }}>
+                {isSubmitted ? "Pentru următorul examen" : "Înainte de start"}
+              </span>
+              <ExamFeedbackToggle
+                enabled={feedbackEnabled}
+                onChange={(next) => updateSettings({ simulatorShowFeedback: next })}
+                hint={
+                  feedbackEnabled
+                    ? "Alegerea ta e memorată. Se aplică la următorul examen pe care îl începi."
+                    : "Activează doar dacă vrei să înveți cu corectări instant. Lasă oprit pentru o simulare reală."
+                }
+              />
             </div>
           )}
 

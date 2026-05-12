@@ -23,6 +23,7 @@ export interface SubjectStat {
 export interface SessionSettings {
   showImmediateFeedback: boolean;
   shuffleOptions: boolean;
+  simulatorShowFeedback: boolean;
 }
 
 export interface ExamState {
@@ -33,6 +34,9 @@ export interface ExamState {
   startedAt: string;
   submittedAt: string | null;
   durationMs: number | null;
+  showFeedback?: boolean;
+  isRepeat?: boolean;
+  repeatShuffled?: boolean;
 }
 
 export interface LocalSession {
@@ -61,6 +65,7 @@ export function createDefaultSession(): LocalSession {
     settings: {
       showImmediateFeedback: true,
       shuffleOptions: false,
+      simulatorShowFeedback: false,
     },
     savedKey: null,
   };

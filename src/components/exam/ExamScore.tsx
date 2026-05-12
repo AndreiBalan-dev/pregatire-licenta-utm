@@ -1,6 +1,7 @@
 "use client";
 
 import { useResolvedTheme } from "@/hooks/useResolvedTheme";
+import { ExamRepeatBadge } from "@/components/exam/ExamRepeatBadge";
 import {
   EXAM_MAX_SCORE,
   EXAM_MIN_SCORE,
@@ -15,6 +16,8 @@ interface ExamScoreProps {
   correctCount: number;
   total: number;
   durationMs: number | null;
+  isRepeat?: boolean;
+  repeatShuffled?: boolean;
 }
 
 function formatDuration(ms: number | null): string {
@@ -28,7 +31,7 @@ function formatDuration(ms: number | null): string {
   return `${sec}s`;
 }
 
-export function ExamScore({ score, correctCount, total, durationMs }: ExamScoreProps) {
+export function ExamScore({ score, correctCount, total, durationMs, isRepeat, repeatShuffled }: ExamScoreProps) {
   const theme = useResolvedTheme();
   const color = scoreToColor(score, theme);
   const positionPct = scorePositionPct(score);
@@ -48,6 +51,13 @@ export function ExamScore({ score, correctCount, total, durationMs }: ExamScoreP
       />
 
       <div className="relative px-6 py-10 sm:py-14 text-center">
+        {/* Repeat badge */}
+        {isRepeat && (
+          <div className="flex justify-center mb-3">
+            <ExamRepeatBadge shuffled={repeatShuffled} />
+          </div>
+        )}
+
         {/* Eyebrow label */}
         <span
           className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] text-[var(--color-text-tertiary)]"

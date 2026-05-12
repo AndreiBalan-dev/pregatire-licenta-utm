@@ -14,6 +14,8 @@ import { ExamSubmitModal } from "@/components/exam/ExamSubmitModal";
 import { ExamScore } from "@/components/exam/ExamScore";
 import { ExamModuleBreakdown } from "@/components/exam/ExamModuleBreakdown";
 import { ExamReview } from "@/components/exam/ExamReview";
+import { ExamRestartModal } from "@/components/exam/ExamRestartModal";
+import { ExamRepeatBadge } from "@/components/exam/ExamRepeatBadge";
 import { useSession } from "@/hooks/useSession";
 import { getQuestion } from "@/data";
 import { modules } from "@/data/modules";
@@ -32,11 +34,13 @@ export default function SimulatorExamPage() {
     submitExam,
     discardExam,
     startExam,
+    restartSameExam,
     getExamSummary,
   } = useSession();
 
   const [submitOpen, setSubmitOpen] = useState(false);
   const [restartOpen, setRestartOpen] = useState(false);
+  const [redoOpen, setRedoOpen] = useState(false);
   const [navigating, setNavigating] = useState(false);
 
   const exam = session.currentExam;
@@ -50,6 +54,8 @@ export default function SimulatorExamPage() {
 
   const isReviewMode = validExam && exam.submittedAt !== null;
   const isActiveMode = validExam && exam.submittedAt === null;
+  const liveFeedbackEnabled = !!(validExam && exam.showFeedback);
+  const isRepeatSession = !!(validExam && exam.isRepeat);
 
   const currentQuestion = useMemo(() => {
     if (!isActiveMode) return null;
@@ -65,9 +71,12 @@ export default function SimulatorExamPage() {
   const handleSelectAnswer = useCallback(
     (answer: AnswerKey) => {
       if (!currentQuestion) return;
+      // When live feedback is on, an answered question is locked.
+      // QuestionCard already disables clicks if showFeedback=true, but guard here too.
+      if (liveFeedbackEnabled && selectedAnswer !== null) return;
       setExamAnswer(currentQuestion.id, answer);
     },
-    [currentQuestion, setExamAnswer],
+    [currentQuestion, setExamAnswer, liveFeedbackEnabled, selectedAnswer],
   );
 
   const goToPrev = useCallback(() => {
@@ -94,6 +103,17 @@ export default function SimulatorExamPage() {
     router.push(`/simulator/${newId}`);
   }, [discardExam, startExam, router]);
 
+  const handleRedoSameExam = useCallback(
+    (shuffleOrder: boolean) => {
+      const newId = restartSameExam(shuffleOrder);
+      if (!newId) return;
+      setNavigating(true);
+      setRedoOpen(false);
+      router.push(`/simulator/${newId}`);
+    },
+    [restartSameExam, router],
+  );
+
   if (!isLoaded || !validExam || navigating) {
     return (
       <div className="min-h-screen flex items-center justify-center" role="status" aria-label="Se încarcă">
@@ -109,6 +129,8 @@ export default function SimulatorExamPage() {
     const moduleColor = currentModule?.color || "var(--color-accent)";
     const isLast = exam.currentIndex >= exam.questionIds.length - 1;
     const answeredCount = Object.keys(exam.answers).length;
+    // Show feedback when live mode is on AND user has committed an answer for this question.
+    const showQuestionFeedback = liveFeedbackEnabled && selectedAnswer !== null;
 
     return (
       <>
@@ -122,6 +144,26 @@ export default function SimulatorExamPage() {
               startedAt={exam.startedAt}
               onFinish={() => setSubmitOpen(true)}
             />
+
+            {/* Mode indicators row */}
+            {(liveFeedbackEnabled || isRepeatSession) && (
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                {liveFeedbackEnabled && (
+                  <span
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.15em] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-40"
+                    style={{ fontFamily: "var(--font-display)" }}
+                    title="Răspunsul tău se blochează imediat ce îl alegi"
+                  >
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M9 12l2 2 4-4" />
+                    </svg>
+                    Feedback instant
+                  </span>
+                )}
+                {isRepeatSession && <ExamRepeatBadge size="sm" shuffled={exam.repeatShuffled} />}
+              </div>
+            )}
 
             <ExamProgress
               questionIds={exam.questionIds}
@@ -160,7 +202,7 @@ export default function SimulatorExamPage() {
                   questionNumber={exam.currentIndex + 1}
                   totalQuestions={exam.questionIds.length}
                   selectedAnswer={selectedAnswer}
-                  showFeedback={false}
+                  showFeedback={showQuestionFeedback}
                   isBookmarked={false}
                   onSelectAnswer={handleSelectAnswer}
                 />
@@ -226,7 +268,11 @@ export default function SimulatorExamPage() {
             {answeredCount < exam.questionIds.length && (
               <div className="mt-6 text-center">
                 <span className="text-[11px] text-[var(--color-text-tertiary)]">
-                  Poți reveni la orice întrebare. Nimic nu e definitiv până la <strong>Finalizează</strong>.
+                  {liveFeedbackEnabled ? (
+                    <>Răspunsul se blochează imediat ce îl alegi. Nimic nu e definitiv până la <strong>Finalizează</strong>.</>
+                  ) : (
+                    <>Poți reveni la orice întrebare. Nimic nu e definitiv până la <strong>Finalizează</strong>.</>
+                  )}
                 </span>
               </div>
             )}
@@ -262,21 +308,56 @@ export default function SimulatorExamPage() {
                 correctCount={summary.correctCount}
                 total={summary.total}
                 durationMs={summary.durationMs}
+                isRepeat={isRepeatSession}
+                repeatShuffled={exam.repeatShuffled}
               />
             </div>
 
             {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-2.5 animate-fade-in stagger-1">
-              <Button variant="primary" size="lg" className="flex-1" onClick={() => setRestartOpen(true)}>
-                Examen Nou
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <polyline points="1 4 1 10 7 10" />
-                  <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+            <div className="space-y-2.5 animate-fade-in stagger-1">
+              <div className="flex flex-col sm:flex-row gap-2.5">
+                <Button variant="primary" size="lg" className="flex-1" onClick={() => setRedoOpen(true)}>
+                  Re-fă acest examen
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polyline points="1 4 1 10 7 10" />
+                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                  </svg>
+                </Button>
+                <Button variant="secondary" size="lg" className="flex-1" onClick={() => setRestartOpen(true)}>
+                  Examen Nou
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </Button>
+              </div>
+              <div className="flex justify-center">
+                <button
+                  onClick={() => router.push("/")}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[var(--radius-md)] text-xs font-medium text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-hover)] transition-colors cursor-pointer"
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                  </svg>
+                  Acasă
+                </button>
+              </div>
+            </div>
+
+            {/* Helpful explanation for "Re-fă acest examen" */}
+            <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-3.5 sm:p-4 animate-fade-in stagger-1">
+              <div className="flex items-start gap-2.5">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 mt-0.5" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="16" x2="12" y2="12" />
+                  <line x1="12" y1="8" x2="12.01" y2="8" />
                 </svg>
-              </Button>
-              <Button variant="secondary" size="lg" className="flex-1" onClick={() => router.push("/")}>
-                Acasă
-              </Button>
+                <p className="text-[11px] sm:text-xs leading-relaxed text-[var(--color-text-tertiary)]">
+                  <span className="text-[var(--color-text-secondary)] font-medium">Re-fă acest examen</span> îți dă aceleași 36 de grile, ca să corectezi exact ce ai greșit.
+                  <span className="text-[var(--color-text-secondary)] font-medium"> Examen Nou</span> alege alte 36 de grile, balansate din toate modulele.
+                </p>
+              </div>
             </div>
 
             <div className="animate-fade-in stagger-2">
@@ -284,7 +365,7 @@ export default function SimulatorExamPage() {
             </div>
 
             <div className="animate-fade-in stagger-3">
-              <ExamReview questionIds={exam.questionIds} answers={exam.answers} />
+              <ExamReview questionIds={exam.questionIds} answers={exam.answers} isRepeat={isRepeatSession} repeatShuffled={exam.repeatShuffled} />
             </div>
           </Container>
         </main>
@@ -309,6 +390,12 @@ export default function SimulatorExamPage() {
             </div>
           </div>
         </Modal>
+
+        <ExamRestartModal
+          open={redoOpen}
+          onCancel={() => setRedoOpen(false)}
+          onConfirm={handleRedoSameExam}
+        />
       </>
     );
   }

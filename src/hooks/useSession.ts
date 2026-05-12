@@ -42,9 +42,16 @@ export function useSession() {
   const [session, setSession] = useState<LocalSession>(createDefaultSession);
   const [isLoaded, setIsLoaded] = useState(false);
   const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const sessionRef = useRef<LocalSession>(session);
 
   useEffect(() => {
-    setSession(loadSession());
+    sessionRef.current = session;
+  }, [session]);
+
+  useEffect(() => {
+    const loaded = loadSession();
+    sessionRef.current = loaded;
+    setSession(loaded);
     setIsLoaded(true);
   }, []);
 
@@ -266,6 +273,7 @@ export function useSession() {
   const startExam = useCallback((): string => {
     const examId = crypto.randomUUID();
     const questionIds = pickExamQuestions(modules, questionsBySubject);
+    const snapshotFeedback = !!sessionRef.current.settings.simulatorShowFeedback;
     const exam: ExamState = {
       examId,
       questionIds,
@@ -274,12 +282,39 @@ export function useSession() {
       startedAt: new Date().toISOString(),
       submittedAt: null,
       durationMs: null,
+      showFeedback: snapshotFeedback,
+      isRepeat: false,
     };
-    setSession((prev) => {
-      const updated = { ...prev, currentExam: exam };
-      saveSession(updated);
-      return updated;
-    });
+    const updated: LocalSession = { ...sessionRef.current, currentExam: exam };
+    sessionRef.current = updated;
+    setSession(updated);
+    saveSession(updated);
+    return examId;
+  }, []);
+
+  const restartSameExam = useCallback((shuffleOrder: boolean): string | null => {
+    const prevExam = sessionRef.current.currentExam;
+    if (!prevExam) return null;
+    const examId = crypto.randomUUID();
+    const sourceIds = prevExam.questionIds;
+    const newIds = shuffleOrder ? shuffleArray(sourceIds) : [...sourceIds];
+    const snapshotFeedback = !!sessionRef.current.settings.simulatorShowFeedback;
+    const exam: ExamState = {
+      examId,
+      questionIds: newIds,
+      answers: {},
+      currentIndex: 0,
+      startedAt: new Date().toISOString(),
+      submittedAt: null,
+      durationMs: null,
+      showFeedback: snapshotFeedback,
+      isRepeat: true,
+      repeatShuffled: shuffleOrder,
+    };
+    const updated: LocalSession = { ...sessionRef.current, currentExam: exam };
+    sessionRef.current = updated;
+    setSession(updated);
+    saveSession(updated);
     return examId;
   }, []);
 
@@ -406,6 +441,7 @@ export function useSession() {
     setSavedKey,
     resetProgress,
     startExam,
+    restartSameExam,
     setExamAnswer,
     setExamIndex,
     submitExam,

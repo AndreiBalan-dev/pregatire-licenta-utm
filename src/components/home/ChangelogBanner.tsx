@@ -4,9 +4,9 @@ import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 
 const recentChanges = [
-  "Simulator de examen cu 36 de grile, ca la examenul real",
-  "Vezi nota pe scala 1-10 si revizuieste raspunsurile",
-  "Performanta pe module si pe materii dupa fiecare examen",
+  "Optiune noua: vezi daca raspunsul e corect sau gresit chiar pe parcursul examenului",
+  "Buton 'Re-fa acest examen' - aceleasi grile, sa-ti corectezi exact ce ai gresit",
+  "Optiune sa schimbi ordinea cand re-faci examenul, ca sa nu memorezi pozitia",
 ];
 
 export function ChangelogBanner() {
@@ -42,7 +42,7 @@ export function ChangelogBanner() {
                 <span
                   className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[var(--color-accent-muted)] text-[var(--color-accent)]"
                 >
-                  v1.4.0
+                  v1.4.1
                 </span>
               </div>
               <span className="text-xs text-[var(--color-text-tertiary)] group-hover:text-[var(--color-accent)] transition-colors flex items-center gap-1">

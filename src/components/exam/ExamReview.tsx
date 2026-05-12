@@ -4,19 +4,22 @@ import { useMemo } from "react";
 import { modules } from "@/data/modules";
 import { getQuestion } from "@/data";
 import { QuestionCard } from "@/components/practice/QuestionCard";
+import { ExamRepeatBadge } from "@/components/exam/ExamRepeatBadge";
 import { cn } from "@/lib/utils";
 import type { AnswerKey } from "@/data/types";
 
 interface ExamReviewProps {
   questionIds: number[];
   answers: Record<number, "a" | "b" | "c" | "d">;
+  isRepeat?: boolean;
+  repeatShuffled?: boolean;
 }
 
 function anchorIdFor(moduleId: string): string {
   return `exam-review-${moduleId}`;
 }
 
-export function ExamReview({ questionIds, answers }: ExamReviewProps) {
+export function ExamReview({ questionIds, answers, isRepeat, repeatShuffled }: ExamReviewProps) {
   const items = useMemo(() => {
     const seenModules = new Set<string>();
     return questionIds.map((qId, index) => {
@@ -31,12 +34,15 @@ export function ExamReview({ questionIds, answers }: ExamReviewProps) {
   return (
     <section className="space-y-5">
       <div className="flex items-center justify-between gap-3 flex-wrap">
-        <h2
-          className="text-xl sm:text-2xl font-bold text-[var(--color-text-primary)]"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          Revizuire completă
-        </h2>
+        <div className="flex items-center gap-2.5 flex-wrap">
+          <h2
+            className="text-xl sm:text-2xl font-bold text-[var(--color-text-primary)]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Revizuire completă
+          </h2>
+          {isRepeat && <ExamRepeatBadge size="sm" shuffled={repeatShuffled} />}
+        </div>
         <span className="text-xs text-[var(--color-text-tertiary)]">
           Toate {questionIds.length} întrebările cu răspunsurile tale și cele corecte
         </span>

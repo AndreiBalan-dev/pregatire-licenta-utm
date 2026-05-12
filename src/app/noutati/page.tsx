@@ -43,6 +43,18 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "1.4.1",
+    date: "12 Mai 2026",
+    title: "Mai mult control pe simulator",
+    changes: [
+      { text: "Optiune noua inainte de start: vezi daca raspunsul e corect sau gresit chiar in timpul examenului. Util cand inveti activ si vrei feedback imediat", type: "feature" },
+      { text: "Alegerea ramane memorata, asa ca nu trebuie sa o reactivezi de fiecare data. O poti dezactiva oricand dupa ce termini un examen", type: "feature" },
+      { text: "Buton 'Re-fa acest examen' - dupa ce termini, primesti aceleasi 36 de grile inca o data, ca sa-ti corectezi exact ce ai gresit", type: "feature" },
+      { text: "Sub-optiune cand re-faci: amesteca ordinea intrebarilor, ca sa te concentrezi pe continut si sa nu memorezi pozitiile", type: "feature" },
+      { text: "Cand re-faci un examen, vezi clar peste tot ca e o 'sesiune repetata' - inclusiv pe pagina de start si la rezultat", type: "improvement" },
+    ],
+  },
+  {
     version: "1.4.0",
     date: "11 Mai 2026",
     title: "Simulator examen licenta",
