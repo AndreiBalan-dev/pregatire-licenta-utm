@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 200" role="img" aria-label="CVHive">
+  <title>CVHive</title>
+  <desc>CVHive horizontal lockup. Yellow rotated H mark on the left, charcoal wordmark on the right with a yellow period.</desc>
+  <defs>
+    <style type="text/css"><![CDATA[
+      @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@800&display=swap');
+      .cvh-wm {
+        font-family: "Bricolage Grotesque", "Inter Black", "Arial Black", "Helvetica Neue Black", "Helvetica Neue", "Arial", system-ui, sans-serif;
+        font-weight: 800;
+        font-size: 110px;
+        letter-spacing: -4.4px;
+      }
+    ]]></style>
+  </defs>
+  <g transform="translate(40 40) rotate(2 50 50)">
+    <rect x="10" y="10" width="100" height="100" fill="#1d1a13"/>
+    <rect x="0" y="0" width="100" height="100" fill="#1d1a13"/>
+    <rect x="4" y="4" width="92" height="92" fill="#f6c648"/>
+    <g fill="#1d1a13">
+      <rect x="25" y="20" width="11" height="60"/>
+      <rect x="64" y="20" width="11" height="60"/>
+      <rect x="36" y="44" width="28" height="11"/>
+    </g>
+  </g>
+  <text x="180" y="135" class="cvh-wm" fill="#1d1a13">CVHive<tspan fill="#f6c648">.</tspan></text>
+</svg>

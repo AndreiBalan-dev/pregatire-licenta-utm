@@ -134,7 +134,7 @@ export default function DesprePage() {
             </div>
           </div>
 
-          {/* Algebo.ai promo - featured card */}
+          {/* CVHive promo - featured card */}
           <div
             className="relative rounded-[var(--radius-xl)] border-2 border-[var(--color-accent)] overflow-hidden mb-6 animate-slide-up stagger-1"
             style={{ background: "linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-tertiary) 50%, var(--color-bg-secondary) 100%)" }}
@@ -154,15 +154,90 @@ export default function DesprePage() {
                   className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-accent)]"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
-                  Recomandat
+                  Pentru Cariera
                 </span>
               </div>
-              <h3
-                className="text-xl sm:text-2xl font-bold text-[var(--color-text-primary)] mb-2"
-                style={{ fontFamily: "var(--font-display)" }}
+              <div className="flex items-center gap-3 mb-2">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/figures/cvhive-mark.svg"
+                  alt=""
+                  aria-hidden="true"
+                  className="w-10 h-10 sm:w-11 sm:h-11 flex-shrink-0"
+                />
+                <h3
+                  className="text-xl sm:text-2xl font-bold text-[var(--color-text-primary)]"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  CVHive
+                </h3>
+              </div>
+              <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-4">
+                Aplici pentru internship sau primul job? CVHive iti construieste rapid un CV care
+                chiar te reprezinta. Asistentul AI iti rescrie descrierile, iti da sfaturi
+                personalizate si iti arata exact ce poti imbunatati. In cateva minute, fara batai
+                de cap.
+              </p>
+              <div className="flex flex-wrap gap-2 mb-5">
+                {["CV Enhancer cu AI", "Sfaturi Personalizate", "Gata Rapid", "Gratuit"].map((tag) => (
+                  <span key={tag} className="text-xs px-2.5 py-1 rounded-full border bg-[var(--color-accent-muted)] text-[var(--color-accent)] font-medium" style={{ borderColor: "rgba(232, 166, 49, 0.3)" }}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <a
+                href="https://cvhive.net"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-accent)] text-[#0C0C0E] text-sm font-bold hover:bg-[var(--color-accent-hover)] transition-all duration-200 shadow-[0_0_20px_rgba(232,166,49,0.15)] hover:shadow-[0_0_30px_rgba(232,166,49,0.25)] active:scale-[0.98]"
               >
-                Algebo.ai
-              </h3>
+                Construieste-ti CV-ul
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="7" y1="17" x2="17" y2="7" />
+                  <polyline points="7 7 17 7 17 17" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          {/* Algebo.ai promo - featured card */}
+          <div
+            className="relative rounded-[var(--radius-xl)] border-2 border-[var(--color-accent)] overflow-hidden mb-6 animate-slide-up stagger-2"
+            style={{ background: "linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-tertiary) 50%, var(--color-bg-secondary) 100%)" }}
+          >
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: "radial-gradient(ellipse 70% 50% at 70% 0%, var(--color-accent), transparent)",
+                opacity: 0.08,
+              }}
+            />
+
+            <div className="relative p-6">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] animate-pulse" />
+                <span
+                  className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-accent)]"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  Pentru BAC
+                </span>
+              </div>
+              <div className="flex items-center gap-3 mb-2">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/figures/algebo-icon.png"
+                  alt=""
+                  aria-hidden="true"
+                  className="w-10 h-10 sm:w-11 sm:h-11 flex-shrink-0 rounded-[var(--radius-md)]"
+                />
+                <h3
+                  className="text-xl sm:text-2xl font-bold text-[var(--color-text-primary)]"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  Algebo.ai
+                </h3>
+              </div>
               <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-4">
                 Platforma #1 din Romania pentru pregatirea la BAC Matematica. Lectii interactive,
                 tutore AI personal disponibil 24/7 si exercitii rezolvate pas cu pas. Daca te pregatesti
@@ -192,7 +267,7 @@ export default function DesprePage() {
           </div>
 
           {/* Articles section */}
-          <div className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] overflow-hidden mb-6 animate-slide-up stagger-2">
+          <div className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] overflow-hidden mb-6 animate-slide-up stagger-3">
             <div className="p-6">
               <h3
                 className="text-lg font-bold text-[var(--color-text-primary)] mb-1"
@@ -250,7 +325,7 @@ export default function DesprePage() {
 
           {/* Platform stats */}
           <div
-            className="relative rounded-[var(--radius-xl)] border border-[var(--color-border)] overflow-hidden animate-slide-up stagger-3"
+            className="relative rounded-[var(--radius-xl)] border border-[var(--color-border)] overflow-hidden animate-slide-up stagger-4"
             style={{ background: "linear-gradient(180deg, var(--color-bg-tertiary) 0%, var(--color-bg-secondary) 40%, var(--color-bg-secondary) 100%)" }}
           >
             <div

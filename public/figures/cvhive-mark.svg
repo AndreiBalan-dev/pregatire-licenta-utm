@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="CVHive">
+  <title>CVHive</title>
+  <desc>CVHive mark, flat variant: no rotation, no shadow. For app icons, favicons, and tight UI.</desc>
+  <rect x="0" y="0" width="100" height="100" fill="#1d1a13"/>
+  <rect x="4" y="4" width="92" height="92" fill="#f6c648"/>
+  <g fill="#1d1a13">
+    <rect x="25" y="20" width="11" height="60"/>
+    <rect x="64" y="20" width="11" height="60"/>
+    <rect x="36" y="44" width="28" height="11"/>
+  </g>
+</svg>
