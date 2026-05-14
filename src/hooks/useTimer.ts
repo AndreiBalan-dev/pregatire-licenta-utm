@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { MAX_QUESTION_TIME_MS } from "@/lib/constants";
 
 export function useTimer() {
   const [elapsed, setElapsed] = useState(0);
@@ -25,7 +26,7 @@ export function useTimer() {
 
   const stop = useCallback(() => {
     setIsRunning(false);
-    const final = Date.now() - startTimeRef.current;
+    const final = Math.min(Date.now() - startTimeRef.current, MAX_QUESTION_TIME_MS);
     setElapsed(0);
     return final;
   }, []);

@@ -1,4 +1,4 @@
-import { MAX_SESSION_SIZE, MAX_DISPLAY_NAME_LENGTH, MAX_QUESTIONS } from "./constants";
+import { MAX_SESSION_SIZE, MAX_DISPLAY_NAME_LENGTH, MAX_QUESTIONS, MAX_QUESTION_TIME_MS } from "./constants";
 
 interface ValidationResult {
   success: boolean;
@@ -91,8 +91,11 @@ export function validateSessionData(body: unknown): ValidationResult {
       if (typeof a.answeredAt !== "string") {
         return { success: false, error: "Format răspuns invalid." };
       }
-      if (typeof a.timeSpentMs !== "number" || a.timeSpentMs < 0 || a.timeSpentMs > 3_600_000) {
+      if (typeof a.timeSpentMs !== "number" || a.timeSpentMs < 0 || !Number.isFinite(a.timeSpentMs)) {
         return { success: false, error: "Timp invalid." };
+      }
+      if (a.timeSpentMs > MAX_QUESTION_TIME_MS) {
+        a.timeSpentMs = MAX_QUESTION_TIME_MS;
       }
     }
   }

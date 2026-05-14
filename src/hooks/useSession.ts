@@ -10,7 +10,7 @@ import {
   type PracticeState,
   type SessionSettings,
 } from "@/lib/session-types";
-import { STORAGE_KEY } from "@/lib/constants";
+import { STORAGE_KEY, MAX_QUESTION_TIME_MS } from "@/lib/constants";
 import { shuffleArray } from "@/lib/utils";
 import { questionsBySubject, getQuestion } from "@/data";
 import { modules } from "@/data/modules";
@@ -86,6 +86,17 @@ function archiveExamIfSubmitted(prev: LocalSession): ExamState[] {
   return prev.examHistory ?? [];
 }
 
+function clampLoadedAnswers(raw: unknown): Record<number, AnswerRecord> {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return {};
+  const out: Record<number, AnswerRecord> = {};
+  for (const [k, v] of Object.entries(raw as Record<string, AnswerRecord>)) {
+    if (!v || typeof v !== "object") continue;
+    const t = typeof v.timeSpentMs === "number" && v.timeSpentMs >= 0 ? v.timeSpentMs : 0;
+    out[Number(k)] = { ...v, timeSpentMs: Math.min(t, MAX_QUESTION_TIME_MS) };
+  }
+  return out;
+}
+
 function loadSession(): LocalSession {
   if (typeof window === "undefined") return createDefaultSession();
   try {
@@ -97,6 +108,7 @@ function loadSession(): LocalSession {
     return {
       ...defaults,
       ...parsed,
+      answers: clampLoadedAnswers(parsed.answers),
       settings: { ...defaults.settings, ...(parsed.settings ?? {}) },
       examHistory: Array.isArray(parsed.examHistory) ? parsed.examHistory : [],
     } as LocalSession;

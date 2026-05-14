@@ -4,6 +4,7 @@ export const MAX_SESSION_SIZE = 500_000; // 500KB
 
 export const MAX_DISPLAY_NAME_LENGTH = 50;
 export const MAX_QUESTIONS = 1000;
+export const MAX_QUESTION_TIME_MS = 3_600_000;
 
 export const MAX_SESSIONS_PER_IP = 20;
 
