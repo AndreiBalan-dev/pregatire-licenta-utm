@@ -44,6 +44,15 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "1.4.6",
+    date: "1 Iunie 2026",
+    title: "Amestecarea alege din toate intrebarile",
+    changes: [
+      { text: "Amestecarea ordinii din practica alege acum aleator din toate intrebarile disponibile, apoi pastreaza cate ai cerut. Inainte, daca aveai 58 de intrebari si cereai 25 amestecate, primeai mereu aceleasi prime 25, doar in alta ordine", type: "fix" },
+      { text: "Cand combini mai multe materii cu amestecarea activata, intrebarile se amesteca peste toate materiile, nu doar din prima selectata", type: "fix" },
+    ],
+  },
+  {
     version: "1.4.5",
     date: "12 Mai 2026",
     title: "Bookmark in simulator si revizuire unita",

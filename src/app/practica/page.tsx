@@ -9,6 +9,7 @@ import { Container } from "@/components/layout/Container";
 import { SubjectSelector } from "@/components/practice/SubjectSelector";
 import { useSession } from "@/hooks/useSession";
 import { cn } from "@/lib/utils";
+import { selectPracticeQuestionIds } from "@/lib/practice";
 import { modules } from "@/data/modules";
 import { questionsBySubject } from "@/data";
 
@@ -67,33 +68,20 @@ function PracticaContent() {
   const handleStart = () => {
     if (selectedSubjects.length === 0) return;
 
-    const allQuestions = selectedSubjects.flatMap((sid) =>
-      (questionsBySubject[sid] || []).filter(
-        (q) => !onlyUnanswered || !session.answers[q.id],
-      ),
-    );
-
-    if (allQuestions.length === 0) return;
-
-    const sorted = allQuestions.sort((a, b) => {
-      const aAnswered = session.answers[a.id] ? 1 : 0;
-      const bAnswered = session.answers[b.id] ? 1 : 0;
-      return aAnswered - bAnswered;
-    });
-
-    let questionIds = sorted.map((q) => q.id);
+    const pool = selectedSubjects.flatMap((sid) => questionsBySubject[sid] || []);
     const batchSize = questionCount === "all" ? null : questionCount;
 
-    if (batchSize !== null) {
-      questionIds = questionIds.slice(0, batchSize);
-    }
-
-    const sessionId = startPractice(
-      selectedSubjects,
-      questionIds,
-      shuffleQuestions,
-      batchSize,
+    const questionIds = selectPracticeQuestionIds(
+      pool,
+      { onlyUnanswered, shuffle: shuffleQuestions, batchSize },
+      (id) => !!session.answers[id],
     );
+
+    if (questionIds.length === 0) return;
+
+    // Ordering (shuffle / unanswered-first) and batching are already applied,
+    // so startPractice must not reshuffle.
+    const sessionId = startPractice(selectedSubjects, questionIds, false, batchSize);
     router.push(`/practica/${sessionId}`);
   };
 

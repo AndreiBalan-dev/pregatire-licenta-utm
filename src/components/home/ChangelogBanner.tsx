@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
+  "Amestecarea ordinii din practica alege acum aleator din toate intrebarile, nu doar din primele cate ai cerut",
+  "La mai multe materii, amestecarea acopera toate materiile, nu doar prima selectata",
   "Marcheaza intrebari direct in simulator, nu doar la practica",
-  "Pagina Revizuire arata acum si greselile din simulator, nu doar pe cele de la practica",
-  "Pop-up-urile se inchid cu click in afara sau cu butonul X",
 ];
 
 export function ChangelogBanner() {
