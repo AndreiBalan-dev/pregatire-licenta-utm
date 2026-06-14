@@ -9,6 +9,7 @@ import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
 import { ExamFeedbackToggle } from "@/components/exam/ExamFeedbackToggle";
 import { ExamRepeatBadge } from "@/components/exam/ExamRepeatBadge";
+import { ExamHistoryButton } from "@/components/results/ExamHistoryButton";
 import { useSession } from "@/hooks/useSession";
 import { useResolvedTheme } from "@/hooks/useResolvedTheme";
 import {
@@ -34,7 +35,7 @@ function timeAgo(iso: string): string {
 export default function SimulatorLandingPage() {
   const router = useRouter();
   const theme = useResolvedTheme();
-  const { session, isLoaded, startExam, discardExam, getExamSummary, updateSettings } = useSession();
+  const { session, isLoaded, startExam, discardExam, getExamSummary, getExamHistorySummaries, clearExamHistory, updateSettings } = useSession();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [navigating, setNavigating] = useState(false);
 
@@ -52,6 +53,7 @@ export default function SimulatorLandingPage() {
   const summary = isSubmitted ? getExamSummary() : null;
   const feedbackEnabled = !!session.settings.simulatorShowFeedback;
   const lastWasRepeat = !!(exam?.isRepeat);
+  const examHistory = getExamHistorySummaries();
 
   const handleStart = () => {
     if (exam) {
@@ -270,6 +272,13 @@ export default function SimulatorLandingPage() {
               </div>
             </div>
           )}
+
+          {/* Exam history entry point (renders only when there is history) */}
+          <ExamHistoryButton
+            history={examHistory}
+            onClear={clearExamHistory}
+            className="mt-5 animate-fade-in stagger-2"
+          />
 
           {/* Feedback toggle - shown when exam is not active (so user can decide before next start) */}
           {!isActive && (

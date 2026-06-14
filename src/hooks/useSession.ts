@@ -403,11 +403,11 @@ export function useSession() {
     return examId;
   }, []);
 
-  const restartSameExam = useCallback((shuffleOrder: boolean): string | null => {
-    const prevExam = sessionRef.current.currentExam;
-    if (!prevExam) return null;
+  // Start a fresh repeat exam from a given set of question ids. Works for the
+  // current exam ("Re-fă acest examen") and for any exam pulled from history.
+  const repeatExamFromIds = useCallback((sourceIds: number[], shuffleOrder: boolean): string | null => {
+    if (!sourceIds || sourceIds.length === 0) return null;
     const examId = crypto.randomUUID();
-    const sourceIds = prevExam.questionIds;
     const newIds = shuffleOrder ? shuffleArray(sourceIds) : [...sourceIds];
     const snapshotFeedback = !!sessionRef.current.settings.simulatorShowFeedback;
     const exam: ExamState = {
@@ -433,6 +433,12 @@ export function useSession() {
     saveSession(updated);
     return examId;
   }, []);
+
+  const restartSameExam = useCallback((shuffleOrder: boolean): string | null => {
+    const prevExam = sessionRef.current.currentExam;
+    if (!prevExam) return null;
+    return repeatExamFromIds(prevExam.questionIds, shuffleOrder);
+  }, [repeatExamFromIds]);
 
   const setExamAnswer = useCallback(
     (questionId: number, answer: AnswerKey) => {
@@ -571,6 +577,7 @@ export function useSession() {
     resetProgress,
     startExam,
     restartSameExam,
+    repeatExamFromIds,
     setExamAnswer,
     setExamIndex,
     submitExam,

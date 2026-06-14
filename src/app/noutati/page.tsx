@@ -44,6 +44,16 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "1.4.7",
+    date: "14 Iunie 2026",
+    title: "Istoricul examenelor, la vedere",
+    changes: [
+      { text: "Buton de istoric examene direct la finalul fiecarui examen si pe pagina de start a simulatorului, nu mai e ascuns doar in Rezultate", type: "feature" },
+      { text: "Poti re-face acum orice examen din istoric cu exact aceleasi grile, nu doar ultimul examen dat", type: "feature" },
+      { text: "Acelasi buton de istoric, consistent peste tot - de la el vezi nota, performanta pe module si review-ul complet al fiecarui examen anterior", type: "improvement" },
+    ],
+  },
+  {
     version: "1.4.6",
     date: "1 Iunie 2026",
     title: "Amestecarea alege din toate intrebarile",

@@ -17,6 +17,7 @@ import { ExamModuleBreakdown } from "@/components/exam/ExamModuleBreakdown";
 import { ExamReview } from "@/components/exam/ExamReview";
 import { ExamRestartModal } from "@/components/exam/ExamRestartModal";
 import { ExamRepeatBadge } from "@/components/exam/ExamRepeatBadge";
+import { ExamHistoryButton } from "@/components/results/ExamHistoryButton";
 import { SubjectIcon } from "@/components/ui/SubjectIcon";
 import { useSession } from "@/hooks/useSession";
 import { getQuestion } from "@/data";
@@ -76,8 +77,10 @@ export default function SimulatorExamPage() {
     submitExam,
     discardExam,
     startExam,
-    restartSameExam,
+    repeatExamFromIds,
     getExamSummary,
+    getExamHistorySummaries,
+    clearExamHistory,
     toggleBookmark,
   } = useSession();
 
@@ -158,13 +161,14 @@ export default function SimulatorExamPage() {
 
   const handleRedoSameExam = useCallback(
     (shuffleOrder: boolean) => {
-      const newId = restartSameExam(shuffleOrder);
+      if (!exam) return;
+      const newId = repeatExamFromIds(exam.questionIds, shuffleOrder);
       if (!newId) return;
       setNavigating(true);
       setRedoOpen(false);
       router.push(`/simulator/${newId}`);
     },
-    [restartSameExam, router],
+    [exam, repeatExamFromIds, router],
   );
 
   if (!isLoaded || !validExam || navigating) {
@@ -350,6 +354,7 @@ export default function SimulatorExamPage() {
   if (isReviewMode) {
     const summary = isHistorical ? summarizeExam(exam) : getExamSummary();
     if (!summary) return null;
+    const examHistory = getExamHistorySummaries();
 
     return (
       <>
@@ -371,7 +376,7 @@ export default function SimulatorExamPage() {
                     Examen din istoric
                   </p>
                   <p className="text-[10px] sm:text-[11px] text-[var(--color-text-tertiary)]">
-                    Vezi rezultatele unui examen mai vechi. Acțiunile de mai jos pornesc un examen nou.
+                    Vezi rezultatele unui examen mai vechi. Îl poți re-face cu aceleași grile sau porni unul nou.
                   </p>
                 </div>
                 <Link
@@ -400,22 +405,20 @@ export default function SimulatorExamPage() {
             {/* Actions */}
             <div className="space-y-2.5 animate-fade-in stagger-1">
               <div className="flex flex-col sm:flex-row gap-2.5">
-                {!isHistorical && (
-                  <Button variant="primary" size="lg" className="flex-1" onClick={() => setRedoOpen(true)}>
-                    Re-fă acest examen
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <polyline points="1 4 1 10 7 10" />
-                      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
-                    </svg>
-                  </Button>
-                )}
+                <Button variant="primary" size="lg" className="flex-1" onClick={() => setRedoOpen(true)}>
+                  Re-fă acest examen
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polyline points="1 4 1 10 7 10" />
+                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                  </svg>
+                </Button>
                 <Button
-                  variant={isHistorical ? "primary" : "secondary"}
+                  variant="secondary"
                   size="lg"
                   className="flex-1"
                   onClick={() => setRestartOpen(true)}
                 >
-                  {isHistorical ? "Pornește un Simulator Nou" : "Examen Nou"}
+                  {isHistorical ? "Simulator Nou" : "Examen Nou"}
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <line x1="5" y1="12" x2="19" y2="12" />
                     <polyline points="12 5 19 12 12 19" />
@@ -447,22 +450,27 @@ export default function SimulatorExamPage() {
               </div>
             </div>
 
-            {/* Helpful explanation for "Re-fă acest examen" - only for current submitted exam */}
-            {!isHistorical && (
-              <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-3.5 sm:p-4 animate-fade-in stagger-1">
-                <div className="flex items-start gap-2.5">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 mt-0.5" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="12" y1="16" x2="12" y2="12" />
-                    <line x1="12" y1="8" x2="12.01" y2="8" />
-                  </svg>
-                  <p className="text-[11px] sm:text-xs leading-relaxed text-[var(--color-text-tertiary)]">
-                    <span className="text-[var(--color-text-secondary)] font-medium">Re-fă acest examen</span> îți dă aceleași 36 de grile, ca să corectezi exact ce ai greșit.
-                    <span className="text-[var(--color-text-secondary)] font-medium"> Examen Nou</span> alege alte 36 de grile, balansate din toate modulele.
-                  </p>
-                </div>
+            {/* Helpful explanation for the two actions */}
+            <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-3.5 sm:p-4 animate-fade-in stagger-1">
+              <div className="flex items-start gap-2.5">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 mt-0.5" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="16" x2="12" y2="12" />
+                  <line x1="12" y1="8" x2="12.01" y2="8" />
+                </svg>
+                <p className="text-[11px] sm:text-xs leading-relaxed text-[var(--color-text-tertiary)]">
+                  <span className="text-[var(--color-text-secondary)] font-medium">Re-fă acest examen</span> îți dă aceleași 36 de grile, ca să corectezi exact ce ai greșit.
+                  <span className="text-[var(--color-text-secondary)] font-medium"> {isHistorical ? "Simulator Nou" : "Examen Nou"}</span> alege alte 36 de grile, balansate din toate modulele.
+                </p>
               </div>
-            )}
+            </div>
+
+            {/* History entry point (renders only when there is history) */}
+            <ExamHistoryButton
+              history={examHistory}
+              onClear={clearExamHistory}
+              className="animate-fade-in stagger-2"
+            />
 
             <div className="animate-fade-in stagger-2">
               <ExamModuleBreakdown perModule={summary.perModule} perSubject={summary.perSubject} />
