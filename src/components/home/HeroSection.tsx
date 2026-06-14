@@ -36,7 +36,7 @@ export function HeroSection({ hasExistingSession, totalAnswered, accuracy }: Her
           </h1>
 
           <p className="text-lg text-[var(--color-text-secondary)] mb-10 max-w-xl leading-relaxed animate-fade-in stagger-2">
-            {TOTAL_QUESTIONS} de grile pentru examenul de licență la Informatică UTM. Programare, baze de date, rețele și tehnologii web - totul într-un singur loc.
+            {TOTAL_QUESTIONS} de grile pentru examenul de licență la Informatică, Universitatea Titu Maiorescu (UTM). Programare, baze de date, rețele și tehnologii web - totul într-un singur loc.
           </p>
 
           <div className="flex flex-wrap items-center gap-4 animate-fade-in stagger-3">
