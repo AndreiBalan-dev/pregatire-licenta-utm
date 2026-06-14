@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Buton de istoric examene la finalul examenului si pe pagina simulatorului, nu doar in Rezultate",
-  "Re-fa orice examen din istoric cu exact aceleasi grile, nu doar ultimul",
-  "Acelasi buton de istoric peste tot: nota, performanta pe module si review complet",
+  "Explicatie 'De ce e corect?' la fiecare intrebare, dupa ce raspunzi",
+  "Vezi de ce e corect raspunsul si de ce nu celelalte variante",
+  "Explicatiile apar la practica, in simulator si in revizuire",
 ];
 
 export function ChangelogBanner() {

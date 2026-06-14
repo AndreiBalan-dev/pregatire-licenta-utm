@@ -2,6 +2,7 @@
 
 import { cn, isCodeLike } from "@/lib/utils";
 import { CodeBlock } from "@/components/ui/CodeBlock";
+import { ExplanationPanel } from "./ExplanationPanel";
 import type { Question, AnswerKey } from "@/data/types";
 
 interface QuestionCardProps {
@@ -184,6 +185,11 @@ export function QuestionCard({
           </svg>
           <span className="text-xs sm:text-sm font-medium">Reîncearcă</span>
         </button>
+      )}
+
+      {/* Why-correct / why-wrong explanation (shown once feedback is visible) */}
+      {showFeedback && question.explanation && (
+        <ExplanationPanel text={question.explanation} />
       )}
     </div>
   );

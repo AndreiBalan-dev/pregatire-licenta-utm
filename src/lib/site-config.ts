@@ -13,7 +13,7 @@
  * keep them in sync.
  */
 
-export const APP_VERSION = "1.4.7";
+export const APP_VERSION = "1.5.0";
 
 export const EXAM_SESSION_YEAR = "2026";
 
@@ -24,6 +24,11 @@ export const SITE_NAME = "Pregătire Licență UTM";
 export const SITE_NAME_SHORT = "Licență UTM";
 
 export const AUTHOR_NAME = "Bălan Andrei Marian";
+
+// Gen-E expo voting campaign (Algebo.ai). Temporary promo on the homepage + a one-time popup.
+export const VOTE_EXPO_URL = "https://expo.gen-e.eu/expo/fafeaa60-f404-46e3-ab59-24dd07f520ec";
+export const VOTE_IMAGE = "/vote-algebo-gene.jpg";
+export const CONTACT_INSTAGRAM = "https://instagram.com/balyandrei";
 
 export const TOTAL_QUESTIONS = 715;
 export const TOTAL_MODULES = 4;

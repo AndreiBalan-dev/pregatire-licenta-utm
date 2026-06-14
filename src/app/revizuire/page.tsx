@@ -7,6 +7,7 @@ import { MobileNav } from "@/components/layout/MobileNav";
 import { Container } from "@/components/layout/Container";
 import { Card } from "@/components/ui/Card";
 import { CodeBlock } from "@/components/ui/CodeBlock";
+import { ExplanationPanel } from "@/components/practice/ExplanationPanel";
 import { ExamRepeatBadge } from "@/components/exam/ExamRepeatBadge";
 import { useSession } from "@/hooks/useSession";
 import { useResolvedTheme } from "@/hooks/useResolvedTheme";
@@ -426,6 +427,10 @@ export default function RevizuirePage() {
                         );
                       })}
                     </div>
+
+                    {question.explanation && (
+                      <ExplanationPanel text={question.explanation} />
+                    )}
                   </Card>
                 );
               })}

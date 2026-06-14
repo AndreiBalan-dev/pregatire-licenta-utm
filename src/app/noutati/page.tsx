@@ -44,6 +44,16 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "1.5.0",
+    date: "14 Iunie 2026",
+    title: "Explicatii la fiecare intrebare",
+    changes: [
+      { text: "Fiecare intrebare are acum o explicatie: apesi 'De ce e corect?' dupa ce raspunzi si vezi de ce e corect raspunsul si de ce nu celelalte variante", type: "feature" },
+      { text: "Explicatiile apar peste tot unde se vede raspunsul corect: la practica, in simulator si in Revizuire", type: "feature" },
+      { text: "Cele peste 700 de explicatii au fost generate cu AI si verificate independent, intrebare cu intrebare", type: "improvement" },
+    ],
+  },
+  {
     version: "1.4.7",
     date: "14 Iunie 2026",
     title: "Istoricul examenelor, la vedere",

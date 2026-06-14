@@ -14,6 +14,8 @@ export interface Question {
   };
   correctAnswer: "a" | "b" | "c" | "d";
   lockOptions?: boolean;
+  /** Romanian "why correct / why wrong" explanation, shown after answering. Attached at load from src/data/explanations.ts. */
+  explanation?: string;
 }
 
 export interface Subject {

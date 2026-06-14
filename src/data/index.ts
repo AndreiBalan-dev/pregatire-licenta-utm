@@ -15,6 +15,7 @@ import { tehnologiiWeb } from "./questions/web/tehnologii-web";
 import { comertElectronic } from "./questions/web/comert-electronic";
 import { cloudComputing } from "./questions/web/cloud-computing";
 import { inovareTransformareDigitala } from "./questions/web/inovare-transformare-digitala";
+import { explanations } from "./explanations";
 
 export const allQuestions: Question[] = [
   ...fundamenteleProgramarii,
@@ -39,6 +40,9 @@ export const questionsBySubject: Record<string, Question[]> = {};
 const questionMap = new Map<number, Question>();
 
 for (const q of allQuestions) {
+  const ex = explanations[q.id];
+  if (ex) q.explanation = ex;
+
   if (!questionsByModule[q.moduleId]) questionsByModule[q.moduleId] = [];
   questionsByModule[q.moduleId].push(q);
 
