@@ -44,6 +44,16 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "1.5.2",
+    date: "16 Iunie 2026",
+    title: "Reia greselile direct din rezultat",
+    changes: [
+      { text: "La finalul unei sesiuni de practica, in rezumatul sesiunii poti reface pe loc doar intrebarile gresite, fara sa mai treci prin alta pagina", type: "feature" },
+      { text: "La simulator, dupa examen, ai un buton nou care reia doar grilele gresite ca exercitiu, cu scor pe acuratete; 'Re-fa acest examen' ramane examenul complet cu nota /10", type: "feature" },
+      { text: "Cand reiei, alegi ce reiei (doar gresite sau tot), daca schimbi ordinea intrebarilor si daca amesteci si raspunsurile", type: "improvement" },
+    ],
+  },
+  {
     version: "1.5.1",
     date: "16 Iunie 2026",
     title: "Raspunsuri amestecate si reluarea greselilor",

@@ -24,6 +24,7 @@ import { getQuestion } from "@/data";
 import { modules } from "@/data/modules";
 import { cn } from "@/lib/utils";
 import { computeScore } from "@/lib/exam";
+import { wrongIdsInExam } from "@/lib/redo";
 import type { AnswerKey } from "@/data/types";
 import type { ExamState } from "@/lib/session-types";
 
@@ -77,6 +78,7 @@ export default function SimulatorExamPage() {
     submitExam,
     discardExam,
     startExam,
+    startPractice,
     repeatExamFromIds,
     getExamSummary,
     getExamHistorySummaries,
@@ -87,6 +89,7 @@ export default function SimulatorExamPage() {
   const [submitOpen, setSubmitOpen] = useState(false);
   const [restartOpen, setRestartOpen] = useState(false);
   const [redoOpen, setRedoOpen] = useState(false);
+  const [redoScope, setRedoScope] = useState<"all" | "wrong">("all");
   const [navigating, setNavigating] = useState(false);
 
   const { exam, isHistorical } = useMemo(() => {
@@ -159,16 +162,29 @@ export default function SimulatorExamPage() {
     router.push(`/simulator/${newId}`);
   }, [discardExam, startExam, router]);
 
-  const handleRedoSameExam = useCallback(
-    (shuffleOrder: boolean, shuffleAnswers: boolean) => {
+  const handleRedo = useCallback(
+    ({ scope, shuffleOrder, shuffleAnswers }: { scope: "all" | "wrong"; shuffleOrder: boolean; shuffleAnswers: boolean }) => {
       if (!exam) return;
+      if (scope === "wrong") {
+        const wrongIds = wrongIdsInExam(exam, (id) => getQuestion(id)?.correctAnswer);
+        if (wrongIds.length === 0) return;
+        const newId = startPractice([], wrongIds, {
+          shuffleOrder,
+          shuffleOptions: shuffleAnswers,
+          mode: "test",
+        });
+        setNavigating(true);
+        setRedoOpen(false);
+        router.push(`/practica/${newId}`);
+        return;
+      }
       const newId = repeatExamFromIds(exam.questionIds, shuffleOrder, shuffleAnswers);
       if (!newId) return;
       setNavigating(true);
       setRedoOpen(false);
       router.push(`/simulator/${newId}`);
     },
-    [exam, repeatExamFromIds, router],
+    [exam, startPractice, repeatExamFromIds, router],
   );
 
   if (!isLoaded || !validExam || navigating) {
@@ -356,6 +372,7 @@ export default function SimulatorExamPage() {
     const summary = isHistorical ? summarizeExam(exam) : getExamSummary();
     if (!summary) return null;
     const examHistory = getExamHistorySummaries();
+    const wrongIds = wrongIdsInExam(exam, (id) => getQuestion(id)?.correctAnswer);
 
     return (
       <>
@@ -405,8 +422,23 @@ export default function SimulatorExamPage() {
 
             {/* Actions */}
             <div className="space-y-2.5 animate-fade-in stagger-1">
+              {wrongIds.length > 0 && (
+                <Button
+                  variant="primary"
+                  size="lg"
+                  className="w-full"
+                  onClick={() => { setRedoScope("wrong"); setRedoOpen(true); }}
+                >
+                  Refă greșitele ({wrongIds.length})
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="15" y1="9" x2="9" y2="15" />
+                    <line x1="9" y1="9" x2="15" y2="15" />
+                  </svg>
+                </Button>
+              )}
               <div className="flex flex-col sm:flex-row gap-2.5">
-                <Button variant="primary" size="lg" className="flex-1" onClick={() => setRedoOpen(true)}>
+                <Button variant={wrongIds.length > 0 ? "secondary" : "primary"} size="lg" className="flex-1" onClick={() => { setRedoScope("all"); setRedoOpen(true); }}>
                   Re-fă acest examen
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <polyline points="1 4 1 10 7 10" />
@@ -515,8 +547,11 @@ export default function SimulatorExamPage() {
         <ExamRestartModal
           open={redoOpen}
           onCancel={() => setRedoOpen(false)}
-          onConfirm={handleRedoSameExam}
+          onConfirm={handleRedo}
           defaultShuffleAnswers={!!session.settings.simulatorShuffleOptions}
+          totalCount={exam.questionIds.length}
+          wrongCount={wrongIds.length}
+          initialScope={redoScope}
         />
       </>
     );

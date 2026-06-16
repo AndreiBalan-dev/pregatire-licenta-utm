@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Amesteca si raspunsurile, la practica si la simulator, nu doar ordinea intrebarilor",
-  "Reia doar greselile sau intrebarile marcate, ca exercitiu sau ca simulare",
-  "Pornesti reluarea din Revizuire sau direct din pagina de Practica",
+  "Reia pe loc intrebarile gresite, direct din rezumatul sesiunii de practica",
+  "La simulator, reia dupa examen doar grilele gresite, ca exercitiu cu scor pe acuratete",
+  "Alegi ce reiei si cum: doar gresite sau tot, alta ordine, raspunsuri amestecate",
 ];
 
 export function ChangelogBanner() {

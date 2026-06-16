@@ -9,12 +9,14 @@ import { QuestionCard } from "@/components/practice/QuestionCard";
 import { ProgressBar } from "@/components/practice/ProgressBar";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
+import { ScopeSelector, OrderSelector, ShuffleAnswersToggle, type RedoScope, type OrderChoice } from "@/components/review/RedoControls";
 import { SubjectIcon } from "@/components/ui/SubjectIcon";
 import { useSession } from "@/hooks/useSession";
 import { useTimer } from "@/hooks/useTimer";
 import { getQuestion, questionsBySubject } from "@/data";
 import { modules } from "@/data/modules";
 import { cn, formatPercentage, formatTime } from "@/lib/utils";
+import { wrongIdsInPractice } from "@/lib/redo";
 import type { AnswerKey } from "@/data/types";
 
 export default function QuizPage() {
@@ -33,6 +35,10 @@ export default function QuizPage() {
   const [selectedAnswer, setSelectedAnswer] = useState<AnswerKey | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
+  const [summaryView, setSummaryView] = useState<"main" | "redo">("main");
+  const [redoScope, setRedoScope] = useState<RedoScope>("wrong");
+  const [redoOrder, setRedoOrder] = useState<OrderChoice>("same");
+  const [redoShuffleAnswers, setRedoShuffleAnswers] = useState(false);
   const [dotRadius, setDotRadius] = useState(3);
 
   useEffect(() => {
@@ -82,6 +88,11 @@ export default function QuizPage() {
       }
     }
     return { correct, wrong, answered: correct + wrong };
+  }, [practice, session.answers]);
+
+  const wrongIdsThisSession = useMemo(() => {
+    if (!practice) return [];
+    return wrongIdsInPractice(practice, session.answers, (id) => getQuestion(id) !== undefined);
   }, [practice, session.answers]);
 
   const handleSelectAnswer = useCallback(
@@ -209,6 +220,27 @@ export default function QuizPage() {
     setShowSummary(false);
     router.replace(`/practica/${newSessionId}`);
   }, [practice, session.answers, startPractice, router]);
+
+  const openRedo = useCallback((scope: RedoScope) => {
+    setRedoScope(scope);
+    setRedoOrder("same");
+    setRedoShuffleAnswers(practice?.optionOrder != null);
+    setSummaryView("redo");
+  }, [practice]);
+
+  const startRedo = useCallback(() => {
+    if (!practice) return;
+    const ids = redoScope === "wrong" ? wrongIdsThisSession : practice.questionIds;
+    if (ids.length === 0) return;
+    const newId = startPractice([], ids, {
+      shuffleOrder: redoOrder === "shuffled",
+      shuffleOptions: redoShuffleAnswers,
+      mode: practice.mode,
+    });
+    setShowSummary(false);
+    setSummaryView("main");
+    router.replace(`/practica/${newId}`);
+  }, [practice, redoScope, redoOrder, redoShuffleAnswers, wrongIdsThisSession, startPractice, router]);
 
   useEffect(() => {
     if (isLoaded && !practice) {
@@ -463,9 +495,15 @@ export default function QuizPage() {
       {/* Summary Modal */}
       <Modal
         open={showSummary}
-        onClose={() => setShowSummary(false)}
-        title={isTest ? "Rezultatul simulării" : "Rezumat Sesiune"}
+        onClose={() => { setShowSummary(false); setSummaryView("main"); }}
+        onBack={summaryView === "redo" ? () => setSummaryView("main") : undefined}
+        title={
+          summaryView === "redo"
+            ? (redoScope === "wrong" ? "Refă greșitele" : "Refă sesiunea")
+            : (isTest ? "Rezultatul simulării" : "Rezumat Sesiune")
+        }
       >
+        {summaryView === "main" ? (
         <div className="space-y-5">
           {/* Accuracy hero */}
           {practiceStats.answered > 0 && (
@@ -541,6 +579,26 @@ export default function QuizPage() {
 
           {/* Action buttons */}
           <div className="flex flex-col gap-2.5 pt-1">
+            {practiceStats.answered > 0 && (
+              wrongIdsThisSession.length > 0 ? (
+                <Button
+                  variant="primary"
+                  size="md"
+                  className="w-full py-3"
+                  onClick={() => openRedo("wrong")}
+                >
+                  Refă greșitele ({wrongIdsThisSession.length})
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polyline points="1 4 1 10 7 10" />
+                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                  </svg>
+                </Button>
+              ) : (
+                <Button variant="ghost" size="sm" className="w-full" onClick={() => openRedo("all")}>
+                  Refă sesiunea
+                </Button>
+              )
+            )}
             {remainingUnanswered > 0 && (
               <Button
                 className="w-full py-3"
@@ -576,6 +634,29 @@ export default function QuizPage() {
             </div>
           </div>
         </div>
+        ) : (
+        <div className="space-y-5">
+          <ScopeSelector
+            scope={redoScope}
+            onScope={setRedoScope}
+            wrongCount={wrongIdsThisSession.length}
+            allCount={practice.questionIds.length}
+            allLabel="Toată sesiunea"
+          />
+          <OrderSelector choice={redoOrder} onChoice={setRedoOrder} />
+          <ShuffleAnswersToggle value={redoShuffleAnswers} onChange={setRedoShuffleAnswers} />
+          <Button
+            className="w-full py-3"
+            onClick={startRedo}
+            disabled={(redoScope === "wrong" ? wrongIdsThisSession.length : practice.questionIds.length) === 0}
+          >
+            Începe
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <polyline points="9 6 15 12 9 18" />
+            </svg>
+          </Button>
+        </div>
+        )}
       </Modal>
     </>
   );
