@@ -10,7 +10,7 @@ import { SubjectSelector } from "@/components/practice/SubjectSelector";
 import { ReviewLaunch } from "@/components/review/ReviewLaunch";
 import { useSession } from "@/hooks/useSession";
 import { cn } from "@/lib/utils";
-import { selectPracticeQuestionIds } from "@/lib/practice";
+import { selectPracticeQuestionIds, type QuestionOrder } from "@/lib/practice";
 import { buildMergedAnswerMap } from "@/lib/answer-merge";
 import { modules } from "@/data/modules";
 import { questionsBySubject, getQuestion } from "@/data";
@@ -59,7 +59,7 @@ function PracticaContent() {
     "all",
   );
   const [onlyUnanswered, setOnlyUnanswered] = useState(false);
-  const [shuffleQuestions, setShuffleQuestions] = useState(false);
+  const [order, setOrder] = useState<QuestionOrder>("natural");
 
   const { totalAvailable, unansweredCount } = useMemo(() => {
     let total = 0;
@@ -100,13 +100,13 @@ function PracticaContent() {
 
     const questionIds = selectPracticeQuestionIds(
       pool,
-      { onlyUnanswered, shuffle: shuffleQuestions, batchSize },
+      { onlyUnanswered, order, batchSize },
       (id) => !!session.answers[id],
     );
 
     if (questionIds.length === 0) return;
 
-    // Ordering (shuffle / unanswered-first) and batching are already applied,
+    // Ordering (shuffle / natural order) and batching are already applied,
     // so startPractice must not reshuffle the question order.
     const sessionId = startPractice(selectedSubjects, questionIds, {
       shuffleOrder: false,
@@ -319,42 +319,6 @@ function PracticaContent() {
                     <label
                       className={cn(
                         "flex items-center gap-3.5 px-4 py-3.5 rounded-[var(--radius-lg)] cursor-pointer transition-all border",
-                        shuffleQuestions
-                          ? "bg-[var(--color-accent-muted)] border-[var(--color-accent)] shadow-[0_0_20px_rgba(232,166,49,0.08)]"
-                          : "bg-[var(--color-bg-primary)] border-[var(--color-border)] hover:border-[var(--color-border-strong)] hover:bg-[var(--color-bg-hover)]"
-                      )}
-                    >
-                      <button
-                        role="switch"
-                        aria-checked={shuffleQuestions}
-                        aria-label="Amestecă ordinea întrebărilor"
-                        onClick={() => setShuffleQuestions(!shuffleQuestions)}
-                        className={`relative w-10 h-[22px] rounded-full transition-all duration-200 cursor-pointer flex-shrink-0 ${
-                          shuffleQuestions
-                            ? "bg-[var(--color-accent)]"
-                            : "bg-[var(--color-border-strong)]"
-                        }`}
-                      >
-                        <span className={`absolute top-[3px] left-[3px] w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-200 ${
-                          shuffleQuestions ? "translate-x-[18px]" : ""
-                        }`} />
-                      </button>
-                      <div className="min-w-0">
-                        <span className={cn(
-                          "text-sm font-medium block transition-colors",
-                          shuffleQuestions ? "text-[var(--color-text-primary)]" : "text-[var(--color-text-secondary)]"
-                        )}>
-                          Amestecă ordinea
-                        </span>
-                        <span className="text-[11px] text-[var(--color-text-tertiary)]">
-                          Ordine aleatorie
-                        </span>
-                      </div>
-                    </label>
-
-                    <label
-                      className={cn(
-                        "sm:col-span-2 flex items-center gap-3.5 px-4 py-3.5 rounded-[var(--radius-lg)] cursor-pointer transition-all border",
                         session.settings.shuffleOptions
                           ? "bg-[var(--color-accent-muted)] border-[var(--color-accent)] shadow-[0_0_20px_rgba(232,166,49,0.08)]"
                           : "bg-[var(--color-bg-primary)] border-[var(--color-border)] hover:border-[var(--color-border-strong)] hover:bg-[var(--color-bg-hover)]"
@@ -387,6 +351,34 @@ function PracticaContent() {
                         </span>
                       </div>
                     </label>
+                  </div>
+
+                  {/* Question order selector */}
+                  <div>
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--color-text-tertiary)] mb-2.5 block">
+                      Ordinea întrebărilor
+                    </span>
+                    <div className="flex gap-2">
+                      {([
+                        { value: "natural", label: "În ordine" },
+                        { value: "unanswered-first", label: "Nerezolvate întâi" },
+                        { value: "random", label: "Aleatoriu" },
+                      ] as const).map((opt) => (
+                        <button
+                          key={opt.value}
+                          onClick={() => setOrder(opt.value)}
+                          className={cn(
+                            "flex-1 py-2 px-1 rounded-[var(--radius-md)] text-[11px] sm:text-sm font-semibold leading-tight transition-all duration-200 cursor-pointer border",
+                            order === opt.value
+                              ? "bg-[var(--color-accent)] text-[#0C0C0E] border-[var(--color-accent)] shadow-[0_0_20px_rgba(232,166,49,0.12)]"
+                              : "bg-[var(--color-bg-primary)] text-[var(--color-text-tertiary)] border-[var(--color-border)] hover:text-[var(--color-text-secondary)] hover:border-[var(--color-border-strong)] hover:bg-[var(--color-bg-hover)] active:scale-[0.97]"
+                          )}
+                          style={{ fontFamily: order === opt.value ? "var(--font-display)" : undefined }}
+                        >
+                          {opt.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
 
                   {/* Batch size selector */}

@@ -24,12 +24,12 @@ function check(name, fn) {
 // The reported bug: with 58 questions, shuffle + a 25-question batch only
 // reordered the FIRST 25; "late" questions were never reachable.
 check(
-  "shuffle picks from the WHOLE pool, then slices (regression)",
+  "order=random picks from the WHOLE pool, then slices (regression)",
   () => {
     const pool = makePool(58); // ids 1..58, none answered
     const result = selectPracticeQuestionIds(
       pool,
-      { onlyUnanswered: false, shuffle: true, batchSize: 25 },
+      { onlyUnanswered: false, order: "random", batchSize: 25 },
       () => false,
       reverseShuffle,
     );
@@ -44,12 +44,25 @@ check(
   },
 );
 
-check("no shuffle: unanswered-first ordering is preserved, then sliced", () => {
+check("order=natural keeps pool order, answered questions NOT pushed back, then sliced", () => {
   const pool = makePool(58);
   const answered = new Set(range(1, 40)); // ids 1..40 answered
   const result = selectPracticeQuestionIds(
     pool,
-    { onlyUnanswered: false, shuffle: false, batchSize: 25 },
+    { onlyUnanswered: false, order: "natural", batchSize: 25 },
+    (id) => answered.has(id),
+  );
+  // natural pool order, first 25 -> [1..25]; already-answered ones keep their place
+  // (regression: they used to be sorted to the back, so a batch hid them entirely)
+  assert.deepEqual(result, range(1, 25));
+});
+
+check("order=unanswered-first (opt-in): undone first, answered after, then sliced", () => {
+  const pool = makePool(58);
+  const answered = new Set(range(1, 40)); // ids 1..40 answered
+  const result = selectPracticeQuestionIds(
+    pool,
+    { onlyUnanswered: false, order: "unanswered-first", batchSize: 25 },
     (id) => answered.has(id),
   );
   // unanswered 41..58 (18) first, then answered 1..7 -> 25 total
@@ -61,7 +74,7 @@ check("onlyUnanswered filters the pool; null batchSize keeps all remaining", () 
   const answered = new Set(range(1, 40));
   const result = selectPracticeQuestionIds(
     pool,
-    { onlyUnanswered: true, shuffle: false, batchSize: null },
+    { onlyUnanswered: true, order: "natural", batchSize: null },
     (id) => answered.has(id),
   );
   assert.deepEqual(result, range(41, 18)); // 41..58
@@ -71,7 +84,7 @@ check("batchSize larger than pool returns the whole (shuffled) pool", () => {
   const pool = makePool(5);
   const result = selectPracticeQuestionIds(
     pool,
-    { onlyUnanswered: false, shuffle: true, batchSize: 25 },
+    { onlyUnanswered: false, order: "random", batchSize: 25 },
     () => false,
     reverseShuffle,
   );

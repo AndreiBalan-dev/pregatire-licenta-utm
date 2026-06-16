@@ -26,19 +26,29 @@ export function buildOptionOrders<T extends { id: number; lockOptions?: boolean 
   return orders;
 }
 
+/**
+ * How the question pool is ordered for a practice session:
+ * - "natural": original order, already-answered questions keep their place.
+ * - "unanswered-first": questions you haven't done yet come first, done ones
+ *   after (opt-in; this used to be the silent default for the non-shuffled
+ *   case, which — with batching — hid answered questions entirely).
+ * - "random": shuffled.
+ */
+export type QuestionOrder = "natural" | "unanswered-first" | "random";
+
 export interface SelectPracticeOptions {
   onlyUnanswered: boolean;
-  shuffle: boolean;
+  order: QuestionOrder;
   batchSize: number | null;
 }
 
 /**
  * Build the ordered list of question ids for a practice session.
  *
- * The full pool is ordered first — randomly when `shuffle` is on, otherwise
- * unanswered questions first — and only then sliced to `batchSize`. Slicing
- * last is what lets a batch draw from the entire pool instead of just the
- * first `batchSize` questions.
+ * The full pool is ordered first (per `order`) and only then sliced to
+ * `batchSize`. Slicing last is what lets a batch draw from the entire pool
+ * instead of just the first `batchSize` questions. To practice only the ones
+ * left, use `onlyUnanswered` (a filter, independent of `order`).
  */
 export function selectPracticeQuestionIds<T extends { id: number }>(
   pool: T[],
@@ -46,15 +56,18 @@ export function selectPracticeQuestionIds<T extends { id: number }>(
   isAnswered: (id: number) => boolean,
   shuffleFn: <U>(items: U[]) => U[] = shuffleArray,
 ): number[] {
-  const { onlyUnanswered, shuffle, batchSize } = options;
+  const { onlyUnanswered, order, batchSize } = options;
 
   const filtered = pool.filter((q) => !onlyUnanswered || !isAnswered(q.id));
 
-  const ordered = shuffle
-    ? shuffleFn(filtered)
-    : [...filtered].sort(
-        (a, b) => (isAnswered(a.id) ? 1 : 0) - (isAnswered(b.id) ? 1 : 0),
-      );
+  const ordered =
+    order === "random"
+      ? shuffleFn(filtered)
+      : order === "unanswered-first"
+        ? [...filtered].sort(
+            (a, b) => (isAnswered(a.id) ? 1 : 0) - (isAnswered(b.id) ? 1 : 0),
+          )
+        : filtered; // "natural" — keep original order, answered ones stay in place
 
   const sized = batchSize !== null ? ordered.slice(0, batchSize) : ordered;
   return sized.map((q) => q.id);

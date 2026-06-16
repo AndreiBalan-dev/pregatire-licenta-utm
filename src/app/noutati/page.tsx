@@ -44,6 +44,16 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "1.5.3",
+    date: "16 Iunie 2026",
+    title: "Alegi ordinea intrebarilor la practica",
+    changes: [
+      { text: "La practica poti alege acum ordinea intrebarilor: in ordine, nerezolvate intai sau aleatoriu", type: "feature" },
+      { text: "Implicit intrebarile apar in ordine si cele pe care le-ai facut deja nu mai sunt sarite: inainte, daca aveai 13 din 50 facute, alea 13 nu mai apareau", type: "fix" },
+      { text: "'Nerezolvate intai' ramane disponibil ca optiune, cand vrei sa incepi cu cele pe care nu le-ai facut", type: "improvement" },
+    ],
+  },
+  {
     version: "1.5.2",
     date: "16 Iunie 2026",
     title: "Reia greselile direct din rezultat",

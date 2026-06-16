@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Reia pe loc intrebarile gresite, direct din rezumatul sesiunii de practica",
-  "La simulator, reia dupa examen doar grilele gresite, ca exercitiu cu scor pe acuratete",
-  "Alegi ce reiei si cum: doar gresite sau tot, alta ordine, raspunsuri amestecate",
+  "Alegi ordinea intrebarilor la practica: in ordine, nerezolvate intai sau aleatoriu",
+  "Implicit apar in ordine, iar intrebarile pe care le-ai facut deja nu mai sunt sarite",
+  "'Nerezolvate intai' ramane optiune, cand vrei sa incepi cu cele nerezolvate",
 ];
 
 export function ChangelogBanner() {
