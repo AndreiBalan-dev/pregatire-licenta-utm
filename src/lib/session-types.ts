@@ -1,3 +1,5 @@
+import type { AnswerKey } from "@/data/types";
+
 export interface AnswerRecord {
   selected: "a" | "b" | "c" | "d";
   isCorrect: boolean;
@@ -9,9 +11,21 @@ export interface PracticeState {
   subjectIds: string[];
   questionIds: number[];
   currentIndex: number;
-  mode: "practice" | "review";
+  /**
+   * "practice" gives instant feedback + explanations as you answer.
+   * "test" hides correctness until the end (a simulation of a custom set,
+   * e.g. redoing your wrong/marked questions), then shows the score.
+   */
+  mode: "practice" | "test";
   startedAt: string;
   batchSize: number | null;
+  /**
+   * Per-question display order of the answer options, set when the session
+   * was started with "shuffle answers" on. Keyed by question id. Absent when
+   * options are shown in natural a/b/c/d order. Each option keeps its own
+   * letter; only the on-screen position changes.
+   */
+  optionOrder?: Record<number, AnswerKey[]>;
 }
 
 export interface SubjectStat {
@@ -22,8 +36,11 @@ export interface SubjectStat {
 
 export interface SessionSettings {
   showImmediateFeedback: boolean;
+  /** Shuffle answer-option positions during practice. */
   shuffleOptions: boolean;
   simulatorShowFeedback: boolean;
+  /** Shuffle answer-option positions during the exam simulator. */
+  simulatorShuffleOptions: boolean;
 }
 
 export interface ExamState {
@@ -37,6 +54,11 @@ export interface ExamState {
   showFeedback?: boolean;
   isRepeat?: boolean;
   repeatShuffled?: boolean;
+  /**
+   * Per-question display order of the answer options when the exam was started
+   * with "shuffle answers" on. Same shape and rules as PracticeState.optionOrder.
+   */
+  optionOrder?: Record<number, AnswerKey[]>;
 }
 
 export interface LocalSession {
@@ -70,6 +92,7 @@ export function createDefaultSession(): LocalSession {
       showImmediateFeedback: true,
       shuffleOptions: false,
       simulatorShowFeedback: false,
+      simulatorShuffleOptions: false,
     },
     savedKey: null,
   };

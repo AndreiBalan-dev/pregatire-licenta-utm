@@ -1,4 +1,30 @@
 import { shuffleArray } from "@/lib/utils";
+import type { AnswerKey } from "@/data/types";
+
+const OPTION_KEYS: readonly AnswerKey[] = ["a", "b", "c", "d"];
+
+/**
+ * Build a stable per-question display order for the answer options.
+ *
+ * Each option keeps its own letter; only its on-screen position changes, so
+ * the stored explanations (which reference letters like "Corect: b") and the
+ * "Corect" feedback stay accurate. Questions flagged `lockOptions` (e.g.
+ * "toate cele de mai sus") keep the natural a/b/c/d order.
+ *
+ * Returned map is keyed by question id; values are a permutation of the four
+ * answer keys. Computed once at session start and persisted, so positions
+ * don't re-jump when the user navigates back or refreshes.
+ */
+export function buildOptionOrders<T extends { id: number; lockOptions?: boolean }>(
+  questions: T[],
+  shuffleFn: <U>(items: U[]) => U[] = shuffleArray,
+): Record<number, AnswerKey[]> {
+  const orders: Record<number, AnswerKey[]> = {};
+  for (const q of questions) {
+    orders[q.id] = q.lockOptions ? [...OPTION_KEYS] : shuffleFn([...OPTION_KEYS]);
+  }
+  return orders;
+}
 
 export interface SelectPracticeOptions {
   onlyUnanswered: boolean;

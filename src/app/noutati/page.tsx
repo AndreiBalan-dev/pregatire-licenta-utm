@@ -44,6 +44,17 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "1.5.1",
+    date: "16 Iunie 2026",
+    title: "Raspunsuri amestecate si reluarea greselilor",
+    changes: [
+      { text: "Poti amesteca acum si raspunsurile, nu doar ordinea intrebarilor, atat la practica cat si la simulator. Variantele apar mereu in alta ordine, ca sa inveti raspunsul corect, nu locul lui pe ecran", type: "feature" },
+      { text: "Reia intr-o sesiune noua doar intrebarile gresite sau cele marcate: ca exercitiu cu explicatii, sau ca simulare fara feedback, cu scorul la final", type: "feature" },
+      { text: "Pornesti reluarea din pagina Revizuire, pe filtrul activ (Gresite, Marcate, Toate), sau direct din pagina de Practica", type: "improvement" },
+      { text: "Multumiri celor care au propus aceste idei. Tot ce ne scrieti ne ajuta sa imbunatatim platforma", type: "improvement" },
+    ],
+  },
+  {
     version: "1.5.0",
     date: "14 Iunie 2026",
     title: "Explicatii la fiecare intrebare",

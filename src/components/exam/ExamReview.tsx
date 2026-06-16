@@ -16,13 +16,15 @@ interface ExamReviewProps {
   repeatShuffled?: boolean;
   bookmarks?: number[];
   onToggleBookmark?: (id: number) => void;
+  /** Per-question answer-option order, matching how the exam was taken. */
+  optionOrder?: Record<number, AnswerKey[]>;
 }
 
 function anchorIdFor(moduleId: string): string {
   return `exam-review-${moduleId}`;
 }
 
-export function ExamReview({ questionIds, answers, isRepeat, repeatShuffled, bookmarks, onToggleBookmark }: ExamReviewProps) {
+export function ExamReview({ questionIds, answers, isRepeat, repeatShuffled, bookmarks, onToggleBookmark, optionOrder }: ExamReviewProps) {
   const bookmarkSet = useMemo(() => new Set(bookmarks ?? []), [bookmarks]);
   const items = useMemo(() => {
     const seenModules = new Set<string>();
@@ -146,6 +148,7 @@ export function ExamReview({ questionIds, answers, isRepeat, repeatShuffled, boo
                   isBookmarked={bookmarkSet.has(q.id)}
                   onSelectAnswer={() => {}}
                   onBookmark={onToggleBookmark ? () => onToggleBookmark(q.id) : undefined}
+                  optionOrder={optionOrder?.[q.id]}
                 />
               </div>
             </div>

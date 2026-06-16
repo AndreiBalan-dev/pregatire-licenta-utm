@@ -2,12 +2,14 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Container } from "@/components/layout/Container";
 import { Card } from "@/components/ui/Card";
 import { CodeBlock } from "@/components/ui/CodeBlock";
 import { ExplanationPanel } from "@/components/practice/ExplanationPanel";
+import { ReviewLaunch } from "@/components/review/ReviewLaunch";
 import { ExamRepeatBadge } from "@/components/exam/ExamRepeatBadge";
 import { useSession } from "@/hooks/useSession";
 import { useResolvedTheme } from "@/hooks/useResolvedTheme";
@@ -64,10 +66,24 @@ type Filter = "wrong" | "correct" | "bookmarked" | "all";
 const optionLabels: Record<AnswerKey, string> = { a: "A", b: "B", c: "C", d: "D" };
 
 export default function RevizuirePage() {
-  const { session, isLoaded, toggleBookmark, getExamSummary } = useSession();
+  const { session, isLoaded, toggleBookmark, getExamSummary, startPractice } = useSession();
+  const router = useRouter();
   const theme = useResolvedTheme();
   const [filter, setFilter] = useState<Filter>("wrong");
   const [moduleFilter, setModuleFilter] = useState<string>("all");
+
+  // Launch a fresh session from exactly the questions currently shown (the
+  // active filter + module filter). "practice" gives feedback as you go;
+  // "test" hides correctness until the end (a simulation).
+  const startReviewSession = (mode: "practice" | "test", ids: number[]) => {
+    if (ids.length === 0) return;
+    const sessionId = startPractice([], ids, {
+      shuffleOrder: true,
+      shuffleOptions: session.settings.shuffleOptions,
+      mode,
+    });
+    router.push(`/practica/${sessionId}`);
+  };
 
   const exam = session.currentExam;
   const examSummary = exam && exam.submittedAt ? getExamSummary() : null;
@@ -304,6 +320,32 @@ export default function RevizuirePage() {
               </button>
             ))}
           </div>
+
+          {/* Launch a redo session from the currently filtered questions */}
+          {filteredQuestions.length > 0 && filter !== "correct" && (
+            <div className="mb-6 animate-slide-up">
+              <ReviewLaunch
+                title={
+                  filter === "wrong"
+                    ? "Reia greșelile"
+                    : filter === "bookmarked"
+                      ? "Reia marcatele"
+                      : "Reia aceste întrebări"
+                }
+                count={filteredQuestions.length}
+                description="O sesiune nouă doar cu întrebările de mai jos. Exersează cu explicații, sau simulează fără feedback și vezi scorul la final."
+                accentColor={filter === "wrong" ? "var(--color-wrong)" : "var(--color-accent)"}
+                icon={
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polyline points="1 4 1 10 7 10" />
+                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                  </svg>
+                }
+                onPractice={() => startReviewSession("practice", filteredQuestions.map((q) => q.id))}
+                onSimulate={() => startReviewSession("test", filteredQuestions.map((q) => q.id))}
+              />
+            </div>
+          )}
 
           {filteredQuestions.length === 0 ? (
             <div className="text-center py-20 animate-fade-in">

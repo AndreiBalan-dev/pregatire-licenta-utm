@@ -160,9 +160,9 @@ export default function SimulatorExamPage() {
   }, [discardExam, startExam, router]);
 
   const handleRedoSameExam = useCallback(
-    (shuffleOrder: boolean) => {
+    (shuffleOrder: boolean, shuffleAnswers: boolean) => {
       if (!exam) return;
-      const newId = repeatExamFromIds(exam.questionIds, shuffleOrder);
+      const newId = repeatExamFromIds(exam.questionIds, shuffleOrder, shuffleAnswers);
       if (!newId) return;
       setNavigating(true);
       setRedoOpen(false);
@@ -264,6 +264,7 @@ export default function SimulatorExamPage() {
                   isBookmarked={session.bookmarks.includes(currentQuestion.id)}
                   onSelectAnswer={handleSelectAnswer}
                   onBookmark={() => toggleBookmark(currentQuestion.id)}
+                  optionOrder={exam.optionOrder?.[currentQuestion.id]}
                 />
               </div>
             </div>
@@ -484,6 +485,7 @@ export default function SimulatorExamPage() {
                 repeatShuffled={exam.repeatShuffled}
                 bookmarks={session.bookmarks}
                 onToggleBookmark={toggleBookmark}
+                optionOrder={exam.optionOrder}
               />
             </div>
           </Container>
@@ -514,6 +516,7 @@ export default function SimulatorExamPage() {
           open={redoOpen}
           onCancel={() => setRedoOpen(false)}
           onConfirm={handleRedoSameExam}
+          defaultShuffleAnswers={!!session.settings.simulatorShuffleOptions}
         />
       </>
     );

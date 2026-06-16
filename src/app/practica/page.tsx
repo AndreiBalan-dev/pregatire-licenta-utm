@@ -7,17 +7,44 @@ import { Header } from "@/components/layout/Header";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Container } from "@/components/layout/Container";
 import { SubjectSelector } from "@/components/practice/SubjectSelector";
+import { ReviewLaunch } from "@/components/review/ReviewLaunch";
 import { useSession } from "@/hooks/useSession";
 import { cn } from "@/lib/utils";
 import { selectPracticeQuestionIds } from "@/lib/practice";
+import { buildMergedAnswerMap } from "@/lib/answer-merge";
 import { modules } from "@/data/modules";
-import { questionsBySubject } from "@/data";
+import { questionsBySubject, getQuestion } from "@/data";
 
 function PracticaContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { startPractice, resetSubject, session } = useSession();
+  const { startPractice, resetSubject, session, updateSettings } = useSession();
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
+
+  // Redo pools: questions answered wrong (across practice + simulator) and marked ones.
+  const mergedAnswers = useMemo(() => buildMergedAnswerMap(session), [session]);
+  const wrongIds = useMemo(
+    () =>
+      Array.from(mergedAnswers.entries())
+        .filter(([, a]) => !a.isCorrect)
+        .map(([id]) => id)
+        .filter((id) => getQuestion(id) !== undefined),
+    [mergedAnswers],
+  );
+  const markedIds = useMemo(
+    () => session.bookmarks.filter((id) => getQuestion(id) !== undefined),
+    [session.bookmarks],
+  );
+
+  const startReviewSession = (mode: "practice" | "test", ids: number[]) => {
+    if (ids.length === 0) return;
+    const sessionId = startPractice([], ids, {
+      shuffleOrder: true,
+      shuffleOptions: session.settings.shuffleOptions,
+      mode,
+    });
+    router.push(`/practica/${sessionId}`);
+  };
 
   useEffect(() => {
     const modulParam = searchParams.get("modul");
@@ -80,8 +107,13 @@ function PracticaContent() {
     if (questionIds.length === 0) return;
 
     // Ordering (shuffle / unanswered-first) and batching are already applied,
-    // so startPractice must not reshuffle.
-    const sessionId = startPractice(selectedSubjects, questionIds, false, batchSize);
+    // so startPractice must not reshuffle the question order.
+    const sessionId = startPractice(selectedSubjects, questionIds, {
+      shuffleOrder: false,
+      batchSize,
+      shuffleOptions: session.settings.shuffleOptions,
+      mode: "practice",
+    });
     router.push(`/practica/${sessionId}`);
   };
 
@@ -105,6 +137,56 @@ function PracticaContent() {
               Selectează disciplinele pe care vrei să le exersezi.
             </p>
           </div>
+
+          {(wrongIds.length > 0 || markedIds.length > 0) && (
+            <div className="mb-8 animate-fade-in">
+              <h2
+                className="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--color-text-tertiary)] mb-3"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Reia ce ai de recuperat
+              </h2>
+              <div
+                className={cn(
+                  "grid gap-3 grid-cols-1",
+                  wrongIds.length > 0 && markedIds.length > 0 && "sm:grid-cols-2",
+                )}
+              >
+                {wrongIds.length > 0 && (
+                  <ReviewLaunch
+                    title="Greșite"
+                    count={wrongIds.length}
+                    description="Întrebările pe care le-ai greșit, la practică sau la simulator."
+                    accentColor="var(--color-wrong)"
+                    icon={
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="15" y1="9" x2="9" y2="15" />
+                        <line x1="9" y1="9" x2="15" y2="15" />
+                      </svg>
+                    }
+                    onPractice={() => startReviewSession("practice", wrongIds)}
+                    onSimulate={() => startReviewSession("test", wrongIds)}
+                  />
+                )}
+                {markedIds.length > 0 && (
+                  <ReviewLaunch
+                    title="Marcate"
+                    count={markedIds.length}
+                    description="Întrebările pe care le-ai marcat ca să revii la ele."
+                    accentColor="var(--color-accent)"
+                    icon={
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                      </svg>
+                    }
+                    onPractice={() => startReviewSession("practice", markedIds)}
+                    onSimulate={() => startReviewSession("test", markedIds)}
+                  />
+                )}
+              </div>
+            </div>
+          )}
 
           <SubjectSelector
             selectedSubjects={selectedSubjects}
@@ -266,6 +348,42 @@ function PracticaContent() {
                         </span>
                         <span className="text-[11px] text-[var(--color-text-tertiary)]">
                           Ordine aleatorie
+                        </span>
+                      </div>
+                    </label>
+
+                    <label
+                      className={cn(
+                        "sm:col-span-2 flex items-center gap-3.5 px-4 py-3.5 rounded-[var(--radius-lg)] cursor-pointer transition-all border",
+                        session.settings.shuffleOptions
+                          ? "bg-[var(--color-accent-muted)] border-[var(--color-accent)] shadow-[0_0_20px_rgba(232,166,49,0.08)]"
+                          : "bg-[var(--color-bg-primary)] border-[var(--color-border)] hover:border-[var(--color-border-strong)] hover:bg-[var(--color-bg-hover)]"
+                      )}
+                    >
+                      <button
+                        role="switch"
+                        aria-checked={session.settings.shuffleOptions}
+                        aria-label="Amestecă ordinea răspunsurilor"
+                        onClick={() => updateSettings({ shuffleOptions: !session.settings.shuffleOptions })}
+                        className={`relative w-10 h-[22px] rounded-full transition-all duration-200 cursor-pointer flex-shrink-0 ${
+                          session.settings.shuffleOptions
+                            ? "bg-[var(--color-accent)]"
+                            : "bg-[var(--color-border-strong)]"
+                        }`}
+                      >
+                        <span className={`absolute top-[3px] left-[3px] w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-200 ${
+                          session.settings.shuffleOptions ? "translate-x-[18px]" : ""
+                        }`} />
+                      </button>
+                      <div className="min-w-0">
+                        <span className={cn(
+                          "text-sm font-medium block transition-colors",
+                          session.settings.shuffleOptions ? "text-[var(--color-text-primary)]" : "text-[var(--color-text-secondary)]"
+                        )}>
+                          Amestecă răspunsurile
+                        </span>
+                        <span className="text-[11px] text-[var(--color-text-tertiary)]">
+                          Variantele apar în altă ordine de fiecare dată
                         </span>
                       </div>
                     </label>

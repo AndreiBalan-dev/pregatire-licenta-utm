@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Explicatie 'De ce e corect?' la fiecare intrebare, dupa ce raspunzi",
-  "Vezi de ce e corect raspunsul si de ce nu celelalte variante",
-  "Explicatiile apar la practica, in simulator si in revizuire",
+  "Amesteca si raspunsurile, la practica si la simulator, nu doar ordinea intrebarilor",
+  "Reia doar greselile sau intrebarile marcate, ca exercitiu sau ca simulare",
+  "Pornesti reluarea din Revizuire sau direct din pagina de Practica",
 ];
 
 export function ChangelogBanner() {

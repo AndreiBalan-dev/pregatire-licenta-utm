@@ -8,17 +8,24 @@ import { cn } from "@/lib/utils";
 interface ExamRestartModalProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (shuffleOrder: boolean) => void;
+  onConfirm: (shuffleOrder: boolean, shuffleAnswers: boolean) => void;
+  /** Initial state for the "shuffle answers" toggle (the saved simulator preference). */
+  defaultShuffleAnswers?: boolean;
 }
 
 type OrderChoice = "same" | "shuffled";
 
-export function ExamRestartModal({ open, onCancel, onConfirm }: ExamRestartModalProps) {
+export function ExamRestartModal({ open, onCancel, onConfirm, defaultShuffleAnswers = false }: ExamRestartModalProps) {
   const [choice, setChoice] = useState<OrderChoice>("same");
+  const [shuffleAnswers, setShuffleAnswers] = useState(defaultShuffleAnswers);
 
   useEffect(() => {
-    if (open) setChoice("same"); // eslint-disable-line react-hooks/set-state-in-effect
-  }, [open]);
+    if (open) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setChoice("same");
+      setShuffleAnswers(defaultShuffleAnswers);
+    }
+  }, [open, defaultShuffleAnswers]);
 
   return (
     <Modal open={open} onClose={onCancel} title="Re-fă același examen">
@@ -62,6 +69,43 @@ export function ExamRestartModal({ open, onCancel, onConfirm }: ExamRestartModal
           />
         </div>
 
+        {/* Shuffle answers toggle */}
+        <label
+          className={cn(
+            "flex items-center gap-3 p-3.5 rounded-[var(--radius-md)] border cursor-pointer transition-all duration-200",
+            shuffleAnswers
+              ? "border-[var(--color-accent)] bg-[var(--color-accent-muted)] shadow-[0_0_18px_rgba(232,166,49,0.1)]"
+              : "border-[var(--color-border)] bg-[var(--color-bg-primary)] hover:border-[var(--color-border-strong)] hover:bg-[var(--color-bg-hover)]",
+          )}
+        >
+          <button
+            type="button"
+            role="switch"
+            aria-checked={shuffleAnswers}
+            aria-label="Amestecă ordinea răspunsurilor"
+            onClick={() => setShuffleAnswers((v) => !v)}
+            className={cn(
+              "relative w-11 h-[24px] rounded-full transition-all duration-200 flex-shrink-0 cursor-pointer",
+              shuffleAnswers ? "bg-[var(--color-accent)]" : "bg-[var(--color-border-strong)]",
+            )}
+          >
+            <span
+              className={cn(
+                "absolute top-[3px] left-[3px] w-[18px] h-[18px] rounded-full bg-white shadow-sm transition-transform duration-200",
+                shuffleAnswers && "translate-x-[20px]",
+              )}
+            />
+          </button>
+          <span className="flex-1 min-w-0">
+            <span className="block text-sm font-semibold text-[var(--color-text-primary)] mb-0.5">
+              Amestecă și răspunsurile
+            </span>
+            <span className="block text-[11px] sm:text-xs leading-relaxed text-[var(--color-text-tertiary)]">
+              Variantele de răspuns apar în altă ordine la fiecare grilă, ca să nu memorezi răspunsul după poziție.
+            </span>
+          </span>
+        </label>
+
         {/* Note */}
         <div className="flex items-start gap-2 px-3 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-bg-primary)] border border-[var(--color-border)]">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-tertiary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 mt-0.5" aria-hidden="true">
@@ -79,7 +123,7 @@ export function ExamRestartModal({ open, onCancel, onConfirm }: ExamRestartModal
           <Button variant="secondary" size="md" className="flex-1" onClick={onCancel}>
             Înapoi
           </Button>
-          <Button variant="primary" size="md" className="flex-1" onClick={() => onConfirm(choice === "shuffled")}>
+          <Button variant="primary" size="md" className="flex-1" onClick={() => onConfirm(choice === "shuffled", shuffleAnswers)}>
             Re-fă examenul
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <polyline points="9 6 15 12 9 18" />

@@ -15,8 +15,26 @@ import { shuffleArray } from "@/lib/utils";
 import { questionsBySubject, getQuestion } from "@/data";
 import { modules } from "@/data/modules";
 import { pickExamQuestions, computeScore } from "@/lib/exam";
+import { buildOptionOrders } from "@/lib/practice";
 import { buildMergedAnswerMap } from "@/lib/answer-merge";
-import type { AnswerKey } from "@/data/types";
+import type { AnswerKey, Question } from "@/data/types";
+
+export interface StartPracticeOptions {
+  /** Randomize the order of the questions themselves. */
+  shuffleOrder?: boolean;
+  batchSize?: number | null;
+  /** Randomize the on-screen position of each question's answer options. */
+  shuffleOptions?: boolean;
+  /** "practice" shows feedback as you go; "test" hides it until the end. */
+  mode?: "practice" | "test";
+}
+
+/** Build a per-question answer-option display order for a set of question ids. */
+function optionOrdersForIds(ids: number[]): Record<number, AnswerKey[]> {
+  return buildOptionOrders(
+    ids.map((id) => getQuestion(id)).filter((q): q is Question => q !== undefined),
+  );
+}
 
 export interface ExamSummaryData {
   examId: string;
@@ -165,14 +183,24 @@ export function useSession() {
           lastPracticedAt: new Date().toISOString(),
         };
 
+        // A question may be re-answered (e.g. redoing wrong/marked questions).
+        // Count "attempted" once per question, and move "correct" by the delta
+        // so the per-subject accuracy reflects the latest answer.
+        const previous = prev.answers[questionId];
+        const correctDelta = previous
+          ? (isCorrect ? 1 : 0) - (previous.isCorrect ? 1 : 0)
+          : isCorrect
+            ? 1
+            : 0;
+
         const updated: LocalSession = {
           ...prev,
           answers: { ...prev.answers, [questionId]: answer },
           subjectStats: {
             ...prev.subjectStats,
             [subjectId]: {
-              attempted: prevSubjectStat.attempted + (prev.answers[questionId] ? 0 : 1),
-              correct: prevSubjectStat.correct + (isCorrect && !prev.answers[questionId] ? 1 : 0),
+              attempted: prevSubjectStat.attempted + (previous ? 0 : 1),
+              correct: Math.max(0, prevSubjectStat.correct + correctDelta),
               lastPracticedAt: new Date().toISOString(),
             },
           },
@@ -254,15 +282,18 @@ export function useSession() {
   );
 
   const startPractice = useCallback(
-    (subjectIds: string[], questionIds: number[], shuffle: boolean, batchSize: number | null = null): string => {
-      const ordered = shuffle ? shuffleArray(questionIds) : questionIds;
+    (subjectIds: string[], questionIds: number[], options: StartPracticeOptions = {}): string => {
+      const { shuffleOrder = false, batchSize = null, shuffleOptions = false, mode = "practice" } = options;
+      const ordered = shuffleOrder ? shuffleArray(questionIds) : questionIds;
+      const optionOrder = shuffleOptions ? optionOrdersForIds(ordered) : undefined;
       const practice: PracticeState = {
         subjectIds,
         questionIds: ordered,
         currentIndex: 0,
-        mode: "practice",
+        mode,
         startedAt: new Date().toISOString(),
         batchSize,
+        ...(optionOrder ? { optionOrder } : {}),
       };
       const sessionId = crypto.randomUUID();
       setSession((prev) => {
@@ -380,6 +411,7 @@ export function useSession() {
     const examId = crypto.randomUUID();
     const questionIds = pickExamQuestions(modules, questionsBySubject);
     const snapshotFeedback = !!sessionRef.current.settings.simulatorShowFeedback;
+    const snapshotShuffleOptions = !!sessionRef.current.settings.simulatorShuffleOptions;
     const exam: ExamState = {
       examId,
       questionIds,
@@ -390,6 +422,7 @@ export function useSession() {
       durationMs: null,
       showFeedback: snapshotFeedback,
       isRepeat: false,
+      ...(snapshotShuffleOptions ? { optionOrder: optionOrdersForIds(questionIds) } : {}),
     };
     const newHistory = archiveExamIfSubmitted(sessionRef.current);
     const updated: LocalSession = {
@@ -405,7 +438,7 @@ export function useSession() {
 
   // Start a fresh repeat exam from a given set of question ids. Works for the
   // current exam ("Re-fă acest examen") and for any exam pulled from history.
-  const repeatExamFromIds = useCallback((sourceIds: number[], shuffleOrder: boolean): string | null => {
+  const repeatExamFromIds = useCallback((sourceIds: number[], shuffleOrder: boolean, shuffleOptions = false): string | null => {
     if (!sourceIds || sourceIds.length === 0) return null;
     const examId = crypto.randomUUID();
     const newIds = shuffleOrder ? shuffleArray(sourceIds) : [...sourceIds];
@@ -421,6 +454,7 @@ export function useSession() {
       showFeedback: snapshotFeedback,
       isRepeat: true,
       repeatShuffled: shuffleOrder,
+      ...(shuffleOptions ? { optionOrder: optionOrdersForIds(newIds) } : {}),
     };
     const newHistory = archiveExamIfSubmitted(sessionRef.current);
     const updated: LocalSession = {
@@ -434,10 +468,10 @@ export function useSession() {
     return examId;
   }, []);
 
-  const restartSameExam = useCallback((shuffleOrder: boolean): string | null => {
+  const restartSameExam = useCallback((shuffleOrder: boolean, shuffleOptions = false): string | null => {
     const prevExam = sessionRef.current.currentExam;
     if (!prevExam) return null;
-    return repeatExamFromIds(prevExam.questionIds, shuffleOrder);
+    return repeatExamFromIds(prevExam.questionIds, shuffleOrder, shuffleOptions);
   }, [repeatExamFromIds]);
 
   const setExamAnswer = useCallback(

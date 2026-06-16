@@ -5,36 +5,47 @@ interface ProgressBarProps {
   total: number;
   correctCount: number;
   wrongCount: number;
+  /**
+   * Hide the correct/greșit breakdown and show a single neutral fill. Used in
+   * "test" (simulation) runs where correctness must stay hidden until the end.
+   */
+  neutral?: boolean;
 }
 
-export function ProgressBar({ current, total, correctCount, wrongCount }: ProgressBarProps) {
+export function ProgressBar({ current, total, correctCount, wrongCount, neutral = false }: ProgressBarProps) {
   const pct = total > 0 ? (current / total) * 100 : 0;
   const correctPct = total > 0 ? (correctCount / total) * 100 : 0;
   const wrongPct = total > 0 ? (wrongCount / total) * 100 : 0;
-  const hasCorrect = correctPct > 0;
-  const hasWrong = wrongPct > 0;
+  const hasCorrect = !neutral && correctPct > 0;
+  const hasWrong = !neutral && wrongPct > 0;
 
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-2.5 text-xs">
-        <div className="flex items-center gap-3">
-          <span className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-[var(--color-correct)]" aria-hidden="true" />
-            <span className="text-[var(--color-correct)] font-semibold">{correctCount}</span>
-            <span className="text-[var(--color-text-tertiary)]">
-              <span className="hidden sm:inline">corecte</span>
-              <span className="sm:hidden" aria-hidden="true">✓</span>
-            </span>
+        {neutral ? (
+          <span className="text-[var(--color-text-tertiary)]">
+            <span className="text-[var(--color-text-secondary)] font-semibold tabular-nums">{current}</span> răspunse
           </span>
-          <span className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-[var(--color-wrong)]" aria-hidden="true" />
-            <span className="text-[var(--color-wrong)] font-semibold">{wrongCount}</span>
-            <span className="text-[var(--color-text-tertiary)]">
-              <span className="hidden sm:inline">greșite</span>
-              <span className="sm:hidden" aria-hidden="true">✗</span>
+        ) : (
+          <div className="flex items-center gap-3">
+            <span className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[var(--color-correct)]" aria-hidden="true" />
+              <span className="text-[var(--color-correct)] font-semibold">{correctCount}</span>
+              <span className="text-[var(--color-text-tertiary)]">
+                <span className="hidden sm:inline">corecte</span>
+                <span className="sm:hidden" aria-hidden="true">✓</span>
+              </span>
             </span>
-          </span>
-        </div>
+            <span className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[var(--color-wrong)]" aria-hidden="true" />
+              <span className="text-[var(--color-wrong)] font-semibold">{wrongCount}</span>
+              <span className="text-[var(--color-text-tertiary)]">
+                <span className="hidden sm:inline">greșite</span>
+                <span className="sm:hidden" aria-hidden="true">✗</span>
+              </span>
+            </span>
+          </div>
+        )}
         <span className="text-[var(--color-text-tertiary)] font-mono tabular-nums">
           {current}<span className="text-[var(--color-border-strong)]">/</span>{total}
         </span>
@@ -45,8 +56,22 @@ export function ProgressBar({ current, total, correctCount, wrongCount }: Progre
         aria-valuenow={current}
         aria-valuemin={0}
         aria-valuemax={total}
-        aria-label={`Progres: ${current} din ${total} rezolvate, ${correctCount} corecte, ${wrongCount} greșite`}
+        aria-label={
+          neutral
+            ? `Progres: ${current} din ${total} răspunse`
+            : `Progres: ${current} din ${total} rezolvate, ${correctCount} corecte, ${wrongCount} greșite`
+        }
       >
+        {/* Neutral fill (test mode): single accent bar, no correctness reveal */}
+        {neutral && pct > 0 && (
+          <div
+            className="absolute inset-y-0 left-0 rounded-full transition-all duration-500 ease-out"
+            style={{
+              width: `${pct}%`,
+              background: "linear-gradient(90deg, var(--color-accent), var(--color-accent-hover))",
+            }}
+          />
+        )}
         {/* Correct segment */}
         {hasCorrect && (
           <div

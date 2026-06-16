@@ -1,6 +1,7 @@
 import process from "node:process";
 import assert from "node:assert/strict";
-import { selectPracticeQuestionIds } from "../src/lib/practice.ts";
+import { selectPracticeQuestionIds, buildOptionOrders } from "../src/lib/practice.ts";
+import { remapExplanationForOrder } from "../src/lib/explanation.ts";
 
 // Deterministic stand-in for the random shuffle so we can assert exact order.
 const reverseShuffle = (arr) => [...arr].reverse();
@@ -75,6 +76,68 @@ check("batchSize larger than pool returns the whole (shuffled) pool", () => {
     reverseShuffle,
   );
   assert.deepEqual(result, range(1, 5).reverse());
+});
+
+// ---- buildOptionOrders (answer-option shuffle) ----
+
+check("buildOptionOrders shuffles each question's options, keyed by id", () => {
+  const orders = buildOptionOrders(
+    [{ id: 10 }, { id: 20 }],
+    reverseShuffle,
+  );
+  // reverse(["a","b","c","d"]) -> ["d","c","b","a"]
+  assert.deepEqual(orders[10], ["d", "c", "b", "a"]);
+  assert.deepEqual(orders[20], ["d", "c", "b", "a"]);
+});
+
+check("buildOptionOrders keeps natural order for lockOptions questions", () => {
+  const orders = buildOptionOrders(
+    [{ id: 1, lockOptions: true }, { id: 2 }],
+    reverseShuffle,
+  );
+  assert.deepEqual(orders[1], ["a", "b", "c", "d"]); // locked: untouched
+  assert.deepEqual(orders[2], ["d", "c", "b", "a"]); // shuffled
+});
+
+check("buildOptionOrders always returns a permutation of the four keys", () => {
+  const orders = buildOptionOrders([{ id: 7 }]); // real random shuffle
+  assert.deepEqual([...orders[7]].sort(), ["a", "b", "c", "d"]);
+});
+
+// ---- remapExplanationForOrder (letters follow the shuffle) ----
+
+const SAMPLE_EXP =
+  "Corect: b\n\n" +
+  "`double x[100];` declară un vector. Vezi a doua variantă.\n\n" +
+  "De ce nu celelalte:\n" +
+  "• a - `x=float[100];` nu este sintaxă validă\n" +
+  "• c - `floating` nu există ca tip de date în C\n" +
+  "• d - `real` nu este tip în C";
+
+check("remapExplanationForOrder: identity order leaves the text untouched", () => {
+  assert.equal(remapExplanationForOrder(SAMPLE_EXP, ["a", "b", "c", "d"]), SAMPLE_EXP);
+  assert.equal(remapExplanationForOrder(SAMPLE_EXP, undefined), SAMPLE_EXP);
+});
+
+check("remapExplanationForOrder: header + bullet leaders follow the new positions", () => {
+  // order ["c","a","b","d"] => c→a, a→b, b→c, d→d
+  const out = remapExplanationForOrder(SAMPLE_EXP, ["c", "a", "b", "d"]);
+  const lines = out.split("\n");
+  assert.equal(lines[0], "Corect: c"); // original correct "b" now sits at position C
+  // bullets are sorted into A-D order by their NEW letter
+  const bullets = lines.filter((l) => l.startsWith("•"));
+  assert.deepEqual(bullets, [
+    "• a - `floating` nu există ca tip de date în C", // was c
+    "• b - `x=float[100];` nu este sintaxă validă", // was a
+    "• d - `real` nu este tip în C", // was d
+  ]);
+});
+
+check("remapExplanationForOrder: prose letters (Romanian 'a', code, 'în C') are untouched", () => {
+  const out = remapExplanationForOrder(SAMPLE_EXP, ["c", "a", "b", "d"]);
+  assert.ok(out.includes("Vezi a doua variantă."), "the word 'a' in prose stays");
+  assert.ok(out.includes("nu există ca tip de date în C"), "'în C' stays");
+  assert.ok(out.includes("`x=float[100];`"), "code spans stay");
 });
 
 if (failures > 0) {

@@ -1,6 +1,7 @@
 "use client";
 
 import { cn, isCodeLike } from "@/lib/utils";
+import { remapExplanationForOrder } from "@/lib/explanation";
 import { CodeBlock } from "@/components/ui/CodeBlock";
 import { ExplanationPanel } from "./ExplanationPanel";
 import type { Question, AnswerKey } from "@/data/types";
@@ -15,9 +16,17 @@ interface QuestionCardProps {
   onSelectAnswer: (answer: AnswerKey) => void;
   onBookmark?: () => void;
   onRetry?: () => void;
+  /**
+   * Display order of the answer options (a permutation of a/b/c/d). When set,
+   * options are rendered in this order while each keeps its own letter, so the
+   * explanations and "Corect" feedback stay accurate. Defaults to a/b/c/d.
+   */
+  optionOrder?: AnswerKey[];
 }
 
-const optionLabels: Record<AnswerKey, string> = { a: "A", b: "B", c: "C", d: "D" };
+// Options are labeled by on-screen position, so shuffled answers still read A, B, C, D
+// top-to-bottom. Correctness is tracked by the option's own key, not its label.
+const POSITION_LABELS = ["A", "B", "C", "D"] as const;
 
 export function QuestionCard({
   question,
@@ -29,7 +38,14 @@ export function QuestionCard({
   onSelectAnswer,
   onBookmark,
   onRetry,
+  optionOrder,
 }: QuestionCardProps) {
+  const orderedKeys =
+    optionOrder && optionOrder.length === 4
+      ? optionOrder
+      : (Object.keys(question.options) as AnswerKey[]);
+  // Keep the explanation's letter references in sync with the shuffled labels.
+  const explanationText = remapExplanationForOrder(question.explanation ?? "", optionOrder);
   return (
     <div key={question.id} className="animate-fade-in">
       {/* Header */}
@@ -104,7 +120,7 @@ export function QuestionCard({
 
       {/* Options */}
       <div className="space-y-2 sm:space-y-3" role="radiogroup" aria-label="Opțiuni de răspuns">
-        {(Object.keys(question.options) as AnswerKey[]).map((key) => {
+        {orderedKeys.map((key, index) => {
           const isSelected = selectedAnswer === key;
           const isCorrect = key === question.correctAnswer;
           const showCorrect = showFeedback && isCorrect;
@@ -123,7 +139,7 @@ export function QuestionCard({
               key={key}
               role="radio"
               aria-checked={isSelected}
-              aria-label={`Opțiunea ${optionLabels[key]}: ${question.options[key]}${feedbackLabel}`}
+              aria-label={`Opțiunea ${POSITION_LABELS[index]}: ${question.options[key]}${feedbackLabel}`}
               onClick={() => !showFeedback && onSelectAnswer(key)}
               disabled={showFeedback}
               className={cn(
@@ -150,7 +166,7 @@ export function QuestionCard({
                         : "border-[var(--color-border-strong)] text-[var(--color-text-tertiary)]"
                 )}
               >
-                {optionLabels[key]}
+                {POSITION_LABELS[index]}
               </span>
               <span
                 className={cn(
@@ -188,8 +204,8 @@ export function QuestionCard({
       )}
 
       {/* Why-correct / why-wrong explanation (shown once feedback is visible) */}
-      {showFeedback && question.explanation && (
-        <ExplanationPanel text={question.explanation} />
+      {showFeedback && explanationText && (
+        <ExplanationPanel text={explanationText} />
       )}
     </div>
   );

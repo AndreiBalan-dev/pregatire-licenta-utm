@@ -8,6 +8,7 @@ import { Container } from "@/components/layout/Container";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
 import { ExamFeedbackToggle } from "@/components/exam/ExamFeedbackToggle";
+import { ExamOptionToggle } from "@/components/exam/ExamOptionToggle";
 import { ExamRepeatBadge } from "@/components/exam/ExamRepeatBadge";
 import { ExamHistoryButton } from "@/components/results/ExamHistoryButton";
 import { useSession } from "@/hooks/useSession";
@@ -52,6 +53,7 @@ export default function SimulatorLandingPage() {
   const isSubmitted = exam && exam.submittedAt !== null;
   const summary = isSubmitted ? getExamSummary() : null;
   const feedbackEnabled = !!session.settings.simulatorShowFeedback;
+  const shuffleAnswersEnabled = !!session.settings.simulatorShuffleOptions;
   const lastWasRepeat = !!(exam?.isRepeat);
   const examHistory = getExamHistorySummaries();
 
@@ -286,15 +288,33 @@ export default function SimulatorLandingPage() {
               <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-text-tertiary)] mb-2.5" style={{ fontFamily: "var(--font-display)" }}>
                 {isSubmitted ? "Pentru următorul examen" : "Înainte de start"}
               </span>
-              <ExamFeedbackToggle
-                enabled={feedbackEnabled}
-                onChange={(next) => updateSettings({ simulatorShowFeedback: next })}
-                hint={
-                  feedbackEnabled
-                    ? "Alegerea ta e memorată. Se aplică la următorul examen pe care îl începi."
-                    : "Activează doar dacă vrei să înveți cu corectări instant. Lasă oprit pentru o simulare reală."
-                }
-              />
+              <div className="space-y-2.5">
+                <ExamFeedbackToggle
+                  enabled={feedbackEnabled}
+                  onChange={(next) => updateSettings({ simulatorShowFeedback: next })}
+                  hint={
+                    feedbackEnabled
+                      ? "Alegerea ta e memorată. Se aplică la următorul examen pe care îl începi."
+                      : "Activează doar dacă vrei să înveți cu corectări instant. Lasă oprit pentru o simulare reală."
+                  }
+                />
+                <ExamOptionToggle
+                  enabled={shuffleAnswersEnabled}
+                  onChange={(next) => updateSettings({ simulatorShuffleOptions: next })}
+                  ariaLabel="Amestecă ordinea răspunsurilor în simulator"
+                  title="Amestecă răspunsurile"
+                  description="Variantele de răspuns apar în altă ordine la fiecare grilă, ca să nu memorezi răspunsul după poziție. Se aplică la următorul examen."
+                  icon={
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="16 3 21 3 21 8" />
+                      <line x1="4" y1="20" x2="21" y2="3" />
+                      <polyline points="21 16 21 21 16 21" />
+                      <line x1="15" y1="15" x2="21" y2="21" />
+                      <line x1="4" y1="4" x2="9" y2="9" />
+                    </svg>
+                  }
+                />
+              </div>
             </div>
           )}
 

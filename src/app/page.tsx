@@ -14,7 +14,7 @@ import { useSession } from "@/hooks/useSession";
 import { useToast } from "@/hooks/useToast";
 import { ToastContainer } from "@/components/ui/Toast";
 
-const WHATSNEW_KEY = "utm-whatsnew-v150";
+const WHATSNEW_KEY = "utm-whatsnew-v151";
 
 export default function HomePage() {
   const { session, isLoaded, hasExistingSession, getOverallStats } = useSession();

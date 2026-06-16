@@ -43,6 +43,7 @@ export default function QuizPage() {
   }, []);
 
   const practice = session.currentPractice;
+  const isTest = practice?.mode === "test";
 
   useEffect(() => {
     timer.reset();
@@ -60,7 +61,8 @@ export default function QuizPage() {
     const isFromThisSession = existingAnswer && existingAnswer.answeredAt >= practice.startedAt;
     if (isFromThisSession) {
       setSelectedAnswer(existingAnswer.selected); // eslint-disable-line react-hooks/set-state-in-effect
-      setShowFeedback(true);
+      // In test mode keep the question editable and never reveal correctness.
+      setShowFeedback(!isTest);
     } else {
       setSelectedAnswer(null);
       setShowFeedback(false);
@@ -87,6 +89,14 @@ export default function QuizPage() {
       if (showFeedback || !currentQuestion) return;
       setSelectedAnswer(answer);
 
+      if (isTest) {
+        // Simulation: record the answer silently (no feedback). The user can
+        // still change it until they advance; the score is shown at the end.
+        const isCorrect = answer === currentQuestion.correctAnswer;
+        answerQuestion(currentQuestion.id, answer, isCorrect, timer.stop(), currentQuestion.subjectId);
+        return;
+      }
+
       if (session.settings.showImmediateFeedback) {
         const isCorrect = answer === currentQuestion.correctAnswer;
         const timeSpent = timer.stop();
@@ -100,13 +110,15 @@ export default function QuizPage() {
         setShowFeedback(true);
       }
     },
-    [showFeedback, currentQuestion, session.settings.showImmediateFeedback, answerQuestion, timer]
+    [showFeedback, currentQuestion, isTest, session.settings.showImmediateFeedback, answerQuestion, timer]
   );
 
   const goToNext = useCallback(() => {
     if (!practice) return;
 
-    if (!showFeedback && selectedAnswer && currentQuestion) {
+    // Practice mode commits on "next" and reveals feedback before advancing.
+    // Test mode already recorded the answer on selection, so it just advances.
+    if (!isTest && !showFeedback && selectedAnswer && currentQuestion) {
       const isCorrect = selectedAnswer === currentQuestion.correctAnswer;
       const timeSpent = timer.stop();
       answerQuestion(
@@ -128,7 +140,7 @@ export default function QuizPage() {
     } else {
       setShowSummary(true);
     }
-  }, [practice, showFeedback, selectedAnswer, currentQuestion, answerQuestion, timer, updatePracticeIndex]);
+  }, [practice, isTest, showFeedback, selectedAnswer, currentQuestion, answerQuestion, timer, updatePracticeIndex]);
 
   const goToPrev = useCallback(() => {
     if (!practice || practice.currentIndex <= 0) return;
@@ -187,15 +199,16 @@ export default function QuizPage() {
     const batchSize = practice.batchSize;
     const batch = batchSize ? nextIds.slice(0, batchSize) : nextIds;
 
-    const newSessionId = startPractice(
-      practice.subjectIds,
-      batch,
-      session.settings.shuffleOptions,
-      batchSize
-    );
+    // Carry the same options into the next batch (answer-shuffle + mode).
+    const newSessionId = startPractice(practice.subjectIds, batch, {
+      shuffleOrder: false,
+      batchSize,
+      shuffleOptions: practice.optionOrder != null,
+      mode: practice.mode,
+    });
     setShowSummary(false);
     router.replace(`/practica/${newSessionId}`);
-  }, [practice, session.answers, session.settings.shuffleOptions, startPractice, router]);
+  }, [practice, session.answers, startPractice, router]);
 
   useEffect(() => {
     if (isLoaded && !practice) {
@@ -237,6 +250,21 @@ export default function QuizPage() {
           aria-hidden="true"
         />
         <Container narrow className="relative">
+          {isTest && (
+            <div className="mb-3 flex items-center gap-2">
+              <span
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.15em] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-40"
+                style={{ fontFamily: "var(--font-display)" }}
+                title="Vezi rezultatul abia la final, ca la examen"
+              >
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M9 11l3 3L22 4" />
+                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                </svg>
+                Mod simulare
+              </span>
+            </div>
+          )}
           {/* Top bar: subject + timer */}
           <div className="flex items-center justify-between mb-4 sm:mb-5">
             {currentSubject && (
@@ -269,6 +297,7 @@ export default function QuizPage() {
               total={practice.questionIds.length}
               correctCount={practiceStats.correct}
               wrongCount={practiceStats.wrong}
+              neutral={isTest}
             />
           </div>
 
@@ -294,11 +323,15 @@ export default function QuizPage() {
                     const isCurrent = actualIndex === practice.currentIndex;
                     const statusLabel = isCurrent
                       ? "curentă"
-                      : answered?.isCorrect
-                        ? "corect"
-                        : answered
-                          ? "greșit"
-                          : "nerezolvată";
+                      : isTest
+                        ? answered
+                          ? "răspuns dat"
+                          : "nerezolvată"
+                        : answered?.isCorrect
+                          ? "corect"
+                          : answered
+                            ? "greșit"
+                            : "nerezolvată";
                     return (
                       <button
                         key={qId}
@@ -318,9 +351,13 @@ export default function QuizPage() {
                             isCurrent
                               ? "w-7 sm:w-8 h-2.5 sm:h-3 bg-[var(--color-accent)] shadow-[0_0_8px_rgba(232,166,49,0.3)]"
                               : "w-2.5 h-2.5 sm:w-3 sm:h-3 hover:scale-110",
-                            !isCurrent && answered?.isCorrect && "bg-[var(--color-correct)]",
-                            !isCurrent && answered && !answered.isCorrect && "bg-[var(--color-wrong)]",
-                            !isCurrent && !answered && "bg-[var(--color-border-strong)]"
+                            // Test mode: neutral marker for answered (no correctness reveal)
+                            !isCurrent && isTest && answered && "bg-[var(--color-accent)] opacity-70",
+                            !isCurrent && isTest && !answered && "bg-[var(--color-border-strong)]",
+                            // Practice mode: correct / wrong / unanswered
+                            !isCurrent && !isTest && answered?.isCorrect && "bg-[var(--color-correct)]",
+                            !isCurrent && !isTest && answered && !answered.isCorrect && "bg-[var(--color-wrong)]",
+                            !isCurrent && !isTest && !answered && "bg-[var(--color-border-strong)]"
                           )}
                         />
                       </button>
@@ -359,6 +396,7 @@ export default function QuizPage() {
                 onSelectAnswer={handleSelectAnswer}
                 onBookmark={handleBookmark}
                 onRetry={handleRetry}
+                optionOrder={practice.optionOrder?.[currentQuestion.id]}
               />
             </div>
           </div>
@@ -398,7 +436,7 @@ export default function QuizPage() {
               return (
                 <button
                   onClick={goToNext}
-                  disabled={!selectedAnswer && !showFeedback}
+                  disabled={!isTest && !selectedAnswer && !showFeedback}
                   aria-label={isLast ? "Finalizează sesiunea" : "Întrebarea următoare"}
                   className={cn(
                     "flex items-center justify-center gap-1.5 h-11 sm:h-12 px-4 sm:px-6 rounded-[var(--radius-md)] font-semibold text-sm transition-all duration-200 cursor-pointer",
@@ -426,7 +464,7 @@ export default function QuizPage() {
       <Modal
         open={showSummary}
         onClose={() => setShowSummary(false)}
-        title="Rezumat Sesiune"
+        title={isTest ? "Rezultatul simulării" : "Rezumat Sesiune"}
       >
         <div className="space-y-5">
           {/* Accuracy hero */}
