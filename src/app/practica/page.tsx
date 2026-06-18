@@ -14,6 +14,16 @@ import { selectPracticeQuestionIds, type QuestionOrder } from "@/lib/practice";
 import { buildMergedAnswerMap } from "@/lib/answer-merge";
 import { modules } from "@/data/modules";
 import { questionsBySubject, getQuestion } from "@/data";
+import { SubjectScopeMenu } from "@/components/review/SubjectScopeMenu";
+import { buildScopeOptions, filterByScope, hasMultipleScopes, scopeStillValid, type Scope } from "@/lib/redo-scope";
+
+const ALL_SCOPE: Scope = { kind: "all" };
+
+/** Locate a question id within the module/materie catalog (for scope filtering). */
+const resolveQuestion = (id: number) => {
+  const q = getQuestion(id);
+  return q ? { moduleId: q.moduleId, subjectId: q.subjectId } : undefined;
+};
 
 function PracticaContent() {
   const router = useRouter();
@@ -35,6 +45,21 @@ function PracticaContent() {
     () => session.bookmarks.filter((id) => getQuestion(id) !== undefined),
     [session.bookmarks],
   );
+
+  // Per-card scope: each redo card can be narrowed to a module or a single materie.
+  const [wrongScope, setWrongScope] = useState<Scope>(ALL_SCOPE);
+  const [markedScope, setMarkedScope] = useState<Scope>(ALL_SCOPE);
+
+  const wrongOptions = useMemo(() => buildScopeOptions(wrongIds, resolveQuestion, modules), [wrongIds]);
+  const markedOptions = useMemo(() => buildScopeOptions(markedIds, resolveQuestion, modules), [markedIds]);
+
+  // If the chosen materie/module leaves the pool (e.g. its progress was reset below),
+  // fall back to "all" so a card never gets stuck on an empty scope.
+  const wrongScopeEffective = scopeStillValid(wrongScope, wrongOptions) ? wrongScope : ALL_SCOPE;
+  const markedScopeEffective = scopeStillValid(markedScope, markedOptions) ? markedScope : ALL_SCOPE;
+
+  const wrongFiltered = useMemo(() => filterByScope(wrongIds, wrongScopeEffective, resolveQuestion), [wrongIds, wrongScopeEffective]);
+  const markedFiltered = useMemo(() => filterByScope(markedIds, markedScopeEffective, resolveQuestion), [markedIds, markedScopeEffective]);
 
   const startReviewSession = (mode: "practice" | "test", ids: number[]) => {
     if (ids.length === 0) return;
@@ -139,23 +164,50 @@ function PracticaContent() {
           </div>
 
           {(wrongIds.length > 0 || markedIds.length > 0) && (
-            <div className="mb-8 animate-fade-in">
-              <h2
-                className="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--color-text-tertiary)] mb-3"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Reia ce ai de recuperat
-              </h2>
+            <div className="mb-10 animate-fade-in">
               <div
-                className={cn(
-                  "grid gap-3 grid-cols-1",
-                  wrongIds.length > 0 && markedIds.length > 0 && "sm:grid-cols-2",
-                )}
+                className="relative rounded-[var(--radius-xl)] border border-[var(--color-border)] overflow-hidden"
+                style={{ background: "linear-gradient(180deg, var(--color-bg-tertiary) 0%, var(--color-bg-secondary) 55%, var(--color-bg-secondary) 100%)" }}
               >
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{ background: "radial-gradient(ellipse 70% 55% at 50% 0%, var(--color-accent), transparent)", opacity: 0.07 }}
+                  aria-hidden="true"
+                />
+                <div className="relative p-4 sm:p-5">
+                  <div className="flex items-center gap-2.5 mb-1.5">
+                    <span
+                      className="flex-shrink-0 inline-flex items-center justify-center w-8 h-8 rounded-[var(--radius-md)] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-border)]"
+                      aria-hidden="true"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="1 4 1 10 7 10" />
+                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                      </svg>
+                    </span>
+                    <h2
+                      className="text-base sm:text-lg font-bold text-[var(--color-text-primary)]"
+                      style={{ fontFamily: "var(--font-display)" }}
+                    >
+                      Reia ce ai de recuperat
+                    </h2>
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] bg-[var(--color-accent)] text-[#0C0C0E]">
+                      Nou
+                    </span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-[var(--color-text-secondary)] mb-4">
+                    Reia greșelile sau întrebările marcate — acum poți alege și pe ce materie sau modul, nu doar tot odată.
+                  </p>
+                  <div
+                    className={cn(
+                      "grid gap-3 grid-cols-1",
+                      wrongIds.length > 0 && markedIds.length > 0 && "sm:grid-cols-2",
+                    )}
+                  >
                 {wrongIds.length > 0 && (
                   <ReviewLaunch
                     title="Greșite"
-                    count={wrongIds.length}
+                    count={wrongFiltered.length}
                     description="Întrebările pe care le-ai greșit, la practică sau la simulator."
                     accentColor="var(--color-wrong)"
                     icon={
@@ -165,14 +217,19 @@ function PracticaContent() {
                         <line x1="9" y1="9" x2="15" y2="15" />
                       </svg>
                     }
-                    onPractice={() => startReviewSession("practice", wrongIds)}
-                    onSimulate={() => startReviewSession("test", wrongIds)}
+                    filterSlot={
+                      hasMultipleScopes(wrongOptions) ? (
+                        <SubjectScopeMenu options={wrongOptions} value={wrongScopeEffective} onChange={setWrongScope} accentColor="var(--color-wrong)" />
+                      ) : undefined
+                    }
+                    onPractice={() => startReviewSession("practice", wrongFiltered)}
+                    onSimulate={() => startReviewSession("test", wrongFiltered)}
                   />
                 )}
                 {markedIds.length > 0 && (
                   <ReviewLaunch
                     title="Marcate"
-                    count={markedIds.length}
+                    count={markedFiltered.length}
                     description="Întrebările pe care le-ai marcat ca să revii la ele."
                     accentColor="var(--color-accent)"
                     icon={
@@ -180,10 +237,17 @@ function PracticaContent() {
                         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
                       </svg>
                     }
-                    onPractice={() => startReviewSession("practice", markedIds)}
-                    onSimulate={() => startReviewSession("test", markedIds)}
+                    filterSlot={
+                      hasMultipleScopes(markedOptions) ? (
+                        <SubjectScopeMenu options={markedOptions} value={markedScopeEffective} onChange={setMarkedScope} accentColor="var(--color-accent)" />
+                      ) : undefined
+                    }
+                    onPractice={() => startReviewSession("practice", markedFiltered)}
+                    onSimulate={() => startReviewSession("test", markedFiltered)}
                   />
                 )}
+                  </div>
+                </div>
               </div>
             </div>
           )}

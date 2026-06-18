@@ -10,6 +10,8 @@ interface ReviewLaunchProps {
   description?: string;
   icon?: ReactNode;
   accentColor?: string;
+  /** Optional control (e.g. a materie filter) rendered above the action buttons. */
+  filterSlot?: ReactNode;
   /** Start a normal practice run (instant feedback + explanations). */
   onPractice: () => void;
   /** Start a no-feedback simulation of the same set (score at the end). */
@@ -32,6 +34,7 @@ export function ReviewLaunch({
   description,
   icon,
   accentColor = "var(--color-accent)",
+  filterSlot,
   onPractice,
   onSimulate,
 }: ReviewLaunchProps) {
@@ -69,6 +72,8 @@ export function ReviewLaunch({
           )}
         </div>
       </div>
+
+      {filterSlot && <div className="mb-3">{filterSlot}</div>}
 
       <div className="flex gap-2">
         <Button

@@ -15,11 +15,21 @@ import { useSession } from "@/hooks/useSession";
 import { useResolvedTheme } from "@/hooks/useResolvedTheme";
 import { getQuestion } from "@/data";
 import { modules } from "@/data/modules";
+import { SubjectScopeMenu } from "@/components/review/SubjectScopeMenu";
+import { buildScopeOptions, filterByScope, hasMultipleScopes, scopeStillValid, type Scope } from "@/lib/redo-scope";
 import { cn, isCodeLike } from "@/lib/utils";
 import { scoreToColor, EXAM_TOTAL_QUESTIONS } from "@/lib/exam";
 import { buildMergedAnswerMap } from "@/lib/answer-merge";
 import type { AnswerKey, Question } from "@/data/types";
 import type { LocalSession } from "@/lib/session-types";
+
+const ALL_SCOPE: Scope = { kind: "all" };
+
+/** Locate a question id within the module/materie catalog (for scope filtering). */
+const resolveQuestion = (id: number) => {
+  const q = getQuestion(id);
+  return q ? { moduleId: q.moduleId, subjectId: q.subjectId } : undefined;
+};
 
 interface DisplayAnswer {
   selected: AnswerKey;
@@ -70,7 +80,7 @@ export default function RevizuirePage() {
   const router = useRouter();
   const theme = useResolvedTheme();
   const [filter, setFilter] = useState<Filter>("wrong");
-  const [moduleFilter, setModuleFilter] = useState<string>("all");
+  const [scope, setScope] = useState<Scope>(ALL_SCOPE);
 
   // Launch a fresh session from exactly the questions currently shown (the
   // active filter + module filter). "practice" gives feedback as you go;
@@ -107,28 +117,31 @@ export default function RevizuirePage() {
 
   const mergedAnswers = useMemo(() => buildMergedAnswerMap(session), [session]);
 
-  const filteredQuestions = useMemo(() => {
-    let questionIds: number[] = [];
-
+  // Base pool for the active tab, before the materie/module scope is applied.
+  const basePoolIds = useMemo(() => {
     if (filter === "wrong") {
-      questionIds = Array.from(mergedAnswers.entries())
-        .filter(([, a]) => !a.isCorrect)
-        .map(([id]) => id);
-    } else if (filter === "correct") {
-      questionIds = Array.from(mergedAnswers.entries())
-        .filter(([, a]) => a.isCorrect)
-        .map(([id]) => id);
-    } else if (filter === "bookmarked") {
-      questionIds = session.bookmarks;
-    } else {
-      questionIds = Array.from(mergedAnswers.keys());
+      return Array.from(mergedAnswers.entries()).filter(([, a]) => !a.isCorrect).map(([id]) => id);
     }
+    if (filter === "correct") {
+      return Array.from(mergedAnswers.entries()).filter(([, a]) => a.isCorrect).map(([id]) => id);
+    }
+    if (filter === "bookmarked") {
+      return session.bookmarks;
+    }
+    return Array.from(mergedAnswers.keys());
+  }, [filter, mergedAnswers, session.bookmarks]);
 
-    return questionIds
-      .map((id) => getQuestion(id))
-      .filter((q): q is Question => q !== undefined)
-      .filter((q) => moduleFilter === "all" || q.moduleId === moduleFilter);
-  }, [filter, moduleFilter, mergedAnswers, session.bookmarks]);
+  const scopeOptions = useMemo(() => buildScopeOptions(basePoolIds, resolveQuestion, modules), [basePoolIds]);
+  // Fall back to "all" when the chosen materie/module isn't in the current tab's pool.
+  const scopeEffective = scopeStillValid(scope, scopeOptions) ? scope : ALL_SCOPE;
+
+  const filteredQuestions = useMemo(
+    () =>
+      filterByScope(basePoolIds, scopeEffective, resolveQuestion)
+        .map((id) => getQuestion(id))
+        .filter((q): q is Question => q !== undefined),
+    [basePoolIds, scopeEffective],
+  );
 
   if (!isLoaded) {
     return (
@@ -291,35 +304,22 @@ export default function RevizuirePage() {
             ))}
           </div>
 
-          {/* Module filter */}
-          <div className="flex flex-wrap items-center gap-2 mb-8 animate-fade-in stagger-3">
-            <button
-              onClick={() => setModuleFilter("all")}
-              className={cn(
-                "px-3 py-1.5 rounded-[var(--radius-md)] text-xs font-medium transition-all duration-200 cursor-pointer border",
-                moduleFilter === "all"
-                  ? "bg-[var(--color-bg-hover)] text-[var(--color-text-primary)] border-[var(--color-border-strong)]"
-                  : "text-[var(--color-text-tertiary)] border-transparent hover:text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-tertiary)]"
-              )}
-            >
-              Toate modulele
-            </button>
-            {modules.map((mod) => (
-              <button
-                key={mod.id}
-                onClick={() => setModuleFilter(mod.id)}
-                className={cn(
-                  "px-3 py-1.5 rounded-[var(--radius-md)] text-xs font-medium transition-all duration-200 cursor-pointer border",
-                  moduleFilter === mod.id
-                    ? "text-[var(--color-text-primary)] border-current"
-                    : "text-[var(--color-text-tertiary)] border-transparent hover:text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-tertiary)]"
-                )}
-                style={moduleFilter === mod.id ? { backgroundColor: `${mod.color}15`, color: mod.color, borderColor: `${mod.color}40` } : {}}
-              >
-                {mod.name}
-              </button>
-            ))}
-          </div>
+          {/* Materie / module filter — scopes both the list and the redo below */}
+          {hasMultipleScopes(scopeOptions) && (
+            <div className="flex items-center gap-2.5 mb-8 animate-fade-in stagger-3">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--color-text-tertiary)] flex-shrink-0">
+                Materie
+              </span>
+              <div className="flex-1 max-w-xs">
+                <SubjectScopeMenu
+                  options={scopeOptions}
+                  value={scopeEffective}
+                  onChange={setScope}
+                  accentColor={filter === "wrong" ? "var(--color-wrong)" : "var(--color-accent)"}
+                />
+              </div>
+            </div>
+          )}
 
           {/* Launch a redo session from the currently filtered questions */}
           {filteredQuestions.length > 0 && filter !== "correct" && (

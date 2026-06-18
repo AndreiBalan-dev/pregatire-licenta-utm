@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Alegi ordinea intrebarilor la practica: in ordine, nerezolvate intai sau aleatoriu",
-  "Implicit apar in ordine, iar intrebarile pe care le-ai facut deja nu mai sunt sarite",
-  "'Nerezolvate intai' ramane optiune, cand vrei sa incepi cu cele nerezolvate",
+  "La practica alegi din ce materie sau modul reiei greselile sau intrebarile marcate",
+  "Te concentrezi pe o singura materie (ex. doar Java) sau pe un modul intreg, nu pe tot",
+  "Filtrul apare cand ai de recuperat din mai multe materii, cu numarul pentru fiecare",
 ];
 
 export function ChangelogBanner() {

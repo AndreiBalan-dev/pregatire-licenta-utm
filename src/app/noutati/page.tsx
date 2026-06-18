@@ -44,6 +44,16 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "1.5.4",
+    date: "18 Iunie 2026",
+    title: "Reia greselile pe materie sau modul",
+    changes: [
+      { text: "In pagina de Practica, la 'Reia ce ai de recuperat', alegi acum din ce materie sau modul reiei: greselile si intrebarile marcate se filtreaza separat", type: "feature" },
+      { text: "Inainte reluai tot ce ai gresit din toate materiile deodata; acum te concentrezi pe o singura materie (de exemplu doar Java) sau pe un modul intreg", type: "improvement" },
+      { text: "Filtrul apare doar cand ai de recuperat din mai multe materii si arata cate intrebari sunt in fiecare", type: "improvement" },
+    ],
+  },
+  {
     version: "1.5.3",
     date: "16 Iunie 2026",
     title: "Alegi ordinea intrebarilor la practica",

@@ -11,8 +11,8 @@ interface WhatsNewModalProps {
 }
 
 /**
- * One-time "what's new" popup. Leads with the two new features (shuffled
- * answers in practice + redoing wrong/marked questions), then (on scroll) a
+ * One-time "what's new" popup. Leads with the new feature (choosing a
+ * module/materie when redoing wrong or marked questions), then (on scroll) a
  * personal thank-you for the Gen-E votes. Shown once per visitor who already
  * has data; see HomePage gating.
  */
@@ -20,7 +20,7 @@ export function WhatsNewModal({ open, onClose, onSeeDetails }: WhatsNewModalProp
   return (
     <Modal open={open} onClose={onClose} title="Ce e nou pe UTMLearn" className="!max-w-lg">
       <div className="max-h-[68vh] overflow-y-auto pr-1 -mr-1 space-y-6">
-        {/* Section 1: the two new features */}
+        {/* Section 1: the new feature */}
         <section>
           <div className="inline-flex items-center gap-1.5 px-2 py-0.5 mb-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-30">
             Nou
@@ -29,53 +29,30 @@ export function WhatsNewModal({ open, onClose, onSeeDetails }: WhatsNewModalProp
             className="text-lg sm:text-xl font-bold text-[var(--color-text-primary)] mb-2"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Două lucruri noi, cerute de voi
+            Acum alegi materia când reiei greșelile
           </h3>
           <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
-            Amândouă mi le-ați propus voi, prin mesaje. Mulțumesc pentru idei, continuați să-mi scrieți!
+            Ați cerut acest feature prin mesaje și l-am făcut. Mulțumesc pentru idei, continuați să-mi scrieți!
           </p>
 
-          <div className="mt-3 space-y-3">
-            {/* Feature 1: shuffled answers */}
+          <div className="mt-3">
+            {/* Feature: redo wrong/marked filtered by module or materie */}
             <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-3.5">
               <div className="flex items-center gap-2 mb-1.5">
                 <span className="flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="16 3 21 3 21 8" />
-                    <line x1="4" y1="20" x2="21" y2="3" />
-                    <polyline points="21 16 21 21 16 21" />
-                    <line x1="15" y1="15" x2="21" y2="21" />
-                    <line x1="4" y1="4" x2="9" y2="9" />
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
                   </svg>
                 </span>
                 <p className="text-sm font-semibold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
-                  Răspunsuri amestecate la practică
+                  Reia greșelile pe materie sau modul
                 </p>
               </div>
               <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
-                La practică și la simulator poți amesteca acum și ordinea variantelor de răspuns, nu doar a
-                întrebărilor. Așa exersezi răspunsul corect, nu locul lui pe ecran.
-              </p>
-            </div>
-
-            {/* Feature 2: redo wrong/marked */}
-            <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-3.5">
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="1 4 1 10 7 10" />
-                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
-                  </svg>
-                </span>
-                <p className="text-sm font-semibold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
-                  Reia greșelile și întrebările marcate
-                </p>
-              </div>
-              <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
-                Din <span className="font-semibold text-[var(--color-text-primary)]">Revizuire</span> sau din pagina de{" "}
-                <span className="font-semibold text-[var(--color-text-primary)]">Practică</span> pornești o sesiune doar
-                cu întrebările greșite sau marcate. O faci ca exercițiu, cu explicații, sau ca simulare fără feedback,
-                cu scorul la final.
+                În pagina de <span className="font-semibold text-[var(--color-text-primary)]">Practică</span>, la{" "}
+                <span className="font-semibold text-[var(--color-text-primary)]">Reia ce ai de recuperat</span>, alegi
+                acum din ce materie sau modul reiei. Te concentrezi pe o singură materie (de exemplu doar Java) sau pe
+                un modul întreg, în loc să reiei tot ce ai greșit deodată. La fel și pentru întrebările marcate.
               </p>
             </div>
           </div>
