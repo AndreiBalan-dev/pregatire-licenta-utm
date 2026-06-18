@@ -44,6 +44,15 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "1.5.7",
+    date: "18 Iunie 2026",
+    title: "Feedback pe loc cand reiei greselile de la examen",
+    changes: [
+      { text: "Cand reiei greselile dupa un examen din simulator, acum vezi pe loc daca ai raspuns corect sau gresit, la fel ca la practica (inainte se comporta ca un simulator, fara feedback pana la final)", type: "fix" },
+      { text: "Reluarea greselilor ramane exercitiu cu scor pe acuratete, nu nota /10", type: "improvement" },
+    ],
+  },
+  {
     version: "1.5.6",
     date: "18 Iunie 2026",
     title: "Reia doar intrebarile rezolvate",

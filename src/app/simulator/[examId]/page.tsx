@@ -172,7 +172,9 @@ export default function SimulatorExamPage() {
         const newId = startPractice([], wrongIds, {
           shuffleOrder,
           shuffleOptions: shuffleAnswers,
-          mode: "test",
+          // Practice mode so wrong answers get instant feedback as you go (the
+          // CTA frames it as "exercițiu de practică"). Accuracy, not a /10 score.
+          mode: "practice",
         });
         setNavigating(true);
         setRedoOpen(false);
