@@ -95,6 +95,15 @@ export default function QuizPage() {
     return wrongIdsInPractice(practice, session.answers, (id) => getQuestion(id) !== undefined);
   }, [practice, session.answers]);
 
+  // Questions actually answered this session (correct + wrong), in original order.
+  const answeredIdsThisSession = useMemo(() => {
+    if (!practice) return [];
+    return practice.questionIds.filter((id) => {
+      const a = session.answers[id];
+      return !!a && a.answeredAt >= practice.startedAt && getQuestion(id) !== undefined;
+    });
+  }, [practice, session.answers]);
+
   const handleSelectAnswer = useCallback(
     (answer: AnswerKey) => {
       if (showFeedback || !currentQuestion) return;
@@ -230,7 +239,12 @@ export default function QuizPage() {
 
   const startRedo = useCallback(() => {
     if (!practice) return;
-    const ids = redoScope === "wrong" ? wrongIdsThisSession : practice.questionIds;
+    const ids =
+      redoScope === "wrong"
+        ? wrongIdsThisSession
+        : redoScope === "answered"
+          ? answeredIdsThisSession
+          : practice.questionIds;
     if (ids.length === 0) return;
     const newId = startPractice([], ids, {
       shuffleOrder: redoOrder === "shuffled",
@@ -240,7 +254,7 @@ export default function QuizPage() {
     setShowSummary(false);
     setSummaryView("main");
     router.replace(`/practica/${newId}`);
-  }, [practice, redoScope, redoOrder, redoShuffleAnswers, wrongIdsThisSession, startPractice, router]);
+  }, [practice, redoScope, redoOrder, redoShuffleAnswers, wrongIdsThisSession, answeredIdsThisSession, startPractice, router]);
 
   useEffect(() => {
     if (isLoaded && !practice) {
@@ -272,6 +286,16 @@ export default function QuizPage() {
   const moduleColor = currentModule?.color || "var(--color-accent)";
 
   const accuracyPct = formatPercentage(practiceStats.correct, practiceStats.answered);
+
+  // Redo scopes for the summary. Show each only when it's a distinct set:
+  // "rezolvate" (answered) appears when you answered some-but-not-all with at
+  // least one correct; "toată sesiunea" hides only if every question was wrong.
+  const redoWrongCount = wrongIdsThisSession.length;
+  const redoAnsweredCount = answeredIdsThisSession.length;
+  const redoAllCount = practice.questionIds.length;
+  const showRedoWrong = redoWrongCount > 0;
+  const showRedoAnswered = redoAnsweredCount > redoWrongCount && redoAnsweredCount < redoAllCount;
+  const showRedoAll = redoWrongCount < redoAllCount;
 
   return (
     <>
@@ -499,7 +523,7 @@ export default function QuizPage() {
         onBack={summaryView === "redo" ? () => setSummaryView("main") : undefined}
         title={
           summaryView === "redo"
-            ? (redoScope === "wrong" ? "Refă greșitele" : "Refă toată sesiunea")
+            ? (redoScope === "wrong" ? "Refă greșitele" : redoScope === "answered" ? "Refă rezolvate" : "Refă toată sesiunea")
             : (isTest ? "Rezultatul simulării" : "Rezumat Sesiune")
         }
       >
@@ -581,32 +605,48 @@ export default function QuizPage() {
           <div className="flex flex-col gap-2.5 pt-1">
             {practiceStats.answered > 0 && (
               <>
-                {wrongIdsThisSession.length > 0 && (
+                {showRedoWrong && (
                   <Button
                     variant="primary"
                     size="md"
                     className="w-full py-3"
                     onClick={() => openRedo("wrong")}
                   >
-                    Refă greșitele ({wrongIdsThisSession.length})
+                    Refă greșitele ({redoWrongCount})
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <polyline points="1 4 1 10 7 10" />
                       <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
                     </svg>
                   </Button>
                 )}
-                <Button
-                  variant={wrongIdsThisSession.length > 0 ? "secondary" : "primary"}
-                  size="md"
-                  className="w-full py-3"
-                  onClick={() => openRedo("all")}
-                >
-                  Refă toată sesiunea ({practice.questionIds.length})
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <polyline points="1 4 1 10 7 10" />
-                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
-                  </svg>
-                </Button>
+                {showRedoAnswered && (
+                  <Button
+                    variant={showRedoWrong ? "secondary" : "primary"}
+                    size="md"
+                    className="w-full py-3"
+                    onClick={() => openRedo("answered")}
+                  >
+                    Refă rezolvate ({redoAnsweredCount})
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <polyline points="1 4 1 10 7 10" />
+                      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                    </svg>
+                  </Button>
+                )}
+                {showRedoAll && (
+                  <Button
+                    variant={showRedoWrong || showRedoAnswered ? "secondary" : "primary"}
+                    size="md"
+                    className="w-full py-3"
+                    onClick={() => openRedo("all")}
+                  >
+                    Refă toată sesiunea ({redoAllCount})
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <polyline points="1 4 1 10 7 10" />
+                      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                    </svg>
+                  </Button>
+                )}
               </>
             )}
             {remainingUnanswered > 0 && (
@@ -652,13 +692,14 @@ export default function QuizPage() {
             wrongCount={wrongIdsThisSession.length}
             allCount={practice.questionIds.length}
             allLabel="Toată sesiunea"
+            answeredCount={showRedoAnswered ? answeredIdsThisSession.length : undefined}
           />
           <OrderSelector choice={redoOrder} onChoice={setRedoOrder} />
           <ShuffleAnswersToggle value={redoShuffleAnswers} onChange={setRedoShuffleAnswers} />
           <Button
             className="w-full py-3"
             onClick={startRedo}
-            disabled={(redoScope === "wrong" ? wrongIdsThisSession.length : practice.questionIds.length) === 0}
+            disabled={(redoScope === "wrong" ? wrongIdsThisSession.length : redoScope === "answered" ? answeredIdsThisSession.length : practice.questionIds.length) === 0}
           >
             Începe
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

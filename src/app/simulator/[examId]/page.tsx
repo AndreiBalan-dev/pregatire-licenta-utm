@@ -16,6 +16,7 @@ import { ExamScore } from "@/components/exam/ExamScore";
 import { ExamModuleBreakdown } from "@/components/exam/ExamModuleBreakdown";
 import { ExamReview } from "@/components/exam/ExamReview";
 import { ExamRestartModal } from "@/components/exam/ExamRestartModal";
+import type { RedoScope } from "@/components/review/RedoControls";
 import { ExamRepeatBadge } from "@/components/exam/ExamRepeatBadge";
 import { ExamHistoryButton } from "@/components/results/ExamHistoryButton";
 import { SubjectIcon } from "@/components/ui/SubjectIcon";
@@ -163,7 +164,7 @@ export default function SimulatorExamPage() {
   }, [discardExam, startExam, router]);
 
   const handleRedo = useCallback(
-    ({ scope, shuffleOrder, shuffleAnswers }: { scope: "all" | "wrong"; shuffleOrder: boolean; shuffleAnswers: boolean }) => {
+    ({ scope, shuffleOrder, shuffleAnswers }: { scope: RedoScope; shuffleOrder: boolean; shuffleAnswers: boolean }) => {
       if (!exam) return;
       if (scope === "wrong") {
         const wrongIds = wrongIdsInExam(exam, (id) => getQuestion(id)?.correctAnswer);

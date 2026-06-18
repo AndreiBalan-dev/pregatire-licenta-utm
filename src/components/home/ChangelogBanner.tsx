@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "La finalul unei sesiuni de practica poti reface toata sesiunea, nu doar greselile",
-  "Acelasi set de intrebari, reluat de la inceput din rezumatul sesiunii",
-  "Merge si cand ai raspuns corect la tot, langa butonul de refacut greselile",
+  "Poti reface doar intrebarile rezolvate dintr-o sesiune, nu doar greselile sau tot",
+  "Util cand ai raspuns la o parte din sesiune, de exemplu 23 din 100",
+  "In rezumat alegi: doar greselile, doar rezolvate, sau toata sesiunea",
 ];
 
 export function ChangelogBanner() {

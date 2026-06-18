@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-export type RedoScope = "all" | "wrong";
+export type RedoScope = "all" | "wrong" | "answered";
 export type OrderChoice = "same" | "shuffled";
 
 /* ----- Scope: "Doar greșite (N)" vs all ----- */
@@ -15,16 +15,20 @@ interface ScopeSelectorProps {
   allCount: number;
   /** Label for the "everything" option, e.g. "Toată sesiunea" or "Toate (36)". */
   allLabel: string;
+  /** When set, shows a middle "answered only" option (correct + wrong, no unanswered). */
+  answeredCount?: number;
+  answeredLabel?: string;
 }
 
-export function ScopeSelector({ scope, onScope, wrongCount, allCount, allLabel }: ScopeSelectorProps) {
+export function ScopeSelector({ scope, onScope, wrongCount, allCount, allLabel, answeredCount, answeredLabel = "Rezolvate" }: ScopeSelectorProps) {
   const noWrong = wrongCount === 0;
+  const showAnswered = answeredCount !== undefined;
   return (
     <div>
       <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--color-text-tertiary)] mb-2.5 block">
         Ce reiei
       </span>
-      <div className="grid grid-cols-2 gap-2.5" role="radiogroup" aria-label="Ce reiei">
+      <div className={cn("grid gap-2.5", showAnswered ? "grid-cols-3" : "grid-cols-2")} role="radiogroup" aria-label="Ce reiei">
         <ScopeCard
           label="Doar greșite"
           count={wrongCount}
@@ -33,6 +37,15 @@ export function ScopeSelector({ scope, onScope, wrongCount, allCount, allLabel }
           disabled={noWrong}
           onSelect={() => onScope("wrong")}
         />
+        {showAnswered && (
+          <ScopeCard
+            label={answeredLabel}
+            count={answeredCount}
+            accent="var(--color-accent)"
+            selected={scope === "answered"}
+            onSelect={() => onScope("answered")}
+          />
+        )}
         <ScopeCard
           label={allLabel}
           count={allCount}

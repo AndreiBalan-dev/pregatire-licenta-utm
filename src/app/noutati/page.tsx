@@ -44,6 +44,15 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "1.5.6",
+    date: "18 Iunie 2026",
+    title: "Reia doar intrebarile rezolvate",
+    changes: [
+      { text: "Daca ai raspuns doar la o parte din sesiune (de exemplu 23 din 100), poti reface acum doar intrebarile rezolvate, fara cele la care nu ai ajuns", type: "feature" },
+      { text: "In rezumatul sesiunii alegi intre: doar greselile, doar rezolvate (corecte si gresite) sau toata sesiunea", type: "improvement" },
+    ],
+  },
+  {
     version: "1.5.5",
     date: "18 Iunie 2026",
     title: "Reia toata sesiunea din rezumat",
