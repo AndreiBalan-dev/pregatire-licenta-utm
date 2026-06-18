@@ -44,6 +44,14 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "2.0.1",
+    date: "19 Iunie 2026",
+    title: "Aceleasi cifre la Practica si Rezultate",
+    changes: [
+      { text: "Progresul pe materie din pagina Practica include acum si raspunsurile din simulator, exact ca la Rezultate; inainte numara doar practica, asa ca simularile rulate nu se vedeau in 'rezolvate'", type: "fix" },
+    ],
+  },
+  {
     version: "2.0.0",
     date: "18 Iunie 2026",
     title: "Pagina noua de Cautare",

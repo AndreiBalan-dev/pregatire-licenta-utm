@@ -93,10 +93,10 @@ function PracticaContent() {
     for (const sid of selectedSubjects) {
       const questions = questionsBySubject[sid] || [];
       total += questions.length;
-      unanswered += questions.filter((q) => !session.answers[q.id]).length;
+      unanswered += questions.filter((q) => !mergedAnswers.has(q.id)).length;
     }
     return { totalAvailable: total, unansweredCount: unanswered };
-  }, [selectedSubjects, session.answers]);
+  }, [selectedSubjects, mergedAnswers]);
 
   const toggleSubject = (id: string) => {
     setSelectedSubjects((prev) =>
@@ -127,7 +127,7 @@ function PracticaContent() {
     const questionIds = selectPracticeQuestionIds(
       pool,
       { onlyUnanswered, order, batchSize },
-      (id) => !!session.answers[id],
+      (id) => mergedAnswers.has(id),
     );
 
     if (questionIds.length === 0) return;

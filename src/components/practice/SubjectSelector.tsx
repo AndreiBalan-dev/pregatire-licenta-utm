@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { modules } from "@/data/modules";
 import { questionsBySubject } from "@/data";
+import { buildMergedAnswerMap } from "@/lib/answer-merge";
 import { cn, formatPercentage } from "@/lib/utils";
 import { useSession } from "@/hooks/useSession";
 import { Button } from "@/components/ui/Button";
@@ -27,6 +28,9 @@ export function SubjectSelector({
 }: SubjectSelectorProps) {
   const [expandedModules, setExpandedModules] = useState<string[]>(modules.map((m) => m.id));
   const { session } = useSession();
+  // "Rezolvat" = answered anywhere (practice OR a submitted simulator exam),
+  // same definition the Rezultate page uses, so the two pages always agree.
+  const answeredMap = useMemo(() => buildMergedAnswerMap(session), [session]);
 
   const toggleModule = (moduleId: string) => {
     setExpandedModules((prev) =>
@@ -47,7 +51,7 @@ export function SubjectSelector({
         const selectedInModule = mod.subjects.filter((s) => selectedSubjects.includes(s.id)).length;
         const moduleAnswered = mod.subjects.reduce((sum, s) => {
           const questions = questionsBySubject[s.id] || [];
-          return sum + questions.filter((q) => session.answers[q.id]).length;
+          return sum + questions.filter((q) => answeredMap.has(q.id)).length;
         }, 0);
         const moduleTotal = mod.subjects.reduce((sum, s) => {
           return sum + (questionsBySubject[s.id]?.length || 0);
@@ -152,7 +156,9 @@ export function SubjectSelector({
               <div className="border-t border-[var(--color-border)] px-3 sm:px-4 py-2 space-y-0.5 sm:space-y-1 animate-fade-in">
                 {mod.subjects.map((subject, subjectIndex) => {
                   const questions = questionsBySubject[subject.id] || [];
-                  const answered = questions.filter((q) => session.answers[q.id]).length;
+                  const answered = questions.filter((q) => answeredMap.has(q.id)).length;
+                  // Reset clears only practice answers, so gate that button on those.
+                  const practiceAnswered = questions.filter((q) => session.answers[q.id]).length;
                   const isSelected = selectedSubjects.includes(subject.id);
                   const pct = formatPercentage(answered, questions.length);
 
@@ -201,7 +207,7 @@ export function SubjectSelector({
                             <span className="text-xs text-[var(--color-text-tertiary)]">
                               {answered}/{questions.length}
                             </span>
-                            {answered > 0 && onResetSubject && (
+                            {practiceAnswered > 0 && onResetSubject && (
                               <button
                                 type="button"
                                 onPointerDown={(e) => {
@@ -211,7 +217,7 @@ export function SubjectSelector({
                                 onClick={(e) => {
                                   e.preventDefault();
                                   e.stopPropagation();
-                                  if (confirm(`Resetezi progresul pentru ${subject.name}? (${answered} răspunsuri vor fi șterse)`)) {
+                                  if (confirm(`Resetezi progresul pentru ${subject.name}? (${practiceAnswered} răspunsuri vor fi șterse)`)) {
                                     onResetSubject(subject.id);
                                   }
                                 }}
