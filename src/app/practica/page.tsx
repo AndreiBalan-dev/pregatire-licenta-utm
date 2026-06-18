@@ -166,11 +166,11 @@ function PracticaContent() {
           {(wrongIds.length > 0 || markedIds.length > 0) && (
             <div className="mb-10 animate-fade-in">
               <div
-                className="relative rounded-[var(--radius-xl)] border border-[var(--color-border)] overflow-hidden"
+                className="relative rounded-[var(--radius-xl)] border border-[var(--color-border)]"
                 style={{ background: "linear-gradient(180deg, var(--color-bg-tertiary) 0%, var(--color-bg-secondary) 55%, var(--color-bg-secondary) 100%)" }}
               >
                 <div
-                  className="absolute inset-0 pointer-events-none"
+                  className="absolute inset-0 pointer-events-none rounded-[var(--radius-xl)]"
                   style={{ background: "radial-gradient(ellipse 70% 55% at 50% 0%, var(--color-accent), transparent)", opacity: 0.07 }}
                   aria-hidden="true"
                 />
