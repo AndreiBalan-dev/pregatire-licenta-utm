@@ -68,7 +68,7 @@ export function ExamRestartModal({
               <line x1="12" y1="8" x2="12.01" y2="8" />
             </svg>
             <p className="text-[11px] leading-relaxed text-[var(--color-text-tertiary)]">
-              Greșelile se reiau ca exercițiu de practică, cu scor pe acuratețe — nu ca nota /10 (aceea e calibrată pe examenul complet).
+              Greșelile se reiau ca exercițiu de practică, cu scor pe acuratețe, nu ca nota /10 (aceea e calibrată pe examenul complet).
             </p>
           </div>
         ) : (

@@ -304,7 +304,7 @@ export default function RevizuirePage() {
             ))}
           </div>
 
-          {/* Materie / module filter — scopes both the list and the redo below */}
+          {/* Materie / module filter that scopes both the list and the redo below */}
           {hasMultipleScopes(scopeOptions) && (
             <div className="flex items-center gap-2.5 mb-8 animate-fade-in stagger-3">
               <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--color-text-tertiary)] flex-shrink-0">

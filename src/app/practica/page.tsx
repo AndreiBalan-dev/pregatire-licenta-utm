@@ -196,7 +196,7 @@ function PracticaContent() {
                     </span>
                   </div>
                   <p className="text-xs sm:text-sm text-[var(--color-text-secondary)] mb-4">
-                    Reia greșelile sau întrebările marcate — acum poți alege și pe ce materie sau modul, nu doar tot odată.
+                    Reia greșelile sau întrebările marcate - acum poți alege și pe ce materie sau modul, nu doar tot odată.
                   </p>
                   <div
                     className={cn(
