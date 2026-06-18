@@ -1,6 +1,8 @@
 "use client";
 
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { type ReactNode, useState } from "react";
+import { createPortal } from "react-dom";
+import { Modal } from "@/components/ui/Modal";
 import { SubjectIcon } from "@/components/ui/SubjectIcon";
 import { cn } from "@/lib/utils";
 import type { Scope, ScopeOptions } from "@/lib/redo-scope";
@@ -32,30 +34,13 @@ function currentSelection(options: ScopeOptions, value: Scope): { label: string;
 }
 
 /**
- * Single-select dropdown for narrowing a redo pool to everything, one module, or
- * one materie (subject). Modules and materii come pre-grouped/counted in
- * `options` (see buildScopeOptions). Closes on select, outside click, or Escape.
+ * Single-select picker for narrowing a redo pool to everything, one module, or
+ * one materie. The trigger opens a centered Modal (rendered through a portal to
+ * document.body, so it can't be clipped or mispositioned by transformed/
+ * overflow-hidden ancestors). Options come pre-grouped in `options`.
  */
 export function SubjectScopeMenu({ options, value, onChange, accentColor = "var(--color-accent)" }: SubjectScopeMenuProps) {
   const [open, setOpen] = useState(false);
-  const rootRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!open) return;
-    const onPointerDown = (e: PointerEvent) => {
-      if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(false);
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    document.addEventListener("pointerdown", onPointerDown);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("pointerdown", onPointerDown);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [open]);
-
   const { label, count } = currentSelection(options, value);
   const activeKey = scopeKey(value);
 
@@ -65,77 +50,84 @@ export function SubjectScopeMenu({ options, value, onChange, accentColor = "var(
   };
 
   return (
-    <div ref={rootRef} className="relative">
+    <>
       <button
         type="button"
-        aria-haspopup="listbox"
+        aria-haspopup="dialog"
         aria-expanded={open}
-        onClick={() => setOpen((o) => !o)}
-        className={cn(
-          "w-full flex items-center justify-between gap-2 px-3 py-2 rounded-[var(--radius-md)] border text-left transition-all duration-200 cursor-pointer",
-          open
-            ? "border-[var(--color-border-strong)] bg-[var(--color-bg-hover)]"
-            : "border-[var(--color-border)] bg-[var(--color-bg-primary)] hover:border-[var(--color-border-strong)] hover:bg-[var(--color-bg-hover)]",
-        )}
+        onClick={() => setOpen(true)}
+        className="group w-full flex items-center justify-between gap-2 px-3 py-2 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] text-left transition-all duration-200 cursor-pointer hover:border-[var(--color-border-strong)] hover:bg-[var(--color-bg-hover)]"
       >
-        <span className="flex items-center gap-1.5 min-w-0">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-tertiary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0" aria-hidden="true">
+        <span className="flex items-center gap-2 min-w-0">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-tertiary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0" aria-hidden="true">
             <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
           </svg>
           <span className="text-xs font-semibold text-[var(--color-text-primary)] truncate">{label}</span>
-          <span className="text-xs tabular-nums flex-shrink-0" style={{ color: accentColor }}>· {count}</span>
+          <span className="text-xs tabular-nums font-bold flex-shrink-0" style={{ color: accentColor }}>{count}</span>
         </span>
         <svg
-          width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-          className={cn("flex-shrink-0 text-[var(--color-text-tertiary)] transition-transform duration-200", open && "rotate-180")}
+          width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+          className="flex-shrink-0 text-[var(--color-text-tertiary)] transition-colors group-hover:text-[var(--color-text-secondary)]"
           aria-hidden="true"
         >
           <polyline points="6 9 12 15 18 9" />
         </svg>
       </button>
 
-      {open && (
-        <div
-          role="listbox"
-          aria-label="Filtrează după materie"
-          className="absolute z-30 left-0 right-0 mt-1.5 max-h-72 overflow-auto rounded-[var(--radius-md)] border border-[var(--color-border-strong)] bg-[var(--color-bg-secondary)] shadow-[var(--shadow-lg)] p-1 animate-fade-in"
-        >
-          <ScopeRow
-            label="Toate materiile"
-            count={options.total}
-            active={activeKey === "all"}
-            accentColor={accentColor}
-            onSelect={() => select({ kind: "all" })}
-            emphasis
-          />
-          {options.modules.map((mod) => (
-            <div key={mod.id} className="mt-0.5">
+      {open &&
+        createPortal(
+          <Modal open onClose={() => setOpen(false)} title="Alege materia" className="!max-w-md">
+            <p className="text-sm text-[var(--color-text-tertiary)] -mt-2 mb-4">
+              Reia doar dintr-o anumită materie sau dintr-un modul întreg.
+            </p>
+            <div className="max-h-[58vh] overflow-y-auto -mx-1 px-1 space-y-0.5">
               <ScopeRow
-                label={mod.name}
-                count={mod.count}
-                active={activeKey === `module:${mod.id}`}
+                label="Toate materiile"
+                count={options.total}
+                active={activeKey === "all"}
                 accentColor={accentColor}
-                onSelect={() => select({ kind: "module", id: mod.id })}
-                leading={<span className="w-2 h-2 rounded-full" style={{ backgroundColor: mod.color }} />}
+                onSelect={() => select({ kind: "all" })}
                 emphasis
+                leading={
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="14" y="14" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
+                  </svg>
+                }
               />
-              {mod.subjects.map((subj) => (
-                <ScopeRow
-                  key={subj.id}
-                  label={subj.name}
-                  count={subj.count}
-                  active={activeKey === `subject:${subj.id}`}
-                  accentColor={accentColor}
-                  onSelect={() => select({ kind: "subject", id: subj.id })}
-                  leading={<SubjectIcon subjectId={subj.id} size={14} className="text-[var(--color-text-tertiary)]" />}
-                  indent
-                />
+              <div className="my-1.5 h-px bg-[var(--color-border)]" />
+              {options.modules.map((mod) => (
+                <div key={mod.id} className="space-y-0.5">
+                  <ScopeRow
+                    label={mod.name}
+                    count={mod.count}
+                    active={activeKey === `module:${mod.id}`}
+                    accentColor={accentColor}
+                    onSelect={() => select({ kind: "module", id: mod.id })}
+                    emphasis
+                    leading={<span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: mod.color }} />}
+                  />
+                  {mod.subjects.map((subj) => (
+                    <ScopeRow
+                      key={subj.id}
+                      label={subj.name}
+                      count={subj.count}
+                      active={activeKey === `subject:${subj.id}`}
+                      accentColor={accentColor}
+                      onSelect={() => select({ kind: "subject", id: subj.id })}
+                      indent
+                      leading={<SubjectIcon subjectId={subj.id} size={15} />}
+                    />
+                  ))}
+                </div>
               ))}
             </div>
-          ))}
-        </div>
-      )}
-    </div>
+          </Modal>,
+          document.body,
+        )}
+    </>
   );
 }
 
@@ -154,32 +146,44 @@ function ScopeRow({ label, count, active, accentColor, onSelect, leading, indent
   return (
     <button
       type="button"
-      role="option"
-      aria-selected={active}
       onClick={onSelect}
+      aria-pressed={active}
       className={cn(
-        "w-full flex items-center gap-2 px-2.5 py-1.5 rounded-[var(--radius-sm)] text-left transition-colors cursor-pointer",
-        indent && "pl-8",
-        active ? "bg-[var(--color-accent-muted)]" : "hover:bg-[var(--color-bg-hover)]",
+        "relative w-full flex items-center gap-2.5 py-2.5 pr-2.5 rounded-[var(--radius-md)] text-left transition-colors cursor-pointer",
+        indent ? "pl-9" : "pl-3",
+        active ? "bg-[var(--color-bg-hover)]" : "hover:bg-[var(--color-bg-tertiary)]",
       )}
     >
+      {active && (
+        <span className="absolute left-1 top-2 bottom-2 w-[3px] rounded-full" style={{ backgroundColor: accentColor }} aria-hidden="true" />
+      )}
       {leading && (
-        <span className="inline-flex items-center justify-center w-3.5 flex-shrink-0 text-[var(--color-text-tertiary)]">
+        <span
+          className="inline-flex items-center justify-center flex-shrink-0 text-[var(--color-text-tertiary)]"
+          style={active ? { color: accentColor } : undefined}
+        >
           {leading}
         </span>
       )}
       <span
         className={cn(
-          "flex-1 min-w-0 truncate text-xs",
-          emphasis ? "font-semibold text-[var(--color-text-primary)]" : "font-medium",
-          !emphasis && (active ? "text-[var(--color-text-primary)]" : "text-[var(--color-text-secondary)]"),
+          "flex-1 min-w-0 truncate",
+          emphasis ? "text-sm font-semibold" : "text-[13px]",
+          active || emphasis ? "text-[var(--color-text-primary)]" : "text-[var(--color-text-secondary)]",
         )}
       >
         {label}
       </span>
-      <span className="text-[11px] tabular-nums text-[var(--color-text-tertiary)] flex-shrink-0">{count}</span>
+      <span
+        className={cn(
+          "flex-shrink-0 tabular-nums text-xs font-semibold px-1.5 py-0.5 rounded-full",
+          active ? "text-[var(--color-text-primary)] bg-[var(--color-bg-tertiary)]" : "text-[var(--color-text-tertiary)]",
+        )}
+      >
+        {count}
+      </span>
       {active && (
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={accentColor} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0" aria-hidden="true">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={accentColor} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0" aria-hidden="true">
           <polyline points="20 6 9 17 4 12" />
         </svg>
       )}
