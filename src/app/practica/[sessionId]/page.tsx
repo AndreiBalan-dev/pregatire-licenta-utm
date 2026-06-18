@@ -499,7 +499,7 @@ export default function QuizPage() {
         onBack={summaryView === "redo" ? () => setSummaryView("main") : undefined}
         title={
           summaryView === "redo"
-            ? (redoScope === "wrong" ? "Refă greșitele" : "Refă sesiunea")
+            ? (redoScope === "wrong" ? "Refă greșitele" : "Refă toată sesiunea")
             : (isTest ? "Rezultatul simulării" : "Rezumat Sesiune")
         }
       >
@@ -580,24 +580,34 @@ export default function QuizPage() {
           {/* Action buttons */}
           <div className="flex flex-col gap-2.5 pt-1">
             {practiceStats.answered > 0 && (
-              wrongIdsThisSession.length > 0 ? (
+              <>
+                {wrongIdsThisSession.length > 0 && (
+                  <Button
+                    variant="primary"
+                    size="md"
+                    className="w-full py-3"
+                    onClick={() => openRedo("wrong")}
+                  >
+                    Refă greșitele ({wrongIdsThisSession.length})
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <polyline points="1 4 1 10 7 10" />
+                      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                    </svg>
+                  </Button>
+                )}
                 <Button
-                  variant="primary"
+                  variant={wrongIdsThisSession.length > 0 ? "secondary" : "primary"}
                   size="md"
                   className="w-full py-3"
-                  onClick={() => openRedo("wrong")}
+                  onClick={() => openRedo("all")}
                 >
-                  Refă greșitele ({wrongIdsThisSession.length})
+                  Refă toată sesiunea ({practice.questionIds.length})
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <polyline points="1 4 1 10 7 10" />
                     <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
                   </svg>
                 </Button>
-              ) : (
-                <Button variant="ghost" size="sm" className="w-full" onClick={() => openRedo("all")}>
-                  Refă sesiunea
-                </Button>
-              )
+              </>
             )}
             {remainingUnanswered > 0 && (
               <Button

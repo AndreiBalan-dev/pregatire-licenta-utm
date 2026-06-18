@@ -44,6 +44,15 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "1.5.5",
+    date: "18 Iunie 2026",
+    title: "Reia toata sesiunea din rezumat",
+    changes: [
+      { text: "La finalul unei sesiuni de practica poti reface acum toata sesiunea, nu doar greselile: acelasi set de intrebari, reluat de la inceput", type: "feature" },
+      { text: "Butonul 'Refa toata sesiunea' apare in rezumat langa 'Refa greselile', si cand ai raspuns corect la tot", type: "improvement" },
+    ],
+  },
+  {
     version: "1.5.4",
     date: "18 Iunie 2026",
     title: "Reia greselile pe materie sau modul",

@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "La practica alegi din ce materie sau modul reiei greselile sau intrebarile marcate",
-  "Te concentrezi pe o singura materie (ex. doar Java) sau pe un modul intreg, nu pe tot",
-  "Filtrul apare cand ai de recuperat din mai multe materii, cu numarul pentru fiecare",
+  "La finalul unei sesiuni de practica poti reface toata sesiunea, nu doar greselile",
+  "Acelasi set de intrebari, reluat de la inceput din rezumatul sesiunii",
+  "Merge si cand ai raspuns corect la tot, langa butonul de refacut greselile",
 ];
 
 export function ChangelogBanner() {
