@@ -4,7 +4,7 @@ export interface Question {
   subjectId: string;
   text: string;
   code?: string;
-  codeLanguage?: "c" | "cpp" | "python" | "java" | "js" | "php" | "sql";
+  codeLanguage?: "c" | "cpp" | "python" | "java" | "js" | "php" | "sql" | "bash";
   figure?: string;
   options: {
     a: string;

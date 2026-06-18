@@ -44,6 +44,19 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "2.0.0",
+    date: "18 Iunie 2026",
+    title: "Pagina noua de Cautare",
+    changes: [
+      { text: "Pagina noua de Cautare: cauti in toate cele 715 intrebari dupa cuvinte, dupa variantele de raspuns sau dupa explicatie, fara sa conteze diacriticele (cauti 'sir' si gaseste si 'sir' cu diacritice)", type: "feature" },
+      { text: "Toate filtrele intr-un singur loc: dupa materie sau modul, dupa cod si limbaj (C, C++, Python, Java, JavaScript, PHP, SQL), dupa figura, dupa explicatie, dupa raspunsul corect si dupa progresul tau (nerezolvate, corecte, gresite, marcate)", type: "feature" },
+      { text: "Din rezultate pornesti pe loc ce ai filtrat: 'Exerseaza' cu feedback instant sau 'Simuleaza' cu scor la final; poti exersa si o singura intrebare", type: "feature" },
+      { text: "Lucruri smart: 'Surprinde-ma' iti da 20 de intrebari la intamplare, 'Puncte slabe' alege automat materiile la care stai mai prost, iar linkul cautarii se poate copia si trimite cu tot cu filtre", type: "feature" },
+      { text: "Pe telefon, Cautarea a luat locul lui 'Despre' in meniul de jos; pe desktop o gasesti prima in bara de sus", type: "improvement" },
+      { text: "Scripturile bash din intrebarile de la Sisteme de Operare apar acum colorate intr-un bloc de cod, ca celelalte limbaje, nu ca text simplu", type: "fix" },
+    ],
+  },
+  {
     version: "1.5.7",
     date: "18 Iunie 2026",
     title: "Feedback pe loc cand reiei greselile de la examen",

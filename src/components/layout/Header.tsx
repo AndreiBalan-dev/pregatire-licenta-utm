@@ -8,6 +8,7 @@ import { Container } from "./Container";
 import { APP_VERSION, EXAM_SESSION_YEAR, SITE_NAME_SHORT } from "@/lib/site-config";
 
 const navLinks = [
+  { href: "/cautare", label: "Căutare" },
   { href: "/practica", label: "Practică" },
   { href: "/rezultate", label: "Rezultate" },
   { href: "/revizuire", label: "Revizuire" },

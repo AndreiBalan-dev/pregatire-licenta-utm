@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Cand reiei greselile dupa un examen, vezi acum pe loc daca ai raspuns corect sau gresit",
-  "Reluarea greselilor de la examen are feedback instant, la fel ca la practica",
-  "Ramane exercitiu cu scor pe acuratete, nu nota /10",
+  "Pagina noua de Cautare: cauti in toate cele 715 intrebari si filtrezi dupa materie, cod, figura, explicatie sau progresul tau",
+  "Din rezultate pornesti pe loc: Exerseaza cu feedback instant sau Simuleaza cu scor la final",
+  "Smart: Surprinde-ma cu 20 de intrebari, Puncte slabe pe materiile tale mai slabe, si link de cautare de trimis",
 ];
 
 export function ChangelogBanner() {

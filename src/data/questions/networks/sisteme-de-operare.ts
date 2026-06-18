@@ -311,13 +311,11 @@ export const sistemeDeOperare: Question[] = [
     id: 686,
     moduleId: "networks",
     subjectId: "sisteme-de-operare",
-    text: `Ce face următorul script? 
- 
-for file in *.txt; do   
-    mv "$file" "\${file%.txt}.bak"   
+    text: `Ce face următorul script?`,
+    code: `for file in *.txt; do
+    mv "$file" "\${file%.txt}.bak"
 done`,
-    code: undefined,
-    codeLanguage: undefined,
+    codeLanguage: "bash",
     options: {
       a: `Afișează doar fișierele .txt`,
       b: `Renumește toate fișierele .txt în .bak`,
@@ -345,15 +343,13 @@ done`,
     id: 688,
     moduleId: "networks",
     subjectId: "sisteme-de-operare",
-    text: `Ce face următorul script? 
- 
-if [[ $1 -gt 10 ]]; then   
-    echo "Mai mare decât 10"   
-else   
-    echo "Mai mic sau egal cu 10"   
+    text: `Ce face următorul script?`,
+    code: `if [[ $1 -gt 10 ]]; then
+    echo "Mai mare decât 10"
+else
+    echo "Mai mic sau egal cu 10"
 fi`,
-    code: undefined,
-    codeLanguage: undefined,
+    codeLanguage: "bash",
     options: {
       a: `Compară dacă $1 este egal cu 10`,
       b: `Afișează un mesaj de eroare`,
@@ -471,14 +467,12 @@ fi`,
     id: 696,
     moduleId: "networks",
     subjectId: "sisteme-de-operare",
-    text: `Ce face următorul script? 
- 
-#!/bin/bash 
-for i in {1..3}; do 
-    echo "Linia $i" 
+    text: `Ce face următorul script?`,
+    code: `#!/bin/bash
+for i in {1..3}; do
+    echo "Linia $i"
 done`,
-    code: undefined,
-    codeLanguage: undefined,
+    codeLanguage: "bash",
     options: {
       a: `Afișează "Linia 1", "Linia 2" și "Linia 3"`,
       b: `Nu face nimic, deoarece sintaxa este greșită`,
@@ -568,16 +562,14 @@ done`,
     id: 702,
     moduleId: "networks",
     subjectId: "sisteme-de-operare",
-    text: `Ce face următorul script? 
- 
-#!/bin/bash 
-n=1 
-while [ $n -le 5 ]; do 
-    echo "Număr: $n" 
-    ((n++)) 
+    text: `Ce face următorul script?`,
+    code: `#!/bin/bash
+n=1
+while [ $n -le 5 ]; do
+    echo "Număr: $n"
+    ((n++))
 done`,
-    code: undefined,
-    codeLanguage: undefined,
+    codeLanguage: "bash",
     options: {
       a: `Afișează "Număr: 1" până la "Număr: 5"`,
       b: `Afișează "Număr: 1" o singură dată`,

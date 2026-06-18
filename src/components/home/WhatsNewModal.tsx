@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Modal } from "@/components/ui/Modal";
 import { VOTE_EXPO_URL, VOTE_IMAGE } from "@/lib/site-config";
 
@@ -23,39 +24,69 @@ export function WhatsNewModal({ open, onClose, onSeeDetails }: WhatsNewModalProp
         {/* Section 1: the new feature */}
         <section>
           <div className="inline-flex items-center gap-1.5 px-2 py-0.5 mb-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-30">
-            Nou
+            v2.0.0
           </div>
           <h3
             className="text-lg sm:text-xl font-bold text-[var(--color-text-primary)] mb-2"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Acum alegi materia când reiei greșelile
+            Caută orice întrebare, pornește exact ce vrei
           </h3>
           <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
-            Ați cerut acest feature prin mesaje și l-am făcut. Mulțumesc pentru idei, continuați să-mi scrieți!
+            Avem o pagină nouă de <span className="font-semibold text-[var(--color-text-primary)]">Căutare</span>. Cauți în
+            toate cele 715 întrebări, filtrezi cum vrei și apoi exersezi fix ce ai găsit.
           </p>
 
-          <div className="mt-3">
-            {/* Feature: redo wrong/marked filtered by module or materie */}
+          <div className="mt-3 space-y-2">
             <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-3.5">
               <div className="flex items-center gap-2 mb-1.5">
                 <span className="flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.35-4.35" />
                   </svg>
                 </span>
                 <p className="text-sm font-semibold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
-                  Reia greșelile pe materie sau modul
+                  Cauți și filtrezi orice
                 </p>
               </div>
               <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
-                În pagina de <span className="font-semibold text-[var(--color-text-primary)]">Practică</span>, la{" "}
-                <span className="font-semibold text-[var(--color-text-primary)]">Reia ce ai de recuperat</span>, alegi
-                acum din ce materie sau modul reiei. Te concentrezi pe o singură materie (de exemplu doar Java) sau pe
-                un modul întreg, în loc să reiei tot ce ai greșit deodată. La fel și pentru întrebările marcate.
+                După cuvinte, variante de răspuns sau explicație (nu contează diacriticele), plus filtre după materie,
+                cod și limbaj, figură, răspuns corect și progresul tău (nerezolvate, corecte, greșite, marcate).
+              </p>
+            </div>
+            <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-3.5">
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3" />
+                  </svg>
+                </span>
+                <p className="text-sm font-semibold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
+                  Pornești pe loc
+                </p>
+              </div>
+              <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
+                Din rezultate dai <span className="font-semibold text-[var(--color-text-primary)]">Exersează</span> cu
+                feedback sau <span className="font-semibold text-[var(--color-text-primary)]">Simulează</span> cu scor la
+                final. Sau <span className="font-semibold text-[var(--color-text-primary)]">Surprinde-mă</span> pentru 20
+                de întrebări la întâmplare.
               </p>
             </div>
           </div>
+
+          <Link
+            href="/cautare"
+            onClick={onClose}
+            className="mt-3 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-accent)] text-[#0C0C0E] font-bold text-sm transition-all duration-200 hover:bg-[var(--color-accent-hover)] active:scale-[0.98]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}
+          >
+            Deschide Căutarea
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </Link>
         </section>
 
         {/* Scroll hint / divider */}
