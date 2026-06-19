@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Pagina noua de Cautare: cauti in toate cele 715 intrebari si filtrezi dupa materie, cod, figura, explicatie sau progresul tau",
-  "Din rezultate pornesti pe loc: Exerseaza cu feedback instant sau Simuleaza cu scor la final",
-  "Smart: Surprinde-ma cu 20 de intrebari, Puncte slabe pe materiile tale mai slabe, si link de cautare de trimis",
+  "Mod nou de Antrenament nelimitat: alegi tot, un modul sau o materie si exersezi in continuu",
+  "Algoritm care invata ce gresesti: greselile revin mai des, cele stiute mai rar, de la o zi la alta",
+  "Tot ce raspunzi la Antrenament intra in aceleasi statistici ca Practica si Simulatorul",
 ];
 
 export function ChangelogBanner() {

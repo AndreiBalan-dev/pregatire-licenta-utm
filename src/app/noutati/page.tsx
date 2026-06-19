@@ -44,6 +44,17 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "2.1.0",
+    date: "20 Iunie 2026",
+    title: "Antrenament nelimitat cu algoritm care invata ce gresesti",
+    changes: [
+      { text: "Mod nou de Antrenament: alegi tot, un modul sau o singura materie si raspunzi in continuu, fara limita de intrebari, pana vrei tu sa te opresti", type: "feature" },
+      { text: "Algoritmul tine minte de la o zi la alta: intrebarile gresite revin mai des, cele stiute revin mai rar (dar tot revin), ca sa exersezi unde stai mai prost", type: "feature" },
+      { text: "Vezi cate intrebari ai stapanit din materiile alese si cat de bine raspunzi pe parcurs; la final poti relua doar greselile, cu deduplicare", type: "improvement" },
+      { text: "Tot ce raspunzi la Antrenament intra in aceleasi statistici ca Practica si Simulatorul", type: "improvement" },
+    ],
+  },
+  {
     version: "2.0.1",
     date: "19 Iunie 2026",
     title: "Aceleasi cifre la Practica si Rezultate",
