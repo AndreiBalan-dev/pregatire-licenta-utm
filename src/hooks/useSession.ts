@@ -9,6 +9,7 @@ import {
   type ExamState,
   type PracticeState,
   type SessionSettings,
+  type TrainingState,
 } from "@/lib/session-types";
 import { STORAGE_KEY, MAX_QUESTION_TIME_MS } from "@/lib/constants";
 import { shuffleArray } from "@/lib/utils";
@@ -16,6 +17,7 @@ import { questionsBySubject, getQuestion } from "@/data";
 import { modules } from "@/data/modules";
 import { pickExamQuestions, computeScore } from "@/lib/exam";
 import { buildOptionOrders } from "@/lib/practice";
+import { initSchedule, pickNext, applyAnswer, masteredCount } from "@/lib/training";
 import { buildMergedAnswerMap } from "@/lib/answer-merge";
 import type { AnswerKey, Question } from "@/data/types";
 
@@ -115,6 +117,16 @@ function clampLoadedAnswers(raw: unknown): Record<number, AnswerRecord> {
   return out;
 }
 
+function clampLoadedBoxes(raw: unknown): Record<number, number> {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return {};
+  const out: Record<number, number> = {};
+  for (const [k, v] of Object.entries(raw as Record<string, unknown>)) {
+    const n = Number(v);
+    if (Number.isFinite(n)) out[Number(k)] = Math.max(0, Math.min(5, Math.floor(n)));
+  }
+  return out;
+}
+
 function loadSession(): LocalSession {
   if (typeof window === "undefined") return createDefaultSession();
   try {
@@ -129,6 +141,11 @@ function loadSession(): LocalSession {
       answers: clampLoadedAnswers(parsed.answers),
       settings: { ...defaults.settings, ...(parsed.settings ?? {}) },
       examHistory: Array.isArray(parsed.examHistory) ? parsed.examHistory : [],
+      trainingBoxes: clampLoadedBoxes(parsed.trainingBoxes),
+      currentTraining:
+        parsed.currentTraining && Array.isArray(parsed.currentTraining.pool)
+          ? parsed.currentTraining
+          : null,
     } as LocalSession;
   } catch {
     return createDefaultSession();
@@ -142,6 +159,34 @@ function saveSession(session: LocalSession) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
   } catch {
   }
+}
+
+/** Record one answer into the global answers map + per-subject stats. Pure. */
+function applyAnswerToSession(
+  prev: LocalSession,
+  questionId: number,
+  selected: "a" | "b" | "c" | "d",
+  isCorrect: boolean,
+  timeSpentMs: number,
+  subjectId: string,
+): LocalSession {
+  const now = new Date().toISOString();
+  const answer: AnswerRecord = { selected, isCorrect, answeredAt: now, timeSpentMs };
+  const prevSubjectStat = prev.subjectStats[subjectId] || { attempted: 0, correct: 0, lastPracticedAt: now };
+  const previous = prev.answers[questionId];
+  const correctDelta = previous ? (isCorrect ? 1 : 0) - (previous.isCorrect ? 1 : 0) : isCorrect ? 1 : 0;
+  return {
+    ...prev,
+    answers: { ...prev.answers, [questionId]: answer },
+    subjectStats: {
+      ...prev.subjectStats,
+      [subjectId]: {
+        attempted: prevSubjectStat.attempted + (previous ? 0 : 1),
+        correct: Math.max(0, prevSubjectStat.correct + correctDelta),
+        lastPracticedAt: now,
+      },
+    },
+  };
 }
 
 export function useSession() {
@@ -170,41 +215,7 @@ export function useSession() {
   const answerQuestion = useCallback(
     (questionId: number, selected: "a" | "b" | "c" | "d", isCorrect: boolean, timeSpentMs: number, subjectId: string) => {
       setSession((prev) => {
-        const answer: AnswerRecord = {
-          selected,
-          isCorrect,
-          answeredAt: new Date().toISOString(),
-          timeSpentMs,
-        };
-
-        const prevSubjectStat = prev.subjectStats[subjectId] || {
-          attempted: 0,
-          correct: 0,
-          lastPracticedAt: new Date().toISOString(),
-        };
-
-        // A question may be re-answered (e.g. redoing wrong/marked questions).
-        // Count "attempted" once per question, and move "correct" by the delta
-        // so the per-subject accuracy reflects the latest answer.
-        const previous = prev.answers[questionId];
-        const correctDelta = previous
-          ? (isCorrect ? 1 : 0) - (previous.isCorrect ? 1 : 0)
-          : isCorrect
-            ? 1
-            : 0;
-
-        const updated: LocalSession = {
-          ...prev,
-          answers: { ...prev.answers, [questionId]: answer },
-          subjectStats: {
-            ...prev.subjectStats,
-            [subjectId]: {
-              attempted: prevSubjectStat.attempted + (previous ? 0 : 1),
-              correct: Math.max(0, prevSubjectStat.correct + correctDelta),
-              lastPracticedAt: new Date().toISOString(),
-            },
-          },
-        };
+        const updated = applyAnswerToSession(prev, questionId, selected, isCorrect, timeSpentMs, subjectId);
         persistSession(updated);
         return updated;
       });
@@ -328,6 +339,112 @@ export function useSession() {
       return updated;
     });
   }, [persistSession]);
+
+  const startTraining = useCallback(
+    (subjectIds: string[], options: { shuffleOrder?: boolean; shuffleOptions?: boolean } = {}): string | null => {
+      const { shuffleOrder = false, shuffleOptions = false } = options;
+      const poolQuestions = subjectIds.flatMap((sid) => questionsBySubject[sid] || []);
+      if (poolQuestions.length === 0) return null;
+      const orderedQuestions = shuffleOrder ? shuffleArray(poolQuestions) : poolQuestions;
+      const pool = orderedQuestions.map((q) => q.id);
+      const sessionId = crypto.randomUUID();
+      setSession((prev) => {
+        const boxes = prev.trainingBoxes ?? {};
+        const due = initSchedule(pool, boxes, prev.answers);
+        const firstId = pickNext({ pool, due, seq: 0, lastQuestionId: null }, boxes, prev.answers);
+        let optionOrder: Record<number, AnswerKey[]> | undefined;
+        if (shuffleOptions) {
+          const q = getQuestion(firstId);
+          if (q) optionOrder = { [firstId]: buildOptionOrders([q])[firstId] };
+        }
+        const training: TrainingState = {
+          subjectIds,
+          pool,
+          due,
+          seq: 0,
+          currentQuestionId: firstId,
+          lastQuestionId: null,
+          seenIds: [],
+          answeredCount: 0,
+          correctCount: 0,
+          startedAt: new Date().toISOString(),
+          shuffleOptions,
+          ...(optionOrder ? { optionOrder } : {}),
+        };
+        const updated = { ...prev, currentTraining: training };
+        saveSession(updated);
+        return updated;
+      });
+      return sessionId;
+    },
+    []
+  );
+
+  const answerTraining = useCallback(
+    (questionId: number, selected: "a" | "b" | "c" | "d", isCorrect: boolean, timeSpentMs: number, subjectId: string) => {
+      setSession((prev) => {
+        const training = prev.currentTraining;
+        if (!training) return prev;
+        const base = applyAnswerToSession(prev, questionId, selected, isCorrect, timeSpentMs, subjectId);
+        const boxes = { ...(prev.trainingBoxes ?? {}) };
+        const { due, seq, box } = applyAnswer(
+          { pool: training.pool, due: training.due, seq: training.seq, lastQuestionId: training.lastQuestionId },
+          boxes,
+          prev.answers,
+          questionId,
+          isCorrect,
+        );
+        boxes[questionId] = box;
+        const nextId = pickNext({ pool: training.pool, due, seq, lastQuestionId: questionId }, boxes, base.answers);
+        let optionOrder = training.optionOrder;
+        if (training.shuffleOptions && (!optionOrder || optionOrder[nextId] == null)) {
+          const q = getQuestion(nextId);
+          if (q) optionOrder = { ...(optionOrder ?? {}), [nextId]: buildOptionOrders([q])[nextId] };
+        }
+        const seenIds = training.seenIds.includes(questionId) ? training.seenIds : [...training.seenIds, questionId];
+        const updated: LocalSession = {
+          ...base,
+          trainingBoxes: boxes,
+          currentTraining: {
+            ...training,
+            due,
+            seq,
+            lastQuestionId: questionId,
+            currentQuestionId: nextId,
+            seenIds,
+            answeredCount: training.answeredCount + 1,
+            correctCount: training.correctCount + (isCorrect ? 1 : 0),
+            ...(optionOrder ? { optionOrder } : {}),
+          },
+        };
+        persistSession(updated);
+        return updated;
+      });
+    },
+    [persistSession]
+  );
+
+  const endTraining = useCallback(() => {
+    setSession((prev) => {
+      const updated = { ...prev, currentTraining: null };
+      persistSession(updated);
+      return updated;
+    });
+  }, [persistSession]);
+
+  const getTrainingProgress = useCallback(() => {
+    const t = session.currentTraining;
+    if (!t) return null;
+    const boxes = session.trainingBoxes ?? {};
+    return {
+      answeredCount: t.answeredCount,
+      correctCount: t.correctCount,
+      accuracy: t.answeredCount > 0 ? Math.round((t.correctCount / t.answeredCount) * 100) : 0,
+      masteredCount: masteredCount(t.pool, boxes, session.answers),
+      poolSize: t.pool.length,
+      seenCount: t.seenIds.length,
+    };
+  }, [session.currentTraining, session.trainingBoxes, session.answers]);
 
   const updateSettings = useCallback(
     (partial: Partial<SessionSettings>) => {
@@ -602,6 +719,10 @@ export function useSession() {
     startPractice,
     updatePracticeIndex,
     endPractice,
+    startTraining,
+    answerTraining,
+    endTraining,
+    getTrainingProgress,
     updateSettings,
     getOverallStats,
     getSubjectStats,

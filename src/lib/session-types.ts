@@ -28,6 +28,29 @@ export interface PracticeState {
   optionOrder?: Record<number, AnswerKey[]>;
 }
 
+export interface TrainingState {
+  /** Chosen scope (subject ids). */
+  subjectIds: string[];
+  /** All in-scope question ids, in introduction order (shuffled if chosen). */
+  pool: number[];
+  /** qid -> absolute seq target (session-local schedule). */
+  due: Record<number, number>;
+  /** Questions answered so far this session (the scheduler clock). */
+  seq: number;
+  /** The question currently on screen. */
+  currentQuestionId: number;
+  /** Dedup: never pick this as the immediate next question. */
+  lastQuestionId: number | null;
+  /** Unique question ids shown this session (for the deduped end summary). */
+  seenIds: number[];
+  answeredCount: number;
+  correctCount: number;
+  startedAt: string;
+  shuffleOptions: boolean;
+  /** Per-question answer-option display order, built lazily when shuffleOptions is on. */
+  optionOrder?: Record<number, AnswerKey[]>;
+}
+
 export interface SubjectStat {
   attempted: number;
   correct: number;
@@ -73,6 +96,10 @@ export interface LocalSession {
   subjectStats: Record<string, SubjectStat>;
   settings: SessionSettings;
   savedKey: string | null;
+  /** Persistent per-question strength (Leitner box 0..5) for Antrenament. Optional/additive. */
+  trainingBoxes?: Record<number, number>;
+  /** The active unlimited-training session, or null. */
+  currentTraining?: TrainingState | null;
 }
 
 export const MAX_EXAM_HISTORY = 20;
@@ -95,5 +122,7 @@ export function createDefaultSession(): LocalSession {
       simulatorShuffleOptions: false,
     },
     savedKey: null,
+    trainingBoxes: {},
+    currentTraining: null,
   };
 }
