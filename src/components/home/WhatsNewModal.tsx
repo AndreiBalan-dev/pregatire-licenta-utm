@@ -12,10 +12,10 @@ interface WhatsNewModalProps {
 }
 
 /**
- * One-time "what's new" popup. Leads with the new feature (choosing a
- * module/materie when redoing wrong or marked questions), then (on scroll) a
- * personal thank-you for the Gen-E votes. Shown once per visitor who already
- * has data; see HomePage gating.
+ * One-time "what's new" popup. Leads with the new feature (the unlimited
+ * Antrenament mode with adaptive re-injection), then (on scroll) a personal
+ * thank-you for the Gen-E votes. Shown once per visitor who already has data;
+ * see WhatsNewGate gating.
  */
 export function WhatsNewModal({ open, onClose, onSeeDetails }: WhatsNewModalProps) {
   return (
@@ -24,17 +24,14 @@ export function WhatsNewModal({ open, onClose, onSeeDetails }: WhatsNewModalProp
         {/* Section 1: the new feature */}
         <section>
           <div className="inline-flex items-center gap-1.5 px-2 py-0.5 mb-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-30">
-            v2.0.0
+            v2.1.0
           </div>
-          <h3
-            className="text-lg sm:text-xl font-bold text-[var(--color-text-primary)] mb-2"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Caută orice întrebare, pornește exact ce vrei
+          <h3 className="text-lg sm:text-xl font-bold text-[var(--color-text-primary)] mb-2" style={{ fontFamily: "var(--font-display)" }}>
+            Antrenament nelimitat, cu un algoritm care învață ce greșești
           </h3>
           <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
-            Avem o pagină nouă de <span className="font-semibold text-[var(--color-text-primary)]">Căutare</span>. Cauți în
-            toate cele 715 întrebări, filtrezi cum vrei și apoi exersezi fix ce ai găsit.
+            Alegi <span className="font-semibold text-[var(--color-text-primary)]">tot</span>, un modul sau o singură
+            materie și răspunzi în continuu. Te oprești când vrei, iar tot ce răspunzi intră în statisticile tale.
           </p>
 
           <div className="mt-3 space-y-2">
@@ -42,49 +39,44 @@ export function WhatsNewModal({ open, onClose, onSeeDetails }: WhatsNewModalProp
               <div className="flex items-center gap-2 mb-1.5">
                 <span className="flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="11" cy="11" r="8" />
-                    <path d="m21 21-4.35-4.35" />
+                    <path d="M3 12a9 9 0 1 0 9-9" /><polyline points="3 3 3 9 9 9" />
                   </svg>
                 </span>
                 <p className="text-sm font-semibold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
-                  Cauți și filtrezi orice
+                  Greșelile revin mai des
                 </p>
               </div>
               <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
-                După cuvinte, variante de răspuns sau explicație (nu contează diacriticele), plus filtre după materie,
-                cod și limbaj, figură, răspuns corect și progresul tău (nerezolvate, corecte, greșite, marcate).
+                Întrebările la care greșești se întorc repede, iar cele pe care le știi revin tot mai rar - dar tot revin,
+                ca să nu le uiți.
               </p>
             </div>
             <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-3.5">
               <div className="flex items-center gap-2 mb-1.5">
                 <span className="flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polygon points="5 3 19 12 5 21 5 3" />
+                    <path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V17h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z" /><path d="M9 21h6" />
                   </svg>
                 </span>
                 <p className="text-sm font-semibold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
-                  Pornești pe loc
+                  Ține minte de la o zi la alta
                 </p>
               </div>
               <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
-                Din rezultate dai <span className="font-semibold text-[var(--color-text-primary)]">Exersează</span> cu
-                feedback sau <span className="font-semibold text-[var(--color-text-primary)]">Simulează</span> cu scor la
-                final. Sau <span className="font-semibold text-[var(--color-text-primary)]">Surprinde-mă</span> pentru 20
-                de întrebări la întâmplare.
+                Algoritmul reține cât de bine stăpânești fiecare grilă, așa că revii oricând și continui de unde ai rămas.
               </p>
             </div>
           </div>
 
           <Link
-            href="/cautare"
+            href="/antrenament"
             onClick={onClose}
             className="mt-3 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-accent)] text-[#0C0C0E] font-bold text-sm transition-all duration-200 hover:bg-[var(--color-accent-hover)] active:scale-[0.98]"
             style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}
           >
-            Deschide Căutarea
+            Începe Antrenamentul
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
+              <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
             </svg>
           </Link>
         </section>
