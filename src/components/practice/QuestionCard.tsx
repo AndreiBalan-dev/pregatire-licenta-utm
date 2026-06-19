@@ -9,7 +9,7 @@ import type { Question, AnswerKey } from "@/data/types";
 interface QuestionCardProps {
   question: Question;
   questionNumber: number;
-  totalQuestions: number;
+  totalQuestions?: number;
   selectedAnswer: AnswerKey | null;
   showFeedback: boolean;
   isBookmarked: boolean;
@@ -57,9 +57,11 @@ export function QuestionCard({
           >
             {questionNumber}
           </span>
-          <span className="text-[11px] sm:text-xs text-[var(--color-text-tertiary)]">
-            / {totalQuestions}
-          </span>
+          {totalQuestions != null && (
+            <span className="text-[11px] sm:text-xs text-[var(--color-text-tertiary)]">
+              / {totalQuestions}
+            </span>
+          )}
         </div>
         {onBookmark && (
           <button
