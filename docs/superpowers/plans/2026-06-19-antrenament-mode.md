@@ -18,7 +18,7 @@
 - **The Algebo.ai vote section in `WhatsNewModal` stays untouched.** Only the feature section (Section 1) changes; bump the gate key to `utm-whatsnew-v210`.
 - **Scheduler logic is pure + unit-tested** in `scripts/training.test.mjs`, registered in the `test` npm script (matches `practice.ts` / `redo.ts` / `redo-scope.ts`).
 - **TypeScript must be type-strippable:** no `enum`, no `namespace`, no decorators, no parameter properties (the `.mjs` tests import `.ts` directly).
-- Target version: **2.1.0**. Release date string: **"19 Iunie 2026"**.
+- Target version: **2.1.0**. Release date string: **"20 Iunie 2026"**.
 
 ## File Structure
 
@@ -1388,7 +1388,7 @@ export const APP_VERSION = "2.1.0";
 ```ts
   {
     version: "2.1.0",
-    date: "19 Iunie 2026",
+    date: "20 Iunie 2026",
     title: "Antrenament nelimitat cu algoritm care invata ce gresesti",
     changes: [
       { text: "Mod nou de Antrenament: alegi tot, un modul sau o singura materie si raspunzi in continuu, fara limita de intrebari, pana vrei tu sa te opresti", type: "feature" },
