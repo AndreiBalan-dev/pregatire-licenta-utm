@@ -93,7 +93,7 @@ export function SubjectSelector({
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
                     <Button
-                      variant="ghost"
+                      variant="accent"
                       size="sm"
                       className="hidden sm:inline-flex"
                       onClick={(e) => {
@@ -134,7 +134,7 @@ export function SubjectSelector({
                     )}
                   </span>
                   <Button
-                    variant="ghost"
+                    variant="accent"
                     size="sm"
                     className="sm:hidden px-2 py-0.5 text-[11px]"
                     onClick={(e) => {

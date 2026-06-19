@@ -153,7 +153,7 @@ export default function AntrenamentRuntime() {
               <button
                 onClick={() => setShowSummary(true)}
                 aria-label="Încheie antrenamentul"
-                className="inline-flex items-center gap-1.5 h-9 px-3 rounded-[var(--radius-md)] text-xs sm:text-sm font-medium text-[var(--color-text-tertiary)] hover:text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-hover)] transition-all cursor-pointer"
+                className="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-[var(--radius-md)] text-xs sm:text-sm font-semibold border border-[var(--color-border-strong)] text-[var(--color-text-secondary)] bg-[var(--color-bg-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-text-tertiary)] hover:bg-[var(--color-bg-hover)] transition-all cursor-pointer"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <rect x="3" y="3" width="18" height="18" rx="2" /><line x1="8" y1="12" x2="16" y2="12" />
