@@ -11,6 +11,7 @@ import { ExamFeedbackToggle } from "@/components/exam/ExamFeedbackToggle";
 import { ExamOptionToggle } from "@/components/exam/ExamOptionToggle";
 import { ExamRepeatBadge } from "@/components/exam/ExamRepeatBadge";
 import { ExamHistoryButton } from "@/components/results/ExamHistoryButton";
+import { AntrenamentCrossSell } from "@/components/home/AntrenamentCrossSell";
 import { useSession } from "@/hooks/useSession";
 import { useResolvedTheme } from "@/hooks/useResolvedTheme";
 import {
@@ -105,6 +106,8 @@ export default function SimulatorLandingPage() {
               36 de grile, ca la examenul real. Vezi cât ai lua pe scala 1-10.
             </p>
           </div>
+
+          <AntrenamentCrossSell className="mb-6" />
 
           {/* Main action card - depends on state */}
           {!exam && (

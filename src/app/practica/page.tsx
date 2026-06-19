@@ -9,6 +9,7 @@ import { MobileNav } from "@/components/layout/MobileNav";
 import { Container } from "@/components/layout/Container";
 import { SubjectSelector } from "@/components/practice/SubjectSelector";
 import { ReviewLaunch } from "@/components/review/ReviewLaunch";
+import { AntrenamentCrossSell } from "@/components/home/AntrenamentCrossSell";
 import { useSession } from "@/hooks/useSession";
 import { cn } from "@/lib/utils";
 import { selectPracticeQuestionIds, type QuestionOrder } from "@/lib/practice";
@@ -199,6 +200,8 @@ function PracticaContent() {
               <polyline points="9 18 15 12 9 6" />
             </svg>
           </Link>
+
+          <AntrenamentCrossSell className="mb-8" />
 
           {(wrongIds.length > 0 || markedIds.length > 0) && (
             <div className="mb-10 animate-fade-in">
