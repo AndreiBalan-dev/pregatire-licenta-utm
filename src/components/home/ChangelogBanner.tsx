@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Mod nou de Antrenament nelimitat: alegi tot, un modul sau o materie si exersezi in continuu",
-  "Algoritm care invata ce gresesti: greselile revin mai des, cele stiute mai rar, de la o zi la alta",
-  "Tot ce raspunzi la Antrenament intra in aceleasi statistici ca Practica si Simulatorul",
+  "Bara de progres de pe cardurile Module se umple acum corect (inainte ramanea goala)",
+  "Cardurile Module arata 'rezolvate' din practica, simulator si antrenament, ca la Practica si Rezultate",
+  "Butonul 'Selecteaza tot' nu se mai dubleaza pe mobil la selectarea materiilor",
 ];
 
 export function ChangelogBanner() {

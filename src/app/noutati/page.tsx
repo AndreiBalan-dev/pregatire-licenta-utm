@@ -44,6 +44,16 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "2.1.1",
+    date: "20 Iunie 2026",
+    title: "Bara de progres si selectia materiilor reparate",
+    changes: [
+      { text: "Bara de progres de pe cardurile Module (pagina principala) ramanea goala/neagra chiar si cand aveai progres; acum se umple corect si arata procentajul real", type: "fix" },
+      { text: "Procentajul si numarul de 'rezolvate' de pe cardurile Module includ acum si raspunsurile din simulator si antrenament, exact ca la Practica si Rezultate; inainte numara doar practica", type: "fix" },
+      { text: "Butonul 'Selecteaza tot' aparea de doua ori pe mobil cand alegeai materiile pentru practica; acum apare o singura data", type: "fix" },
+    ],
+  },
+  {
     version: "2.1.0",
     date: "20 Iunie 2026",
     title: "Antrenament nelimitat cu algoritm care invata ce gresesti",

@@ -77,8 +77,10 @@ export function ModuleCard({ module, totalQuestions, answeredCount, correctCount
                 className="h-full rounded-full transition-all duration-700 ease-out"
                 style={{
                   width: `${pct}%`,
-                  background: `linear-gradient(90deg, ${module.color}, ${module.color}CC)`,
-                  boxShadow: pct > 0 ? `0 0 12px ${module.color}30` : undefined,
+                  // module.color is a CSS var, so "var(...)CC" hex-alpha is invalid CSS and
+                  // killed the whole gradient (bar showed empty/black). color-mix keeps it valid.
+                  background: `linear-gradient(90deg, ${module.color}, color-mix(in srgb, ${module.color} 80%, transparent))`,
+                  boxShadow: pct > 0 ? `0 0 12px color-mix(in srgb, ${module.color} 19%, transparent)` : undefined,
                 }}
               />
             </div>

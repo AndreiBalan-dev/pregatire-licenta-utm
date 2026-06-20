@@ -1,13 +1,18 @@
 "use client";
 
+import { useMemo } from "react";
 import { modules } from "@/data/modules";
 import { ModuleCard } from "./ModuleCard";
 import { Container } from "@/components/layout/Container";
 import { useSession } from "@/hooks/useSession";
+import { buildMergedAnswerMap } from "@/lib/answer-merge";
 import { allQuestions, questionsByModule } from "@/data";
 
 export function ModuleGrid() {
   const { session } = useSession();
+  // Use the same merged answer map as the Practica and Rezultate pages so the
+  // homepage module cards report the same "rezolvate" counts (not practica-only).
+  const answeredMap = useMemo(() => buildMergedAnswerMap(session), [session]);
 
   return (
     <section className="py-8 sm:py-10">
@@ -28,10 +33,10 @@ export function ModuleGrid() {
           {modules.map((mod, i) => {
             const moduleQuestions = questionsByModule[mod.id] || [];
             const answeredCount = moduleQuestions.filter(
-              (q) => session.answers[q.id]
+              (q) => answeredMap.has(q.id)
             ).length;
             const correctCount = moduleQuestions.filter(
-              (q) => session.answers[q.id]?.isCorrect
+              (q) => answeredMap.get(q.id)?.isCorrect
             ).length;
 
             return (

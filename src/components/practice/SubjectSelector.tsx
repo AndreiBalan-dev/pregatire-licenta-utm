@@ -92,10 +92,13 @@ export function SubjectSelector({
                     </Badge>
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
+                    {/* Desktop placement. max-sm:hidden (not a bare "hidden") because the
+                        Button's base inline-flex would otherwise win and show it on mobile,
+                        duplicating the sm:hidden copy in the stats row below. */}
                     <Button
                       variant="accent"
                       size="sm"
-                      className="hidden sm:inline-flex"
+                      className="max-sm:hidden"
                       onClick={(e) => {
                         e.stopPropagation();
                         if (allSelected) {
