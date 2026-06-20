@@ -120,3 +120,20 @@ export function masteredCount(
   }
   return n;
 }
+
+/**
+ * Round-robin merge of several lists: a[0], b[0], c[0], a[1], b[1], ...,
+ * skipping lists that run out. Used to keep a multi-subject training scope
+ * mixed across subjects/modules instead of one full subject (then module) at a
+ * time, which would otherwise make new questions trickle in strict pool order.
+ */
+export function interleave<T>(lists: T[][]): T[] {
+  const out: T[] = [];
+  const max = lists.reduce((m, l) => Math.max(m, l.length), 0);
+  for (let i = 0; i < max; i++) {
+    for (const list of lists) {
+      if (i < list.length) out.push(list[i]);
+    }
+  }
+  return out;
+}

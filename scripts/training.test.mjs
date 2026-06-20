@@ -2,6 +2,7 @@ import process from "node:process";
 import assert from "node:assert/strict";
 import {
   seedBox, nextBox, intervalForBox, initSchedule, pickNext, applyAnswer, masteredCount,
+  interleave,
   INTERVALS, NEW_SPACING, MASTERED_BOX, MAX_BOX,
 } from "../src/lib/training.ts";
 
@@ -98,6 +99,17 @@ check("behavioral: a fully-mastered question is never retired (finite due, still
   const { due } = applyAnswer({ pool: [1], due: { 1: 0 }, seq: 10, lastQuestionId: null }, { 1: 5 }, {}, 1, true);
   assert.ok(Number.isFinite(due[1]));
   assert.equal(due[1], 11 + intervalForBox(5)); // 61, still comes back
+});
+
+check("interleave: round-robins across lists, skips exhausted ones, loses nothing", () => {
+  assert.deepEqual(interleave([[1, 2, 3], [4, 5, 6]]), [1, 4, 2, 5, 3, 6]);
+  // uneven lengths: the longer list's tail follows once the shorter runs out
+  assert.deepEqual(interleave([[1, 2, 3, 4], [5, 6]]), [1, 5, 2, 6, 3, 4]);
+  assert.deepEqual(interleave([[1], [], [2, 3]]), [1, 2, 3]);
+  assert.deepEqual(interleave([]), []);
+  const lists = [[1, 2, 3, 4, 5, 6], [7, 8], [9, 10, 11]];
+  assert.equal(interleave(lists).length, 11);
+  assert.deepEqual(interleave(lists).sort((a, b) => a - b), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
 });
 
 if (failures > 0) { console.error(`\n${failures} test(s) failed`); process.exit(1); }

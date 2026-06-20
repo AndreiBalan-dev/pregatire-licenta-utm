@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Bara de progres de pe cardurile Module se umple acum corect (inainte ramanea goala)",
-  "Cardurile Module arata 'rezolvate' din practica, simulator si antrenament, ca la Practica si Rezultate",
-  "Butonul 'Selecteaza tot' nu se mai dubleaza pe mobil la selectarea materiilor",
+  "Antrenament: la mai multe materii, intrebarile se amesteca intre module de la inceput (nu mai vin tot dintr-unul la rand)",
+  "Antrenament: vezi acum si cate intrebari ai vazut, nu doar cate ai stapanit",
+  "Bara de progres de pe cardurile Module se umple corect, inclusiv pe Rezultate",
 ];
 
 export function ChangelogBanner() {

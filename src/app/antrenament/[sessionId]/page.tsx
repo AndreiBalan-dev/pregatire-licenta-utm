@@ -129,6 +129,7 @@ export default function AntrenamentRuntime() {
   const currentModule = modules.find((m) => m.id === currentQuestion.moduleId);
   const moduleColor = currentModule?.color || "var(--color-accent)";
   const masteredPct = progress.poolSize > 0 ? Math.round((progress.masteredCount / progress.poolSize) * 100) : 0;
+  const seenPct = progress.poolSize > 0 ? Math.round((progress.seenCount / progress.poolSize) * 100) : 0;
   const wrongCount = progress.answeredCount - progress.correctCount;
 
   const uniqueCorrect = uniqueSeen.filter((id) => session.answers[id]?.isCorrect).length;
@@ -178,10 +179,12 @@ export default function AntrenamentRuntime() {
                 </span>
               </div>
               <span className="text-[var(--color-text-tertiary)] font-mono tabular-nums">
-                Stăpânite {progress.masteredCount}<span className="text-[var(--color-border-strong)]">/</span>{progress.poolSize}
+                Văzute {progress.seenCount}<span className="text-[var(--color-border-strong)] mx-1">·</span>Stăpânite {progress.masteredCount}<span className="text-[var(--color-border-strong)]">/</span>{progress.poolSize}
               </span>
             </div>
-            <div className="relative h-2 rounded-full bg-[var(--color-bg-primary)] overflow-hidden" role="progressbar" aria-valuenow={progress.masteredCount} aria-valuemin={0} aria-valuemax={progress.poolSize} aria-label={`Stăpânite ${progress.masteredCount} din ${progress.poolSize}`}>
+            <div className="relative h-2 rounded-full bg-[var(--color-bg-primary)] overflow-hidden" role="progressbar" aria-valuenow={progress.masteredCount} aria-valuemin={0} aria-valuemax={progress.poolSize} aria-label={`Stăpânite ${progress.masteredCount} din ${progress.poolSize}, văzute ${progress.seenCount}`}>
+              {/* Faint fill = share of the pool you've seen; solid fill = mastered (always within seen). */}
+              <div className="absolute inset-y-0 left-0 rounded-full bg-[var(--color-border-strong)] transition-all duration-500 ease-out" style={{ width: `${seenPct}%` }} />
               <div className="absolute inset-y-0 left-0 rounded-full transition-all duration-500 ease-out" style={{ width: `${masteredPct}%`, background: "linear-gradient(90deg, var(--color-correct), var(--color-accent))" }} />
             </div>
           </div>

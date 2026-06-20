@@ -44,6 +44,15 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "2.1.2",
+    date: "21 Iunie 2026",
+    title: "Antrenament: materii amestecate si progres mai clar",
+    changes: [
+      { text: "Antrenament: cand alegi mai multe materii, intrebarile noi se amesteca acum intre materii si module de la inceput; inainte veneau toate dintr-un singur modul la rand", type: "fix" },
+      { text: "Antrenament: pe langa cate ai stapanit, vezi acum si cate intrebari ai vazut, ca sa urmaresti mai bine progresul (o intrebare devine 'stapanita' dupa ce o nimeresti corect de mai multe ori)", type: "improvement" },
+    ],
+  },
+  {
     version: "2.1.1",
     date: "20 Iunie 2026",
     title: "Bara de progres si selectia materiilor reparate",

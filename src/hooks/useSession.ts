@@ -17,7 +17,7 @@ import { questionsBySubject, getQuestion } from "@/data";
 import { modules } from "@/data/modules";
 import { pickExamQuestions, computeScore } from "@/lib/exam";
 import { buildOptionOrders } from "@/lib/practice";
-import { initSchedule, pickNext, applyAnswer, masteredCount } from "@/lib/training";
+import { initSchedule, pickNext, applyAnswer, masteredCount, interleave } from "@/lib/training";
 import { buildMergedAnswerMap } from "@/lib/answer-merge";
 import type { AnswerKey, Question } from "@/data/types";
 
@@ -343,9 +343,12 @@ export function useSession() {
   const startTraining = useCallback(
     (subjectIds: string[], options: { shuffleOrder?: boolean; shuffleOptions?: boolean } = {}): string | null => {
       const { shuffleOrder = false, shuffleOptions = false } = options;
-      const poolQuestions = subjectIds.flatMap((sid) => questionsBySubject[sid] || []);
-      if (poolQuestions.length === 0) return null;
-      const orderedQuestions = shuffleOrder ? shuffleArray(poolQuestions) : poolQuestions;
+      // Round-robin across the selected subjects so multi-module scopes mix from
+      // the start; shuffle (when on) randomizes across the whole flattened set.
+      const lists = subjectIds.map((sid) => questionsBySubject[sid] || []);
+      const flat = lists.flat();
+      if (flat.length === 0) return null;
+      const orderedQuestions = shuffleOrder ? shuffleArray(flat) : interleave(lists);
       const pool = orderedQuestions.map((q) => q.id);
       const sessionId = crypto.randomUUID();
       setSession((prev) => {
