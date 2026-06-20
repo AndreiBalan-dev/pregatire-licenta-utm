@@ -88,8 +88,10 @@ export function ExamModuleBreakdown({ perModule, perSubject }: ExamModuleBreakdo
                       className="absolute inset-y-0 left-0 rounded-full transition-all duration-700 ease-out"
                       style={{
                         width: `${pct}%`,
-                        background: `linear-gradient(90deg, ${mod.color}, ${mod.color}DD)`,
-                        boxShadow: pct > 0 ? `0 0 8px ${mod.color}55` : undefined,
+                        // mod.color is a CSS var; "var(...)DD" hex-alpha is invalid CSS and
+                        // voids the gradient (empty/black bar). color-mix keeps the var valid.
+                        background: `linear-gradient(90deg, ${mod.color}, color-mix(in srgb, ${mod.color} 87%, transparent))`,
+                        boxShadow: pct > 0 ? `0 0 8px color-mix(in srgb, ${mod.color} 33%, transparent)` : undefined,
                       }}
                     />
                   </div>

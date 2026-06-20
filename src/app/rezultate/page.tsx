@@ -205,8 +205,10 @@ export default function RezultatePage() {
                           className="h-full rounded-full transition-all duration-700 ease-out"
                           style={{
                             width: `${modPct}%`,
-                            background: `linear-gradient(90deg, ${mod.color}, ${mod.color}CC)`,
-                            boxShadow: modPct > 0 ? `0 0 12px ${mod.color}30` : undefined,
+                            // mod.color is a CSS var; "var(...)CC" hex-alpha is invalid CSS and
+                            // voids the gradient (empty/black bar). color-mix keeps the var valid.
+                            background: `linear-gradient(90deg, ${mod.color}, color-mix(in srgb, ${mod.color} 80%, transparent))`,
+                            boxShadow: modPct > 0 ? `0 0 12px color-mix(in srgb, ${mod.color} 19%, transparent)` : undefined,
                           }}
                         />
                       </div>
