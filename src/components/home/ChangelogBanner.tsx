@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Reiei greselile fara sa pierzi sesiunea mare: din rezultat poti relua tot simulatorul, nu doar ultimul set",
-  "Un singur loc pentru orice reluare: doar greselile, toate greselile initiale, sau sesiunea completa",
-  "Simulare noua dintr-un clic; la practica vezi 'Ultimele X' cand termini lotul",
+  "Codul din textul intrebarilor apare acum cu font monospat, mai usor de citit",
+  "La practica, 'Ultimele X' tine cont de optiunea 'Doar nerezolvate' si numara corect lotul ramas",
+  "Reiei greselile fara sa pierzi sesiunea mare: din rezultat reiei tot simulatorul, nu doar ultimul set",
 ];
 
 export function ChangelogBanner() {

@@ -1,27 +1,12 @@
 "use client";
 
-import { useState, Fragment, type ReactNode } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { renderInlineCode } from "@/components/ui/InlineText";
 
 interface ExplanationPanelProps {
   text: string;
   className?: string;
-}
-
-/** Render inline `code` spans (backtick-delimited) as monospace chips. */
-function renderInline(text: string): ReactNode[] {
-  return text.split("`").map((part, i) =>
-    i % 2 === 1 ? (
-      <code
-        key={i}
-        className="px-1 py-0.5 mx-px rounded-[var(--radius-sm)] bg-[var(--color-bg-primary)] border border-[var(--color-border)] font-mono text-[0.88em] text-[var(--color-text-primary)] break-words"
-      >
-        {part}
-      </code>
-    ) : (
-      <Fragment key={i}>{part}</Fragment>
-    ),
-  );
 }
 
 /**
@@ -92,7 +77,7 @@ export function ExplanationPanel({ text, className }: ExplanationPanelProps) {
                 return (
                   <div key={i} className="flex gap-2 mt-1">
                     <span className="text-[var(--color-text-tertiary)] flex-shrink-0" aria-hidden="true">•</span>
-                    <span className="min-w-0">{renderInline(trimmed.replace(/^•\s*/, ""))}</span>
+                    <span className="min-w-0">{renderInlineCode(trimmed.replace(/^•\s*/, ""))}</span>
                   </div>
                 );
               }
@@ -101,7 +86,7 @@ export function ExplanationPanel({ text, className }: ExplanationPanelProps) {
               if (trimmed.endsWith(":")) {
                 return (
                   <p key={i} className="mt-2.5 mb-0.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[var(--color-text-tertiary)]" style={{ fontFamily: "var(--font-display)" }}>
-                    {renderInline(trimmed)}
+                    {renderInlineCode(trimmed)}
                   </p>
                 );
               }
@@ -109,7 +94,7 @@ export function ExplanationPanel({ text, className }: ExplanationPanelProps) {
               // Normal paragraph
               return (
                 <p key={i} className="mt-1">
-                  {renderInline(trimmed)}
+                  {renderInlineCode(trimmed)}
                 </p>
               );
             })}

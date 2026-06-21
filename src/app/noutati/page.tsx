@@ -44,6 +44,15 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "2.2.1",
+    date: "21 Iunie 2026",
+    title: "Cod mai lizibil in intrebari si reluare corecta a loturilor",
+    changes: [
+      { text: "Expresiile si secventele de cod scrise in textul intrebarilor apar acum cu font monospat, la fel ca la explicatii, nu ca text simplu - se citesc mult mai usor", type: "improvement" },
+      { text: "La practica, butonul cu urmatorul lot tine cont acum de optiunea 'Doar nerezolvate': daca nu ai bifat-o, numara toate intrebarile ramase din lot, nu doar pe cele nerezolvate (inainte putea scrie 'Ultimele 12' in loc de 'Ultimele 25')", type: "fix" },
+    ],
+  },
+  {
     version: "2.2.0",
     date: "21 Iunie 2026",
     title: "Reiei greselile fara sa pierzi sesiunea mare",

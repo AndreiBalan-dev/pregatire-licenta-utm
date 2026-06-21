@@ -331,7 +331,7 @@ ROLLBACK`,
     id: 377,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Comanda DROP VIEW vedere are ca efect:`,
+    text: `Comanda \`DROP VIEW vedere\` are ca efect:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -502,7 +502,7 @@ ROLLBACK`,
     id: 388,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Se dă secvența de cod următoare. Câte înregistrări ale dbo.tabel vor fi afișate de instrucțiunea SELECT?`,
+    text: `Se dă secvența de cod următoare. Câte înregistrări ale \`dbo.tabel\` vor fi afișate de instrucțiunea \`SELECT\`?`,
     code: `CREATE TABLE dbo.tabel
   (ID int NOT NULL PRIMARY KEY)
 GO

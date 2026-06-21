@@ -612,7 +612,7 @@ int main(){
     id: 123,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie programul C++:\nLinia de cod c b=a; determină:`,
+    text: `Fie programul C++:\nLinia de cod \`c b=a;\` determină:`,
     code: `class c{
   int a;
 public:
@@ -675,7 +675,7 @@ int main(){
     id: 126,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie următorul program C++:\nCe se poate afirma despre operator[]()?`,
+    text: `Fie următorul program C++:\nCe se poate afirma despre \`operator[]()\`?`,
     code: `#include<iostream.h>
 class A{
   int a[3];

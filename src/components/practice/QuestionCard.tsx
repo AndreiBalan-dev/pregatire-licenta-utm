@@ -3,6 +3,7 @@
 import { cn, isCodeLike } from "@/lib/utils";
 import { remapExplanationForOrder } from "@/lib/explanation";
 import { CodeBlock } from "@/components/ui/CodeBlock";
+import { renderInlineCode } from "@/components/ui/InlineText";
 import { ExplanationPanel } from "./ExplanationPanel";
 import type { Question, AnswerKey } from "@/data/types";
 
@@ -116,7 +117,7 @@ export function QuestionCard({
       {/* Question text */}
       <div className="mb-5 sm:mb-6">
         <p className="text-[13px] sm:text-base leading-relaxed text-[var(--color-text-primary)] whitespace-pre-wrap break-words">
-          {question.text}
+          {renderInlineCode(question.text)}
         </p>
       </div>
 

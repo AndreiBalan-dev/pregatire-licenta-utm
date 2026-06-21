@@ -20,7 +20,7 @@ export const programarePython: Question[] = [
     id: 52,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Pentru ca instrucțiunea Python del t[1:4] să nu producă o eroare în momentul executării sale, variabila t trebuie să fie inițializată prin:`,
+    text: `Pentru ca instrucțiunea Python \`del t[1:4]\` să nu producă o eroare în momentul executării sale, variabila t trebuie să fie inițializată prin:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -35,7 +35,7 @@ export const programarePython: Question[] = [
     id: 53,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Pentru ca instrucțiunea Python t[1]=7 să nu producă o eroare în momentul executării sale, variabila t trebuie să fie inițializată prin:`,
+    text: `Pentru ca instrucțiunea Python \`t[1]=7\` să nu producă o eroare în momentul executării sale, variabila t trebuie să fie inițializată prin:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -65,7 +65,7 @@ export const programarePython: Question[] = [
     id: 55,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următoarele 5 expresii scrise în limbajul Python: (a+b)/2==m, (a+b)//2==m, a+b==2*m, (b-a)/2==m–a și a//2==m-b//2. Câte dintre ele sunt adevărate dacă şi numai dacă numărul real 𝑚 este egal cu media aritmetică a numerelor întregi 𝑎 și 𝑏?`,
+    text: `Considerăm următoarele 5 expresii scrise în limbajul Python: \`(a+b)/2==m\`, \`(a+b)//2==m\`, \`a+b==2*m\`, \`(b-a)/2==m–a\` și \`a//2==m-b//2\`. Câte dintre ele sunt adevărate dacă şi numai dacă numărul real \`m\` este egal cu media aritmetică a numerelor întregi \`a\` și \`b\`?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -80,7 +80,7 @@ export const programarePython: Question[] = [
     id: 56,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Care este valoarea expresiei 2024//7/5*100/5//7, scrisă în limbajul Python?`,
+    text: `Care este valoarea expresiei \`2024//7/5*100/5//7\`, scrisă în limbajul Python?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -95,7 +95,7 @@ export const programarePython: Question[] = [
     id: 57,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Care este valoarea expresiei 2**4*4**2//4**4*2**2, scrisă în limbajul Python?`,
+    text: `Care este valoarea expresiei \`2**4*4**2//4**4*2**2\`, scrisă în limbajul Python?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -245,7 +245,7 @@ export const programarePython: Question[] = [
     id: 67,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm o listă nevidă 𝐿 ale cărei elemente sunt liste nevide de numere întregi (de exemplu, 𝐿 = [[10, 70, −100], [50], [1, 100, 70]). Care dintre următoarele expresii Python nu atribuie variabilei de tip întreg 𝑙𝑚𝑎𝑥 cel mai mare număr care apare în sublistele listei 𝐿 (pentru exemplul dat anterior acesta este 100)?`,
+    text: `Considerăm o listă nevidă \`L\` ale cărei elemente sunt liste nevide de numere întregi (de exemplu, \`L = [[10, 70, −100], [50], [1, 100, 70]]\`). Care dintre următoarele expresii Python nu atribuie variabilei de tip întreg \`lmax\` cel mai mare număr care apare în sublistele listei \`L\` (pentru exemplul dat anterior acesta este 100)?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -290,7 +290,7 @@ export const programarePython: Question[] = [
     id: 70,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Dacă s="restaurare" și t="orchestrare", atunci valoarea expresiei s.find(t[4:7]) + t.find(s[-4:-1]) este egală cu:`,
+    text: `Dacă \`s="restaurare"\` și \`t="orchestrare"\`, atunci valoarea expresiei \`s.find(t[4:7]) + t.find(s[-4:-1])\` este egală cu:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -305,7 +305,7 @@ export const programarePython: Question[] = [
     id: 71,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Fie 𝑠 un șir de caractere format din exact 10 litere mici din alfabetul englez și următoarele 4 expresii de tip logic, scrise în limbajul Python: s[:5]*2==s, s.index(s[5:])==0, s[:5]==s[5:] și s.startswith(s[5:])+s.endswith(s[:5])==2. Câte dintre cele 4 expresii sunt adevărate dacă și numai dacă șirul 𝑠 se poate obține prin concatenarea a două șiruri identice de lungime 5?`,
+    text: `Fie \`s\` un șir de caractere format din exact 10 litere mici din alfabetul englez și următoarele 4 expresii de tip logic, scrise în limbajul Python: \`s[:5]*2==s\`, \`s.index(s[5:])==0\`, \`s[:5]==s[5:]\` și \`s.startswith(s[5:])+s.endswith(s[:5])==2\`. Câte dintre cele 4 expresii sunt adevărate dacă și numai dacă șirul \`s\` se poate obține prin concatenarea a două șiruri identice de lungime 5?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -320,7 +320,7 @@ export const programarePython: Question[] = [
     id: 72,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Fie 𝑡 un șir de caractere format din numere naturale nenule despărțite între ele prin spații și următoarele 4 expresii scrise în limbajul Python:\n\n• x=int("".join(sorted(t.split())))\n• x=int("".join(sorted("".join(t.split()))))\n• x=int("".join(sorted("".join(t.split())))[::-1])\n• x=int("".join(sorted(t)[::-1]))\n\nÎn câte dintre cele 4 expresii variabila 𝑥 va conține întotdeauna cel mai mare număr care se poate forma folosind toate cifrele tuturor numerelor din șirul 𝑡?`,
+    text: `Fie \`t\` un șir de caractere format din numere naturale nenule despărțite între ele prin spații și următoarele 4 expresii scrise în limbajul Python:\n\n• \`x=int("".join(sorted(t.split())))\`\n• \`x=int("".join(sorted("".join(t.split()))))\`\n• \`x=int("".join(sorted("".join(t.split())))[::-1])\`\n• \`x=int("".join(sorted(t)[::-1]))\`\n\nÎn câte dintre cele 4 expresii variabila \`x\` va conține întotdeauna cel mai mare număr care se poate forma folosind toate cifrele tuturor numerelor din șirul \`t\`?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -470,7 +470,7 @@ export const programarePython: Question[] = [
     id: 82,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Fie s și t două șiruri de caractere. Care este efectul instrucțiunii s, t = (t, s)[::-1]?`,
+    text: `Fie s și t două șiruri de caractere. Care este efectul instrucțiunii \`s, t = (t, s)[::-1]\`?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -530,7 +530,7 @@ export const programarePython: Question[] = [
     id: 86,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Fie lista L = [10, [3.14, True, [20, "test", 2.71]], "usor"]. Care dintre următoarele expresii poate fi utilizată pentru a elimina cuvântul "test" din lista L?`,
+    text: `Fie lista \`L = [10, [3.14, True, [20, "test", 2.71]], "usor"]\`. Care dintre următoarele expresii poate fi utilizată pentru a elimina cuvântul "test" din lista L?`,
     code: undefined,
     codeLanguage: undefined,
     options: {

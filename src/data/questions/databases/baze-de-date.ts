@@ -621,7 +621,7 @@ WHERE p.codp=c.codp
     id: 343,
     moduleId: "databases",
     subjectId: "baze-de-date",
-    text: `Comanda DROP nume_tabela este echivalentă cu comanda:`,
+    text: `Comanda \`DROP nume_tabela\` este echivalentă cu comanda:`,
     code: undefined,
     codeLanguage: undefined,
     options: {

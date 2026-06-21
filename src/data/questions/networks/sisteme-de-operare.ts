@@ -51,7 +51,7 @@ export const sistemeDeOperare: Question[] = [
     id: 669,
     moduleId: "networks",
     subjectId: "sisteme-de-operare",
-    text: `Ce face comanda echo "export PATH=/usr/local/bin:\\$PATH" >> ~/.bashrc?`,
+    text: `Ce face comanda \`echo "export PATH=/usr/local/bin:\\$PATH" >> ~/.bashrc\`?`,
     code: undefined,
     codeLanguage: undefined,
     options: {

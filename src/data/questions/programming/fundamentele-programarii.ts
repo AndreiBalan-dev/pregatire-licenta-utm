@@ -330,7 +330,7 @@ printf("%d",np);`,
     id: 17,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Care este valoarea expresiei strlen("programare")+strcmp("test","test")?`,
+    text: `Care este valoarea expresiei \`strlen("programare")+strcmp("test","test")\`?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -664,7 +664,7 @@ typedef struct
     id: 35,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Fie 𝑣 un tablou unidimensional format din 100 de numere reale de tip double și 𝑝 o variabilă de tip pointer către double în care este memorată adresa ultimului element al tabloului 𝑣 (double *p=&v[99];). Care dintre următoarele expresii nu afișează numărul de octeți pe care îi ocupă tabloul 𝑣 în memorie?`,
+    text: `Fie \`v\` un tablou unidimensional format din 100 de numere reale de tip double și \`p\` o variabilă de tip pointer către double în care este memorată adresa ultimului element al tabloului \`v\` (\`double *p=&v[99];\`). Care dintre următoarele expresii nu afișează numărul de octeți pe care îi ocupă tabloul \`v\` în memorie?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
