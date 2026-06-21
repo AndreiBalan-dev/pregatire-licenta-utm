@@ -263,10 +263,27 @@ export default function QuizPage() {
           ? answeredIdsThisSession
           : practice.questionIds;
     if (ids.length === 0) return;
+    // A partial redo (wrong/answered) from a normal practice session begins a
+    // redo chain: stamp a practice-origin lineage so the next summary can offer
+    // the initial mistakes and the full original session. The "all" re-run
+    // starts a fresh origin (no lineage), matching the exam-side full re-run.
+    const lineage =
+      redoScope === "all"
+        ? undefined
+        : practice.redoLineage ?? {
+            origin: {
+              kind: "practice" as const,
+              questionIds: practice.questionIds,
+              subjectIds: practice.subjectIds,
+              batchSize: practice.batchSize,
+            },
+            firstWrong: wrongIdsThisSession,
+          };
     const newId = startPractice([], ids, {
       shuffleOrder: redoOrder === "shuffled",
       shuffleOptions: redoShuffleAnswers,
       mode: practice.mode,
+      ...(lineage ? { redoLineage: lineage } : {}),
     });
     setShowSummary(false);
     setSummaryView("main");
