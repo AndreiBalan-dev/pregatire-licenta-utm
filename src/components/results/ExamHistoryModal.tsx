@@ -8,7 +8,7 @@ import { ExamRepeatBadge } from "@/components/exam/ExamRepeatBadge";
 import { useResolvedTheme } from "@/hooks/useResolvedTheme";
 import { modules } from "@/data/modules";
 import { scoreGradientCss, scorePositionPct, scoreToColor } from "@/lib/exam";
-import { cn } from "@/lib/utils";
+import { cn, timeAgo } from "@/lib/utils";
 import type { ExamSummaryData } from "@/lib/session-types";
 
 interface ExamHistoryModalProps {
@@ -16,19 +16,6 @@ interface ExamHistoryModalProps {
   onClose: () => void;
   history: ExamSummaryData[];
   onClear?: () => void;
-}
-
-function timeAgo(iso: string): string {
-  const diff = Date.now() - new Date(iso).getTime();
-  const min = Math.floor(diff / 60000);
-  if (min < 1) return "acum câteva secunde";
-  if (min < 60) return `acum ${min} ${min === 1 ? "minut" : "minute"}`;
-  const hours = Math.floor(min / 60);
-  if (hours < 24) return `acum ${hours} ${hours === 1 ? "oră" : "ore"}`;
-  const days = Math.floor(hours / 24);
-  if (days < 30) return `acum ${days} ${days === 1 ? "zi" : "zile"}`;
-  const months = Math.floor(days / 30);
-  return `acum ${months} ${months === 1 ? "lună" : "luni"}`;
 }
 
 function formatDuration(ms: number | null): string {

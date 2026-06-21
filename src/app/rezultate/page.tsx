@@ -2,27 +2,44 @@
 
 import { useMemo } from "react";
 import type React from "react";
+import { useRouter } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Container } from "@/components/layout/Container";
 import { ProgressRing } from "@/components/results/ProgressRing";
 import { SimulatorResultCard } from "@/components/results/SimulatorResultCard";
-import { ExamHistoryButton } from "@/components/results/ExamHistoryButton";
+import { SessionHistory } from "@/components/results/SessionHistory";
 import { SubjectIcon } from "@/components/ui/SubjectIcon";
 import { useSession } from "@/hooks/useSession";
 import { modules } from "@/data/modules";
-import { questionsBySubject, allQuestions } from "@/data";
+import { questionsBySubject, allQuestions, getQuestion } from "@/data";
 import { buildMergedAnswerMap } from "@/lib/answer-merge";
 import { cn, formatPercentage, formatTime } from "@/lib/utils";
+import type { PracticeSummary } from "@/lib/session-types";
 
 export default function RezultatePage() {
-  const { session, isLoaded, getOverallStats, getExamSummary, getExamHistorySummaries, clearExamHistory } = useSession();
+  const { session, isLoaded, getOverallStats, getExamSummary, getSessionHistory, clearSessionHistory, startPractice, startTraining, repeatExamFromIds } = useSession();
+  const router = useRouter();
   const stats = getOverallStats();
   const exam = session.currentExam;
   const examSummary = exam && exam.submittedAt ? getExamSummary() : null;
-  const examHistory = getExamHistorySummaries();
 
   const mergedAnswers = useMemo(() => buildMergedAnswerMap(session), [session]);
+
+  const handleRetryExam = (questionIds: number[]) => {
+    const newId = repeatExamFromIds(questionIds, false);
+    if (newId) router.push(`/simulator/${newId}`);
+  };
+  const handleRetryPractice = (p: PracticeSummary) => {
+    const ids = p.questionIds.filter((id: number) => getQuestion(id) !== undefined);
+    if (ids.length === 0) return;
+    const newId = startPractice(p.subjectIds, ids, { mode: p.mode });
+    router.push(`/practica/${newId}`);
+  };
+  const handleRetryTraining = (subjectIds: string[]) => {
+    const newId = startTraining(subjectIds);
+    if (newId) router.push(`/antrenament/${newId}`);
+  };
 
   if (!isLoaded) {
     return (
@@ -58,12 +75,15 @@ export default function RezultatePage() {
             <SimulatorResultCard exam={exam} summary={examSummary} />
           </section>
 
-          {/* History trigger (renders only when there is history) */}
-          <ExamHistoryButton
-            history={examHistory}
-            onClear={clearExamHistory}
-            className="mb-10 sm:mb-12 animate-fade-in stagger-1"
-          />
+          {/* Unified session history timeline (renders only when there is history) */}
+            <SessionHistory
+              entries={getSessionHistory()}
+              onRetryExam={handleRetryExam}
+              onRetryPractice={handleRetryPractice}
+              onRetryTraining={handleRetryTraining}
+              onClear={clearSessionHistory}
+              className="animate-fade-in"
+            />
 
           {/* Practica section header */}
           <div className="flex items-center gap-3 mb-5 sm:mb-6 animate-fade-in stagger-2 flex-wrap">

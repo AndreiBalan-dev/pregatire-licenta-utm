@@ -39,3 +39,16 @@ const codePattern = /[(){}\[\]]|::|->|<<|>>|&&|\|\||==|!=|<=|>=|\bSELECT\b|\bFRO
 export function isCodeLike(text: string): boolean {
   return codePattern.test(text);
 }
+
+export function timeAgo(iso: string): string {
+  const diff = Date.now() - new Date(iso).getTime();
+  const min = Math.floor(diff / 60000);
+  if (min < 1) return "acum câteva secunde";
+  if (min < 60) return `acum ${min} ${min === 1 ? "minut" : "minute"}`;
+  const hours = Math.floor(min / 60);
+  if (hours < 24) return `acum ${hours} ${hours === 1 ? "oră" : "ore"}`;
+  const days = Math.floor(hours / 24);
+  if (days < 30) return `acum ${days} ${days === 1 ? "zi" : "zile"}`;
+  const months = Math.floor(days / 30);
+  return `acum ${months} ${months === 1 ? "lună" : "luni"}`;
+}
