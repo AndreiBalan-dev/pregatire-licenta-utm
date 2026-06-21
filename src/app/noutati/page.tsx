@@ -44,6 +44,17 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "2.2.0",
+    date: "21 Iunie 2026",
+    title: "Reiei greselile fara sa pierzi sesiunea mare",
+    changes: [
+      { text: "Cand reiei greselile dupa un simulator sau o practica si tot mai ai de lucru, poti acum sa reiei direct sesiunea mare din care au venit (de exemplu toate cele 36 de grile din simulator), nu doar ultimul set mic de greseli", type: "feature" },
+      { text: "Reiei dintr-un singur loc oricare set: doar greselile de acum, toate greselile initiale, sau sesiunea completa; butoanele se potrivesc singure dupa cate greseli ti-au mai ramas", type: "feature" },
+      { text: "Cand iei 100% pe un set de greseli, primesti pe loc optiunea sa reiei toate greselile initiale sau toata sesiunea, nu doar setul mic pe care tocmai l-ai terminat", type: "improvement" },
+      { text: "Pornesti o simulare noua direct din rezultat, dintr-un clic; la practica continui cu urmatorul lot, iar cand e ultimul scrie 'Ultimele X'", type: "improvement" },
+    ],
+  },
+  {
     version: "2.1.2",
     date: "21 Iunie 2026",
     title: "Antrenament: materii amestecate si progres mai clar",

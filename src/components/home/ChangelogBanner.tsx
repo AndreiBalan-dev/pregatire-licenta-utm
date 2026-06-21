@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Antrenament: la mai multe materii, intrebarile se amesteca intre module de la inceput (nu mai vin tot dintr-unul la rand)",
-  "Antrenament: vezi acum si cate intrebari ai vazut, nu doar cate ai stapanit",
-  "Bara de progres de pe cardurile Module se umple corect, inclusiv pe Rezultate",
+  "Reiei greselile fara sa pierzi sesiunea mare: din rezultat poti relua tot simulatorul, nu doar ultimul set",
+  "Un singur loc pentru orice reluare: doar greselile, toate greselile initiale, sau sesiunea completa",
+  "Simulare noua dintr-un clic; la practica vezi 'Ultimele X' cand termini lotul",
 ];
 
 export function ChangelogBanner() {
