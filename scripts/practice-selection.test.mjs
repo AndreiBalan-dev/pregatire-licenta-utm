@@ -158,6 +158,26 @@ check("questionHasCode: false for plain theory prose and empty/absent code block
   assert.equal(questionHasCode({ code: "   ", text: "Definitie?" }), false);
 });
 
+check("questionHasCode: true when an answer option reads as code (code lives in options)", () => {
+  assert.equal(
+    questionHasCode({ text: "Care secventa afiseaza 1 2 3?", options: { a: "for(i=0;i<3;i++) printf(i)", b: "alta", c: "alta", d: "alta" } }),
+    true,
+  );
+});
+
+check("questionHasCode: false when stem and all options are plain theory text", () => {
+  assert.equal(
+    questionHasCode({ text: "Ce este un compilator?", options: { a: "Un program", b: "Un fisier", c: "O eroare", d: "Un tabel" } }),
+    false,
+  );
+});
+
+check("questionHasCode: Big-O / numeric-sequence / formula options are NOT code (bare parens excluded)", () => {
+  assert.equal(questionHasCode({ text: "Complexitatea?", options: { a: "O(n log n)", b: "O(n)", c: "O(1)", d: "O(n)" } }), false);
+  assert.equal(questionHasCode({ text: "Ordinea?", options: { a: "(6, 9, 3)", b: "(1, 2, 3)", c: "(3, 2, 1)", d: "(9, 6, 3)" } }), false);
+  assert.equal(questionHasCode({ text: "Cate comparatii?", options: { a: "n(n-1)/2", b: "n(n+1)/2", c: "n/2", d: "n" } }), false);
+});
+
 // ---- buildOptionOrders (answer-option shuffle) ----
 
 check("buildOptionOrders shuffles each question's options, keyed by id", () => {

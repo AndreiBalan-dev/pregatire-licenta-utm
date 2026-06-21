@@ -21,6 +21,35 @@ export function WhatsNewModal({ open, onClose, onSeeDetails }: WhatsNewModalProp
   return (
     <Modal open={open} onClose={onClose} title="Ce e nou pe UTMLearn" className="!max-w-lg">
       <div className="max-h-[68vh] overflow-y-auto pr-1 -mr-1 space-y-6">
+        {/* Section: v2.4.0 - cod/teorie filter at Practica */}
+        <section>
+          <div className="inline-flex items-center gap-1.5 px-2 py-0.5 mb-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-30">
+            v2.4.0
+          </div>
+          <h3 className="text-lg sm:text-xl font-bold text-[var(--color-text-primary)] mb-2" style={{ fontFamily: "var(--font-display)" }}>
+            Exersează separat codul sau teoria
+          </h3>
+          <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            La materiile de programare, când alegi o materie pe pagina de Practică poți acum filtra între
+            <span className="font-semibold text-[var(--color-text-primary)]"> Cu cod</span>,
+            <span className="font-semibold text-[var(--color-text-primary)]"> Fără cod</span> (doar teorie) și
+            <span className="font-semibold text-[var(--color-text-primary)]"> Toate</span>, fiecare cu numărul ei.
+            Așa poți exersa separat grilele cu cod de cele de teorie.
+          </p>
+
+          <Link
+            href="/practica"
+            onClick={onClose}
+            className="mt-3 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-accent)] text-[#0C0C0E] font-bold text-sm transition-all duration-200 hover:bg-[var(--color-accent-hover)] active:scale-[0.98]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}
+          >
+            Deschide Practica
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+            </svg>
+          </Link>
+        </section>
+
         {/* Section 1: the new feature */}
         <section>
           <div className="inline-flex items-center gap-1.5 px-2 py-0.5 mb-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-30">

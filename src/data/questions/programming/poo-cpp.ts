@@ -877,11 +877,13 @@ int main{
     subjectId: "poo-cpp",
     text: `Fie data urmatoarea ierarhie de clase C++:
 
+~~~cpp
 class B {...}
 class D1:B{...}
 class D2:B{...}
 class M1:D1, public D2{...}
 class M2:virtual D1, virtual D2 {...}
+~~~
 
 Considerăm următoarele afirmaţii:
 1. clasa M1 va moşteni un obiect de tip B;

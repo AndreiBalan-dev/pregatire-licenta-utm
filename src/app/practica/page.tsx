@@ -360,7 +360,7 @@ function PracticaContent() {
                       {effectiveCount}
                     </span>
                     <span className="text-base text-[var(--color-text-tertiary)] font-medium">
-                      {onlyUnanswered ? "nerezolvate" : "întrebări"}
+                      {(onlyUnanswered ? "nerezolvate" : "întrebări") + (effectiveCodeFilter === "with" ? " cu cod" : effectiveCodeFilter === "without" ? " fără cod" : "")}
                     </span>
                   </div>
 

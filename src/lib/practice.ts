@@ -118,11 +118,35 @@ export function nextBatch(
 }
 
 /**
- * Whether a question involves code: a non-empty highlighted code block, or
- * inline code in its text (a `backtick` chip or a ~~~ fenced block). Lets the
- * Practica page split programming subjects into "cu cod" vs "fara cod" (theorie).
+ * Code signals inside an answer option. Deliberately EXCLUDES bare round parens:
+ * those also appear in Big-O (O(n log n)), numeric sequences ((6, 9, 3)) and
+ * math formulas (n(n-1)/2), which are theory, not code. Braces, brackets,
+ * semicolons and the operators below do not appear in that math notation, so
+ * they catch real code-in-options (loops, declarations, comparisons) without
+ * mis-tagging complexity/algorithm theory.
  */
-export function questionHasCode(q: { code?: string; text: string }): boolean {
+const OPTION_CODE_PATTERN =
+  /[{};[\]]|::|->|<<|>>|&&|\|\||==|!=|<=|>=|\bSELECT\b|\bFROM\b|\bWHERE\b|\bINSERT\b|\bUPDATE\b|\bDELETE\b|\bJOIN\b/i;
+
+/**
+ * Whether a question involves code, so the Practica page can split programming
+ * subjects into "cu cod" vs "fara cod" (theorie). Counts a non-empty highlighted
+ * code block, inline code in the text (a `backtick` chip or a ~~~ fenced block),
+ * or any answer option that reads as code (many grids put the code only in the
+ * options). Figures and Big-O / math notation are intentionally NOT treated as code.
+ */
+export function questionHasCode(q: {
+  code?: string;
+  text?: string;
+  options?: { a: string; b: string; c: string; d: string };
+}): boolean {
   if (q.code && q.code.trim().length > 0) return true;
-  return q.text.includes("`") || q.text.includes("~~~");
+  const text = q.text ?? "";
+  if (text.includes("`") || text.includes("~~~")) return true;
+  if (q.options) {
+    for (const opt of Object.values(q.options)) {
+      if (OPTION_CODE_PATTERN.test(opt)) return true;
+    }
+  }
+  return false;
 }
