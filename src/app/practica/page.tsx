@@ -166,44 +166,6 @@ function PracticaContent() {
             </p>
           </div>
 
-          {/* Cross-sell: full exam simulation, for when they'd rather do the real thing. */}
-          <Link
-            href="/simulator"
-            className="group flex items-center gap-3 sm:gap-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-3.5 sm:p-4 mb-8 transition-all duration-200 hover:border-[var(--color-accent)] animate-fade-in"
-          >
-            <span
-              className="flex-shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-[var(--radius-md)] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-border)]"
-              aria-hidden="true"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 11l3 3L22 4" />
-                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-              </svg>
-            </span>
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2">
-                <span className="text-sm sm:text-base font-bold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
-                  Simulator Examen Licență
-                </span>
-              </div>
-              <p className="text-[11px] sm:text-xs text-[var(--color-text-tertiary)] mt-0.5">
-                Vrei examenul real? 36 de grile, notă /10, sistem oficial de notare.
-              </p>
-            </div>
-            <span className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-[var(--radius-md)] text-sm font-semibold bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] transition-colors group-hover:bg-[var(--color-accent)] group-hover:text-[#0C0C0E] flex-shrink-0">
-              Pornește
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:hidden flex-shrink-0 text-[var(--color-text-tertiary)] group-hover:text-[var(--color-accent)] transition-colors" aria-hidden="true">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-          </Link>
-
-          <AntrenamentCrossSell className="mb-8" />
-
           {(wrongIds.length > 0 || markedIds.length > 0) && (
             <div className="mb-10 animate-fade-in">
               <div
@@ -292,6 +254,44 @@ function PracticaContent() {
               </div>
             </div>
           )}
+
+          {/* Cross-sell: full exam simulation, for when they'd rather do the real thing. */}
+          <Link
+            href="/simulator"
+            className="group flex items-center gap-3 sm:gap-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-3.5 sm:p-4 mb-8 transition-all duration-200 hover:border-[var(--color-accent)] animate-fade-in"
+          >
+            <span
+              className="flex-shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-[var(--radius-md)] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-border)]"
+              aria-hidden="true"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 11l3 3L22 4" />
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+              </svg>
+            </span>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-2">
+                <span className="text-sm sm:text-base font-bold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
+                  Simulator Examen Licență
+                </span>
+              </div>
+              <p className="text-[11px] sm:text-xs text-[var(--color-text-tertiary)] mt-0.5">
+                Vrei examenul real? 36 de grile, notă /10, sistem oficial de notare.
+              </p>
+            </div>
+            <span className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-[var(--radius-md)] text-sm font-semibold bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] transition-colors group-hover:bg-[var(--color-accent)] group-hover:text-[#0C0C0E] flex-shrink-0">
+              Pornește
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:hidden flex-shrink-0 text-[var(--color-text-tertiary)] group-hover:text-[var(--color-accent)] transition-colors" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </Link>
+
+          <AntrenamentCrossSell className="mb-8" />
 
           <SubjectSelector
             selectedSubjects={selectedSubjects}
