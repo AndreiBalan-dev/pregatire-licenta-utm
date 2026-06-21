@@ -24,18 +24,32 @@ export function WhatsNewModal({ open, onClose, onSeeDetails }: WhatsNewModalProp
         {/* Section 1: the new feature */}
         <section>
           <div className="inline-flex items-center gap-1.5 px-2 py-0.5 mb-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-30">
-            v2.2.0
+            v2.3.0
           </div>
           <h3 className="text-lg sm:text-xl font-bold text-[var(--color-text-primary)] mb-2" style={{ fontFamily: "var(--font-display)" }}>
-            Reia greșelile fără să pierzi sesiunea mare
+            Istoric pentru toate sesiunile, cu reluare
           </h3>
           <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
-            Când reiei greșelile după un simulator sau o practică, acum poți relua dintr-un singur loc orice set:
-            doar greșelile de acum, <span className="font-semibold text-[var(--color-text-primary)]">toate</span> greșelile
-            inițiale sau sesiunea completă. Butoanele se potrivesc singure după câte greșeli ți-au mai rămas.
+            Acum se salvează în istoric <span className="font-semibold text-[var(--color-text-primary)]">toate</span> sesiunile,
+            nu doar simulările: practica și antrenamentul apar pe pagina Rezultate, fiecare cu statisticile ei și un buton de reluare.
           </p>
 
           <div className="mt-3 space-y-2">
+            <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-3.5">
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
+                  </svg>
+                </span>
+                <p className="text-sm font-semibold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
+                  Vezi cum a mers fiecare sesiune
+                </p>
+              </div>
+              <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
+                Acuratețe și corecte din total la practică, câte ai văzut și câte ai stăpânit la antrenament, nota la simulări.
+              </p>
+            </div>
             <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-3.5">
               <div className="flex items-center gap-2 mb-1.5">
                 <span className="flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true">
@@ -44,37 +58,22 @@ export function WhatsNewModal({ open, onClose, onSeeDetails }: WhatsNewModalProp
                   </svg>
                 </span>
                 <p className="text-sm font-semibold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
-                  Nu mai pierzi sesiunea mare
+                  Reia orice sesiune dintr-un clic
                 </p>
               </div>
               <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
-                Din orice reluare poți sări înapoi la toate greșelile inițiale sau la toată simularea, nu doar la ultimul set mic.
-              </p>
-            </div>
-            <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-3.5">
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-                  </svg>
-                </span>
-                <p className="text-sm font-semibold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
-                  Mergi mai departe dintr-un clic
-                </p>
-              </div>
-              <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
-                Pornești o simulare nouă direct din rezultat, iar la practică treci la următorul lot, cu &quot;Ultimele X&quot; când e ultimul.
+                Din istoric reiei exact aceeași sesiune oricând vrei, fără să o reconstruiești.
               </p>
             </div>
           </div>
 
           <Link
-            href="/simulator"
+            href="/rezultate"
             onClick={onClose}
             className="mt-3 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-accent)] text-[#0C0C0E] font-bold text-sm transition-all duration-200 hover:bg-[var(--color-accent-hover)] active:scale-[0.98]"
             style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}
           >
-            Începe o simulare
+            Vezi Rezultatele
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
             </svg>
