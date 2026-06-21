@@ -387,6 +387,21 @@ export default function QuizPage() {
           aria-hidden="true"
         />
         <Container narrow className="relative">
+          {isRedo && (
+            <div className="mb-3 flex items-center gap-2">
+              <span
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.15em] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-40"
+                style={{ fontFamily: "var(--font-display)" }}
+                title="Reiei greșeli dintr-o sesiune mai mare"
+              >
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <polyline points="1 4 1 10 7 10" />
+                  <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                </svg>
+                {lineage?.origin.kind === "exam" ? "Reluare din simulare" : "Reluare din sesiune"}
+              </span>
+            </div>
+          )}
           {isTest && (
             <div className="mb-3 flex items-center gap-2">
               <span
@@ -749,6 +764,11 @@ export default function QuizPage() {
                   )}
                 </>
               )
+            )}
+            {isRedo && redoTargets.length > 1 && (
+              <p className="text-[11px] leading-relaxed text-[var(--color-text-tertiary)] text-center px-2">
+                Alegi ce reiei: doar greșelile, greșelile inițiale sau sesiunea completă.
+              </p>
             )}
             {remainingUnanswered > 0 && (
               <Button
