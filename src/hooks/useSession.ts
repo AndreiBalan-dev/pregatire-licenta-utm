@@ -7,6 +7,7 @@ import {
   MAX_EXAM_HISTORY,
   type AnswerRecord,
   type ExamState,
+  type ExamSummaryData,
   type PracticeState,
   type RedoLineage,
   type SessionSettings,
@@ -43,23 +44,6 @@ function optionOrdersForIds(ids: number[]): Record<number, AnswerKey[]> {
   return buildOptionOrders(
     ids.map((id) => getQuestion(id)).filter((q): q is Question => q !== undefined),
   );
-}
-
-export interface ExamSummaryData {
-  examId: string;
-  total: number;
-  answeredCount: number;
-  unansweredCount: number;
-  correctCount: number;
-  wrongCount: number;
-  score: number;
-  perModule: Record<string, { correct: number; total: number }>;
-  perSubject: Record<string, { correct: number; total: number }>;
-  durationMs: number | null;
-  submittedAt: string | null;
-  startedAt: string;
-  isRepeat: boolean;
-  repeatShuffled: boolean;
 }
 
 function computeExamSummary(exam: ExamState): ExamSummaryData {

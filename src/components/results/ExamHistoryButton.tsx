@@ -3,7 +3,7 @@
 import { useState, type ReactNode } from "react";
 import { ExamHistoryModal } from "@/components/results/ExamHistoryModal";
 import { cn } from "@/lib/utils";
-import type { ExamSummaryData } from "@/hooks/useSession";
+import type { ExamSummaryData } from "@/lib/session-types";
 
 interface ExamHistoryButtonProps {
   history: ExamSummaryData[];

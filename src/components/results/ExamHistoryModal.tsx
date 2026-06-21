@@ -9,7 +9,7 @@ import { useResolvedTheme } from "@/hooks/useResolvedTheme";
 import { modules } from "@/data/modules";
 import { scoreGradientCss, scorePositionPct, scoreToColor } from "@/lib/exam";
 import { cn } from "@/lib/utils";
-import type { ExamSummaryData } from "@/hooks/useSession";
+import type { ExamSummaryData } from "@/lib/session-types";
 
 interface ExamHistoryModalProps {
   open: boolean;

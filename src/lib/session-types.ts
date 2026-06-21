@@ -116,6 +116,49 @@ export interface ExamState {
   optionOrder?: Record<number, AnswerKey[]>;
 }
 
+export interface ExamSummaryData {
+  examId: string;
+  total: number;
+  answeredCount: number;
+  unansweredCount: number;
+  correctCount: number;
+  wrongCount: number;
+  score: number;
+  perModule: Record<string, { correct: number; total: number }>;
+  perSubject: Record<string, { correct: number; total: number }>;
+  durationMs: number | null;
+  submittedAt: string | null;
+  startedAt: string;
+  isRepeat: boolean;
+  repeatShuffled: boolean;
+}
+
+export interface PracticeSummary {
+  id: string;
+  startedAt: string;
+  endedAt: string;
+  mode: "practice" | "test";
+  subjectIds: string[];
+  questionIds: number[];
+  answered: number;
+  correct: number;
+  wrong: number;
+  perModule: Record<string, { correct: number; total: number }>;
+  durationMs: number;
+}
+
+export interface TrainingSummary {
+  id: string;
+  startedAt: string;
+  endedAt: string;
+  subjectIds: string[];
+  seenCount: number;
+  answeredCount: number;
+  correctCount: number;
+  masteredAtEnd: number;
+  poolSize: number;
+}
+
 export interface LocalSession {
   version: 1;
   startedAt: string;
@@ -125,6 +168,8 @@ export interface LocalSession {
   currentPractice: PracticeState | null;
   currentExam: ExamState | null;
   examHistory: ExamState[];
+  practiceHistory?: PracticeSummary[];
+  trainingHistory?: TrainingSummary[];
   subjectStats: Record<string, SubjectStat>;
   settings: SessionSettings;
   savedKey: string | null;
@@ -135,6 +180,8 @@ export interface LocalSession {
 }
 
 export const MAX_EXAM_HISTORY = 20;
+export const MAX_PRACTICE_HISTORY = 20;
+export const MAX_TRAINING_HISTORY = 20;
 
 export function createDefaultSession(): LocalSession {
   return {
