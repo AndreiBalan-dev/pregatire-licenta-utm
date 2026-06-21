@@ -140,6 +140,7 @@ function PracticaContent() {
       batchSize,
       shuffleOptions: session.settings.shuffleOptions,
       mode: "practice",
+      onlyUnanswered,
     });
     router.push(`/practica/${sessionId}`);
   };

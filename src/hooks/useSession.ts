@@ -32,6 +32,10 @@ export interface StartPracticeOptions {
   mode?: "practice" | "test";
   /** When set, marks this session as a redo derived from a larger session. */
   redoLineage?: RedoLineage;
+  /** Carry the "doar nerezolvate" choice so the next-batch CTA can honor it. */
+  onlyUnanswered?: boolean;
+  /** Ids already served in this paging chain (incl. this batch); next-batch skips them. */
+  seenIds?: number[];
 }
 
 /** Build a per-question answer-option display order for a set of question ids. */
@@ -297,7 +301,7 @@ export function useSession() {
 
   const startPractice = useCallback(
     (subjectIds: string[], questionIds: number[], options: StartPracticeOptions = {}): string => {
-      const { shuffleOrder = false, batchSize = null, shuffleOptions = false, mode = "practice", redoLineage } = options;
+      const { shuffleOrder = false, batchSize = null, shuffleOptions = false, mode = "practice", redoLineage, onlyUnanswered, seenIds } = options;
       const ordered = shuffleOrder ? shuffleArray(questionIds) : questionIds;
       const optionOrder = shuffleOptions ? optionOrdersForIds(ordered) : undefined;
       const practice: PracticeState = {
@@ -309,6 +313,8 @@ export function useSession() {
         batchSize,
         ...(optionOrder ? { optionOrder } : {}),
         ...(redoLineage ? { redoLineage } : {}),
+        ...(onlyUnanswered !== undefined ? { onlyUnanswered } : {}),
+        ...(seenIds ? { seenIds } : {}),
       };
       const sessionId = crypto.randomUUID();
       setSession((prev) => {

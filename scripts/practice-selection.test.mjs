@@ -1,6 +1,6 @@
 import process from "node:process";
 import assert from "node:assert/strict";
-import { selectPracticeQuestionIds, buildOptionOrders } from "../src/lib/practice.ts";
+import { selectPracticeQuestionIds, buildOptionOrders, remainingPoolIds, nextBatch } from "../src/lib/practice.ts";
 import { remapExplanationForOrder } from "../src/lib/explanation.ts";
 
 // Deterministic stand-in for the random shuffle so we can assert exact order.
@@ -89,6 +89,58 @@ check("batchSize larger than pool returns the whole (shuffled) pool", () => {
     reverseShuffle,
   );
   assert.deepEqual(result, range(1, 5).reverse());
+});
+
+// ---- next-batch paging (remainingPoolIds / nextBatch) ----
+
+check("remainingPoolIds (onlyUnanswered=false): counts ALL unseen, answered or not", () => {
+  // 50-question pool, first 25 served (seen). 13 of the rest were answered in a
+  // prior session. With the filter OFF, all 25 unseen remain (the reported bug:
+  // it used to count only the 12 unanswered).
+  const pool = range(1, 50);
+  const seenIds = range(1, 25);
+  const answered = new Set(range(26, 13)); // 26..38 answered earlier
+  const rem = remainingPoolIds(
+    { pool, seenIds, onlyUnanswered: false },
+    (id) => answered.has(id),
+  );
+  assert.deepEqual(rem, range(26, 25)); // 26..50, all 25
+});
+
+check("remainingPoolIds (onlyUnanswered=true): only never-answered unseen count", () => {
+  const pool = range(1, 50);
+  const seenIds = range(1, 25);
+  const answered = new Set(range(26, 13)); // 26..38 answered
+  const rem = remainingPoolIds(
+    { pool, seenIds, onlyUnanswered: true },
+    (id) => answered.has(id),
+  );
+  assert.deepEqual(rem, range(39, 12)); // 39..50, the 12 unanswered
+});
+
+check("nextBatch slices remaining, grows seenIds, and does not loop back", () => {
+  const pool = range(1, 50);
+  const first = nextBatch(
+    { pool, seenIds: range(1, 25), onlyUnanswered: false, batchSize: 25 },
+    () => false,
+  );
+  assert.deepEqual(first.ids, range(26, 25)); // the last 25
+  assert.deepEqual(first.seenIds, range(1, 50)); // everything seen now
+  // A second call finds nothing left; it must NOT re-offer 1..25.
+  const second = nextBatch(
+    { pool, seenIds: first.seenIds, onlyUnanswered: false, batchSize: 25 },
+    () => false,
+  );
+  assert.deepEqual(second.ids, []);
+});
+
+check("nextBatch with null batchSize returns all remaining", () => {
+  const pool = range(1, 10);
+  const out = nextBatch(
+    { pool, seenIds: [1, 2], onlyUnanswered: false, batchSize: null },
+    () => false,
+  );
+  assert.deepEqual(out.ids, range(3, 8)); // 3..10
 });
 
 // ---- buildOptionOrders (answer-option shuffle) ----

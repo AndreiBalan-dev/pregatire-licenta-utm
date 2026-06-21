@@ -17,6 +17,7 @@ import { getQuestion, questionsBySubject } from "@/data";
 import { modules } from "@/data/modules";
 import { cn, formatPercentage, formatTime } from "@/lib/utils";
 import { wrongIdsInPractice } from "@/lib/redo";
+import { remainingPoolIds, nextBatch } from "@/lib/practice";
 import { buildRedoTargets, type RedoTarget } from "@/lib/redo-lineage";
 import type { AnswerKey } from "@/data/types";
 
@@ -190,7 +191,7 @@ export default function QuizPage() {
     router.push("/rezultate");
   }, [endPractice, router]);
 
-  const remainingUnanswered = useMemo(() => {
+  const remainingCount = useMemo(() => {
     if (!practice) return 0;
     const subjectIds =
       practice.subjectIds.length > 0
@@ -199,17 +200,12 @@ export default function QuizPage() {
           ? practice.redoLineage.origin.subjectIds ?? []
           : [];
     if (subjectIds.length === 0) return 0;
-    const currentSet = new Set(practice.questionIds);
-    let count = 0;
-    for (const sid of subjectIds) {
-      const questions = questionsBySubject[sid] || [];
-      for (const q of questions) {
-        if (!currentSet.has(q.id) && !session.answers[q.id]) {
-          count++;
-        }
-      }
-    }
-    return count;
+    const pool = subjectIds.flatMap((sid) => (questionsBySubject[sid] || []).map((q) => q.id));
+    const seenIds = practice.seenIds ?? practice.questionIds;
+    // Redo sessions never stored the flag; default them to unanswered-only so
+    // "next batch" means fresh material, matching the prior behaviour.
+    const onlyUnanswered = practice.onlyUnanswered ?? !!practice.redoLineage;
+    return remainingPoolIds({ pool, seenIds, onlyUnanswered }, (id) => !!session.answers[id]).length;
   }, [practice, session.answers]);
 
   const handleContinueNextBatch = useCallback(() => {
@@ -221,27 +217,25 @@ export default function QuizPage() {
           ? practice.redoLineage.origin.subjectIds ?? []
           : [];
     if (subjectIds.length === 0) return;
-    const currentSet = new Set(practice.questionIds);
-    const nextIds: number[] = [];
-    for (const sid of subjectIds) {
-      const questions = questionsBySubject[sid] || [];
-      for (const q of questions) {
-        if (!currentSet.has(q.id) && !session.answers[q.id]) {
-          nextIds.push(q.id);
-        }
-      }
-    }
-    if (nextIds.length === 0) return;
-
+    const pool = subjectIds.flatMap((sid) => (questionsBySubject[sid] || []).map((q) => q.id));
+    const seenIds = practice.seenIds ?? practice.questionIds;
+    const onlyUnanswered = practice.onlyUnanswered ?? !!practice.redoLineage;
     const batchSize = practice.batchSize ?? practice.redoLineage?.origin.batchSize ?? null;
-    const batch = batchSize ? nextIds.slice(0, batchSize) : nextIds;
+    const { ids: batch, seenIds: nextSeen } = nextBatch(
+      { pool, seenIds, onlyUnanswered, batchSize },
+      (id) => !!session.answers[id],
+    );
+    if (batch.length === 0) return;
 
-    // Continuing the pool starts a fresh origin batch (no lineage).
+    // Continuing the pool starts a fresh paging session (no redo lineage),
+    // carrying the filter choice and the accumulated seen set forward.
     const newSessionId = startPractice(subjectIds, batch, {
       shuffleOrder: false,
       batchSize,
       shuffleOptions: practice.optionOrder != null,
       mode: practice.mode,
+      onlyUnanswered,
+      seenIds: nextSeen,
     });
     setShowSummary(false);
     router.replace(`/practica/${newSessionId}`);
@@ -694,23 +688,23 @@ export default function QuizPage() {
           </div>
 
           {/* Remaining info */}
-          {remainingUnanswered > 0 && (
+          {remainingCount > 0 && (
             <div className="flex items-center justify-center gap-2 text-xs text-[var(--color-text-tertiary)] py-1">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-60">
                 <circle cx="12" cy="12" r="10" />
                 <line x1="12" y1="8" x2="12" y2="12" />
                 <line x1="12" y1="16" x2="12.01" y2="16" />
               </svg>
-              Încă {remainingUnanswered} întrebări nerezolvate din aceste materii
+              Încă {remainingCount} întrebări din aceste materii
             </div>
           )}
-          {remainingUnanswered === 0 && practiceStats.answered > 0 && (
+          {remainingCount === 0 && practiceStats.answered > 0 && (
             <div className="flex items-center justify-center gap-2 text-sm font-medium text-[var(--color-correct)] py-1">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                 <polyline points="22 4 12 14.01 9 11.01" />
               </svg>
-              Ai rezolvat toate întrebările din aceste materii!
+              Ai parcurs toate întrebările din aceste materii!
             </div>
           )}
 
@@ -787,15 +781,15 @@ export default function QuizPage() {
                 Alegi ce reiei: doar greșelile, greșelile inițiale sau sesiunea completă.
               </p>
             )}
-            {remainingUnanswered > 0 && (
+            {remainingCount > 0 && (
               <Button
                 className="w-full py-3"
                 onClick={handleContinueNextBatch}
               >
                 {(() => {
                   const eff = practice.batchSize ?? practice.redoLineage?.origin.batchSize ?? null;
-                  const n = eff ? Math.min(eff, remainingUnanswered) : remainingUnanswered;
-                  const word = !eff || remainingUnanswered <= eff ? "Ultimele" : "Următoarele";
+                  const n = eff ? Math.min(eff, remainingCount) : remainingCount;
+                  const word = !eff || remainingCount <= eff ? "Ultimele" : "Următoarele";
                   return (
                     <>
                       <span className="hidden sm:inline">{word} {n} întrebări</span>
@@ -832,7 +826,7 @@ export default function QuizPage() {
                 Înapoi
               </Button>
               <Button
-                variant={remainingUnanswered > 0 ? "ghost" : "primary"}
+                variant={remainingCount > 0 ? "ghost" : "primary"}
                 size="sm"
                 className="flex-1 py-2.5 sm:py-2.5"
                 onClick={handleEndPractice}

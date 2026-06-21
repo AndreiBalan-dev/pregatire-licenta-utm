@@ -46,6 +46,18 @@ export interface PracticeState {
   optionOrder?: Record<number, AnswerKey[]>;
   /** Set when this session is a redo derived from a larger session. */
   redoLineage?: RedoLineage;
+  /**
+   * Whether the session was started with "doar nerezolvate". Drives the
+   * "next batch" CTA: when true it counts/serves only never-answered questions,
+   * when false it pages through the whole pool. Absent on legacy sessions.
+   */
+  onlyUnanswered?: boolean;
+  /**
+   * Question ids already served in this batch-paging chain (including the
+   * current batch). Lets the "next batch" page through the pool without
+   * re-offering earlier batches. Absent on non-paging or legacy sessions.
+   */
+  seenIds?: number[];
 }
 
 export interface TrainingState {
