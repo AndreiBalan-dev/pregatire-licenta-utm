@@ -173,8 +173,12 @@ export default function SimulatorExamPage() {
           shuffleOrder,
           shuffleOptions: shuffleAnswers,
           // Practice mode so wrong answers get instant feedback as you go (the
-          // CTA frames it as "exercițiu de practică"). Accuracy, not a /10 score.
+          // CTA frames it as "exercitiu de practica"). Accuracy, not a /10 score.
           mode: "practice",
+          redoLineage: {
+            origin: { kind: "exam", questionIds: exam.questionIds },
+            firstWrong: wrongIds,
+          },
         });
         setNavigating(true);
         setRedoOpen(false);

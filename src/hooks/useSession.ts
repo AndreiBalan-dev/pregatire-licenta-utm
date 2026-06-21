@@ -8,6 +8,7 @@ import {
   type AnswerRecord,
   type ExamState,
   type PracticeState,
+  type RedoLineage,
   type SessionSettings,
   type TrainingState,
 } from "@/lib/session-types";
@@ -29,6 +30,8 @@ export interface StartPracticeOptions {
   shuffleOptions?: boolean;
   /** "practice" shows feedback as you go; "test" hides it until the end. */
   mode?: "practice" | "test";
+  /** When set, marks this session as a redo derived from a larger session. */
+  redoLineage?: RedoLineage;
 }
 
 /** Build a per-question answer-option display order for a set of question ids. */
@@ -294,7 +297,7 @@ export function useSession() {
 
   const startPractice = useCallback(
     (subjectIds: string[], questionIds: number[], options: StartPracticeOptions = {}): string => {
-      const { shuffleOrder = false, batchSize = null, shuffleOptions = false, mode = "practice" } = options;
+      const { shuffleOrder = false, batchSize = null, shuffleOptions = false, mode = "practice", redoLineage } = options;
       const ordered = shuffleOrder ? shuffleArray(questionIds) : questionIds;
       const optionOrder = shuffleOptions ? optionOrdersForIds(ordered) : undefined;
       const practice: PracticeState = {
@@ -305,6 +308,7 @@ export function useSession() {
         startedAt: new Date().toISOString(),
         batchSize,
         ...(optionOrder ? { optionOrder } : {}),
+        ...(redoLineage ? { redoLineage } : {}),
       };
       const sessionId = crypto.randomUUID();
       setSession((prev) => {
