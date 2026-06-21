@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/Button";
+import { cn } from "@/lib/utils";
 
 interface ReviewLaunchProps {
   title: string;
@@ -41,7 +42,12 @@ export function ReviewLaunch({
   const disabled = count === 0;
 
   return (
-    <div className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-4 sm:p-5">
+    <div
+      className={cn(
+        "rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-4 sm:p-5 transition-opacity",
+        disabled && "opacity-60",
+      )}
+    >
       <div className="flex items-center gap-3 mb-4">
         {icon && (
           <span

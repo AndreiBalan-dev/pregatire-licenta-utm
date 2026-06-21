@@ -201,13 +201,7 @@ function PracticaContent() {
                   <p className="text-xs sm:text-sm text-[var(--color-text-secondary)] mb-4">
                     Reia greșelile sau întrebările marcate - acum poți alege și pe ce materie sau modul, nu doar tot odată.
                   </p>
-                  <div
-                    className={cn(
-                      "grid gap-3 grid-cols-1",
-                      wrongIds.length > 0 && markedIds.length > 0 && "sm:grid-cols-2",
-                    )}
-                  >
-                {wrongIds.length > 0 && (
+                  <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
                   <ReviewLaunch
                     title="Greșite"
                     count={wrongFiltered.length}
@@ -221,15 +215,11 @@ function PracticaContent() {
                       </svg>
                     }
                     filterSlot={
-                      hasMultipleScopes(wrongOptions) ? (
-                        <SubjectScopeMenu options={wrongOptions} value={wrongScopeEffective} onChange={setWrongScope} accentColor="var(--color-wrong)" />
-                      ) : undefined
+                      <SubjectScopeMenu options={wrongOptions} value={wrongScopeEffective} onChange={setWrongScope} accentColor="var(--color-wrong)" disabled={!hasMultipleScopes(wrongOptions)} />
                     }
                     onPractice={() => startReviewSession("practice", wrongFiltered)}
                     onSimulate={() => startReviewSession("test", wrongFiltered)}
                   />
-                )}
-                {markedIds.length > 0 && (
                   <ReviewLaunch
                     title="Marcate"
                     count={markedFiltered.length}
@@ -241,14 +231,11 @@ function PracticaContent() {
                       </svg>
                     }
                     filterSlot={
-                      hasMultipleScopes(markedOptions) ? (
-                        <SubjectScopeMenu options={markedOptions} value={markedScopeEffective} onChange={setMarkedScope} accentColor="var(--color-accent)" />
-                      ) : undefined
+                      <SubjectScopeMenu options={markedOptions} value={markedScopeEffective} onChange={setMarkedScope} accentColor="var(--color-accent)" disabled={!hasMultipleScopes(markedOptions)} />
                     }
                     onPractice={() => startReviewSession("practice", markedFiltered)}
                     onSimulate={() => startReviewSession("test", markedFiltered)}
                   />
-                )}
                   </div>
                 </div>
               </div>

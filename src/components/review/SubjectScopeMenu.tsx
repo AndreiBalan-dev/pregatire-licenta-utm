@@ -13,6 +13,8 @@ interface SubjectScopeMenuProps {
   onChange: (scope: Scope) => void;
   /** Accent used for the active state + count. Defaults to the app accent. */
   accentColor?: string;
+  /** Greyed-out, non-opening trigger (e.g. when there is only one materie to choose from). */
+  disabled?: boolean;
 }
 
 function scopeKey(scope: Scope): string {
@@ -39,7 +41,7 @@ function currentSelection(options: ScopeOptions, value: Scope): { label: string;
  * document.body, so it can't be clipped or mispositioned by transformed/
  * overflow-hidden ancestors). Options come pre-grouped in `options`.
  */
-export function SubjectScopeMenu({ options, value, onChange, accentColor = "var(--color-accent)" }: SubjectScopeMenuProps) {
+export function SubjectScopeMenu({ options, value, onChange, accentColor = "var(--color-accent)", disabled = false }: SubjectScopeMenuProps) {
   const [open, setOpen] = useState(false);
   const { label, count } = currentSelection(options, value);
   const activeKey = scopeKey(value);
@@ -55,8 +57,14 @@ export function SubjectScopeMenu({ options, value, onChange, accentColor = "var(
         type="button"
         aria-haspopup="dialog"
         aria-expanded={open}
-        onClick={() => setOpen(true)}
-        className="group w-full flex items-center justify-between gap-2 px-3 py-2 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] text-left transition-all duration-200 cursor-pointer hover:border-[var(--color-border-strong)] hover:bg-[var(--color-bg-hover)]"
+        disabled={disabled}
+        onClick={() => { if (!disabled) setOpen(true); }}
+        className={cn(
+          "group w-full flex items-center justify-between gap-2 px-3 py-2 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] text-left transition-all duration-200",
+          disabled
+            ? "opacity-50 cursor-not-allowed"
+            : "cursor-pointer hover:border-[var(--color-border-strong)] hover:bg-[var(--color-bg-hover)]",
+        )}
       >
         <span className="flex items-center gap-2 min-w-0">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-tertiary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0" aria-hidden="true">
