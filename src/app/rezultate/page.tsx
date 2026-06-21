@@ -82,7 +82,7 @@ export default function RezultatePage() {
               onRetryPractice={handleRetryPractice}
               onRetryTraining={handleRetryTraining}
               onClear={clearSessionHistory}
-              className="animate-fade-in"
+              className="mb-10 sm:mb-12 animate-fade-in stagger-1"
             />
 
           {/* Practica section header */}
