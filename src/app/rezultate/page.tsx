@@ -76,14 +76,14 @@ export default function RezultatePage() {
           </section>
 
           {/* Unified session history timeline (renders only when there is history) */}
-            <SessionHistory
-              entries={getSessionHistory()}
-              onRetryExam={handleRetryExam}
-              onRetryPractice={handleRetryPractice}
-              onRetryTraining={handleRetryTraining}
-              onClear={clearSessionHistory}
-              className="mb-10 sm:mb-12 animate-fade-in stagger-1"
-            />
+          <SessionHistory
+            entries={getSessionHistory()}
+            onRetryExam={handleRetryExam}
+            onRetryPractice={handleRetryPractice}
+            onRetryTraining={handleRetryTraining}
+            onClear={clearSessionHistory}
+            className="mb-10 sm:mb-12 animate-fade-in stagger-1"
+          />
 
           {/* Practica section header */}
           <div className="flex items-center gap-3 mb-5 sm:mb-6 animate-fade-in stagger-2 flex-wrap">
