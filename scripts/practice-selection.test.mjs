@@ -1,6 +1,6 @@
 import process from "node:process";
 import assert from "node:assert/strict";
-import { selectPracticeQuestionIds, buildOptionOrders, remainingPoolIds, nextBatch } from "../src/lib/practice.ts";
+import { selectPracticeQuestionIds, buildOptionOrders, remainingPoolIds, nextBatch, questionHasCode } from "../src/lib/practice.ts";
 import { remapExplanationForOrder } from "../src/lib/explanation.ts";
 
 // Deterministic stand-in for the random shuffle so we can assert exact order.
@@ -141,6 +141,21 @@ check("nextBatch with null batchSize returns all remaining", () => {
     () => false,
   );
   assert.deepEqual(out.ids, range(3, 8)); // 3..10
+});
+
+// ---- questionHasCode (code vs theory split) ----
+
+check("questionHasCode: true for a code block, inline backtick, or ~~~ fence", () => {
+  assert.equal(questionHasCode({ code: "print(1)", text: "Ce afiseaza?" }), true);
+  assert.equal(questionHasCode({ text: "Care e valoarea `s[:5]`?" }), true);
+  assert.equal(questionHasCode({ text: "Functii:\n~~~python\ndef f():\n    pass\n~~~" }), true);
+});
+
+check("questionHasCode: false for plain theory prose and empty/absent code block", () => {
+  assert.equal(questionHasCode({ text: "Ce este un compilator?" }), false);
+  assert.equal(questionHasCode({ code: "", text: "Definitie?" }), false);
+  assert.equal(questionHasCode({ code: undefined, text: "Definitie?" }), false);
+  assert.equal(questionHasCode({ code: "   ", text: "Definitie?" }), false);
 });
 
 // ---- buildOptionOrders (answer-option shuffle) ----

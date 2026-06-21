@@ -12,7 +12,7 @@ import { ReviewLaunch } from "@/components/review/ReviewLaunch";
 import { AntrenamentCrossSell } from "@/components/home/AntrenamentCrossSell";
 import { useSession } from "@/hooks/useSession";
 import { cn } from "@/lib/utils";
-import { selectPracticeQuestionIds, type QuestionOrder } from "@/lib/practice";
+import { selectPracticeQuestionIds, questionHasCode, type QuestionOrder } from "@/lib/practice";
 import { buildMergedAnswerMap } from "@/lib/answer-merge";
 import { modules } from "@/data/modules";
 import { questionsBySubject, getQuestion } from "@/data";
@@ -20,6 +20,11 @@ import { SubjectScopeMenu } from "@/components/review/SubjectScopeMenu";
 import { buildScopeOptions, filterByScope, hasMultipleScopes, scopeStillValid, type Scope } from "@/lib/redo-scope";
 
 const ALL_SCOPE: Scope = { kind: "all" };
+
+/** Subjects in the Programare module, where the cod/teorie filter is offered. */
+const PROGRAMMING_SUBJECT_IDS = new Set(
+  (modules.find((m) => m.id === "programming")?.subjects ?? []).map((s) => s.id),
+);
 
 /** Locate a question id within the module/materie catalog (for scope filtering). */
 const resolveQuestion = (id: number) => {
@@ -87,6 +92,7 @@ function PracticaContent() {
   );
   const [onlyUnanswered, setOnlyUnanswered] = useState(false);
   const [order, setOrder] = useState<QuestionOrder>("natural");
+  const [codeFilter, setCodeFilter] = useState<"all" | "with" | "without">("all");
 
   const { totalAvailable, unansweredCount } = useMemo(() => {
     let total = 0;
@@ -98,6 +104,32 @@ function PracticaContent() {
     }
     return { totalAvailable: total, unansweredCount: unanswered };
   }, [selectedSubjects, mergedAnswers]);
+
+  // The cod/teorie filter is only offered when a Programare subject is selected.
+  const hasProgrammingSelected = selectedSubjects.some((id) => PROGRAMMING_SUBJECT_IDS.has(id));
+  const effectiveCodeFilter = hasProgrammingSelected ? codeFilter : "all";
+
+  // Split the selected pool into code vs theory, respecting "doar nerezolvate"
+  // so the per-bucket counts match the session size shown in the hero.
+  const codeCounts = useMemo(() => {
+    let withCode = 0;
+    let withoutCode = 0;
+    for (const sid of selectedSubjects) {
+      for (const q of questionsBySubject[sid] || []) {
+        if (onlyUnanswered && mergedAnswers.has(q.id)) continue;
+        if (questionHasCode(q)) withCode += 1;
+        else withoutCode += 1;
+      }
+    }
+    return { withCode, withoutCode };
+  }, [selectedSubjects, onlyUnanswered, mergedAnswers]);
+
+  const effectiveCount =
+    effectiveCodeFilter === "with"
+      ? codeCounts.withCode
+      : effectiveCodeFilter === "without"
+        ? codeCounts.withoutCode
+        : codeCounts.withCode + codeCounts.withoutCode;
 
   const toggleSubject = (id: string) => {
     setSelectedSubjects((prev) =>
@@ -122,7 +154,15 @@ function PracticaContent() {
   const handleStart = () => {
     if (selectedSubjects.length === 0) return;
 
-    const pool = selectedSubjects.flatMap((sid) => questionsBySubject[sid] || []);
+    const pool = selectedSubjects
+      .flatMap((sid) => questionsBySubject[sid] || [])
+      .filter((q) =>
+        effectiveCodeFilter === "all"
+          ? true
+          : effectiveCodeFilter === "with"
+            ? questionHasCode(q)
+            : !questionHasCode(q),
+      );
     const batchSize = questionCount === "all" ? null : questionCount;
 
     const questionIds = selectPracticeQuestionIds(
@@ -317,7 +357,7 @@ function PracticaContent() {
                       className="text-5xl sm:text-6xl font-extrabold text-[var(--color-text-primary)] tabular-nums"
                       style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
                     >
-                      {onlyUnanswered ? unansweredCount : totalAvailable}
+                      {effectiveCount}
                     </span>
                     <span className="text-base text-[var(--color-text-tertiary)] font-medium">
                       {onlyUnanswered ? "nerezolvate" : "întrebări"}
@@ -351,6 +391,37 @@ function PracticaContent() {
 
                 {/* Controls */}
                 <div className="relative px-6 pb-6 space-y-5">
+                  {/* Cod vs teorie filter - only for Programare subjects */}
+                  {hasProgrammingSelected && (
+                    <div>
+                      <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--color-text-tertiary)] mb-2.5 block">
+                        Conținut
+                      </span>
+                      <div className="flex gap-2">
+                        {([
+                          { value: "all", label: "Toate", count: codeCounts.withCode + codeCounts.withoutCode },
+                          { value: "with", label: "Cu cod", count: codeCounts.withCode },
+                          { value: "without", label: "Fără cod", count: codeCounts.withoutCode },
+                        ] as const).map((opt) => (
+                          <button
+                            key={opt.value}
+                            onClick={() => setCodeFilter(opt.value)}
+                            className={cn(
+                              "flex-1 py-2 px-1 rounded-[var(--radius-md)] text-[11px] sm:text-sm font-semibold leading-tight transition-all duration-200 cursor-pointer border inline-flex items-center justify-center gap-1.5",
+                              codeFilter === opt.value
+                                ? "bg-[var(--color-accent)] text-[#0C0C0E] border-[var(--color-accent)] shadow-[0_0_20px_rgba(232,166,49,0.12)]"
+                                : "bg-[var(--color-bg-primary)] text-[var(--color-text-tertiary)] border-[var(--color-border)] hover:text-[var(--color-text-secondary)] hover:border-[var(--color-border-strong)] hover:bg-[var(--color-bg-hover)] active:scale-[0.97]",
+                            )}
+                            style={{ fontFamily: codeFilter === opt.value ? "var(--font-display)" : undefined }}
+                          >
+                            {opt.label}
+                            <span className="tabular-nums opacity-80">{opt.count}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                   {/* Toggle cards */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {(() => {
@@ -500,7 +571,7 @@ function PracticaContent() {
                   {/* Launch button */}
                   <button
                     onClick={handleStart}
-                    disabled={onlyUnanswered && unansweredCount === 0}
+                    disabled={effectiveCount === 0}
                     className={cn(
                       "w-full py-4 rounded-[var(--radius-lg)] text-base font-bold transition-all duration-200 cursor-pointer",
                       "flex items-center justify-center gap-2.5",

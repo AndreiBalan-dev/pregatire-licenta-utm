@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
+  "La Practica, materiile de programare au un filtru nou: Cu cod / Fara cod / Toate, cu numarul pentru fiecare",
   "Istoric pentru toate sesiunile (practica, antrenament, simulari), cu statistici si reluare, pe Rezultate",
   "Reiei orice sesiune trecuta dintr-un singur clic",
-  "Pe Practica, butoanele Simulator si Antrenament sunt acum sub 'Reia ce ai de recuperat'",
 ];
 
 export function ChangelogBanner() {

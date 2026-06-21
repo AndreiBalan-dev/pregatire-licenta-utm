@@ -116,3 +116,13 @@ export function nextBatch(
   const ids = input.batchSize !== null ? remaining.slice(0, input.batchSize) : remaining;
   return { ids, seenIds: [...input.seenIds, ...ids] };
 }
+
+/**
+ * Whether a question involves code: a non-empty highlighted code block, or
+ * inline code in its text (a `backtick` chip or a ~~~ fenced block). Lets the
+ * Practica page split programming subjects into "cu cod" vs "fara cod" (theorie).
+ */
+export function questionHasCode(q: { code?: string; text: string }): boolean {
+  if (q.code && q.code.trim().length > 0) return true;
+  return q.text.includes("`") || q.text.includes("~~~");
+}

@@ -44,6 +44,15 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "2.4.0",
+    date: "21 Iunie 2026",
+    title: "Exerseaza separat grilele cu cod sau doar teoria",
+    changes: [
+      { text: "La materiile de programare, cand alegi o materie pe pagina de Practica poti acum filtra intre 'Cu cod', 'Fara cod' (doar teorie) si 'Toate', ca sa exersezi separat grilele cu cod de cele teoretice", type: "feature" },
+      { text: "Filtrul arata cate intrebari sunt in fiecare categorie, iar numarul sesiunii se actualizeaza dupa ce alegi", type: "improvement" },
+    ],
+  },
+  {
     version: "2.3.0",
     date: "21 Iunie 2026",
     title: "Istoric pentru toate sesiunile, cu reluare",
