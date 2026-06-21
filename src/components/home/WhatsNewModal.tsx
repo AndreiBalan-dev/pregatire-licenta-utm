@@ -24,14 +24,15 @@ export function WhatsNewModal({ open, onClose, onSeeDetails }: WhatsNewModalProp
         {/* Section 1: the new feature */}
         <section>
           <div className="inline-flex items-center gap-1.5 px-2 py-0.5 mb-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-30">
-            v2.1.0
+            v2.2.0
           </div>
           <h3 className="text-lg sm:text-xl font-bold text-[var(--color-text-primary)] mb-2" style={{ fontFamily: "var(--font-display)" }}>
-            Antrenament nelimitat, cu un algoritm care învață ce greșești
+            Reia greșelile fără să pierzi sesiunea mare
           </h3>
           <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
-            Alegi <span className="font-semibold text-[var(--color-text-primary)]">tot</span>, un modul sau o singură
-            materie și răspunzi în continuu. Te oprești când vrei, iar tot ce răspunzi intră în statisticile tale.
+            Când reiei greșelile după un simulator sau o practică, acum poți relua dintr-un singur loc orice set:
+            doar greșelile de acum, <span className="font-semibold text-[var(--color-text-primary)]">toate</span> greșelile
+            inițiale sau sesiunea completă. Butoanele se potrivesc singure după câte greșeli ți-au mai rămas.
           </p>
 
           <div className="mt-3 space-y-2">
@@ -39,42 +40,41 @@ export function WhatsNewModal({ open, onClose, onSeeDetails }: WhatsNewModalProp
               <div className="flex items-center gap-2 mb-1.5">
                 <span className="flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M3 12a9 9 0 1 0 9-9" /><polyline points="3 3 3 9 9 9" />
+                    <polyline points="1 4 1 10 7 10" /><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
                   </svg>
                 </span>
                 <p className="text-sm font-semibold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
-                  Greșelile revin mai des
+                  Nu mai pierzi sesiunea mare
                 </p>
               </div>
               <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
-                Întrebările la care greșești se întorc repede, iar cele pe care le știi revin tot mai rar - dar tot revin,
-                ca să nu le uiți.
+                Din orice reluare poți sări înapoi la toate greșelile inițiale sau la toată simularea, nu doar la ultimul set mic.
               </p>
             </div>
             <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-3.5">
               <div className="flex items-center gap-2 mb-1.5">
                 <span className="flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V17h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z" /><path d="M9 21h6" />
+                    <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
                   </svg>
                 </span>
                 <p className="text-sm font-semibold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
-                  Ține minte de la o zi la alta
+                  Mergi mai departe dintr-un clic
                 </p>
               </div>
               <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
-                Algoritmul reține cât de bine stăpânești fiecare grilă, așa că revii oricând și continui de unde ai rămas.
+                Pornești o simulare nouă direct din rezultat, iar la practică treci la următorul lot, cu &quot;Ultimele X&quot; când e ultimul.
               </p>
             </div>
           </div>
 
           <Link
-            href="/antrenament"
+            href="/simulator"
             onClick={onClose}
             className="mt-3 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-accent)] text-[#0C0C0E] font-bold text-sm transition-all duration-200 hover:bg-[var(--color-accent-hover)] active:scale-[0.98]"
             style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}
           >
-            Începe Antrenamentul
+            Începe o simulare
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
             </svg>
