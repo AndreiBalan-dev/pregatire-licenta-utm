@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Codul pe mai multe linii din intrebari apare acum intr-un bloc colorat, nu inghesuit pe un rand",
-  "Codul scurt din textul intrebarilor apare cu font monospat, mai usor de citit",
-  "La practica, 'Ultimele X' tine cont de optiunea 'Doar nerezolvate' si numara corect lotul ramas",
+  "Istoric pentru toate sesiunile (practica, antrenament, simulari), cu statistici si reluare, pe Rezultate",
+  "Reiei orice sesiune trecuta dintr-un singur clic",
+  "Pe Practica, butoanele Simulator si Antrenament sunt acum sub 'Reia ce ai de recuperat'",
 ];
 
 export function ChangelogBanner() {

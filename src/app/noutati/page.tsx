@@ -44,6 +44,16 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "2.3.0",
+    date: "21 Iunie 2026",
+    title: "Istoric pentru toate sesiunile, cu reluare",
+    changes: [
+      { text: "Acum se salveaza in istoric si sesiunile de practica si de antrenament, nu doar simularile; le gasesti pe pagina Rezultate, cu statistici si un buton de reluare, ca sa reiei oricand o sesiune", type: "feature" },
+      { text: "Fiecare sesiune din istoric arata cum a mers: acuratete si corecte din total la practica, cate ai vazut si cate ai stapanit la antrenament, nota la simulari", type: "improvement" },
+      { text: "Pe pagina de Practica, butoanele Simulator si Antrenament au fost mutate sub 'Reia ce ai de recuperat'", type: "improvement" },
+    ],
+  },
+  {
     version: "2.2.2",
     date: "21 Iunie 2026",
     title: "Blocuri de cod pe mai multe linii in intrebari",
