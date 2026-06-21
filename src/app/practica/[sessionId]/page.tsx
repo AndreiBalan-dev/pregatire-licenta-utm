@@ -30,6 +30,7 @@ export default function QuizPage() {
     toggleBookmark,
     startPractice,
     repeatExamFromIds,
+    startExam,
     updatePracticeIndex,
     endPractice,
   } = useSession();
@@ -191,9 +192,16 @@ export default function QuizPage() {
 
   const remainingUnanswered = useMemo(() => {
     if (!practice) return 0;
+    const subjectIds =
+      practice.subjectIds.length > 0
+        ? practice.subjectIds
+        : practice.redoLineage?.origin.kind === "practice"
+          ? practice.redoLineage.origin.subjectIds ?? []
+          : [];
+    if (subjectIds.length === 0) return 0;
     const currentSet = new Set(practice.questionIds);
     let count = 0;
-    for (const sid of practice.subjectIds) {
+    for (const sid of subjectIds) {
       const questions = questionsBySubject[sid] || [];
       for (const q of questions) {
         if (!currentSet.has(q.id) && !session.answers[q.id]) {
@@ -206,9 +214,16 @@ export default function QuizPage() {
 
   const handleContinueNextBatch = useCallback(() => {
     if (!practice) return;
+    const subjectIds =
+      practice.subjectIds.length > 0
+        ? practice.subjectIds
+        : practice.redoLineage?.origin.kind === "practice"
+          ? practice.redoLineage.origin.subjectIds ?? []
+          : [];
+    if (subjectIds.length === 0) return;
     const currentSet = new Set(practice.questionIds);
     const nextIds: number[] = [];
-    for (const sid of practice.subjectIds) {
+    for (const sid of subjectIds) {
       const questions = questionsBySubject[sid] || [];
       for (const q of questions) {
         if (!currentSet.has(q.id) && !session.answers[q.id]) {
@@ -218,11 +233,11 @@ export default function QuizPage() {
     }
     if (nextIds.length === 0) return;
 
-    const batchSize = practice.batchSize;
+    const batchSize = practice.batchSize ?? practice.redoLineage?.origin.batchSize ?? null;
     const batch = batchSize ? nextIds.slice(0, batchSize) : nextIds;
 
-    // Carry the same options into the next batch (answer-shuffle + mode).
-    const newSessionId = startPractice(practice.subjectIds, batch, {
+    // Continuing the pool starts a fresh origin batch (no lineage).
+    const newSessionId = startPractice(subjectIds, batch, {
       shuffleOrder: false,
       batchSize,
       shuffleOptions: practice.optionOrder != null,
@@ -315,6 +330,12 @@ export default function QuizPage() {
     },
     [practice, lineage, repeatExamFromIds, startPractice, router],
   );
+
+  const handleNewSimulator = useCallback(() => {
+    const newId = startExam();
+    setShowSummary(false);
+    router.push(`/simulator/${newId}`);
+  }, [startExam, router]);
 
   useEffect(() => {
     if (isLoaded && !practice) {
@@ -734,10 +755,33 @@ export default function QuizPage() {
                 className="w-full py-3"
                 onClick={handleContinueNextBatch}
               >
-                <span className="hidden sm:inline">Următoarele {practice.batchSize ? Math.min(practice.batchSize, remainingUnanswered) : remainingUnanswered} întrebări</span>
-                <span className="sm:hidden">Încă {practice.batchSize ? Math.min(practice.batchSize, remainingUnanswered) : remainingUnanswered} întrebări</span>
+                {(() => {
+                  const eff = practice.batchSize ?? practice.redoLineage?.origin.batchSize ?? null;
+                  const n = eff ? Math.min(eff, remainingUnanswered) : remainingUnanswered;
+                  const word = !eff || remainingUnanswered <= eff ? "Ultimele" : "Următoarele";
+                  return (
+                    <>
+                      <span className="hidden sm:inline">{word} {n} întrebări</span>
+                      <span className="sm:hidden">{word} {n}</span>
+                    </>
+                  );
+                })()}
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="9 6 15 12 9 18" />
+                </svg>
+              </Button>
+            )}
+            {isRedo && lineage?.origin.kind === "exam" && (
+              <Button
+                variant="secondary"
+                size="md"
+                className="w-full py-3"
+                onClick={handleNewSimulator}
+              >
+                Simulare nouă
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
                 </svg>
               </Button>
             )}
