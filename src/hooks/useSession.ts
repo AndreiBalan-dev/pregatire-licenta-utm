@@ -5,14 +5,19 @@ import {
   LocalSession,
   createDefaultSession,
   MAX_EXAM_HISTORY,
+  MAX_PRACTICE_HISTORY,
+  MAX_TRAINING_HISTORY,
   type AnswerRecord,
   type ExamState,
   type ExamSummaryData,
   type PracticeState,
+  type PracticeSummary,
   type RedoLineage,
   type SessionSettings,
   type TrainingState,
+  type TrainingSummary,
 } from "@/lib/session-types";
+import { computePracticeSummary, computeTrainingSummary, sortSessionHistory, type SessionHistoryEntry } from "@/lib/session-history";
 import { STORAGE_KEY, MAX_QUESTION_TIME_MS } from "@/lib/constants";
 import { shuffleArray } from "@/lib/utils";
 import { questionsBySubject, getQuestion } from "@/data";
@@ -97,6 +102,30 @@ function archiveExamIfSubmitted(prev: LocalSession): ExamState[] {
   return prev.examHistory ?? [];
 }
 
+function archivePracticeIfRecordable(prev: LocalSession): PracticeSummary[] {
+  const p = prev.currentPractice;
+  const hist = prev.practiceHistory ?? [];
+  if (!p || p.redoLineage) return hist; // skip non-sessions and redo drills
+  const summary = computePracticeSummary(
+    p,
+    prev.answers,
+    (id) => getQuestion(id)?.moduleId,
+    crypto.randomUUID(),
+    new Date().toISOString(),
+  );
+  if (summary.answered === 0) return hist; // skip empty sessions
+  return [summary, ...hist].slice(0, MAX_PRACTICE_HISTORY);
+}
+
+function archiveTrainingIfRecordable(prev: LocalSession): TrainingSummary[] {
+  const t = prev.currentTraining;
+  const hist = prev.trainingHistory ?? [];
+  if (!t || t.answeredCount === 0) return hist;
+  const mastered = masteredCount(t.pool, prev.trainingBoxes ?? {}, prev.answers);
+  const summary = computeTrainingSummary(t, mastered, crypto.randomUUID(), new Date().toISOString());
+  return [summary, ...hist].slice(0, MAX_TRAINING_HISTORY);
+}
+
 function clampLoadedAnswers(raw: unknown): Record<number, AnswerRecord> {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) return {};
   const out: Record<number, AnswerRecord> = {};
@@ -132,6 +161,8 @@ function loadSession(): LocalSession {
       answers: clampLoadedAnswers(parsed.answers),
       settings: { ...defaults.settings, ...(parsed.settings ?? {}) },
       examHistory: Array.isArray(parsed.examHistory) ? parsed.examHistory : [],
+      practiceHistory: Array.isArray(parsed.practiceHistory) ? parsed.practiceHistory : [],
+      trainingHistory: Array.isArray(parsed.trainingHistory) ? parsed.trainingHistory : [],
       trainingBoxes: clampLoadedBoxes(parsed.trainingBoxes),
       currentTraining:
         parsed.currentTraining && Array.isArray(parsed.currentTraining.pool)
@@ -302,7 +333,7 @@ export function useSession() {
       };
       const sessionId = crypto.randomUUID();
       setSession((prev) => {
-        const updated = { ...prev, currentPractice: practice };
+        const updated = { ...prev, currentPractice: practice, practiceHistory: archivePracticeIfRecordable(prev) };
         saveSession(updated);
         return updated;
       });
@@ -328,7 +359,7 @@ export function useSession() {
 
   const endPractice = useCallback(() => {
     setSession((prev) => {
-      const updated = { ...prev, currentPractice: null };
+      const updated = { ...prev, currentPractice: null, practiceHistory: archivePracticeIfRecordable(prev) };
       persistSession(updated);
       return updated;
     });
@@ -368,7 +399,7 @@ export function useSession() {
           shuffleOptions,
           ...(optionOrder ? { optionOrder } : {}),
         };
-        const updated = { ...prev, currentTraining: training };
+        const updated = { ...prev, currentTraining: training, trainingHistory: archiveTrainingIfRecordable(prev) };
         saveSession(updated);
         return updated;
       });
@@ -423,7 +454,7 @@ export function useSession() {
 
   const endTraining = useCallback(() => {
     setSession((prev) => {
-      const updated = { ...prev, currentTraining: null };
+      const updated = { ...prev, currentTraining: null, trainingHistory: archiveTrainingIfRecordable(prev) };
       persistSession(updated);
       return updated;
     });
@@ -662,6 +693,34 @@ export function useSession() {
     return (session.examHistory ?? []).map((e) => computeExamSummary(e));
   }, [session.examHistory]);
 
+  const getSessionHistory = useCallback((): SessionHistoryEntry[] => {
+    const exams = (session.examHistory ?? []).map((e) => ({
+      kind: "exam" as const,
+      date: e.submittedAt ?? e.startedAt,
+      exam: computeExamSummary(e),
+      questionIds: e.questionIds,
+    }));
+    const practices = (session.practiceHistory ?? []).map((p) => ({
+      kind: "practice" as const,
+      date: p.endedAt,
+      practice: p,
+    }));
+    const trainings = (session.trainingHistory ?? []).map((t) => ({
+      kind: "training" as const,
+      date: t.endedAt,
+      training: t,
+    }));
+    return sortSessionHistory([...exams, ...practices, ...trainings]);
+  }, [session.examHistory, session.practiceHistory, session.trainingHistory]);
+
+  const clearSessionHistory = useCallback(() => {
+    setSession((prev) => {
+      const updated = { ...prev, examHistory: [], practiceHistory: [], trainingHistory: [] };
+      persistSession(updated);
+      return updated;
+    });
+  }, [persistSession]);
+
   const getExamSummary = useCallback(() => {
     const exam = session.currentExam;
     if (!exam) return null;
@@ -737,5 +796,7 @@ export function useSession() {
     clearExamHistory,
     getExamSummary,
     getExamHistorySummaries,
+    getSessionHistory,
+    clearSessionHistory,
   };
 }
