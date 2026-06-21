@@ -7,6 +7,24 @@ export interface AnswerRecord {
   timeSpentMs: number;
 }
 
+/**
+ * Where a redo session traces back to, so the results popup can offer
+ * "redo the full original session" and "redo all initial mistakes". Created
+ * once on the first redo out of an origin and propagated unchanged.
+ */
+export interface RedoLineage {
+  origin: {
+    kind: "exam" | "practice";
+    /** Full question set of the original session (to repeat it). */
+    questionIds: number[];
+    /** Practice origin only: enables "next batch" continuation. */
+    subjectIds?: string[];
+    batchSize?: number | null;
+  };
+  /** Snapshot of the origin's wrong answers (cannot be recomputed later). */
+  firstWrong: number[];
+}
+
 export interface PracticeState {
   subjectIds: string[];
   questionIds: number[];
@@ -26,6 +44,8 @@ export interface PracticeState {
    * letter; only the on-screen position changes.
    */
   optionOrder?: Record<number, AnswerKey[]>;
+  /** Set when this session is a redo derived from a larger session. */
+  redoLineage?: RedoLineage;
 }
 
 export interface TrainingState {
