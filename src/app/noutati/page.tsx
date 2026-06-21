@@ -44,6 +44,14 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "2.2.2",
+    date: "21 Iunie 2026",
+    title: "Blocuri de cod pe mai multe linii in intrebari",
+    changes: [
+      { text: "Cand o intrebare are cod pe mai multe linii scris direct in text (de exemplu mai multe functii Python una sub alta), acesta apare acum intr-un bloc de cod colorat si lizibil, in loc de text inghesuit pe un singur rand", type: "fix" },
+    ],
+  },
+  {
     version: "2.2.1",
     date: "21 Iunie 2026",
     title: "Cod mai lizibil in intrebari si reluare corecta a loturilor",

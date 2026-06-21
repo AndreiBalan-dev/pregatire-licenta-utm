@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Codul din textul intrebarilor apare acum cu font monospat, mai usor de citit",
+  "Codul pe mai multe linii din intrebari apare acum intr-un bloc colorat, nu inghesuit pe un rand",
+  "Codul scurt din textul intrebarilor apare cu font monospat, mai usor de citit",
   "La practica, 'Ultimele X' tine cont de optiunea 'Doar nerezolvate' si numara corect lotul ramas",
-  "Reiei greselile fara sa pierzi sesiunea mare: din rezultat reiei tot simulatorul, nu doar ultimul set",
 ];
 
 export function ChangelogBanner() {

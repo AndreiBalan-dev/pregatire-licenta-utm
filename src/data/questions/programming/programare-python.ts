@@ -395,7 +395,7 @@ export const programarePython: Question[] = [
     id: 77,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Considerăm următoarele 4 funcții scrise în limbajul Python:\n\na) def sc1(n):\n    return sum([int(x) for x in str(n)])\n\nb) def sc2(n):\n    d = {int(x): str(n).count(x) for x in str(n)}\n    return sum([x * d[x] for x in d])\n\nc) def sc3(n):\n    s = 0\n    while n >= 10:\n        s += n // 10\n        n %= 10\n    return s + n\n\nd) def sc4(n):\n    L = [int(x) for x in str(n)]\n    while len(L) > 1:\n        x = L.pop()\n        y = L.pop()\n        L.append(x+y)\n    return L[0]\n\nCâte dintre cele 4 funcții definite anterior furnizează suma cifrelor numărului natural 𝑛 transmis ca parametru?`,
+    text: `Considerăm următoarele 4 funcții scrise în limbajul Python:\n\na)\n~~~python\ndef sc1(n):\n    return sum([int(x) for x in str(n)])\n~~~\nb)\n~~~python\ndef sc2(n):\n    d = {int(x): str(n).count(x) for x in str(n)}\n    return sum([x * d[x] for x in d])\n~~~\nc)\n~~~python\ndef sc3(n):\n    s = 0\n    while n >= 10:\n        s += n // 10\n        n %= 10\n    return s + n\n~~~\nd)\n~~~python\ndef sc4(n):\n    L = [int(x) for x in str(n)]\n    while len(L) > 1:\n        x = L.pop()\n        y = L.pop()\n        L.append(x+y)\n    return L[0]\n~~~\nCâte dintre cele 4 funcții definite anterior furnizează suma cifrelor numărului natural \`n\` transmis ca parametru?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
