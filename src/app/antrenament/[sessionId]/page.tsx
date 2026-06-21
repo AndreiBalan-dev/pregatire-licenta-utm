@@ -13,6 +13,7 @@ import { useTimer } from "@/hooks/useTimer";
 import { getQuestion } from "@/data";
 import { modules } from "@/data/modules";
 import { cn, formatPercentage, formatTime } from "@/lib/utils";
+import { navBack, navForward } from "@/lib/training-review";
 import type { AnswerKey } from "@/data/types";
 
 const ALL_SUBJECT_IDS = modules.flatMap((m) => m.subjects.map((s) => s.id));
@@ -47,6 +48,8 @@ export default function AntrenamentRuntime() {
   const [selectedAnswer, setSelectedAnswer] = useState<AnswerKey | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
+  /** Index into the recency-ordered seen history while reviewing a past question; null = live. */
+  const [reviewIndex, setReviewIndex] = useState<number | null>(null);
 
   useEffect(() => {
     timer.reset();
@@ -88,10 +91,6 @@ export default function AntrenamentRuntime() {
     timer.reset();
   }, [training, timer]);
 
-  const handleBookmark = useCallback(() => {
-    if (currentQuestion) toggleBookmark(currentQuestion.id);
-  }, [currentQuestion, toggleBookmark]);
-
   const uniqueSeen = useMemo(
     () => (training ? training.seenIds.filter((id) => getQuestion(id) !== undefined) : []),
     [training],
@@ -125,8 +124,36 @@ export default function AntrenamentRuntime() {
     );
   }
 
-  const isBookmarked = session.bookmarks.includes(currentQuestion.id);
-  const currentModule = modules.find((m) => m.id === currentQuestion.moduleId);
+  // Review navigation: when reviewIndex is set we show a past (answered) question
+  // read-only; otherwise the live question. seenIds is recency-ordered, so the
+  // just-answered question is always the newest reviewable item.
+  const reviewId = reviewIndex !== null ? uniqueSeen[reviewIndex] ?? null : null;
+  const reviewing = reviewId !== null;
+  const shown = reviewId !== null ? getQuestion(reviewId) ?? currentQuestion : currentQuestion;
+  const reviewAnswer = reviewId !== null ? session.answers[reviewId] ?? null : null;
+  const reviewNumber = reviewing && reviewIndex !== null ? reviewIndex + 1 : null;
+
+  const navState = { reviewLen: uniqueSeen.length, reviewing: reviewIndex, liveFeedback: showFeedback };
+  const backAction = navBack(navState);
+  const forwardAction = navForward(navState);
+
+  const returnToLive = () => {
+    setReviewIndex(null);
+    if (!showFeedback) timer.start(); // resume the live question's clock (unless mid-feedback)
+  };
+  const handleBack = () => {
+    if (backAction.type !== "review") return;
+    if (reviewIndex === null) timer.pause(); // entering review from live: freeze the clock
+    setReviewIndex(backAction.index);
+  };
+  const handleForward = () => {
+    if (forwardAction.type === "review") setReviewIndex(forwardAction.index);
+    else if (forwardAction.type === "live") returnToLive();
+    else if (forwardAction.type === "advance") handleNext();
+  };
+
+  const isBookmarked = session.bookmarks.includes(shown.id);
+  const currentModule = modules.find((m) => m.id === shown.moduleId);
   const moduleColor = currentModule?.color || "var(--color-accent)";
   const masteredPct = progress.poolSize > 0 ? Math.round((progress.masteredCount / progress.poolSize) * 100) : 0;
   const seenPct = progress.poolSize > 0 ? Math.round((progress.seenCount / progress.poolSize) * 100) : 0;
@@ -150,7 +177,9 @@ export default function AntrenamentRuntime() {
               </span>
             </div>
             <div className="flex items-center gap-3 flex-shrink-0">
-              <span className="text-xs text-[var(--color-text-tertiary)] font-mono tabular-nums">{formatTime(timer.elapsed)}</span>
+              {!reviewing && (
+                <span className="text-xs text-[var(--color-text-tertiary)] font-mono tabular-nums">{formatTime(timer.elapsed)}</span>
+              )}
               <button
                 onClick={() => setShowSummary(true)}
                 aria-label="Încheie antrenamentul"
@@ -189,27 +218,61 @@ export default function AntrenamentRuntime() {
             </div>
           </div>
 
+          {reviewing && (
+            <div className="mb-3 flex items-center justify-between gap-2 rounded-[var(--radius-md)] border border-[var(--color-accent)] border-opacity-30 bg-[var(--color-accent-muted)] px-3 py-2">
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--color-accent)] min-w-0" style={{ fontFamily: "var(--font-display)" }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <polyline points="1 4 1 10 7 10" /><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                </svg>
+                Revizuire
+                <span className="text-[var(--color-text-tertiary)] font-mono tabular-nums">{reviewNumber} / {uniqueSeen.length}</span>
+              </span>
+              <button
+                onClick={returnToLive}
+                className="inline-flex items-center gap-1.5 flex-shrink-0 text-xs font-semibold text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors cursor-pointer"
+              >
+                Revino la curent
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18" /></svg>
+              </button>
+            </div>
+          )}
+
           <div className="relative -mx-4 sm:mx-0 px-4 py-4 sm:p-6 sm:rounded-[var(--radius-xl)] border-y sm:border border-[var(--color-border)] bg-[var(--color-bg-secondary)] overflow-hidden">
             <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse 80% 35% at 50% 0%, ${moduleColor}, transparent)`, opacity: 0.04 }} />
             <div className="relative">
               <QuestionCard
-                question={currentQuestion}
-                questionNumber={progress.answeredCount + 1}
-                selectedAnswer={selectedAnswer}
-                showFeedback={showFeedback}
+                question={shown}
+                questionNumber={reviewNumber ?? progress.answeredCount + 1}
+                totalQuestions={reviewing ? uniqueSeen.length : undefined}
+                selectedAnswer={reviewing ? reviewAnswer?.selected ?? null : selectedAnswer}
+                showFeedback={reviewing ? true : showFeedback}
                 isBookmarked={isBookmarked}
-                onSelectAnswer={handleSelect}
-                onBookmark={handleBookmark}
-                optionOrder={training.optionOrder?.[currentQuestion.id]}
+                onSelectAnswer={reviewing ? () => {} : handleSelect}
+                onBookmark={() => toggleBookmark(shown.id)}
+                optionOrder={training.optionOrder?.[shown.id]}
               />
             </div>
           </div>
 
-          <div className="flex items-center mt-4 sm:mt-6">
+          <div className="flex items-center mt-4 sm:mt-6 gap-2">
             <button
-              onClick={handleNext}
-              disabled={!showFeedback}
-              aria-label="Întrebarea următoare"
+              onClick={handleBack}
+              disabled={backAction.type === "none"}
+              aria-label="Întrebarea anterioară"
+              className={cn(
+                "flex items-center justify-center gap-1.5 h-11 sm:h-12 px-3 sm:px-5 rounded-[var(--radius-md)] font-medium text-sm transition-all duration-200 cursor-pointer",
+                "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-hover)] active:scale-[0.97]",
+                "disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none",
+              )}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6" /></svg>
+              <span className="hidden sm:inline">Anterioara</span>
+            </button>
+
+            <button
+              onClick={handleForward}
+              disabled={forwardAction.type === "none"}
+              aria-label={reviewing ? "Înainte" : "Întrebarea următoare"}
               className={cn(
                 "flex items-center justify-center gap-1.5 h-11 sm:h-12 px-6 rounded-[var(--radius-md)] font-semibold text-sm transition-all duration-200 cursor-pointer ml-auto",
                 "bg-[var(--color-accent)] text-[#0C0C0E] hover:bg-[var(--color-accent-hover)] active:scale-[0.97]",
@@ -218,7 +281,7 @@ export default function AntrenamentRuntime() {
               )}
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Următoarea
+              {reviewing ? "Înainte" : "Următoarea"}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18" /></svg>
             </button>
           </div>

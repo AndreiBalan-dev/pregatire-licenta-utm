@@ -44,6 +44,15 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "2.4.1",
+    date: "21 Iunie 2026",
+    title: "Mergi inapoi la intrebarile trecute in Antrenament",
+    changes: [
+      { text: "La Antrenamentul nelimitat poti acum sa mergi inapoi la intrebarile la care ai raspuns deja, ca sa revezi raspunsul corect si explicatia, apoi te intorci la intrebarea curenta dintr-un singur clic", type: "feature" },
+      { text: "Revizuirea e doar pentru citit (nu schimbi raspunsul), iar un indicator iti arata a cata intrebare din cele vazute esti", type: "improvement" },
+    ],
+  },
+  {
     version: "2.4.0",
     date: "21 Iunie 2026",
     title: "Exerseaza separat grilele cu cod sau doar teoria",

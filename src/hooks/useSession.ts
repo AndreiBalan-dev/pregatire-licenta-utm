@@ -429,7 +429,9 @@ export function useSession() {
           const q = getQuestion(nextId);
           if (q) optionOrder = { ...(optionOrder ?? {}), [nextId]: buildOptionOrders([q])[nextId] };
         }
-        const seenIds = training.seenIds.includes(questionId) ? training.seenIds : [...training.seenIds, questionId];
+        // Distinct, recency-ordered: the just-answered question moves to the end
+        // so the in-session "go back" review always treats it as the newest item.
+        const seenIds = [...training.seenIds.filter((id) => id !== questionId), questionId];
         const updated: LocalSession = {
           ...base,
           trainingBoxes: boxes,

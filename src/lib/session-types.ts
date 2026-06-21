@@ -73,7 +73,12 @@ export interface TrainingState {
   currentQuestionId: number;
   /** Dedup: never pick this as the immediate next question. */
   lastQuestionId: number | null;
-  /** Unique question ids shown this session (for the deduped end summary). */
+  /**
+   * Distinct question ids answered this session, most-recently-answered LAST
+   * (re-answering a question moves it to the end). The end summary uses only its
+   * length/set; the recency order drives the in-session "go back" review, where
+   * the just-answered question is always the newest item.
+   */
   seenIds: number[];
   answeredCount: number;
   correctCount: number;
