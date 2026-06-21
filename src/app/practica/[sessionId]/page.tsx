@@ -17,6 +17,7 @@ import { getQuestion, questionsBySubject } from "@/data";
 import { modules } from "@/data/modules";
 import { cn, formatPercentage, formatTime } from "@/lib/utils";
 import { wrongIdsInPractice } from "@/lib/redo";
+import { buildRedoTargets, type RedoTarget } from "@/lib/redo-lineage";
 import type { AnswerKey } from "@/data/types";
 
 export default function QuizPage() {
@@ -28,6 +29,7 @@ export default function QuizPage() {
     retryQuestion,
     toggleBookmark,
     startPractice,
+    repeatExamFromIds,
     updatePracticeIndex,
     endPractice,
   } = useSession();
@@ -255,6 +257,64 @@ export default function QuizPage() {
     setSummaryView("main");
     router.replace(`/practica/${newId}`);
   }, [practice, redoScope, redoOrder, redoShuffleAnswers, wrongIdsThisSession, answeredIdsThisSession, startPractice, router]);
+
+  const lineage = practice?.redoLineage;
+  const isRedo = !!lineage;
+
+  const redoTargets = useMemo<RedoTarget[]>(
+    () => (lineage ? buildRedoTargets({ wrongIds: wrongIdsThisSession, lineage }) : []),
+    [lineage, wrongIdsThisSession],
+  );
+
+  const redoTargetLabel = useCallback(
+    (target: RedoTarget): string => {
+      const isExam = lineage?.origin.kind === "exam";
+      if (target.role === "wrong") return `Refă greșitele (${target.ids.length})`;
+      if (target.role === "initial")
+        return isExam
+          ? `Greșelile din simulare (${target.ids.length})`
+          : `Greșelile din sesiune (${target.ids.length})`;
+      return isExam
+        ? `Refă toată simularea (${target.ids.length})`
+        : `Refă sesiunea completă (${target.ids.length})`;
+    },
+    [lineage],
+  );
+
+  const handleRedoTarget = useCallback(
+    (target: RedoTarget) => {
+      if (!practice || !lineage) return;
+      const carryShuffle = practice.optionOrder != null;
+      if (target.role === "full") {
+        if (lineage.origin.kind === "exam") {
+          const newId = repeatExamFromIds(lineage.origin.questionIds, false, carryShuffle);
+          if (!newId) return;
+          setShowSummary(false);
+          router.push(`/simulator/${newId}`);
+        } else {
+          const newId = startPractice(lineage.origin.subjectIds ?? [], lineage.origin.questionIds, {
+            shuffleOrder: false,
+            batchSize: lineage.origin.batchSize ?? null,
+            shuffleOptions: carryShuffle,
+            mode: practice.mode,
+          });
+          setShowSummary(false);
+          router.replace(`/practica/${newId}`);
+        }
+        return;
+      }
+      // "wrong" or "initial": stay in the chain, propagate the same lineage.
+      const newId = startPractice([], target.ids, {
+        shuffleOrder: false,
+        shuffleOptions: carryShuffle,
+        mode: practice.mode,
+        redoLineage: lineage,
+      });
+      setShowSummary(false);
+      router.replace(`/practica/${newId}`);
+    },
+    [practice, lineage, repeatExamFromIds, startPractice, router],
+  );
 
   useEffect(() => {
     if (isLoaded && !practice) {
@@ -604,50 +664,70 @@ export default function QuizPage() {
           {/* Action buttons */}
           <div className="flex flex-col gap-2.5 pt-1">
             {practiceStats.answered > 0 && (
-              <>
-                {showRedoWrong && (
-                  <Button
-                    variant="primary"
-                    size="md"
-                    className="w-full py-3"
-                    onClick={() => openRedo("wrong")}
-                  >
-                    Refă greșitele ({redoWrongCount})
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <polyline points="1 4 1 10 7 10" />
-                      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
-                    </svg>
-                  </Button>
-                )}
-                {showRedoAnswered && (
-                  <Button
-                    variant={showRedoWrong ? "secondary" : "primary"}
-                    size="md"
-                    className="w-full py-3"
-                    onClick={() => openRedo("answered")}
-                  >
-                    Refă rezolvate ({redoAnsweredCount})
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <polyline points="1 4 1 10 7 10" />
-                      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
-                    </svg>
-                  </Button>
-                )}
-                {showRedoAll && (
-                  <Button
-                    variant={showRedoWrong || showRedoAnswered ? "secondary" : "primary"}
-                    size="md"
-                    className="w-full py-3"
-                    onClick={() => openRedo("all")}
-                  >
-                    Refă toată sesiunea ({redoAllCount})
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <polyline points="1 4 1 10 7 10" />
-                      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
-                    </svg>
-                  </Button>
-                )}
-              </>
+              isRedo ? (
+                <>
+                  {redoTargets.map((target, i) => (
+                    <Button
+                      key={target.role}
+                      variant={i === 0 ? "primary" : "secondary"}
+                      size="md"
+                      className="w-full py-3"
+                      onClick={() => handleRedoTarget(target)}
+                    >
+                      {redoTargetLabel(target)}
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <polyline points="1 4 1 10 7 10" />
+                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                      </svg>
+                    </Button>
+                  ))}
+                </>
+              ) : (
+                <>
+                  {showRedoWrong && (
+                    <Button
+                      variant="primary"
+                      size="md"
+                      className="w-full py-3"
+                      onClick={() => openRedo("wrong")}
+                    >
+                      Refă greșitele ({redoWrongCount})
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <polyline points="1 4 1 10 7 10" />
+                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                      </svg>
+                    </Button>
+                  )}
+                  {showRedoAnswered && (
+                    <Button
+                      variant={showRedoWrong ? "secondary" : "primary"}
+                      size="md"
+                      className="w-full py-3"
+                      onClick={() => openRedo("answered")}
+                    >
+                      Refă rezolvate ({redoAnsweredCount})
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <polyline points="1 4 1 10 7 10" />
+                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                      </svg>
+                    </Button>
+                  )}
+                  {showRedoAll && (
+                    <Button
+                      variant={showRedoWrong || showRedoAnswered ? "secondary" : "primary"}
+                      size="md"
+                      className="w-full py-3"
+                      onClick={() => openRedo("all")}
+                    >
+                      Refă toată sesiunea ({redoAllCount})
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <polyline points="1 4 1 10 7 10" />
+                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                      </svg>
+                    </Button>
+                  )}
+                </>
+              )
             )}
             {remainingUnanswered > 0 && (
               <Button
