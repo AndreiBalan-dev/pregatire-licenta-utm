@@ -16,6 +16,7 @@ interface ExamScoreProps {
   correctCount: number;
   total: number;
   durationMs: number | null;
+  unansweredCount?: number;
   isRepeat?: boolean;
   repeatShuffled?: boolean;
 }
@@ -31,7 +32,7 @@ function formatDuration(ms: number | null): string {
   return `${sec}s`;
 }
 
-export function ExamScore({ score, correctCount, total, durationMs, isRepeat, repeatShuffled }: ExamScoreProps) {
+export function ExamScore({ score, correctCount, total, durationMs, unansweredCount, isRepeat, repeatShuffled }: ExamScoreProps) {
   const theme = useResolvedTheme();
   const color = scoreToColor(score, theme);
   const positionPct = scorePositionPct(score);
@@ -133,6 +134,18 @@ export function ExamScore({ score, correctCount, total, durationMs, isRepeat, re
               <span className="ml-1">corecte</span>
             </span>
           </span>
+          {unansweredCount != null && unansweredCount > 0 && (
+            <>
+              <span className="text-[var(--color-text-tertiary)] hidden sm:inline" aria-hidden="true">·</span>
+              <span className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-text-tertiary)]" aria-hidden="true" />
+                <span>
+                  <span className="font-semibold text-[var(--color-text-primary)] tabular-nums">{unansweredCount}</span>
+                  <span className="ml-1">fără răspuns</span>
+                </span>
+              </span>
+            </>
+          )}
           <span className="text-[var(--color-text-tertiary)] hidden sm:inline" aria-hidden="true">·</span>
           <span className="flex items-center gap-1.5">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70" aria-hidden="true">

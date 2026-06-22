@@ -44,6 +44,15 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "2.4.2",
+    date: "22 Iunie 2026",
+    title: "Raspunsurile de la simulare se salveaza mai sigur",
+    changes: [
+      { text: "Am reparat o problema unde un raspuns de la simulator putea sa nu se salveze daca inchideai sau lasai aplicatia in fundal (mai ales pe telefon) imediat dupa ce raspundeai sau apasai Finalizeaza; acum raspunsurile si nota se salveaza imediat", type: "fix" },
+      { text: "La rezultatul simularii se arata acum si cate intrebari ai lasat fara raspuns, ca sa fie clar de ce nota le include (o intrebare fara raspuns conteaza la fel ca una gresita)", type: "improvement" },
+    ],
+  },
+  {
     version: "2.4.1",
     date: "21 Iunie 2026",
     title: "Mergi inapoi la intrebarile trecute in Antrenament",

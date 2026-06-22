@@ -422,6 +422,7 @@ export default function SimulatorExamPage() {
                 correctCount={summary.correctCount}
                 total={summary.total}
                 durationMs={summary.durationMs}
+                unansweredCount={summary.unansweredCount}
                 isRepeat={isRepeatSession}
                 repeatShuffled={exam.repeatShuffled}
               />

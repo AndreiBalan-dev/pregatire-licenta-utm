@@ -18,6 +18,7 @@ interface ExamSummary {
   correctCount: number;
   total: number;
   durationMs: number | null;
+  unansweredCount: number;
   perModule: Record<string, { correct: number; total: number }>;
 }
 
@@ -394,6 +395,11 @@ export function SimulatorResultCard({ exam, summary }: SimulatorResultCardProps)
                 {summary.correctCount}
                 <span className="text-sm text-[var(--color-text-tertiary)] font-normal">/{summary.total}</span>
               </div>
+              {summary.unansweredCount > 0 && (
+                <div className="text-[10px] text-[var(--color-text-tertiary)] mt-0.5 tabular-nums">
+                  {summary.unansweredCount} fără răspuns
+                </div>
+              )}
             </div>
             <div className="rounded-[var(--radius-md)] bg-[var(--color-bg-primary)] border border-[var(--color-border)] p-3 text-center">
               <div className="flex items-center justify-center gap-1.5 mb-1">

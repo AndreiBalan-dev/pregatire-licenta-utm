@@ -228,6 +228,29 @@ export function useSession() {
     setIsLoaded(true);
   }, []);
 
+  // Durable flush: saves are debounced (300ms), so without this an in-progress
+  // answer or a just-submitted exam can be lost if the tab is closed or, on
+  // mobile, backgrounded within that window. Persist the latest state
+  // synchronously when the page is hidden or unloaded.
+  useEffect(() => {
+    const flush = () => {
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+        saveTimeoutRef.current = null;
+      }
+      saveSession(sessionRef.current);
+    };
+    const onVisibility = () => {
+      if (document.visibilityState === "hidden") flush();
+    };
+    window.addEventListener("pagehide", flush);
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      window.removeEventListener("pagehide", flush);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, []);
+
   const persistSession = useCallback((updated: LocalSession) => {
     setSession(updated);
     if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
@@ -579,6 +602,10 @@ export function useSession() {
     };
     sessionRef.current = updated;
     setSession(updated);
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current);
+      saveTimeoutRef.current = null;
+    }
     saveSession(updated);
     return examId;
   }, []);
@@ -611,6 +638,10 @@ export function useSession() {
     };
     sessionRef.current = updated;
     setSession(updated);
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current);
+      saveTimeoutRef.current = null;
+    }
     saveSession(updated);
     return examId;
   }, []);
@@ -669,10 +700,16 @@ export function useSession() {
           durationMs,
         },
       };
-      persistSession(updated);
+      // Submit is a critical commit point: persist immediately rather than via
+      // the 300ms debounce, which could be dropped if the tab closes first.
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+        saveTimeoutRef.current = null;
+      }
+      saveSession(updated);
       return updated;
     });
-  }, [persistSession]);
+  }, []);
 
   const discardExam = useCallback(() => {
     setSession((prev) => {
