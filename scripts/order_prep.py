@@ -5,13 +5,16 @@ import sys, re, json, glob
 sys.stdout.reconfigure(encoding="utf-8")
 
 import os
-# Only trusted maps (agents that self-verified against red pixel-bands). sisteme-de-operare
-# agent proved unreliable (mis-mapped id 670), so it's handled in a separate careful pass.
-mapfiles = ["order-map-py.json", "order-map-poo.json", "order-map-metode.json"]
+# Agent order maps. sisteme-de-operare orders are mostly correct (spot-checked vs PDF), but its
+# RED reads were unreliable and id 670's order was wrong (data!=PDF options) — exclude 670.
+mapfiles = ["order-map-py.json", "order-map-poo.json", "order-map-metode.json", "order-map-so.json"]
 maps = {}
 for f in mapfiles:
     if os.path.exists(f):
         maps.update(json.load(open(f, encoding="utf-8")))
+DROP = {"670"}  # known-bad agent order (its data options differ from the PDF)
+for k in DROP:
+    maps.pop(k, None)
 
 # load stored correctAnswer + option texts per id
 ID_RE = re.compile(r"\r?\n  \{\r?\n    id:\s*(\d+),")
