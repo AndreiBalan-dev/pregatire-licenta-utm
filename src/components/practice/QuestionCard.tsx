@@ -5,6 +5,7 @@ import { remapExplanationForOrder } from "@/lib/explanation";
 import { CodeBlock } from "@/components/ui/CodeBlock";
 import { QuestionText } from "@/components/ui/QuestionText";
 import { ExplanationPanel } from "./ExplanationPanel";
+import { ConfusableHint } from "./ConfusableHint";
 import type { Question, AnswerKey } from "@/data/types";
 
 interface QuestionCardProps {
@@ -51,18 +52,21 @@ export function QuestionCard({
     <div key={question.id} className="animate-fade-in">
       {/* Header */}
       <div className="flex items-center justify-between mb-4 sm:mb-6">
-        <div className="flex items-baseline gap-1.5">
-          <span
-            className="text-sm sm:text-base font-bold text-[var(--color-accent)]"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            {questionNumber}
-          </span>
-          {totalQuestions != null && (
-            <span className="text-[11px] sm:text-xs text-[var(--color-text-tertiary)]">
-              / {totalQuestions}
+        <div className="flex items-center gap-2 min-w-0">
+          <div className="flex items-baseline gap-1.5">
+            <span
+              className="text-sm sm:text-base font-bold text-[var(--color-accent)]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              {questionNumber}
             </span>
-          )}
+            {totalQuestions != null && (
+              <span className="text-[11px] sm:text-xs text-[var(--color-text-tertiary)]">
+                / {totalQuestions}
+              </span>
+            )}
+          </div>
+          <ConfusableHint questionId={question.id} />
         </div>
         {onBookmark && (
           <button

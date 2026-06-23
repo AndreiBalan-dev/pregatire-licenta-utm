@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
+  "Nou: evidentiatorul de intrebari-capcana (buton cu marker in bara de sus) marcheaza intrebarile aproape identice sau cu raspunsuri ce difera printr-un detaliu mic",
   "Variantele de raspuns apar acum in aceeasi ordine ca in PDF-ul oficial; doar optiunea Amesteca raspunsurile le mai schimba",
-  "Am verificat raspunsurile corecte fata de grila oficiala si am reparat o intrebare care aparea de doua ori cu raspunsuri diferite",
-  "Raspunsurile de la simulare se salveaza acum mai sigur, chiar daca inchizi sau lasi aplicatia in fundal pe telefon",
+  "Am verificat raspunsurile corecte fata de grila oficiala si am reparat cateva diferente",
 ];
 
 export function ChangelogBanner() {

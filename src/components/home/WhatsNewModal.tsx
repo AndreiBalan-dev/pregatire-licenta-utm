@@ -21,6 +21,49 @@ export function WhatsNewModal({ open, onClose, onSeeDetails }: WhatsNewModalProp
   return (
     <Modal open={open} onClose={onClose} title="Ce e nou pe UTMLearn" className="!max-w-lg">
       <div className="max-h-[68vh] overflow-y-auto pr-1 -mr-1 space-y-6">
+        {/* Section 0: v2.5.0 - confusable-question highlighter (newest) */}
+        <section>
+          <div className="flex items-center gap-2 mb-2.5">
+            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-30">
+              v2.5.0
+            </div>
+            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] bg-[rgba(52,211,153,0.12)] text-[#34D399] border border-[#34D399] border-opacity-30">
+              Nou
+            </div>
+          </div>
+          <h3 className="text-lg sm:text-xl font-bold text-[var(--color-text-primary)] mb-2" style={{ fontFamily: "var(--font-display)" }}>
+            Evidenţiator de întrebări-capcană
+          </h3>
+          <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            Multe grile sunt aproape identice (un operator schimbat în cod, un cuvânt în enunţ) sau au două răspunsuri
+            care diferă printr-un detaliu mic (de ex. <span className="font-mono text-[var(--color-text-primary)]">{"<"}</span> faţă de{" "}
+            <span className="font-mono text-[var(--color-text-primary)]">{">"}</span>). Apasă pe butonul cu marker{" "}
+            <span className="inline-flex items-center align-middle text-[var(--color-accent)]" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m9 11-6 6v3h9l3-3" /><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4" />
+              </svg>
+            </span>{" "}
+            din bara de sus şi se aprinde un marcaj pe aceste întrebări.
+          </p>
+          <div className="mt-3 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-3.5">
+            <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
+              Apeşi pe marcajul <span className="font-bold text-[var(--color-accent)]">Capcană</span> de lângă întrebare şi vezi pe scurt ce
+              e diferit, cu un buton către întrebările similare. Marcajul stă lângă întrebare, nu lângă răspunsuri, ca să nu apeşi din greşeală un răspuns.
+            </p>
+          </div>
+          <Link
+            href="/practica"
+            onClick={onClose}
+            className="mt-3 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-accent)] text-[#0C0C0E] font-bold text-sm transition-all duration-200 hover:bg-[var(--color-accent-hover)] active:scale-[0.98]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}
+          >
+            Încearcă la Practică
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+            </svg>
+          </Link>
+        </section>
+
         {/* Section 1: v2.5.0 - answers in PDF order + full answer audit (REPLACE per release) */}
         <section>
           <div className="flex items-center gap-2 mb-2.5">
