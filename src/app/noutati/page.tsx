@@ -44,6 +44,15 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "2.5.0",
+    date: "24 Iunie 2026",
+    title: "Raspunsurile sunt in ordinea din grila oficiala + verificare a raspunsurilor",
+    changes: [
+      { text: "Variantele de raspuns apar acum implicit in aceeasi ordine ca in PDF-ul oficial; daca vrei sa le amesteci, activeaza optiunea Amesteca raspunsurile, doar ea le mai schimba ordinea", type: "improvement" },
+      { text: "Am verificat raspunsurile corecte fata de grila oficiala si am reparat o intrebare care aparea de doua ori cu raspunsuri corecte diferite; restul au iesit bine. Daca totusi vezi vreo greseala, spune-mi si o repar imediat ce ajunge la mine", type: "fix" },
+    ],
+  },
+  {
     version: "2.4.2",
     date: "22 Iunie 2026",
     title: "Raspunsurile de la simulare se salveaza mai sigur",

@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
+  "Variantele de raspuns apar acum in aceeasi ordine ca in PDF-ul oficial; doar optiunea Amesteca raspunsurile le mai schimba",
+  "Am verificat raspunsurile corecte fata de grila oficiala si am reparat o intrebare care aparea de doua ori cu raspunsuri diferite",
   "Raspunsurile de la simulare se salveaza acum mai sigur, chiar daca inchizi sau lasi aplicatia in fundal pe telefon",
-  "La Antrenamentul nelimitat poti merge inapoi la intrebarile trecute, ca sa revezi raspunsul si explicatia",
-  "La Practica, materiile de programare au un filtru nou: Cu cod / Fara cod / Toate, cu numarul pentru fiecare",
 ];
 
 export function ChangelogBanner() {

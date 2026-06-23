@@ -13,7 +13,7 @@
  * keep them in sync.
  */
 
-export const APP_VERSION = "2.4.2";
+export const APP_VERSION = "2.5.0";
 
 export const EXAM_SESSION_YEAR = "2026";
 
@@ -30,6 +30,6 @@ export const VOTE_EXPO_URL = "https://expo.gen-e.eu/expo/fafeaa60-f404-46e3-ab59
 export const VOTE_IMAGE = "/vote-algebo-gene.jpg";
 export const CONTACT_INSTAGRAM = "https://instagram.com/balyandrei";
 
-export const TOTAL_QUESTIONS = 715;
+export const TOTAL_QUESTIONS = 714;
 export const TOTAL_MODULES = 4;
 export const TOTAL_SUBJECTS = 15;

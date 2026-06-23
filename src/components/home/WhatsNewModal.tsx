@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Modal } from "@/components/ui/Modal";
-import { VOTE_EXPO_URL, VOTE_IMAGE } from "@/lib/site-config";
+import { VOTE_EXPO_URL, VOTE_IMAGE, CONTACT_INSTAGRAM } from "@/lib/site-config";
 
 interface WhatsNewModalProps {
   open: boolean;
@@ -12,30 +12,53 @@ interface WhatsNewModalProps {
 }
 
 /**
- * One-time "what's new" popup. Leads with the new feature (the unlimited
- * Antrenament mode with adaptive re-injection), then (on scroll) a personal
- * thank-you for the Gen-E votes. Shown once per visitor who already has data;
- * see WhatsNewGate gating.
+ * One-time "what's new" popup. Leads with the latest release note (v2.5.0: answer options now
+ * follow the official PDF order, plus a full audit of the correct answers), then (on scroll) a
+ * personal thank-you for the Gen-E votes. Shown once per visitor who already has data; see
+ * WhatsNewGate gating.
  */
 export function WhatsNewModal({ open, onClose, onSeeDetails }: WhatsNewModalProps) {
   return (
     <Modal open={open} onClose={onClose} title="Ce e nou pe UTMLearn" className="!max-w-lg">
       <div className="max-h-[68vh] overflow-y-auto pr-1 -mr-1 space-y-6">
-        {/* Section: v2.4.0 - cod/teorie filter at Practica */}
+        {/* Section 1: v2.5.0 - answers in PDF order + full answer audit (REPLACE per release) */}
         <section>
-          <div className="inline-flex items-center gap-1.5 px-2 py-0.5 mb-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-30">
-            v2.4.0
+          <div className="flex items-center gap-2 mb-2.5">
+            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-30">
+              v2.5.0
+            </div>
+            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] bg-[rgba(239,68,68,0.12)] text-[#F87171] border border-[#F87171] border-opacity-30">
+              Important
+            </div>
           </div>
           <h3 className="text-lg sm:text-xl font-bold text-[var(--color-text-primary)] mb-2" style={{ fontFamily: "var(--font-display)" }}>
-            Exersează separat codul sau teoria
+            Răspunsurile respectă acum ordinea din grila oficială
           </h3>
           <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
-            La materiile de programare, când alegi o materie pe pagina de Practică poți acum filtra între
-            <span className="font-semibold text-[var(--color-text-primary)]"> Cu cod</span>,
-            <span className="font-semibold text-[var(--color-text-primary)]"> Fără cod</span> (doar teorie) și
-            <span className="font-semibold text-[var(--color-text-primary)]"> Toate</span>, fiecare cu numărul ei.
-            Așa poți exersa separat grilele cu cod de cele de teorie.
+            Am așezat variantele de răspuns în aceeași ordine ca în PDF-ul oficial, așa că implicit arată exact ca grila.
+            Dacă vrei să le amesteci, activează opțiunea{" "}
+            <span className="font-semibold text-[var(--color-text-primary)]">Amestecă răspunsurile</span>;
+            doar ea mai schimbă ordinea acum.
           </p>
+
+          <div className="mt-3 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-3.5">
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+              </span>
+              <p className="text-sm font-semibold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
+                Am verificat răspunsurile corecte față de grila oficială
+              </p>
+            </div>
+            <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
+              Am comparat răspunsurile cu PDF-ul oficial și am reparat o întrebare care apărea de două ori cu
+              răspunsuri diferite. Restul au ieșit bine. Dacă totuși observi vreo greșeală, scrie-mi pe{" "}
+              <a href={CONTACT_INSTAGRAM} target="_blank" rel="noopener noreferrer" className="font-semibold text-[var(--color-accent)] hover:underline">Instagram</a>{" "}
+              și o repar imediat ce ajunge la mine.
+            </p>
+          </div>
 
           <Link
             href="/practica"
@@ -44,65 +67,6 @@ export function WhatsNewModal({ open, onClose, onSeeDetails }: WhatsNewModalProp
             style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}
           >
             Deschide Practica
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-            </svg>
-          </Link>
-        </section>
-
-        {/* Section 1: the new feature */}
-        <section>
-          <div className="inline-flex items-center gap-1.5 px-2 py-0.5 mb-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-30">
-            v2.3.0
-          </div>
-          <h3 className="text-lg sm:text-xl font-bold text-[var(--color-text-primary)] mb-2" style={{ fontFamily: "var(--font-display)" }}>
-            Istoric pentru toate sesiunile, cu reluare
-          </h3>
-          <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
-            Acum se salvează în istoric <span className="font-semibold text-[var(--color-text-primary)]">toate</span> sesiunile,
-            nu doar simulările: practica și antrenamentul apar pe pagina Rezultate, fiecare cu statisticile ei și un buton de reluare.
-          </p>
-
-          <div className="mt-3 space-y-2">
-            <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-3.5">
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
-                  </svg>
-                </span>
-                <p className="text-sm font-semibold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
-                  Vezi cum a mers fiecare sesiune
-                </p>
-              </div>
-              <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
-                Acuratețe și corecte din total la practică, câte ai văzut și câte ai stăpânit la antrenament, nota la simulări.
-              </p>
-            </div>
-            <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-3.5">
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="1 4 1 10 7 10" /><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
-                  </svg>
-                </span>
-                <p className="text-sm font-semibold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
-                  Reia orice sesiune dintr-un clic
-                </p>
-              </div>
-              <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
-                Din istoric reiei exact aceeași sesiune oricând vrei, fără să o reconstruiești.
-              </p>
-            </div>
-          </div>
-
-          <Link
-            href="/rezultate"
-            onClick={onClose}
-            className="mt-3 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-accent)] text-[#0C0C0E] font-bold text-sm transition-all duration-200 hover:bg-[var(--color-accent-hover)] active:scale-[0.98]"
-            style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}
-          >
-            Vezi Rezultatele
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
             </svg>

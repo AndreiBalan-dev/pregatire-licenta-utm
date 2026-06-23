@@ -7,7 +7,6 @@ import { VoteCTA } from "@/components/home/VoteCTA";
 import { ExamSimulatorCTA } from "@/components/home/ExamSimulatorCTA";
 import { TrainingCTA } from "@/components/home/TrainingCTA";
 import { ModuleGrid } from "@/components/home/ModuleGrid";
-import { CVHivePromo } from "@/components/home/CVHivePromo";
 import { ChangelogBanner } from "@/components/home/ChangelogBanner";
 import { useSession } from "@/hooks/useSession";
 import { useToast } from "@/hooks/useToast";
@@ -40,7 +39,6 @@ export default function HomePage() {
         <ExamSimulatorCTA />
         <TrainingCTA />
         <ModuleGrid />
-        <CVHivePromo />
         <ChangelogBanner />
       </main>
       <MobileNav />
