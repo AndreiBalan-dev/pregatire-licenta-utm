@@ -323,31 +323,43 @@ changes = []      # {id, file, order, new_correct, raw_new[4], correct_span, opt
 identity = 0
 unmatched = []
 risky = []        # prose-ref questions among the changes
+# Optional override map (from the visual agent pass): {id: [data-letter order matching PDF top->bottom]}.
+# Used only for questions the extractor cannot match. Order-only; answers still preserved by the gates.
+OVERRIDE = {int(k): v for k, v in json.load(open("order-override.json", encoding="utf-8")).items()} \
+    if os.path.exists("order-override.json") else {}
+override_used = []
 for s in stored:
-    p, ov, st = find_parsed(s)
-    if p is None or ov < 0.82 or st < 0.62:
-        unmatched.append(s)
-        continue
-    # bijection: each PDF position -> the stored letter holding that text
-    pos_to_letter = []
-    used = set()
-    ok = True
-    for pt in p["npdf"]:
-        bestL, bestr = None, -1
-        for L, dt in s["nopts"].items():
-            if L in used:
-                continue
-            r = ratio(dt, pt)
-            if r > bestr:
-                bestL, bestr = L, r
-        if bestL is None or bestr < 0.78:
-            ok = False
-            break
-        pos_to_letter.append(bestL)
-        used.add(bestL)
-    if not ok or len(set(pos_to_letter)) != 4:
-        unmatched.append(s)
-        continue
+    pos_to_letter = None
+    # Override (from the self-verified visual agent pass) takes PRECEDENCE: the text-extractor
+    # false-matches code questions (e.g. it wrongly called metode id 151 "identity"), so when a
+    # question is in the agent map we trust that order. Still answer-preserving via the gates below.
+    ovr = OVERRIDE.get(s["id"])
+    if ovr and sorted(ovr) == ["a", "b", "c", "d"]:
+        pos_to_letter = list(ovr)
+        override_used.append(s["id"])
+    else:
+        p, ov, st = find_parsed(s)
+        if p is not None and ov >= 0.82 and st >= 0.62:
+            # bijection: each PDF position -> the stored letter holding that text
+            pl, used, ok = [], set(), True
+            for pt in p["npdf"]:
+                bestL, bestr = None, -1
+                for L, dt in s["nopts"].items():
+                    if L in used:
+                        continue
+                    r = ratio(dt, pt)
+                    if r > bestr:
+                        bestL, bestr = L, r
+                if bestL is None or bestr < 0.78:
+                    ok = False
+                    break
+                pl.append(bestL)
+                used.add(bestL)
+            if ok and len(set(pl)) == 4:
+                pos_to_letter = pl
+        if pos_to_letter is None:
+            unmatched.append(s)
+            continue
     if pos_to_letter == POSITION:
         identity += 1
         continue
@@ -367,6 +379,15 @@ for s in stored:
         continue
     rec = {**s, "order": pos_to_letter, "new_correct": new_correct, "raw_new": raw_new}
     changes.append(rec)
+
+# dump per-question order status (for the follow-up visual pass)
+_stored_ids = {s["id"] for s in stored}
+_unmatched_ids = sorted(s["id"] for s in unmatched)
+_reordered_ids = sorted(c["id"] for c in changes)
+json.dump({"in_order": sorted(_stored_ids - set(_unmatched_ids) - set(_reordered_ids)),
+           "reordered_now": _reordered_ids, "unmatched": _unmatched_ids,
+           "risky_prose": sorted(risky), "stored_ids": sorted(_stored_ids)},
+          open("order-state.json", "w"), indent=0)
 
 # ============================ known-case sanity gates ============================
 KNOWN = {269: "c", 323: "b", 258: "d", 260: "c", 373: "b"}  # expected correctAnswer after reorder

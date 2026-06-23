@@ -45,3 +45,13 @@ next-env.d.ts
 
 # PDF extracted text (for future audits)
 .pdf-extracts/
+# verification working artifacts (regenerable)
+audit-report.md
+reorder-plan.md
+reorder-analysis.md
+locate-verify.md
+order-need.json
+order-state.json
+order-override.json
+order-map-*.json
+locate-status.json
