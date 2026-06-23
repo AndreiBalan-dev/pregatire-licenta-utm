@@ -148,11 +148,11 @@ contractul la distanta, fara penalitati si fara invocarea vreunui motiv in timp 
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `carduri de debit - care asigura utilizatorului achizitionarea de bunuri si servicii sau retrageri
+      a: `carduri cu banda magnetica - care contin pe 3 piste ce memoreaza informatii criptate despre utilizator, emitent, algoritmul de codare etc;`,
+      b: `carduri cu microprocesor – smart-carduri- avand stocate in chip datele de securitate si permitand functionarea ca portofel electronic`,
+      c: `carduri de debit - care asigura utilizatorului achizitionarea de bunuri si servicii sau retrageri
 de numerar, cu conditia prezervarii unor fonduri intr-un cont de card, si efectuarea de
 cheltuieli in limita soldului disponibil`,
-      b: `carduri cu banda magnetica - care contin pe 3 piste ce memoreaza informatii criptate despre utilizator, emitent, algoritmul de codare etc;`,
-      c: `carduri cu microprocesor – smart-carduri- avand stocate in chip datele de securitate si permitand functionarea ca portofel electronic`,
       d: `numai carduri cu banda magnetica si carduri cu microprocesor (smart-carduri)`,
     },
     correctAnswer: "d",
@@ -165,9 +165,9 @@ cheltuieli in limita soldului disponibil`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `imbunătătirea secretului tranzactiilor; informatia este accesibilă părtilor unei tranzactii numai în măsura în care este necesar.`,
-      b: `autentificarea participantilor la tranzactii prin folosirea certificatelor digitale`,
-      c: `un canal securizat între toate părtile implicate într-o tranzactie`,
+      a: `un canal securizat între toate părtile implicate într-o tranzactie`,
+      b: `imbunătătirea secretului tranzactiilor; informatia este accesibilă părtilor unei tranzactii numai în măsura în care este necesar.`,
+      c: `autentificarea participantilor la tranzactii prin folosirea certificatelor digitale`,
       d: `toate cele de mai sus`,
     },
     correctAnswer: "d",
@@ -570,8 +570,8 @@ comertului electronic este falsa. Care este aceea?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `carduri de credit - care asigura utilizatorului achizitionarea de bunuri si servicii sau retrageri de numerar, pe baza unei linii de credit acordate posesorului de card`,
-      b: `carduri cu banda magnetica - care contin pe 3 piste ce memoreaza informatii criptate despre utilizator, emitent, algoritmul de codare etc.`,
+      a: `carduri cu banda magnetica - care contin pe 3 piste ce memoreaza informatii criptate despre utilizator, emitent, algoritmul de codare etc.`,
+      b: `carduri de credit - care asigura utilizatorului achizitionarea de bunuri si servicii sau retrageri de numerar, pe baza unei linii de credit acordate posesorului de card`,
       c: `carduri de debit - care asigura utilizatorului achizitionarea de bunuri si servicii sau retrageri
 de numerar, cu conditia prezervarii unor fonduri intr-un cont de card, si efectuarea de
 cheltuieli in limita soldului disponibil`,
@@ -587,9 +587,9 @@ cheltuieli in limita soldului disponibil`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `carduri fara contact (contactless-card)`,
+      a: `carduri cu contact (contact-card)`,
       b: `carduri cu memorie (memory-card)`,
-      c: `carduri cu contact (contact-card)`,
+      c: `carduri fara contact (contactless-card)`,
       d: `numai carduri fara contact (contactless-card) si carduri cu contact (contact-card)`,
     },
     correctAnswer: "d",

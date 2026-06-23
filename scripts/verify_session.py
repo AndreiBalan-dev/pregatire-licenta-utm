@@ -56,5 +56,7 @@ for qid in sorted(set(base) & set(cur)):
         correct_changed.append(qid)
 print(f"option-set changed (should be none): {optset_changed}")
 print(f"CORRECT-ANSWER TEXT changed (expect only [126]): {correct_changed}")
-ok = removed == [353] and not added and not optset_changed and correct_changed == [126]
-print("\nRESULT:", "ALL GOOD - whole session preserved every answer except the intended id-126 fix" if ok else "*** REVIEW ***")
+# Intended, PDF-verified answer fixes this session: id 126 (operator[]) and id 336 (EXISTS vs JOIN).
+INTENDED = [126, 336]
+ok = removed == [353] and not added and not optset_changed and correct_changed == INTENDED
+print("\nRESULT:", "ALL GOOD - only the intended PDF-verified answer fixes (126, 336); all else preserved" if ok else "*** REVIEW ***")

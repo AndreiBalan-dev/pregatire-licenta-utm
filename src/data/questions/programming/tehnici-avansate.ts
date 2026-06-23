@@ -257,12 +257,12 @@ int main()
 }`,
     codeLanguage: "c",
     options: {
-      a: `0`,
-      b: `20`,
-      c: `-20`,
+      a: `-20`,
+      b: `0`,
+      c: `20`,
       d: `-5`,
     },
-    correctAnswer: "b",
+    correctAnswer: "c",
   },
   {
     id: 216,

@@ -7,7 +7,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 import os
 # Agent order maps. sisteme-de-operare orders are mostly correct (spot-checked vs PDF), but its
 # RED reads were unreliable and id 670's order was wrong (data!=PDF options) — exclude 670.
-mapfiles = ["order-map-py.json", "order-map-poo.json", "order-map-metode.json", "order-map-so.json"]
+mapfiles = ["order-map-py.json", "order-map-poo.json", "order-map-metode.json", "order-map-so.json", "order-map-batch2.json"]
 maps = {}
 for f in mapfiles:
     if os.path.exists(f):

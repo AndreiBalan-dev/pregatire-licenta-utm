@@ -298,12 +298,12 @@ export const tehnologiiWeb: Question[] = [
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `"124"`,
-      b: `"1" si 6`,
+      a: `124`,
+      b: `"124"`,
       c: `"1" si 24`,
-      d: `124`,
+      d: `"1" si 6`,
     },
-    correctAnswer: "a",
+    correctAnswer: "b",
   },
   {
     id: 534,
