@@ -213,11 +213,14 @@ for path in glob.glob("src/data/questions/**/*.ts", recursive=True):
             "nstem": "",  # filled below
         })
 
-# stems
+# stems (include CODE, because the extractor's PDF stem includes the code lines; this is
+# what disambiguates sibling questions and matches code-heavy questions reliably)
 id_text = {}
 for path, raw in file_text.items():
-    for m in re.finditer(r"id:\s*(\d+),.*?text:\s*`(.*?)`,\s*\r?\n\s*code:", raw, re.DOTALL):
-        id_text[int(m.group(1))] = m.group(2)
+    for m in re.finditer(r"id:\s*(\d+),.*?text:\s*`(.*?)`,\s*\r?\n\s*code:\s*(`(?:\\.|[^`])*`|undefined)", raw, re.DOTALL):
+        code = m.group(3)
+        code = code[1:-1] if code.startswith("`") else ""
+        id_text[int(m.group(1))] = m.group(2) + " " + code
 for s in stored:
     s["nstem"] = nstem(id_text.get(s["id"], ""))
 
