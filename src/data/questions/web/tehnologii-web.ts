@@ -35,7 +35,7 @@ export const tehnologiiWeb: Question[] = [
     id: 516,
     moduleId: "web",
     subjectId: "tehnologii-web",
-    text: `Dimensionarea unei imagini se realizează folosind urmatoarele atribute ale tag-ului <img>?`,
+    text: `Dimensionarea unei imagini se realizează folosind urmatoarele atribute ale tag-ului \`<img>\`?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -65,7 +65,7 @@ export const tehnologiiWeb: Question[] = [
     id: 518,
     moduleId: "web",
     subjectId: "tehnologii-web",
-    text: `Care este rolul tagului <keygen> din HTML 5?`,
+    text: `Care este rolul tagului \`<keygen>\` din HTML 5?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -354,7 +354,7 @@ export const tehnologiiWeb: Question[] = [
     id: 537,
     moduleId: "web",
     subjectId: "tehnologii-web",
-    text: `Ce rol are argumnetul secure (sigur) pentru funcţia  setcookie() din PHP?`,
+    text: `Ce rol are argumnetul secure (sigur) pentru funcţia  \`setcookie()\` din PHP?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -448,7 +448,7 @@ export const tehnologiiWeb: Question[] = [
     id: 543,
     moduleId: "web",
     subjectId: "tehnologii-web",
-    text: `Ce rol are functia include() în PHP?`,
+    text: `Ce rol are functia \`include()\` în PHP?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -577,7 +577,7 @@ export const tehnologiiWeb: Question[] = [
     id: 551,
     moduleId: "web",
     subjectId: "tehnologii-web",
-    text: `Care este modul corect de a adăuga 1 la varibila $numara?`,
+    text: `Care este modul corect de a adăuga 1 la varibila \`$numara\`?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -682,7 +682,7 @@ export const tehnologiiWeb: Question[] = [
     id: 558,
     moduleId: "web",
     subjectId: "tehnologii-web",
-    text: `Ce rol are functia explode($separator, $şir) în PHP?`,
+    text: `Ce rol are functia \`explode($separator, $şir)\` în PHP?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -730,7 +730,7 @@ export const tehnologiiWeb: Question[] = [
     id: 561,
     moduleId: "web",
     subjectId: "tehnologii-web",
-    text: `Cum se pot selecta toate elementele <p> de pe o pagină web utilizând jQuery?`,
+    text: `Cum se pot selecta toate elementele \`<p>\` de pe o pagină web utilizând jQuery?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -760,7 +760,7 @@ export const tehnologiiWeb: Question[] = [
     id: 563,
     moduleId: "web",
     subjectId: "tehnologii-web",
-    text: `Ce face secțiunea if __name__ == '__main__': într-o aplicație Python?`,
+    text: `Ce face secțiunea \`if __name__ == '__main__':\` într-o aplicație Python?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -775,7 +775,7 @@ export const tehnologiiWeb: Question[] = [
     id: 564,
     moduleId: "web",
     subjectId: "tehnologii-web",
-    text: `Care este rolul fișierului package.json în cadrul unui proiect Node.js?`,
+    text: `Care este rolul fișierului \`package.json\` în cadrul unui proiect Node.js?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -790,7 +790,7 @@ export const tehnologiiWeb: Question[] = [
     id: 565,
     moduleId: "web",
     subjectId: "tehnologii-web",
-    text: `Ce face comanda npm install express –save?`,
+    text: `Ce face comanda \`npm install express –save\`?`,
     code: undefined,
     codeLanguage: undefined,
     options: {

@@ -80,7 +80,7 @@ export const sgbd: Question[] = [
     id: 361,
     moduleId: "databases",
     subjectId: "sgbd",
-    text: `Se dă tabelul STUDENT(CNP, Nume, Grupa, Adresa) şi următoarea secvenţă ce reprezintă o tranzacţie. Care este rezultatul acestei tranzacţii pentru tabela STUDENT_NOU?`,
+    text: `Se dă tabelul \`STUDENT(CNP, Nume, Grupa, Adresa)\` şi următoarea secvenţă ce reprezintă o tranzacţie. Care este rezultatul acestei tranzacţii pentru tabela STUDENT_NOU?`,
     code: `CREATE TABLE STUDENT_NOU (CNP NUMBER, Nume VARCHAR(30))
 INSERT INTO STUDENT_NOU SELECT CNP, Nume FROM STUDENT
 SAVEPOINT s1

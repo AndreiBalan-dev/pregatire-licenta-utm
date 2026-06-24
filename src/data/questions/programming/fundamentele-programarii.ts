@@ -559,7 +559,7 @@ typedef struct
     id: 28,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Considerăm funcția int suma(int x,int y) care returnează suma numerelor întregi x și y, precum și funcția int prod(int x,int y) care returnează produsul numerelor întregi x și y. Știind că a, b și c sunt 3 variabile de tip întreg, care dintre expresiile de mai jos atribuie variabilei t de tip întreg valoarea expresiei (a+b)*(a+c)+b*c?`,
+    text: `Considerăm funcția \`int suma(int x,int y)\` care returnează suma numerelor întregi x și y, precum și funcția \`int prod(int x,int y)\` care returnează produsul numerelor întregi x și y. Știind că a, b și c sunt 3 variabile de tip întreg, care dintre expresiile de mai jos atribuie variabilei t de tip întreg valoarea expresiei \`(a+b)*(a+c)+b*c\`?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -574,7 +574,7 @@ typedef struct
     id: 29,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Considerăm funcția int suma(int x,int y) care returnează suma numerelor întregi x și y, precum și funcția int prod(int x,int y) care returnează produsul numerelor întregi x și y. Știind că a, b și c sunt 3 variabile de tip întreg, care dintre expresiile de mai jos atribuie variabilei t de tip întreg valoarea expresiei a*b+a*b*c?`,
+    text: `Considerăm funcția \`int suma(int x,int y)\` care returnează suma numerelor întregi x și y, precum și funcția \`int prod(int x,int y)\` care returnează produsul numerelor întregi x și y. Știind că a, b și c sunt 3 variabile de tip întreg, care dintre expresiile de mai jos atribuie variabilei t de tip întreg valoarea expresiei \`a*b+a*b*c\`?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -649,7 +649,7 @@ typedef struct
     id: 34,
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
-    text: `Fie v un tablou unidimensional format din 100 de numere reale de tip double și numărul natural k cuprins între 0 și 99. Care dintre următoarele expresii afișează adresa elementului v[k]?`,
+    text: `Fie v un tablou unidimensional format din 100 de numere reale de tip double și numărul natural k cuprins între 0 și 99. Care dintre următoarele expresii afișează adresa elementului \`v[k]\`?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -815,7 +815,7 @@ typedef struct
     moduleId: "programming",
     subjectId: "fundamentele-programarii",
     text: `Considerăm următorul program:
-Știind ca lungimea maximă a unei linii din fișierul text test.txt este de 100 de caractere, ce se va afișa după executarea programului de mai sus?`,
+Știind ca lungimea maximă a unei linii din fișierul text \`test.txt\` este de 100 de caractere, ce se va afișa după executarea programului de mai sus?`,
     code: `#include<stdio.h>
 #include<string.h>
 int main()

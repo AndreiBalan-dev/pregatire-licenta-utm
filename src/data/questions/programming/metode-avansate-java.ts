@@ -365,7 +365,7 @@ export const metodeAvansateJava: Question[] = [
     id: 175,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
-    text: "In Java, metoda clone() a clasei Object",
+    text: "In Java, metoda `clone()` a clasei Object",
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -785,7 +785,7 @@ export const metodeAvansateJava: Question[] = [
     id: 203,
     moduleId: "programming",
     subjectId: "metode-avansate-java",
-    text: "Fie secventa urmatoare de cod (presupunem ca in clasa Persoana sunt implementate corect metodele get si set pentru datele membre String nume si double salariu):\nCe va produce secventa de cod data?",
+    text: "Fie secventa urmatoare de cod (presupunem ca in clasa Persoana sunt implementate corect metodele get si set pentru datele membre `String nume` si `double salariu`):\nCe va produce secventa de cod data?",
     code: `listaPersoane.stream()\n  .filter(p -> p.getNume().startsWith("B"))\n  .filter(p -> p.getSalariu() > 2000)\n  .map(Persoana::getNume)\n  .sorted()\n  .map(o -> o.toString())\n  .collect(Collectors.joining(","));`,
     codeLanguage: "java",
     options: {

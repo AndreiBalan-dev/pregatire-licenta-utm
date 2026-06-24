@@ -213,7 +213,7 @@ int main(){
     id: 109,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `Fie clasa C++:\nDeclaraţia float c(int, int) ar putea corespunde unui constructor al clasei?`,
+    text: `Fie clasa C++:\nDeclaraţia \`float c(int, int)\` ar putea corespunde unui constructor al clasei?`,
     code: `class c{
   int a,b;
 public:

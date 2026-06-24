@@ -5,7 +5,7 @@ export const algoritmiStructuriDate: Question[] = [
     id: 255,
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
-    text: `Se da urmatorul algoritm. Stiind ca datele de intrare sunt n = 7 si vectorul x = (9, 15, 23, 2, 5, 4, 8) care vor fi valorile vectorului poz la sfarsitul algoritmului?`,
+    text: `Se da urmatorul algoritm. Stiind ca datele de intrare sunt \`n = 7\` si vectorul \`x = (9, 15, 23, 2, 5, 4, 8)\` care vor fi valorile vectorului poz la sfarsitul algoritmului?`,
     code: `for i = 1, n
   poz[i] = 1
 endfor
@@ -51,7 +51,7 @@ endfor`,
     id: 257,
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
-    text: `Se da urmatoarea functie. Daca vectorul x = (2, 4, 5, 8, 9, 15, 23), care va fi rezultatul apelarii functiei cautare (x, 2, 6, 8) ?`,
+    text: `Se da urmatoarea functie. Daca vectorul \`x = (2, 4, 5, 8, 9, 15, 23)\`, care va fi rezultatul apelarii functiei \`cautare (x, 2, 6, 8)\` ?`,
     code: `int cautare(int x[], int first, int last, int value)
 {   int mid;
      if(first > last) return -1;
@@ -290,7 +290,7 @@ endfor`,
     id: 272,
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
-    text: `Se da urmatorul algoritm. Care vor fi valorile vectorului x dupa terminarea pasului i = 3 stiind ca la intrare avem valorile n = 7 si vectorul x = (9, 15, 23, 2, 5, 4, 8)?`,
+    text: `Se da urmatorul algoritm. Care vor fi valorile vectorului x dupa terminarea pasului \`i = 3\` stiind ca la intrare avem valorile \`n = 7\` si vectorul \`x = (9, 15, 23, 2, 5, 4, 8)\`?`,
     code: `for i = 1, n -1
   index_min = i
   for j = i + 1, n
@@ -316,7 +316,7 @@ endfor`,
     id: 273,
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
-    text: `Se da urmatorul algoritm. Care vor fi valorile vectorului x dupa terminarea pasului i = 5, stiind ca la intrare avem valorile n = 7 si x = (9, 15, 23, 2, 5, 4, 8)?`,
+    text: `Se da urmatorul algoritm. Care vor fi valorile vectorului x dupa terminarea pasului \`i = 5\`, stiind ca la intrare avem valorile \`n = 7\` si \`x = (9, 15, 23, 2, 5, 4, 8)\`?`,
     code: `for i = 2, n
   elem = x[i]
   j = i -1
@@ -342,7 +342,7 @@ endfor`,
     id: 274,
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
-    text: `Se considera urmatoarea secventa de operatii intr-o stiva: push(2), push(10), push(8), pop(), push(9), push(6), pop(), pop(), push(7), push(3), pop(), pop(), pop(), pop(). In ce ordine vor fi scoase din stiva elementele? (push = inserare, pop = stergere)`,
+    text: `Se considera urmatoarea secventa de operatii intr-o stiva: \`push(2), push(10), push(8), pop(), push(9), push(6), pop(), pop(), push(7), push(3), pop(), pop(), pop(), pop()\`. In ce ordine vor fi scoase din stiva elementele? (push = inserare, pop = stergere)`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -357,7 +357,7 @@ endfor`,
     id: 275,
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
-    text: `Se considera urmatoarea secventa de operatii intr-o coada: enqueue(2), enqueue(10), enqueue(8), dequeue(), enqueue(9), enqueue(6), dequeue(), dequeue(), enqueue(7), enqueue(3), dequeue(), dequeue(),dequeue(), dequeue(). In ce ordine vor fi scoase din coada elementele? (enqueue = inserare, dequeue = stergere)`,
+    text: `Se considera urmatoarea secventa de operatii intr-o coada: \`enqueue(2), enqueue(10), enqueue(8), dequeue(), enqueue(9), enqueue(6), dequeue(), dequeue(), enqueue(7), enqueue(3), dequeue(), dequeue(),dequeue(), dequeue()\`. In ce ordine vor fi scoase din coada elementele? (enqueue = inserare, dequeue = stergere)`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -447,7 +447,7 @@ endfor`,
     id: 280,
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
-    text: `Se considera lista inlantuita cu elemente numere intregi din Fig. 2. Data urmatoarea definitie a tipului de date ce corespunde unui nod al listei, ce va afisa urmatoarea functie, daca este apelata prin print(HEAD)?`,
+    text: `Se considera lista inlantuita cu elemente numere intregi din Fig. 2. Data urmatoarea definitie a tipului de date ce corespunde unui nod al listei, ce va afisa urmatoarea functie, daca este apelata prin \`print(HEAD)\`?`,
     figure: "/figures/fig2.png",
     code: `struct NOD
 {
@@ -477,7 +477,7 @@ void print(NOD *head)
     id: 281,
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
-    text: `Se considera lista inlantuita cu elemente numere intregi din Fig. 2. Data urmatoarea definitie a tipului de date ce corespunde unui nod al listei, ce va afisa urmatoarea functie, daca este apelata prin print(HEAD)?`,
+    text: `Se considera lista inlantuita cu elemente numere intregi din Fig. 2. Data urmatoarea definitie a tipului de date ce corespunde unui nod al listei, ce va afisa urmatoarea functie, daca este apelata prin \`print(HEAD)\`?`,
     figure: "/figures/fig2.png",
     code: `struct NOD
 {
@@ -507,7 +507,7 @@ void print(NOD *head)
     id: 282,
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
-    text: `Se considera lista inlantuita cu elemente numere intregi din Fig. 2. Data urmatoarea definitie a tipului de date ce corespunde unui nod al listei, ce va afisa urmatoarea functie, daca este apelata prin print(HEAD)?`,
+    text: `Se considera lista inlantuita cu elemente numere intregi din Fig. 2. Data urmatoarea definitie a tipului de date ce corespunde unui nod al listei, ce va afisa urmatoarea functie, daca este apelata prin \`print(HEAD)\`?`,
     figure: "/figures/fig2.png",
     code: `struct NOD
 {
@@ -537,7 +537,7 @@ void print(NOD *head)
     id: 283,
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
-    text: `Se da urmatoarea functie. Daca vectorul x = (9, 15, 23, 25, 4, 5, 8), care va fi vectorul C la apelarea functiei interclasare (x, 0, 3, 6, C)?`,
+    text: `Se da urmatoarea functie. Daca vectorul \`x = (9, 15, 23, 25, 4, 5, 8)\`, care va fi vectorul C la apelarea functiei \`interclasare (x, 0, 3, 6, C)\`?`,
     code: `void interclasare(int x[], int prim, int mijloc, int ultim, int C[])
 {
   // lista A: x[prim ..mijloc]
@@ -566,7 +566,7 @@ void print(NOD *head)
     id: 284,
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
-    text: `Se da urmatoarea functie, care apeleaza functia interclasare descrisa la exercitiul 29. La apelul functiei mergesort(x, 0, 6) unde vectorul x = (9, 15, 23, 2, 4, 5, 8), de cate ori va fi apelata functia mergesort (incluzand apelul initial)?`,
+    text: `Se da urmatoarea functie, care apeleaza functia interclasare descrisa la exercitiul 29. La apelul functiei \`mergesort(x, 0, 6)\` unde vectorul \`x = (9, 15, 23, 2, 4, 5, 8)\`, de cate ori va fi apelata functia mergesort (incluzand apelul initial)?`,
     code: `void mergesort(int x[], int prim, int ultim)
 {
   if (prim < ultim)
@@ -785,7 +785,7 @@ void print(NOD *head)
     id: 297,
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
-    text: `Daca se aplicam metoda bulelor (bubblesort) pentru sortarea vectorului x = (9, 15, 23, 25, 4, 8, 5), cum se va modifica vectorul x dupa prima parcurgere a sa?`,
+    text: `Daca se aplicam metoda bulelor (bubblesort) pentru sortarea vectorului \`x = (9, 15, 23, 25, 4, 8, 5)\`, cum se va modifica vectorul x dupa prima parcurgere a sa?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -800,7 +800,7 @@ void print(NOD *head)
     id: 298,
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
-    text: `Daca se aplicam metoda bulelor (bubblesort) pentru sortarea vectorului x = (9, 15, 23, 25, 4, 8, 5), cum se va modifica vectorul x dupa doua parcurgeri ale sale?`,
+    text: `Daca se aplicam metoda bulelor (bubblesort) pentru sortarea vectorului \`x = (9, 15, 23, 25, 4, 8, 5)\`, cum se va modifica vectorul x dupa doua parcurgeri ale sale?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -815,7 +815,7 @@ void print(NOD *head)
     id: 299,
     moduleId: "programming",
     subjectId: "algoritmi-structuri-date",
-    text: `Daca se aplicam sortarea prin inserare pentru sortarea vectorului x = (9, 15, 23, 25, 4, 8, 5), care este primul element al vectorului a carui analiza va implica efectuarea de modificari asupra vectorului?`,
+    text: `Daca se aplicam sortarea prin inserare pentru sortarea vectorului \`x = (9, 15, 23, 25, 4, 8, 5)\`, care este primul element al vectorului a carui analiza va implica efectuarea de modificari asupra vectorului?`,
     code: undefined,
     codeLanguage: undefined,
     options: {

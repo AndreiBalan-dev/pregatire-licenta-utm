@@ -173,7 +173,7 @@ unui LAN Ethernet?`,
     id: 417,
     moduleId: "networks",
     subjectId: "retele-calculatoare",
-    text: `Următoarea adresă IPv6 2023:0000:34FA:0000:0000:09C1:4322:AA43 se mai poate 
+    text: `Următoarea adresă IPv6 \`2023:0000:34FA:0000:0000:09C1:4322:AA43\` se mai poate
 scrie 
 corect astfel:`,
     code: undefined,
@@ -376,7 +376,7 @@ de rețea?`,
     id: 430,
     moduleId: "networks",
     subjectId: "retele-calculatoare",
-    text: `O rețea din Internet are masca de subrețea 255.255.225.224. Care este numărul maxim de 
+    text: `O rețea din Internet are masca de subrețea \`255.255.225.224\`. Care este numărul maxim de
 gazde din subrețea?`,
     code: undefined,
     codeLanguage: undefined,
@@ -407,7 +407,7 @@ gazde din subrețea?`,
     id: 432,
     moduleId: "networks",
     subjectId: "retele-calculatoare",
-    text: `Comanda Router(config)#hostname permite:`,
+    text: `Comanda \`Router(config)#hostname\` permite:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -452,7 +452,7 @@ gazde din subrețea?`,
     id: 435,
     moduleId: "networks",
     subjectId: "retele-calculatoare",
-    text: `Se dă adresa IP 140.20.37.133 si masca de subrețea 255.255.255.192. Să se precizeze 
+    text: `Se dă adresa IP \`140.20.37.133\` si masca de subrețea \`255.255.255.192\`. Să se precizeze
 adresa 
 de subrețea din care face parte această adresă IP si adresa de difuzare în subrețea.`,
     code: undefined,
@@ -575,7 +575,7 @@ cunoscute:`,
     id: 443,
     moduleId: "networks",
     subjectId: "retele-calculatoare",
-    text: `Comanda următoare: Router(config)#router ospf 10 dată pe un ruter Cisco are ca efect:`,
+    text: `Comanda următoare: \`Router(config)#router ospf 10\` dată pe un ruter Cisco are ca efect:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -591,7 +591,7 @@ cunoscute:`,
     moduleId: "networks",
     subjectId: "retele-calculatoare",
     text: `Următoarea comandă de configurare a unui ruter 
-Router(config-router)#network 192.168.0.0 0.0 255.255 area 10 are ca effect:`,
+\`Router(config-router)#network 192.168.0.0 0.0 255.255 area 10\` are ca effect:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -637,7 +637,7 @@ variabilă)?`,
     id: 447,
     moduleId: "networks",
     subjectId: "retele-calculatoare",
-    text: `Următoarea adresă IPv6 FE80::200:CFF:FE3A:8B18 este:`,
+    text: `Următoarea adresă IPv6 \`FE80::200:CFF:FE3A:8B18\` este:`,
     code: undefined,
     codeLanguage: undefined,
     options: {

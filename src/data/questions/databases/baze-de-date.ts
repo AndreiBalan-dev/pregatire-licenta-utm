@@ -95,7 +95,7 @@ export const bazeDeDate: Question[] = [
     id: 311,
     moduleId: "databases",
     subjectId: "baze-de-date",
-    text: `Se dă tabelul:\nANGAJATI (CodAngaj, Nume, DataAngajare, Compartiment, Profesia, Salariu)\nCare dintre următoarele instrucţiuni (Transact) SQL permite afişarea numărului de salariaţi pentru fiecare compartiment care incepe cu litera "J"?`,
+    text: `Se dă tabelul:\n\`ANGAJATI (CodAngaj, Nume, DataAngajare, Compartiment, Profesia, Salariu)\`\nCare dintre următoarele instrucţiuni (Transact) SQL permite afişarea numărului de salariaţi pentru fiecare compartiment care incepe cu litera "J"?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -147,7 +147,7 @@ WHERE ValTot IN (100, 200)`,
     id: 314,
     moduleId: "databases",
     subjectId: "baze-de-date",
-    text: `Se dă tabelul:\nCHITANTE (NrChitanta, Suma, Data, NrGhiseu)\nCare dintre următoarele instrucţiuni (Transact) SQL are ca efect afişarea zilelor in care s-au emis cel puţin 3 chitanţe?`,
+    text: `Se dă tabelul:\n\`CHITANTE (NrChitanta, Suma, Data, NrGhiseu)\`\nCare dintre următoarele instrucţiuni (Transact) SQL are ca efect afişarea zilelor in care s-au emis cel puţin 3 chitanţe?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -162,7 +162,7 @@ WHERE ValTot IN (100, 200)`,
     id: 315,
     moduleId: "databases",
     subjectId: "baze-de-date",
-    text: `Se dă entitatea ANGAJATI, cu următoarele atribute:\nANGAJATI (CodAngaj, Nume, DataAngajare, Compartiment, Profesia, Salariu)\nCare dintre următoarele instrucţiuni (Transact) SQL permite ştergerea salariaţilor angajati înainte de începutul anului 2025, cu profesia "informatician"?`,
+    text: `Se dă entitatea ANGAJATI, cu următoarele atribute:\n\`ANGAJATI (CodAngaj, Nume, DataAngajare, Compartiment, Profesia, Salariu)\`\nCare dintre următoarele instrucţiuni (Transact) SQL permite ştergerea salariaţilor angajati înainte de începutul anului 2025, cu profesia "informatician"?`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -252,7 +252,7 @@ WHERE ValTot IN (100, 200)`,
     id: 321,
     moduleId: "databases",
     subjectId: "baze-de-date",
-    text: `Folosind relaţia cadru_did(cod, nume, graddid, data_ang, sal_neg, sal_merit), să se specifice care dintre următoarele exemple este corectă:`,
+    text: `Folosind relaţia \`cadru_did(cod, nume, graddid, data_ang, sal_neg, sal_merit)\`, să se specifice care dintre următoarele exemple este corectă:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -329,7 +329,7 @@ WHERE salariu = max(salariu)`,
     id: 326,
     moduleId: "databases",
     subjectId: "baze-de-date",
-    text: `Fie tabelul METEO(localit varchar(30), tempmin numeric(3), tempmax numeric(4)).\nSă se stabilească în care dintre exemplele următoare se folosesc incorect operatorii aritmetici:`,
+    text: `Fie tabelul \`METEO(localit varchar(30), tempmin numeric(3), tempmax numeric(4))\`.\nSă se stabilească în care dintre exemplele următoare se folosesc incorect operatorii aritmetici:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -376,7 +376,7 @@ WHERE salariu = MAX(salariu)`,
     id: 329,
     moduleId: "databases",
     subjectId: "baze-de-date",
-    text: `Se dau tabelele:\nPERSONAL(Marca, Numepren, Compart, Datasv, Salorar, Salorarco, Compart)\nPONTAJE(Marca, Data, Orelucrate, Oreco, Orenoapte, Oreabsnem)\nCe afişează următoarea interogare?`,
+    text: `Se dau tabelele:\n\`PERSONAL(Marca, Numepren, Compart, Datasv, Salorar, Salorarco, Compart)\`\n\`PONTAJE(Marca, Data, Orelucrate, Oreco, Orenoapte, Oreabsnem)\`\nCe afişează următoarea interogare?`,
     code: `SELECT ZILE1.Data AS Ziua
 FROM (SELECT Data FROM PONTAJE po INNER JOIN PERSONAL pe
   ON po.Marca=pe.Marca WHERE Numepren = 'Popescu') ZILE1
@@ -396,7 +396,7 @@ INNER JOIN (SELECT Data FROM PONTAJE po INNER JOIN PERSONAL pe
     id: 330,
     moduleId: "databases",
     subjectId: "baze-de-date",
-    text: `Se dau tabelele:\nANGAJATI(ID_Angajat, Nume, ID_Compart, Salariu)\nCOMPARTIMENT(ID_Compart, Nume_Compart)\nşi următoarea interogare:\nCe operaţii implementează această interogare?`,
+    text: `Se dau tabelele:\n\`ANGAJATI(ID_Angajat, Nume, ID_Compart, Salariu)\`\n\`COMPARTIMENT(ID_Compart, Nume_Compart)\`\nşi următoarea interogare:\nCe operaţii implementează această interogare?`,
     code: `SELECT a.ID_Angajat, a.Nume, c.ID_Compart, c.Nume_Compart
 FROM ANGAJATI a, COMPARTIMENT c
 WHERE a.ID_Compart = c.ID_Compart`,
@@ -413,7 +413,7 @@ WHERE a.ID_Compart = c.ID_Compart`,
     id: 331,
     moduleId: "databases",
     subjectId: "baze-de-date",
-    text: `Se dau tabelele:\nPERSONAL(Marca, Numepren, Compart, Datasv, Salorar, Salorarco, Compart)\nPONTAJE(Marca, Data, Orelucrate, Oreco, Orenoapte, Oreabsnem)\nCe afişează următoarea interogare?`,
+    text: `Se dau tabelele:\n\`PERSONAL(Marca, Numepren, Compart, Datasv, Salorar, Salorarco, Compart)\`\n\`PONTAJE(Marca, Data, Orelucrate, Oreco, Orenoapte, Oreabsnem)\`\nCe afişează următoarea interogare?`,
     code: `SELECT po1.Marca, pe1.Numepren,
   COUNT(DISTINCT po1.Data) AS Zile_Lucrate,
   COUNT(DISTINCT po2.Data) AS Zile_Lucrate_Comp
@@ -636,7 +636,7 @@ WHERE p.codp=c.codp
     id: 344,
     moduleId: "databases",
     subjectId: "baze-de-date",
-    text: `Folosind tabela cadru_did(cod, nume, graddid, data_ang, sal_neg, sal_merit), creată şi populată cu date, să se specifice care dintre exemplele următoare este corect:`,
+    text: `Folosind tabela \`cadru_did(cod, nume, graddid, data_ang, sal_neg, sal_merit)\`, creată şi populată cu date, să se specifice care dintre exemplele următoare este corect:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
@@ -772,7 +772,7 @@ GROUP BY id_departament`,
     id: 352,
     moduleId: "databases",
     subjectId: "baze-de-date",
-    text: `Avand tabelele cadrudid(cod(PK), nume, graddid, cod_fac_ang(FK)) și facultate(cod_fac(PK), denumire), instrucțiunea:\nAre ca rezultat al execuției:`,
+    text: `Avand tabelele \`cadrudid(cod(PK), nume, graddid, cod_fac_ang(FK))\` și \`facultate(cod_fac(PK), denumire)\`, instrucțiunea:\nAre ca rezultat al execuției:`,
     code: `SELECT c.graddid, COUNT(c.graddid) Numar
 FROM cadrudid c JOIN facultate f
   ON c.cod_fac_ang = f.cod_fac
@@ -791,7 +791,7 @@ GROUP BY c.graddid`,
     id: 354,
     moduleId: "databases",
     subjectId: "baze-de-date",
-    text: `Se dă tabelul:\nANGAJATI (CodAngaj, Nume, DataAngajare, Compartiment, Profesia, Salariu)\nCare dintre următoarele instrucţiuni (Transact) SQL permite majorarea salariului cu 3% pentru salariaţii angajaţi în anul 2025?`,
+    text: `Se dă tabelul:\n\`ANGAJATI (CodAngaj, Nume, DataAngajare, Compartiment, Profesia, Salariu)\`\nCare dintre următoarele instrucţiuni (Transact) SQL permite majorarea salariului cu 3% pentru salariaţii angajaţi în anul 2025?`,
     code: undefined,
     codeLanguage: undefined,
     options: {

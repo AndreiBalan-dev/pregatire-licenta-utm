@@ -44,6 +44,14 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "2.5.1",
+    date: "24 Iunie 2026",
+    title: "Codul din intrebari se vede acum ca si cod",
+    changes: [
+      { text: "La intrebarile cu cod, SQL sau comenzi in enunt, fragmentele de cod apar acum scrise cu font de cod (monospace), nu ca text simplu. Asa, schemele de tabele, comenzile de terminal, adresele IP si expresiile se citesc si se deosebesc mai usor de restul textului", type: "improvement" },
+    ],
+  },
+  {
     version: "2.5.0",
     date: "24 Iunie 2026",
     title: "Raspunsuri in ordinea din grila, verificate, + evidentiator de intrebari-capcana",

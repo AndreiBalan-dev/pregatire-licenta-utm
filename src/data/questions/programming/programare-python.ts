@@ -560,7 +560,7 @@ export const programarePython: Question[] = [
     id: 88,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Fie următoarea funcție scrisă în limbajul Python:\nDacă a și b sunt două variabile de tip numeric, atunci după executarea secvenței de instrucțiuni\nt = f(a, b)\nprint(t[1]-t[0])\nîntotdeauna se va afișa:`,
+    text: `Fie următoarea funcție scrisă în limbajul Python:\nDacă a și b sunt două variabile de tip numeric, atunci după executarea secvenței de instrucțiuni\n~~~python\nt = f(a, b)\nprint(t[1]-t[0])\n~~~\nîntotdeauna se va afișa:`,
     code: `def f(x, y):\n    return x-y, x+y`,
     codeLanguage: "python",
     options: {
@@ -710,7 +710,7 @@ export const programarePython: Question[] = [
     id: 98,
     moduleId: "programming",
     subjectId: "programare-python",
-    text: `Fie următoarea funcție scrisă în limbajul Python:\nDacă T este o listă cu elemente de tip numeric, atunci după executarea secvenței de instrucțiuni\nr = f(T)\nprint(r, T)\nîntotdeauna se vor afișa:`,
+    text: `Fie următoarea funcție scrisă în limbajul Python:\nDacă T este o listă cu elemente de tip numeric, atunci după executarea secvenței de instrucțiuni\n~~~python\nr = f(T)\nprint(r, T)\n~~~\nîntotdeauna se vor afișa:`,
     code: `def f(L):\n    L = list(set(L))\n    L.sort()\n    return L`,
     codeLanguage: "python",
     options: {
