@@ -443,7 +443,7 @@ frecvență biți este necesar ca:`,
     code: undefined,
     codeLanguage: undefined,
     options: {
-      a: `n0 n1;`,
+      a: `n0 ≅ n1;`,
       b: `n0 < n1;`,
       c: `n0 > n1;`,
       d: `n0 << n1;`,
