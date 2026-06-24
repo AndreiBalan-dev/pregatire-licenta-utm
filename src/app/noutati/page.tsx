@@ -48,7 +48,7 @@ const changelog: Version[] = [
     date: "24 Iunie 2026",
     title: "Raspunsuri in ordinea din grila, verificate, + evidentiator de intrebari-capcana",
     changes: [
-      { text: "Nou: evidentiatorul de intrebari-capcana. Apesi pe butonul cu marker din bara de sus si se aprinde un marcaj pe intrebarile aproape identice cu altele sau cu raspunsuri care difera printr-un detaliu mic (ex: < fata de >). Apesi pe marcaj si vezi pe scurt ce e diferit, cu link catre intrebarile similare. Marcajul sta langa intrebare, nu langa raspunsuri, ca sa nu apesi din greseala un raspuns", type: "feature" },
+      { text: "Nou: evidentiatorul de intrebari-capcana, activ din start. Dupa ce raspunzi, intrebarile aproape identice cu altele sau cu doua raspunsuri ce difera printr-un detaliu mic (ex: < fata de >) primesc un marcaj, iar diferenta care conteaza e evidentiata chiar in raspuns, ca sa o retii. Apesi pe marcajul de langa enunt (nu langa raspunsuri) si vezi pe scurt ce e diferit, cu link catre intrebarile similare. Merge la Practica si in Cautare, si il poti opri oricand din butonul cu marker din bara de sus", type: "feature" },
       { text: "Variantele de raspuns apar acum implicit in aceeasi ordine ca in PDF-ul oficial; daca vrei sa le amesteci, activeaza optiunea Amesteca raspunsurile, doar ea le mai schimba ordinea", type: "improvement" },
       { text: "Am verificat raspunsurile corecte fata de grila oficiala si am reparat cateva (inclusiv o intrebare care aparea de doua ori cu raspunsuri diferite); restul au iesit bine. Daca totusi vezi vreo greseala, spune-mi si o repar imediat ce ajunge la mine", type: "fix" },
     ],

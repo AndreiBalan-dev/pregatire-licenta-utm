@@ -6,6 +6,9 @@ import { CodeBlock } from "@/components/ui/CodeBlock";
 import { QuestionText } from "@/components/ui/QuestionText";
 import { ExplanationPanel } from "./ExplanationPanel";
 import { ConfusableHint } from "./ConfusableHint";
+import { renderMarkedText } from "@/components/ui/InlineText";
+import { confusables } from "@/data/confusables";
+import { useHighlighter } from "@/hooks/useHighlighter";
 import type { Question, AnswerKey } from "@/data/types";
 
 interface QuestionCardProps {
@@ -48,6 +51,14 @@ export function QuestionCard({
       : (Object.keys(question.options) as AnswerKey[]);
   // Keep the explanation's letter references in sync with the shuffled labels.
   const explanationText = remapExplanationForOrder(question.explanation ?? "", optionOrder);
+
+  // Confusable-question highlighter: the trap chip and the in-text difference marks appear
+  // ONLY after the answer is revealed (showFeedback) and only while the highlighter is on, so
+  // they never tip off the answer beforehand.
+  const { on: highlighterOn } = useHighlighter();
+  const conf = confusables[question.id];
+  const marksActive = showFeedback && highlighterOn && !!conf;
+  const stemMarks = marksActive ? conf?.stemHighlights : undefined;
   return (
     <div key={question.id} className="animate-fade-in">
       {/* Header */}
@@ -66,7 +77,7 @@ export function QuestionCard({
               </span>
             )}
           </div>
-          <ConfusableHint questionId={question.id} />
+          {showFeedback && <ConfusableHint questionId={question.id} />}
         </div>
         {onBookmark && (
           <button
@@ -120,7 +131,7 @@ export function QuestionCard({
 
       {/* Question text */}
       <div className="mb-5 sm:mb-6">
-        <QuestionText text={question.text} />
+        <QuestionText text={question.text} marks={stemMarks} />
       </div>
 
       {/* Options */}
@@ -130,6 +141,7 @@ export function QuestionCard({
           const isCorrect = key === question.correctAnswer;
           const showCorrect = showFeedback && isCorrect;
           const showWrong = showFeedback && isSelected && !isCorrect;
+          const optMarks = marksActive ? conf?.optionHighlights?.[key] : undefined;
 
           const feedbackLabel = showCorrect
             ? " (corect)"
@@ -186,7 +198,9 @@ export function QuestionCard({
                   isCodeLike(question.options[key]) && "font-mono text-[11px] sm:text-xs"
                 )}
               >
-                {question.options[key]}
+                {optMarks && optMarks.length
+                  ? renderMarkedText(question.options[key], optMarks)
+                  : question.options[key]}
               </span>
             </button>
           );

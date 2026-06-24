@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Modal } from "@/components/ui/Modal";
+import { renderInlineCode } from "@/components/ui/InlineText";
 import { useHighlighter } from "@/hooks/useHighlighter";
 import { confusables } from "@/data/confusables";
 
@@ -23,7 +24,11 @@ export function ConfusableHint({ questionId }: { questionId: number }) {
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={(e) => {
+          // Stop the click bubbling so the chip never toggles a parent (e.g. the search result card).
+          e.stopPropagation();
+          setOpen(true);
+        }}
         aria-haspopup="dialog"
         aria-label="De ce e o întrebare-capcană"
         className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-bold uppercase tracking-wide bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-30 hover:bg-[var(--color-accent)] hover:text-[#0C0C0E] transition-colors cursor-pointer"
@@ -36,7 +41,7 @@ export function ConfusableHint({ questionId }: { questionId: number }) {
       </button>
 
       <Modal open={open} onClose={() => setOpen(false)} title="Întrebare-capcană" className="!max-w-md">
-        <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">{info.note}</p>
+        <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">{renderInlineCode(info.note)}</p>
         {info.searchQuery && (
           <Link
             href={`/cautare?q=${encodeURIComponent(info.searchQuery)}`}

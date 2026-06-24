@@ -3,6 +3,10 @@
 import { Fragment, useState } from "react";
 import { CodeBlock } from "@/components/ui/CodeBlock";
 import { SubjectIcon } from "@/components/ui/SubjectIcon";
+import { ConfusableHint } from "@/components/practice/ConfusableHint";
+import { useHighlighter } from "@/hooks/useHighlighter";
+import { renderInlineCode, renderMarkedText } from "@/components/ui/InlineText";
+import { confusables } from "@/data/confusables";
 import { cn } from "@/lib/utils";
 import type { Question } from "@/data/types";
 
@@ -85,6 +89,11 @@ export function SearchResultCard({
   // Revealing the answer is a separate, deliberate step from opening the card,
   // so you can "Exersează asta" without ever seeing the correct option.
   const [revealed, setRevealed] = useState(false);
+  const { on: highlighterOn } = useHighlighter();
+  const conf = confusables[question.id];
+  // On the search page, revealing the answer is the "after you respond" moment: only then do the
+  // trap chip and the in-text difference marks appear (and only while the highlighter is on).
+  const marksActive = revealed && highlighterOn && !!conf;
 
   const toggleCard = () => {
     const next = !expanded;
@@ -140,6 +149,7 @@ export function SearchResultCard({
           )}
 
           <StatusPill status={status} />
+          {revealed && <ConfusableHint questionId={question.id} />}
 
           <span className="ml-auto flex items-center gap-1 flex-shrink-0">
             <button
@@ -189,6 +199,7 @@ export function SearchResultCard({
           <div className="space-y-1.5">
             {ANSWER_KEYS.map((key) => {
               const showCorrect = revealed && key === question.correctAnswer;
+              const optMarks = marksActive ? conf?.optionHighlights?.[key] : undefined;
               return (
                 <div
                   key={key}
@@ -208,7 +219,9 @@ export function SearchResultCard({
                     {key}
                   </span>
                   <span className={cn("min-w-0 flex-1", showCorrect ? "text-[var(--color-text-primary)]" : "text-[var(--color-text-secondary)]")}>
-                    {question.options[key]}
+                    {optMarks && optMarks.length
+                      ? renderMarkedText(question.options[key], optMarks)
+                      : question.options[key]}
                   </span>
                   {showCorrect && (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-correct)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 mt-0.5" aria-hidden="true">
@@ -252,7 +265,7 @@ export function SearchResultCard({
                 De ce e corect
               </p>
               <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)] whitespace-pre-wrap">
-                {question.explanation}
+                {renderInlineCode(question.explanation)}
               </p>
             </div>
           )}

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --import ./scripts/register-alias.mjs scripts/practice-selection.test.mjs && node --import ./scripts/register-alias.mjs scripts/redo.test.mjs && node --import ./scripts/register-alias.mjs scripts/redo-scope.test.mjs && node --import ./scripts/register-alias.mjs scripts/redo-lineage.test.mjs && node --import ./scripts/register-alias.mjs scripts/question-text.test.mjs && node --import ./scripts/register-alias.mjs scripts/session-history.test.mjs && node --import ./scripts/register-alias.mjs scripts/search.test.mjs && node --import ./scripts/register-alias.mjs scripts/training.test.mjs && node --import ./scripts/register-alias.mjs scripts/training-review.test.mjs"
+    "test": "node --import ./scripts/register-alias.mjs scripts/practice-selection.test.mjs && node --import ./scripts/register-alias.mjs scripts/redo.test.mjs && node --import ./scripts/register-alias.mjs scripts/redo-scope.test.mjs && node --import ./scripts/register-alias.mjs scripts/redo-lineage.test.mjs && node --import ./scripts/register-alias.mjs scripts/question-text.test.mjs && node --import ./scripts/register-alias.mjs scripts/session-history.test.mjs && node --import ./scripts/register-alias.mjs scripts/search.test.mjs && node --import ./scripts/register-alias.mjs scripts/training.test.mjs && node --import ./scripts/register-alias.mjs scripts/training-review.test.mjs && node --import ./scripts/register-alias.mjs scripts/highlighter.test.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",

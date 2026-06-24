@@ -5,7 +5,7 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Nou: evidentiatorul de intrebari-capcana (buton cu marker in bara de sus) marcheaza intrebarile aproape identice sau cu raspunsuri ce difera printr-un detaliu mic",
+  "Nou: evidentiatorul de intrebari-capcana, activ din start; dupa ce raspunzi, marcheaza chiar in raspuns diferenta care conteaza si semnaleaza intrebarile aproape identice (merge la Practica si in Cautare)",
   "Variantele de raspuns apar acum in aceeasi ordine ca in PDF-ul oficial; doar optiunea Amesteca raspunsurile le mai schimba",
   "Am verificat raspunsurile corecte fata de grila oficiala si am reparat cateva diferente",
 ];

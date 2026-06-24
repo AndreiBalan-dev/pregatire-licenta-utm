@@ -1,5 +1,5 @@
 import { CodeBlock } from "./CodeBlock";
-import { renderInlineCode } from "./InlineText";
+import { renderMarkedText } from "./InlineText";
 import { parseQuestionText } from "@/lib/question-text";
 
 const PROSE_CLASS =
@@ -11,15 +11,20 @@ const PROSE_CLASS =
  * CodeBlock. Parsing lives in `parseQuestionText` (pure, tested); this only
  * maps segments to markup. A prompt with no fence renders as one prose
  * paragraph, so existing questions look exactly as before.
+ *
+ * `marks` (optional) are literal substrings of the prose to highlight - used by
+ * the confusable-question highlighter to mark the tiny difference vs a near-
+ * identical sibling, only once the answer is revealed. With no marks the output
+ * is identical to before.
  */
-export function QuestionText({ text }: { text: string }) {
+export function QuestionText({ text, marks }: { text: string; marks?: string[] }) {
   const segments = parseQuestionText(text);
   return (
     <>
       {segments.map((seg, i) =>
         seg.kind === "prose" ? (
           <p key={i} className={PROSE_CLASS}>
-            {renderInlineCode(seg.text)}
+            {renderMarkedText(seg.text, marks)}
           </p>
         ) : (
           <div key={i} className="-mx-4 sm:mx-0 my-3 sm:my-4">
