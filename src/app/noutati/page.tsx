@@ -44,6 +44,14 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "2.5.2",
+    date: "24 Iunie 2026",
+    title: "Explicatiile \"De ce e corect\" raman corecte si cand amesteci raspunsurile",
+    changes: [
+      { text: "La cateva intrebari, explicatia \"De ce e corect\" se referea la un raspuns prin litera lui (ex: \"varianta a\"). Daca amestecai raspunsurile, litera nu mai corespundea pozitiei de pe ecran, iar la trei intrebari textul ramasese pe litera veche dupa ce am pus variantele in ordinea din grila. Acum explicatiile descriu raspunsul prin continut, deci raman corecte indiferent de ordinea variantelor", type: "fix" },
+    ],
+  },
+  {
     version: "2.5.1",
     date: "24 Iunie 2026",
     title: "Codul din intrebari se vede acum ca si cod",

@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
+  "Explicatiile \"De ce e corect\" raman corecte si cand amesteci raspunsurile; am scos referirile la raspuns prin litera (ex: \"varianta a\") si le-am pus pe continut",
   "La intrebarile cu cod, SQL sau comenzi, codul din enunt apare acum scris cu font de cod (monospace), nu ca text simplu, ca sa se citeasca mai usor",
   "Evidentiatorul de intrebari-capcana, activ din start; dupa ce raspunzi, marcheaza chiar in raspuns diferenta care conteaza si semnaleaza intrebarile aproape identice (merge la Practica si in Cautare)",
-  "Variantele de raspuns apar in aceeasi ordine ca in PDF-ul oficial; doar optiunea Amesteca raspunsurile le mai schimba",
 ];
 
 export function ChangelogBanner() {
