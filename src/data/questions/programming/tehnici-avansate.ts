@@ -793,13 +793,12 @@ anterior.`,
     subjectId: "tehnici-avansate",
     text: `În Aula Magna a Universității Titu Maiorescu din București se va organiza un festival de
 teatru care va dura o singură zi. Fiecare regizor a transmis organizatorului festivalului
-intervalul de timp [ℎℎ1: 𝑚𝑚1, ℎℎ2: 𝑚𝑚2] în care se poate desfășura spectacolul său.
+intervalul de timp \`[hh1:mm1, hh2:mm2]\` în care se poate desfășura spectacolul său.
 Știind că spectacolele nu se pot suprapune și între oricare două spectacole consecutive nu
 există nicio pauză, organizatorul festivalului s-a gândit să folosească o strategie de
 planificare de tip Greedy pentru a planifica un număr maxim de spectacole în cadrul
 festivalului. Considerând că 7 regizori au trimis intervalele de desfăşurare ale
-spectacolelor lor 𝑠1 = [08: 00,10: 30], 𝑠2 = [08: 30,09: 00], 𝑠3 = [16: 30,18: 00], 𝑠4 =
-[10: 30,10: 45], 𝑠5 = [11: 00,17: 00], 𝑠6 = [11: 30,13: 00], 𝑠7 = [15: 15,16: 45],
+spectacolelor lor \`s1 = [08:00, 10:30]\`, \`s2 = [08:30, 09:00]\`, \`s3 = [16:30, 18:00]\`, \`s4 = [10:30, 10:45]\`, \`s5 = [11:00, 17:00]\`, \`s6 = [11:30, 13:00]\`, \`s7 = [15:15, 16:45]\`,
 precizați care dintre variantele de mai jos reprezintă o planificare corectă, cu un număr
 maxim de spectacole:`,
     code: undefined,
@@ -818,13 +817,12 @@ maxim de spectacole:`,
     subjectId: "tehnici-avansate",
     text: `În Aula Magna a Universității Titu Maiorescu din București se va organiza un festival de
 teatru care va dura o singură zi. Fiecare regizor a transmis organizatorului festivalului
-intervalul de timp [ℎℎ1: 𝑚𝑚1, ℎℎ2: 𝑚𝑚2] în care se poate desfășura spectacolul său.
+intervalul de timp \`[hh1:mm1, hh2:mm2]\` în care se poate desfășura spectacolul său.
 Știind că spectacolele nu se pot suprapune și între oricare două spectacole consecutive nu
 există nicio pauză, organizatorul festivalului s-a gândit să folosească o strategie de
 planificare de tip Greedy pentru a planifica un număr maxim de spectacole în cadrul
 festivalului. Considerând că 7 regizori au trimis intervalele de desfăşurare ale
-spectacolelor lor 𝑠1 = [08: 00,10: 30], 𝑠2 = [08: 30,11: 00], 𝑠3 = [16: 30,18: 00], 𝑠4 =
-[10: 30,10: 45], 𝑠5 = [11: 00,12: 00], 𝑠6 = [12: 30,16: 00], 𝑠7 = [17: 15,18: 45],
+spectacolelor lor \`s1 = [08:00, 10:30]\`, \`s2 = [08:30, 11:00]\`, \`s3 = [16:30, 18:00]\`, \`s4 = [10:30, 10:45]\`, \`s5 = [11:00, 12:00]\`, \`s6 = [12:30, 16:00]\`, \`s7 = [17:15, 18:45]\`,
 precizați care dintre variantele de mai jos reprezintă o planificare corectă, cu un număr
 maxim de spectacole:`,
     code: undefined,

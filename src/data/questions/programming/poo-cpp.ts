@@ -1182,7 +1182,7 @@ int main(){
     id: 144,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `De câte ori este apelat destructorul clasei Persoana în programul urmãtor C++?\nRăspuns:`,
+    text: `De câte ori este apelat destructorul clasei Persoana în programul următor C++?\nRăspuns:`,
     code: `#include <iostream>
 using namespace std;
 class Persoana{
@@ -1211,7 +1211,7 @@ int main(){
     id: 145,
     moduleId: "programming",
     subjectId: "poo-cpp",
-    text: `În programul urmãtor C++:\nSunt apelate urmãtoarele:`,
+    text: `În programul următor C++:\nSunt apelate următoarele:`,
     code: `#include <iostream>
 using namespace std;
 class Persoana{
@@ -1243,10 +1243,10 @@ int main(){
 }`,
     codeLanguage: "cpp",
     options: {
-      a: `constructor – de patru ori, constructor de copiere – o datã, destructor – de patru ori;`,
-      b: `constructor – de trei ori, constructor de copiere - de douã ori, destructor de cinci ori;`,
-      c: `constructor – de douã ori, constructor de copiere – de douã ori, operator= - o datã,`,
-      d: `constructor – de douã ori, constructor de copiere – o datã, operator= - de douã ori,`,
+      a: `constructor – de patru ori, constructor de copiere – o dată, destructor – de patru ori;`,
+      b: `constructor – de trei ori, constructor de copiere - de două ori, destructor de cinci ori;`,
+      c: `constructor – de două ori, constructor de copiere – de două ori, operator= - o dată,`,
+      d: `constructor – de două ori, constructor de copiere – o dată, operator= - de două ori,`,
     },
     correctAnswer: "c",
   },
