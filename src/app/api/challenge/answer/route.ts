@@ -53,8 +53,13 @@ export async function POST(request: NextRequest) {
       lobbyCode: code, playerId: player.id, questionId,
       selected, isCorrect, timeMs, pointsAwarded: isCorrect ? "1" : "0",
     });
-  } catch {
-    return NextResponse.json({ error: "Ai răspuns deja la această întrebare." }, { status: 409 });
+  } catch (e: unknown) {
+    // Postgres unique_violation (the no-redo constraint). Any other error is a
+    // real failure and must not be masked as a duplicate.
+    if ((e as { code?: string })?.code === "23505") {
+      return NextResponse.json({ error: "Ai răspuns deja la această întrebare." }, { status: 409 });
+    }
+    throw e;
   }
 
   const afterAnswered = beforeAnswered + 1;
@@ -74,10 +79,14 @@ export async function POST(request: NextRequest) {
     lastSeenAt: new Date(),
   }).where(eq(challengePlayers.id, player.id));
 
-  // Cross-player facts for milestones.
-  const others = await db.select({ finishedAt: challengePlayers.finishedAt })
-    .from(challengePlayers).where(eq(challengePlayers.lobbyCode, code));
-  const anyoneFinishedBefore = others.filter((o) => o.finishedAt !== null).length > (justFinished ? 1 : 0);
+  // Only needed when this answer completed the set (used for first-finish vs finish).
+  let anyoneFinishedBefore = false;
+  if (justFinished) {
+    const others = await db.select({ finishedAt: challengePlayers.finishedAt })
+      .from(challengePlayers).where(eq(challengePlayers.lobbyCode, code));
+    // The current player's finishedAt is already set, so > 1 means someone else finished earlier.
+    anyoneFinishedBefore = others.filter((o) => o.finishedAt !== null).length > 1;
+  }
 
   const afterStandings = await buildStandings(code);
   const afterLeaderId = afterStandings[0]?.playerId ?? null;
