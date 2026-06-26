@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { createPusherClient } from "@/lib/realtime/pusher-client";
 import { CHANNELS, EVENTS, type Standing, type MilestoneEvent } from "@/lib/realtime/events";
 
@@ -10,12 +10,15 @@ export function useChallengeChannel(code: string | null, token: string | null) {
   const [standings, setStandings] = useState<Standing[]>([]);
   const [lastMilestone, setLastMilestone] = useState<MilestoneEvent | null>(null);
   const [status, setStatus] = useState<"started" | "finished" | null>(null);
-  const pusherRef = useRef<ReturnType<typeof createPusherClient> | null>(null);
 
   useEffect(() => {
     if (!code || !token) return;
+    // Reset any state carried over from a previous channel before subscribing fresh.
+    setMembers([]);
+    setStandings([]);
+    setLastMilestone(null);
+    setStatus(null);
     const pusher = createPusherClient(token, code);
-    pusherRef.current = pusher;
     const channel = pusher.subscribe(CHANNELS.lobby(code));
 
     const syncMembers = () => {
