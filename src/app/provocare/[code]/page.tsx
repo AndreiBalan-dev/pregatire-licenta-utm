@@ -84,6 +84,24 @@ export default function LobbyPage() {
     return () => clearInterval(id);
   }, [snapshot?.status, status, token, hostToken, code]);
 
+  // Fallback while still in the waiting room. Pusher does NOT replay missed
+  // events, so a client that was mid-subscribe or briefly dropped exactly when
+  // the host pressed Start would otherwise sit on the lobby until a manual
+  // refresh. Polling /state makes the jump into the running game self-correct
+  // (the poll also picks up our own questionOrder once the host has started).
+  useEffect(() => {
+    if (snapshot?.status !== "lobby") return;
+    const t = token ?? hostToken;
+    if (!t) return;
+    const id = setInterval(() => {
+      fetch(`/api/challenge/state?code=${code}&token=${encodeURIComponent(t)}`)
+        .then((r) => r.json())
+        .then((d) => { if (!d.error) setSnapshot(d); })
+        .catch(() => { /* transient - the next tick retries */ });
+    }, 4000);
+    return () => clearInterval(id);
+  }, [snapshot?.status, token, hostToken, code]);
+
   function onJoined(playerToken: string, name: string) {
     savePlayer(code, { playerToken, name });
     setToken(playerToken);
