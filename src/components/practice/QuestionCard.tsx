@@ -198,9 +198,7 @@ export function QuestionCard({
                   isCodeLike(question.options[key]) && "font-mono text-[11px] sm:text-xs"
                 )}
               >
-                {optMarks && optMarks.length
-                  ? renderMarkedText(question.options[key], optMarks)
-                  : question.options[key]}
+                {renderMarkedText(question.options[key], optMarks)}
               </span>
             </button>
           );

@@ -14,17 +14,29 @@ const PROSE_CLASS =
  *
  * `marks` (optional) are literal substrings of the prose to highlight - used by
  * the confusable-question highlighter to mark the tiny difference vs a near-
- * identical sibling, only once the answer is revealed. With no marks the output
- * is identical to before.
+ * identical sibling, only once the answer is revealed. `query` (optional) tints
+ * search-term matches in the prose instead. `proseClassName` overrides the
+ * default paragraph styling for denser surfaces (e.g. the search result list).
+ * With none of these the output is identical to before.
  */
-export function QuestionText({ text, marks }: { text: string; marks?: string[] }) {
+export function QuestionText({
+  text,
+  marks,
+  query,
+  proseClassName,
+}: {
+  text: string;
+  marks?: string[];
+  query?: string;
+  proseClassName?: string;
+}) {
   const segments = parseQuestionText(text);
   return (
     <>
       {segments.map((seg, i) =>
         seg.kind === "prose" ? (
-          <p key={i} className={PROSE_CLASS}>
-            {renderMarkedText(seg.text, marks)}
+          <p key={i} className={proseClassName ?? PROSE_CLASS}>
+            {renderMarkedText(seg.text, marks, query)}
           </p>
         ) : (
           <div key={i} className="-mx-4 sm:mx-0 my-3 sm:my-4">

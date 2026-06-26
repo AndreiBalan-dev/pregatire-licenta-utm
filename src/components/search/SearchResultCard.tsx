@@ -1,7 +1,8 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { CodeBlock } from "@/components/ui/CodeBlock";
+import { QuestionText } from "@/components/ui/QuestionText";
 import { SubjectIcon } from "@/components/ui/SubjectIcon";
 import { ConfusableHint } from "@/components/practice/ConfusableHint";
 import { useHighlighter } from "@/hooks/useHighlighter";
@@ -28,30 +29,10 @@ const LANG_LABEL: Record<string, string> = {
   c: "C", cpp: "C++", python: "Python", java: "Java", js: "JavaScript", php: "PHP", sql: "SQL", bash: "Bash",
 };
 
-function escapeRegExp(s: string): string {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-/** Highlight case-insensitive matches of `query` inside `text` (skips #id / numeric queries). */
-function highlight(text: string, query: string) {
+/** The query to highlight inside a stem, or undefined for #id / numeric / empty searches. */
+function stemQueryFor(query: string): string | undefined {
   const q = query.trim();
-  if (!q || q.startsWith("#") || /^\d+$/.test(q)) return text;
-  let parts: string[];
-  try {
-    parts = text.split(new RegExp(`(${escapeRegExp(q)})`, "ig"));
-  } catch {
-    return text;
-  }
-  const lower = q.toLowerCase();
-  return parts.map((part, i) =>
-    part.toLowerCase() === lower ? (
-      <mark key={i} className="bg-[var(--color-accent-strong)] text-[var(--color-text-primary)] rounded-[2px] px-0.5">
-        {part}
-      </mark>
-    ) : (
-      <Fragment key={i}>{part}</Fragment>
-    ),
-  );
+  return !q || q.startsWith("#") || /^\d+$/.test(q) ? undefined : q;
 }
 
 function StatusPill({ status }: { status: ResultStatus }) {
@@ -179,9 +160,16 @@ export function SearchResultCard({
           </span>
         </div>
 
-        <p className={cn("text-sm text-[var(--color-text-primary)] leading-relaxed", !expanded && "line-clamp-2")}>
-          {highlight(question.text, query)}
-        </p>
+        <div className={cn(!expanded && "max-h-[2.9em] overflow-hidden")}>
+          <QuestionText
+            text={question.text}
+            query={stemQueryFor(query)}
+            proseClassName={cn(
+              "text-sm text-[var(--color-text-primary)] leading-relaxed break-words",
+              !expanded && "line-clamp-2",
+            )}
+          />
+        </div>
       </div>
 
       {expanded && (
@@ -219,9 +207,7 @@ export function SearchResultCard({
                     {key}
                   </span>
                   <span className={cn("min-w-0 flex-1", showCorrect ? "text-[var(--color-text-primary)]" : "text-[var(--color-text-secondary)]")}>
-                    {optMarks && optMarks.length
-                      ? renderMarkedText(question.options[key], optMarks)
-                      : question.options[key]}
+                    {renderMarkedText(question.options[key], optMarks)}
                   </span>
                   {showCorrect && (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-correct)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 mt-0.5" aria-hidden="true">

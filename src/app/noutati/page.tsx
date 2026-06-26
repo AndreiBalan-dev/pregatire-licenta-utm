@@ -44,6 +44,14 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "2.5.3",
+    date: "26 Iunie 2026",
+    title: "Codul din intrebari se vede ca si cod peste tot, nu doar in sesiuni",
+    changes: [
+      { text: "Formatarea codului din enunt (font de cod pentru fragmentele scurte si blocuri colorate pentru secventele mai lungi) aparea doar in sesiunile de practica si simulator. Acum se vede peste tot unde apar intrebari: la Revizuire si in Cautare. In plus, codul scris in variantele de raspuns apare si el ca si cod, nu ca text simplu", type: "improvement" },
+    ],
+  },
+  {
     version: "2.5.2",
     date: "24 Iunie 2026",
     title: "Explicatiile \"De ce e corect\" raman corecte si cand amesteci raspunsurile",

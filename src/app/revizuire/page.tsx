@@ -8,6 +8,8 @@ import { MobileNav } from "@/components/layout/MobileNav";
 import { Container } from "@/components/layout/Container";
 import { Card } from "@/components/ui/Card";
 import { CodeBlock } from "@/components/ui/CodeBlock";
+import { QuestionText } from "@/components/ui/QuestionText";
+import { renderInlineCode } from "@/components/ui/InlineText";
 import { ExplanationPanel } from "@/components/practice/ExplanationPanel";
 import { ReviewLaunch } from "@/components/review/ReviewLaunch";
 import { ExamRepeatBadge } from "@/components/exam/ExamRepeatBadge";
@@ -431,9 +433,12 @@ export default function RevizuirePage() {
                       </div>
                     )}
 
-                    <p className="text-sm text-[var(--color-text-primary)] leading-relaxed whitespace-pre-wrap mb-3">
-                      {question.text}
-                    </p>
+                    <div className="mb-3">
+                      <QuestionText
+                        text={question.text}
+                        proseClassName="text-sm text-[var(--color-text-primary)] leading-relaxed whitespace-pre-wrap break-words"
+                      />
+                    </div>
 
                     <div className="space-y-1.5">
                       {(Object.keys(question.options) as AnswerKey[]).map((key) => {
@@ -463,7 +468,7 @@ export default function RevizuirePage() {
                               isWrongSelection ? "text-[var(--color-wrong)]" : "",
                               isCodeLike(question.options[key]) && "font-mono"
                             )}>
-                              {question.options[key]}
+                              {renderInlineCode(question.options[key])}
                             </span>
                           </div>
                         );

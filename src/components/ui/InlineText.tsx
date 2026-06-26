@@ -9,20 +9,36 @@ const CODE_CLASS =
 const MARK_CLASS =
   "rounded-[2px] px-0.5 font-bold bg-[var(--color-accent)] text-[#0C0C0E] break-words";
 
+// Search-result match: a lighter tint than the "marker pen" so a long matched
+// run stays readable inside the result text.
+const SEARCH_CLASS =
+  "bg-[var(--color-accent-strong)] text-[var(--color-text-primary)] rounded-[2px] px-0.5";
+
 function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-/** Wrap every literal occurrence of any `marks` substring in `text` with an accent <mark>. */
-function highlightMarks(text: string, marks: string[], keyPrefix: string): ReactNode[] {
-  const real = marks.filter((m) => m && m.length > 0);
+/**
+ * Wrap every occurrence of any `terms` substring in `text` with a <mark> styled
+ * by `className`. Longest-first so a more specific (longer) term wins over a
+ * shorter overlapping one. `caseInsensitive` is for the search query (a "cout"
+ * query should still light up "Cout"); confusable marks stay case-sensitive so
+ * they pinpoint the exact differing token.
+ */
+function highlightSubstrings(
+  text: string,
+  terms: string[],
+  className: string,
+  keyPrefix: string,
+  caseInsensitive = false,
+): ReactNode[] {
+  const real = terms.filter((m) => m && m.length > 0);
   if (real.length === 0) return [<Fragment key={`${keyPrefix}p`}>{text}</Fragment>];
-  // Longest-first so a more specific (longer) mark wins over a shorter overlapping one.
   const ordered = [...real].sort((a, b) => b.length - a.length);
-  const re = new RegExp(`(${ordered.map(escapeRegExp).join("|")})`, "g");
+  const re = new RegExp(`(${ordered.map(escapeRegExp).join("|")})`, caseInsensitive ? "gi" : "g");
   return text.split(re).map((part, i) =>
     i % 2 === 1 ? (
-      <mark key={`${keyPrefix}m${i}`} className={MARK_CLASS}>
+      <mark key={`${keyPrefix}m${i}`} className={className}>
         {part}
       </mark>
     ) : (
@@ -32,13 +48,17 @@ function highlightMarks(text: string, marks: string[], keyPrefix: string): React
 }
 
 /**
- * Render text with backtick-delimited inline `code` spans as monospace chips and,
- * optionally, literal `marks` substrings wrapped in an accent <mark> highlight.
- * Marks are matched only inside the non-code parts. With no marks this is exactly
- * the old inline-code rendering, so existing content is untouched.
+ * Render text with backtick-delimited inline `code` spans as monospace chips.
+ * Inside the non-code prose, optionally highlight EITHER confusable `marks`
+ * (exact, case-sensitive, gold marker) OR a search `query` (case-insensitive,
+ * subtle tint) - the two are never active at once, so a stem reads the same
+ * whether it's shown in a session, the review list, or a search result. With
+ * neither, this is exactly the old inline-code rendering, so existing content
+ * is untouched.
  */
-export function renderMarkedText(text: string, marks?: string[]): ReactNode[] {
+export function renderMarkedText(text: string, marks?: string[], query?: string): ReactNode[] {
   const hasMarks = !!marks && marks.length > 0;
+  const hasQuery = !!query && query.length > 0;
   const out: ReactNode[] = [];
   text.split("`").forEach((part, i) => {
     if (i % 2 === 1) {
@@ -48,7 +68,9 @@ export function renderMarkedText(text: string, marks?: string[]): ReactNode[] {
         </code>,
       );
     } else if (hasMarks) {
-      out.push(...highlightMarks(part, marks!, `p${i}`));
+      out.push(...highlightSubstrings(part, marks!, MARK_CLASS, `p${i}`));
+    } else if (hasQuery) {
+      out.push(...highlightSubstrings(part, [query!], SEARCH_CLASS, `p${i}`, true));
     } else {
       out.push(<Fragment key={`f${i}`}>{part}</Fragment>);
     }
