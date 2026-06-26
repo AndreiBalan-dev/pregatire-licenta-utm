@@ -16,10 +16,11 @@ export const EVENTS = {
 export interface Standing {
   playerId: number;
   name: string;
-  score: number;
+  score: number; // Kahoot-style points
   correctCount: number;
   answeredCount: number;
   totalQuestions: number;
+  totalTimeMs: number; // summed response time, for the completion-time display + tiebreak
   progress: number; // 0..1
   finished: boolean;
   rank: number; // 1-based, ties share a rank

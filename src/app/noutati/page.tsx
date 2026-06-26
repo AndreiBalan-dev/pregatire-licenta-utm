@@ -44,6 +44,18 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "3.0.0",
+    date: "27 Iunie 2026",
+    title: "Provocare: joaca grile cu prietenii, in timp real",
+    changes: [
+      { text: "Mod nou Provocare: creezi o provocare alegand materiile, dai linkul prietenilor (se copiaza singur) si va luati la intrecere pe aceleasi grile, in timp real, cu clasament live. Fiecare intra doar cu un nume, fara cont, pana la 6 jucatori", type: "feature" },
+      { text: "Punctaj ca la Kahoot: cu cat raspunzi mai repede si corect, cu atat iei mai multe puncte; raspuns gresit sau timp expirat inseamna 0 puncte. Poti pune timp pe fiecare intrebare sau pentru tot testul (de la 1 la 120 de minute, implicit 10). La final vezi podiumul, timpul fiecaruia si cate a nimerit", type: "feature" },
+      { text: "Daca cuiva ii pica netul, il vezi marcat cu cat timp mai are sa revina si jocul merge mai departe fara sa se strice; cand revine, continua de unde a ramas", type: "feature" },
+      { text: "Poti porni provocarea cu toate intrebarile din materiile alese, nu doar pana la 50", type: "improvement" },
+      { text: "Pe prima pagina poti acum ascunde numaratoarea pana la examen dintr-un X, daca te distrage; alegerea se tine minte", type: "improvement" },
+    ],
+  },
+  {
     version: "2.6.0",
     date: "26 Iunie 2026",
     title: "Control cu tastatura pe desktop",

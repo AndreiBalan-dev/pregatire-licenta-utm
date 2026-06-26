@@ -1,5 +1,5 @@
-import { CHALLENGE } from "@/lib/constants";
-import type { ChallengeConfig } from "./types";
+import { CHALLENGE, CHALLENGE_TIMER } from "@/lib/constants";
+import type { ChallengeConfig, TimerMode } from "./types";
 
 export function validateName(raw: unknown): { ok: true; name: string } | { ok: false; error: string } {
   if (typeof raw !== "string") return { ok: false, error: "Nume invalid." };
@@ -39,6 +39,30 @@ export function validateCreateConfig(
     if (typeof c[flag] !== "boolean") return { ok: false, error: "Configurație invalidă." };
   }
 
+  // Timer: either a whole-quiz budget ("total") or a per-question budget.
+  const rawTimer = c.timer;
+  if (!rawTimer || typeof rawTimer !== "object" || Array.isArray(rawTimer)) {
+    return { ok: false, error: "Configurație timer invalidă." };
+  }
+  const tm = rawTimer as Record<string, unknown>;
+  let timerTotal: number = CHALLENGE_TIMER.TOTAL_DEFAULT_SECONDS;
+  let timerPerQuestion: number = CHALLENGE_TIMER.PER_QUESTION_DEFAULT;
+  if (tm.mode === "total") {
+    const ts = tm.totalSeconds;
+    if (typeof ts !== "number" || !Number.isInteger(ts) || ts < CHALLENGE_TIMER.TOTAL_MIN_SECONDS || ts > CHALLENGE_TIMER.TOTAL_MAX_SECONDS) {
+      return { ok: false, error: "Durata totală trebuie să fie între 1 și 120 de minute." };
+    }
+    timerTotal = ts;
+  } else if (tm.mode === "per_question") {
+    const pq = tm.perQuestionSeconds;
+    if (typeof pq !== "number" || !(CHALLENGE_TIMER.PER_QUESTION_OPTIONS as readonly number[]).includes(pq)) {
+      return { ok: false, error: "Timpul pe întrebare este invalid." };
+    }
+    timerPerQuestion = pq;
+  } else {
+    return { ok: false, error: "Mod timer invalid." };
+  }
+
   // Phase 1 ships self_paced only; lockstep is accepted by the validator but the
   // create route rejects it until Phase 2 (see Task 9).
   const perQuestionSeconds =
@@ -58,6 +82,7 @@ export function validateCreateConfig(
       perQuestionSeconds,
       capacity,
       hostPlays: c.hostPlays as boolean,
+      timer: { mode: tm.mode as TimerMode, totalSeconds: timerTotal, perQuestionSeconds: timerPerQuestion },
     },
   };
 }

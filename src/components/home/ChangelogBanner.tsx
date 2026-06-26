@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Control cu tastatura pe desktop la Practica, Antrenament si Simulator: navighezi prin variante cu sagetile, confirmi cu Space si schimbi intrebarea cu sagetile stanga/dreapta; il poti opri din bara de sus",
-  "Numaratoare inversa pe prima pagina pana la Proba 1 (proba scrisa) a licentei: zile, ore, minute si secunde, cu data si ora exacta",
-  "Antrenamentul nu mai ramane blocat pe cercul de incarcare daca o intrebare folosita a fost scoasa intre timp; referintele invechite sunt curatate automat la incarcare",
+  "Provocare, mod nou: joci grile multiplayer cu prietenii in timp real, cu clasament live si punctaj ca la Kahoot (mai repede si corect = mai multe puncte)",
+  "Pui timp pe fiecare intrebare sau pentru tot testul, pana la 6 jucatori fara cont, iar la final vezi podiumul si timpii; deconectarile nu mai strica jocul",
+  "Poti porni provocarea cu toate intrebarile alese, plus un buton sa ascunzi numaratoarea pana la examen de pe prima pagina",
 ];
 
 export function ChangelogBanner() {

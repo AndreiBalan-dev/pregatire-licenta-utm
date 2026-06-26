@@ -352,3 +352,104 @@ body {
     padding-bottom: 72px;
   }
 }
+
+/* ============================================================
+   Provocare (challenge) - the arena: livelier, more competitive
+   motion than the calm study surfaces. All effects degrade to
+   nothing under prefers-reduced-motion.
+   ============================================================ */
+
+/* A player dropping into the lobby lineup, with a little overshoot. */
+@keyframes rosterPop {
+  0% { opacity: 0; transform: scale(0.6) translateY(6px); }
+  60% { opacity: 1; transform: scale(1.06); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.animate-roster-pop {
+  animation: rosterPop 340ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Your row when your rank improves: a quick amber ring that fades out. */
+@keyframes rankFlash {
+  0% { box-shadow: 0 0 0 0 var(--color-accent-strong); }
+  100% { box-shadow: 0 0 0 10px transparent; }
+}
+.animate-rank-flash { animation: rankFlash 700ms ease-out; }
+
+/* The "GO!" stamp when the round begins. */
+@keyframes goFlash {
+  0% { opacity: 0; transform: scale(0.7); }
+  25% { opacity: 1; transform: scale(1.05); }
+  70% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.5); }
+}
+.animate-go-flash {
+  animation: goFlash 900ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Podium columns growing up from the floor. */
+@keyframes podiumRise {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+.animate-podium-rise {
+  transform-origin: bottom;
+  animation: podiumRise 620ms cubic-bezier(0.34, 1.4, 0.64, 1) both;
+}
+
+/* Confetti pieces over the results podium. */
+@keyframes confettiFall {
+  0% { opacity: 1; transform: translate3d(0, -12vh, 0) rotate(0deg); }
+  100% { opacity: 0; transform: translate3d(var(--confetti-drift, 0), 86vh, 0) rotate(720deg); }
+}
+.confetti-piece {
+  animation: confettiFall var(--confetti-dur, 2.6s) var(--confetti-delay, 0s) ease-in forwards;
+}
+
+/* Soft breathing cue for "waiting for the host". */
+@keyframes breathe {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+.animate-breathe { animation: breathe 1.8s ease-in-out infinite; }
+
+/* Countdown in its final seconds: a once-per-second throb on the timer pill. */
+@keyframes timerThrob {
+  0%, 100% { transform: scale(1); }
+  18% { transform: scale(1.12); }
+}
+.animate-timer-throb { animation: timerThrob 1s ease-in-out infinite; }
+
+/* When a per-question timer runs out: the card jolts, then a red wash fades. */
+@keyframes timeoutShake {
+  0% { transform: translateX(0); }
+  15% { transform: translateX(-7px); }
+  30% { transform: translateX(6px); }
+  45% { transform: translateX(-5px); }
+  60% { transform: translateX(4px); }
+  75% { transform: translateX(-2px); }
+  100% { transform: translateX(0); }
+}
+.animate-timeout-shake { animation: timeoutShake 420ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
+
+@keyframes timeoutWash {
+  0% { opacity: 0; }
+  25% { opacity: 0.5; }
+  100% { opacity: 0; }
+}
+.animate-timeout-wash { animation: timeoutWash 700ms ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-roster-pop,
+  .animate-rank-flash,
+  .animate-podium-rise,
+  .confetti-piece,
+  .animate-breathe,
+  .animate-timer-throb,
+  .animate-timeout-shake,
+  .animate-timeout-wash {
+    animation: none;
+  }
+  .animate-podium-rise { transform: scaleY(1); }
+  .animate-go-flash { animation: none; opacity: 1; transform: none; }
+}

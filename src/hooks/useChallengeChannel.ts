@@ -10,6 +10,7 @@ export function useChallengeChannel(code: string | null, token: string | null) {
   const [standings, setStandings] = useState<Standing[]>([]);
   const [lastMilestone, setLastMilestone] = useState<MilestoneEvent | null>(null);
   const [status, setStatus] = useState<"started" | "finished" | null>(null);
+  const [connected, setConnected] = useState(true);
 
   useEffect(() => {
     if (!code || !token) return;
@@ -20,6 +21,15 @@ export function useChallengeChannel(code: string | null, token: string | null) {
     setLastMilestone(null);
     setStatus(null);
     const pusher = createPusherClient(token, code);
+    pusher.connection.bind("error", (err: unknown) => {
+      console.error("[provocare] pusher connection error (check NEXT_PUBLIC_PUSHER_KEY/CLUSTER):", err);
+    });
+    pusher.connection.bind("state_change", (states: { current: string }) => {
+      // Only treat a sustained drop as "disconnected" - transient connecting/
+      // initialized states shouldn't flash a banner on first load or quick blips.
+      const s = states.current;
+      setConnected(!(s === "unavailable" || s === "failed" || s === "disconnected"));
+    });
     const channel = pusher.subscribe(CHANNELS.lobby(code));
 
     const syncMembers = () => {
@@ -32,6 +42,9 @@ export function useChallengeChannel(code: string | null, token: string | null) {
     channel.bind("pusher:subscription_succeeded", syncMembers);
     channel.bind("pusher:member_added", syncMembers);
     channel.bind("pusher:member_removed", syncMembers);
+    channel.bind("pusher:subscription_error", (err: unknown) => {
+      console.error("[provocare] presence subscription failed (auth route rejected or keys wrong):", err);
+    });
     channel.bind(EVENTS.ROUND_STARTED, () => setStatus("started"));
     channel.bind(EVENTS.LEADERBOARD, (p: { standings: Standing[] }) => setStandings(p.standings));
     channel.bind(EVENTS.MILESTONE, (m: MilestoneEvent) => setLastMilestone(m));
@@ -44,5 +57,5 @@ export function useChallengeChannel(code: string | null, token: string | null) {
     };
   }, [code, token]);
 
-  return { members, standings, lastMilestone, status };
+  return { members, standings, lastMilestone, status, connected };
 }

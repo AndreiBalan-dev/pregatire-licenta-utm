@@ -7,6 +7,10 @@ import { EXAM_PROBA1_START, EXAM_PROBA1_END } from "@/lib/site-config";
 const START = new Date(EXAM_PROBA1_START).getTime();
 const END = new Date(EXAM_PROBA1_END).getTime();
 
+// Remembered client-side so a visitor who hides the countdown keeps it hidden on
+// later visits too (it becomes moot once the exam passes).
+const COUNTDOWN_HIDDEN_KEY = "utm-exam-countdown-hidden";
+
 type Remaining = { days: number; hours: number; minutes: number; seconds: number };
 
 function remainingFrom(now: number): Remaining | null {
@@ -35,12 +39,25 @@ function unitLabel(value: number, plural: string, singular: string) {
  */
 export function ExamCountdown() {
   const [now, setNow] = useState<number | null>(null);
+  // This component only ever renders client-side (the homepage gates on a loaded
+  // session), so reading localStorage in the initializer is safe and avoids a
+  // flash of the countdown for visitors who already hid it.
+  const [hidden, setHidden] = useState<boolean>(() => {
+    try { return localStorage.getItem(COUNTDOWN_HIDDEN_KEY) === "1"; } catch { return false; }
+  });
 
   useEffect(() => {
     setNow(Date.now()); // eslint-disable-line react-hooks/set-state-in-effect -- seed the live clock on mount (post-hydration) so the first paint is a stable placeholder
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
   }, []);
+
+  const dismiss = () => {
+    setHidden(true);
+    try { localStorage.setItem(COUNTDOWN_HIDDEN_KEY, "1"); } catch { /* ignore storage errors */ }
+  };
+
+  if (hidden) return null;
 
   const remaining = now === null ? undefined : remainingFrom(now);
   const inProgress = now !== null && now >= START && now < END;
@@ -75,9 +92,22 @@ export function ExamCountdown() {
           />
           <div aria-hidden="true" className="absolute inset-0 grid-pattern opacity-30" />
 
+          {/* Dismiss: hide the countdown (remembered) until the exam, for anyone it distracts. */}
+          <button
+            type="button"
+            onClick={dismiss}
+            aria-label="Ascunde numărătoarea până la examen"
+            title="Ascunde numărătoarea"
+            className="absolute top-3 right-3 z-10 inline-flex items-center justify-center w-7 h-7 rounded-full text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-hover)] transition-colors cursor-pointer"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+
           <div className="relative p-5 sm:p-8">
             {/* Eyebrow: live status dot + which probe this is */}
-            <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 mb-5 sm:mb-6">
+            <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 mb-5 sm:mb-6 pr-8">
               <div className="inline-flex items-center gap-2.5">
                 <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
                   <span className="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-accent)] opacity-60" />

@@ -6,7 +6,13 @@ import Pusher from "pusher-js";
 export function createPusherClient(token: string, code: string): Pusher {
   return new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
     cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
-    authEndpoint: "/api/challenge/pusher/auth",
-    auth: { params: { token, code } },
+    // pusher-js v8: channelAuthorization (the old `authEndpoint`/`auth.params`
+    // is deprecated and does NOT reliably forward custom params, which left the
+    // presence auth route without token/code and rejected the subscription).
+    channelAuthorization: {
+      endpoint: "/api/challenge/pusher/auth",
+      transport: "ajax",
+      params: { token, code },
+    },
   });
 }

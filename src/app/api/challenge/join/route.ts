@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
-import { challengeLobbies, challengePlayers } from "@/db/schema";
+import { challengePlayers } from "@/db/schema";
 import { eq, count } from "drizzle-orm";
 import { generateToken, hashToken, hashIp } from "@/lib/crypto";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { RATE_LIMITS } from "@/lib/constants";
 import { validateName } from "@/lib/challenge/validation";
-import { loadLobby, expireIfStale, getClientIp, buildStandings } from "@/lib/challenge/server";
+import { loadLobby, expireIfStale, getClientIp, buildStandings, isUniqueViolation } from "@/lib/challenge/server";
 
 export async function POST(request: NextRequest) {
   const ip = getClientIp(request);
@@ -41,12 +41,11 @@ export async function POST(request: NextRequest) {
     }).returning({ id: challengePlayers.id });
     playerId = inserted[0].id;
   } catch (err: unknown) {
-    if ((err as { code?: string })?.code === "23505") {
-      console.error("challenge join name conflict");
-      return NextResponse.json({ error: "Numele este deja folosit în această cameră." }, { status: 409 });
+    if (isUniqueViolation(err)) {
+      return NextResponse.json({ error: "Numele este deja folosit în această cameră. Alege altul." }, { status: 409 });
     }
     console.error("challenge join error:", err instanceof Error ? err.message : "unknown");
-    throw err;
+    return NextResponse.json({ error: "Eroare la alăturare." }, { status: 500 });
   }
 
   const snapshot = { status: lobby.status, mode: lobby.mode, config: lobby.config, standings: await buildStandings(code) };

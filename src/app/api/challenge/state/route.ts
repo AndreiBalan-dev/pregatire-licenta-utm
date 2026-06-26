@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
-import { challengeAnswers } from "@/db/schema";
+import { challengeAnswers, challengePlayers } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { loadPlayerByToken, expireIfStale, buildStandings } from "@/lib/challenge/server";
+import { loadPlayerByToken, expireIfStale, maybeFinishRunning, buildStandings } from "@/lib/challenge/server";
+import { getTimer, totalRemainingSeconds } from "@/lib/challenge/timing";
+import type { TimerConfig } from "@/lib/challenge/types";
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
@@ -13,10 +15,19 @@ export async function GET(request: NextRequest) {
   const found = await loadPlayerByToken(code, token);
   if (!found) return NextResponse.json({ error: "Neautorizat." }, { status: 403 });
   const { lobby, player } = found;
-  const expired = await expireIfStale(lobby);
 
-  // Which questions this player already answered, and with what letter, so the UI
-  // can render the locked state and resume at the first unanswered question.
+  // Heartbeat: this player is connected right now, which keeps their grace window
+  // open (so they don't get treated as "gone" while still on the page).
+  await db.update(challengePlayers).set({ lastSeenAt: new Date() }).where(eq(challengePlayers.id, player.id));
+
+  const expired = await expireIfStale(lobby);
+  const justFinished = await maybeFinishRunning(lobby);
+  const status = expired ? "expired" : justFinished ? "finished" : lobby.status;
+
+  const timer = getTimer(lobby.config as { timer?: TimerConfig });
+
+  // Which questions this player already answered, so the UI can resume at the
+  // first unanswered question.
   const answers = await db.select({
     questionId: challengeAnswers.questionId,
     selected: challengeAnswers.selected,
@@ -24,10 +35,11 @@ export async function GET(request: NextRequest) {
   }).from(challengeAnswers).where(eq(challengeAnswers.playerId, player.id));
 
   return NextResponse.json({
-    status: expired ? "expired" : lobby.status,
+    status,
     mode: lobby.mode,
     config: lobby.config,
     questionIds: lobby.questionIds ?? null,
+    totalRemainingSeconds: status === "running" ? totalRemainingSeconds(timer, lobby.startedAt, Date.now()) : null,
     me: {
       playerId: player.id,
       name: player.name,

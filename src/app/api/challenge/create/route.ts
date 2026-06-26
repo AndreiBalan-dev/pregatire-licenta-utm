@@ -2,12 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
 import { challengeLobbies, challengePlayers } from "@/db/schema";
 import { eq, count } from "drizzle-orm";
-import { generateSaveKey, generateToken, hashToken, hashIp } from "@/lib/crypto";
+import { generateChallengeCode, generateToken, hashToken, hashIp } from "@/lib/crypto";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { RATE_LIMITS, CHALLENGE } from "@/lib/constants";
 import { validateCreateConfig, validateName } from "@/lib/challenge/validation";
 import { questionsBySubject } from "@/data";
-import { getClientIp } from "@/lib/challenge/server";
+import { getClientIp, isUniqueViolation } from "@/lib/challenge/server";
 
 export async function POST(request: NextRequest) {
   const ip = getClientIp(request);
@@ -53,18 +53,32 @@ export async function POST(request: NextRequest) {
     hostName = nameCheck.name;
   }
 
-  const code = generateSaveKey();
   const hostToken = generateToken();
 
   try {
-    await db.insert(challengeLobbies).values({
-      code,
-      hostTokenHash: hashToken(hostToken),
-      mode: cfg.config.mode,
-      status: "lobby",
-      config: cfg.config,
-      ipHash: ipHashed,
-    });
+    // Short shareable code; retry on the rare PK collision (no transaction needed).
+    let code = "";
+    let lobbyInserted = false;
+    for (let attempt = 0; attempt < 8 && !lobbyInserted; attempt++) {
+      code = generateChallengeCode();
+      try {
+        await db.insert(challengeLobbies).values({
+          code,
+          hostTokenHash: hashToken(hostToken),
+          mode: cfg.config.mode,
+          status: "lobby",
+          config: cfg.config,
+          ipHash: ipHashed,
+        });
+        lobbyInserted = true;
+      } catch (e: unknown) {
+        if (isUniqueViolation(e)) continue; // code taken, try another
+        throw e;
+      }
+    }
+    if (!lobbyInserted) {
+      return NextResponse.json({ error: "Eroare la creare. Mai încearcă." }, { status: 500 });
+    }
 
     let playerToken: string | null = null;
     if (hostName) {

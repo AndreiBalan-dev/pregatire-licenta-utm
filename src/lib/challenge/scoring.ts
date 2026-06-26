@@ -31,6 +31,7 @@ export function rankPlayers(players: PlayerRow[], totalQuestions: number): Stand
       correctCount: pl.correctCount,
       answeredCount: pl.answeredCount,
       totalQuestions,
+      totalTimeMs: pl.totalTimeMs,
       progress: totalQuestions > 0 ? pl.answeredCount / totalQuestions : 0,
       finished: pl.finishedAt !== null,
       rank,
