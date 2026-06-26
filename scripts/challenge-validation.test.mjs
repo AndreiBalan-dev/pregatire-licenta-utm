@@ -45,9 +45,20 @@ check("rejects empty subject list", () => {
   assert.equal(validateCreateConfig({ ...goodCfg, subjectIds: [] }, subjects).ok, false);
 });
 
-check("clamps capacity and question count to limits", () => {
+check("rejects out-of-range capacity and question count", () => {
   assert.equal(validateCreateConfig({ ...goodCfg, capacity: 99 }, subjects).ok, false);
   assert.equal(validateCreateConfig({ ...goodCfg, questionCount: 999 }, subjects).ok, false);
+  assert.equal(validateCreateConfig({ ...goodCfg, capacity: 0 }, subjects).ok, false);
+  assert.equal(validateCreateConfig({ ...goodCfg, questionCount: 0 }, subjects).ok, false);
+});
+
+check("rejects an invalid mode and non-object input", () => {
+  assert.equal(validateCreateConfig({ ...goodCfg, mode: "nope" }, subjects).ok, false);
+  assert.equal(validateCreateConfig([], subjects).ok, false);
+});
+
+check("rejects non-boolean flags", () => {
+  assert.equal(validateCreateConfig({ ...goodCfg, shuffleOrder: "yes" }, subjects).ok, false);
 });
 
 if (failures > 0) { console.error(`\n${failures} test(s) failed`); process.exit(1); }

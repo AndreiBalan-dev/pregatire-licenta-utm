@@ -15,7 +15,7 @@ export function validateCreateConfig(
   raw: unknown,
   validSubjectIds: Set<string>,
 ): { ok: true; config: ChallengeConfig } | { ok: false; error: string } {
-  if (!raw || typeof raw !== "object") return { ok: false, error: "Configurație invalidă." };
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return { ok: false, error: "Configurație invalidă." };
   const c = raw as Record<string, unknown>;
 
   if (c.mode !== "self_paced" && c.mode !== "lockstep") return { ok: false, error: "Mod invalid." };
