@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Provocare - Licenţă UTM",
-  description: "Creează o provocare şi joacă cu prietenii.",
+  title: "Provocare - Licență UTM",
+  description: "Creează o provocare și joacă cu prietenii.",
 };
 
 export default function ProvocareLayout({ children }: { children: React.ReactNode }) {

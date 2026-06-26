@@ -23,7 +23,7 @@ export default function ProvocarePage() {
   async function createLobby() {
     setError(null);
     if (hostPlays && hostName.trim().length === 0) { setError("Introdu numele tău."); return; }
-    if (subjectIds.length === 0) { setError("Alege cel puţin o materie."); return; }
+    if (subjectIds.length === 0) { setError("Alege cel puțin o materie."); return; }
     setBusy(true);
     try {
       const res = await fetch("/api/challenge/create", {
@@ -36,7 +36,7 @@ export default function ProvocarePage() {
       });
       const data = await res.json();
       if (!res.ok) { setError(data.error ?? "Eroare."); return; }
-      savePlayer(data.code, { hostToken: data.hostToken, playerToken: data.playerToken ?? undefined, name: hostName });
+      savePlayer(data.code, { hostToken: data.hostToken, playerToken: data.playerToken ?? undefined, name: hostName || undefined });
       router.push(`/provocare/${data.code}`);
     } finally {
       setBusy(false);
@@ -93,11 +93,11 @@ export default function ProvocarePage() {
         <label className="flex items-center gap-2"><input type="checkbox" checked={shuffleOrder} onChange={(e) => setShuffleOrder(e.target.checked)} /> Amestecă ordinea întrebărilor</label>
         <label className="flex items-center gap-2"><input type="checkbox" checked={shuffleOptions} onChange={(e) => setShuffleOptions(e.target.checked)} /> Amestecă variantele de răspuns</label>
         <label className="flex items-center gap-2"><input type="checkbox" checked={instantFeedback} onChange={(e) => setInstantFeedback(e.target.checked)} /> Feedback instant după fiecare răspuns</label>
-        <label className="flex items-center gap-2"><input type="checkbox" checked={hostPlays} onChange={(e) => setHostPlays(e.target.checked)} /> Particip şi eu</label>
+        <label className="flex items-center gap-2"><input type="checkbox" checked={hostPlays} onChange={(e) => setHostPlays(e.target.checked)} /> Particip și eu</label>
       </div>
 
       {error && <p className="text-[var(--color-wrong)] text-sm mb-3">{error}</p>}
-      <button onClick={createLobby} disabled={busy}
+      <button type="button" onClick={createLobby} disabled={busy}
         className="w-full py-3 rounded-md bg-[var(--color-accent)] text-[#0C0C0E] font-semibold disabled:opacity-60">
         {busy ? "Se creează..." : "Creează provocarea"}
       </button>
