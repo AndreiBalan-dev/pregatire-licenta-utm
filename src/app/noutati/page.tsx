@@ -44,6 +44,14 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "2.6.0",
+    date: "26 Iunie 2026",
+    title: "Control cu tastatura pe desktop",
+    changes: [
+      { text: "Pe desktop poti acum raspunde si naviga doar din tastatura: te misti prin variante cu sagetile sus/jos, confirmi varianta cu Space si treci la urmatoarea intrebare cu sageata dreapta (stanga pentru cea anterioara). Merge la Practica, Antrenament si Simulator, e pornit din start si il poti opri oricand din butonul cu tastatura din bara de sus. La prima folosire iti apare cateva secunde un mic memento cu comenzile. Pe telefon nu apare, fiindca nu are sens fara tastatura", type: "feature" },
+    ],
+  },
+  {
     version: "2.5.5",
     date: "26 Iunie 2026",
     title: "Numaratoare inversa pana la proba scrisa, pe prima pagina",
