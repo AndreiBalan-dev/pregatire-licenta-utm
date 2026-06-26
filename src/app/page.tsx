@@ -7,6 +7,7 @@ import { ExamCountdown } from "@/components/home/ExamCountdown";
 import { VoteCTA } from "@/components/home/VoteCTA";
 import { ExamSimulatorCTA } from "@/components/home/ExamSimulatorCTA";
 import { TrainingCTA } from "@/components/home/TrainingCTA";
+import { ProvocareCTA } from "@/components/home/ProvocareCTA";
 import { ModuleGrid } from "@/components/home/ModuleGrid";
 import { ChangelogBanner } from "@/components/home/ChangelogBanner";
 import { useSession } from "@/hooks/useSession";
@@ -40,6 +41,7 @@ export default function HomePage() {
         <VoteCTA />
         <ExamSimulatorCTA />
         <TrainingCTA />
+        <ProvocareCTA />
         <ModuleGrid />
         <ChangelogBanner />
       </main>

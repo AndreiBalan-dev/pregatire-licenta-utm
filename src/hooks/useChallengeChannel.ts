@@ -14,6 +14,7 @@ export function useChallengeChannel(code: string | null, token: string | null) {
   useEffect(() => {
     if (!code || !token) return;
     // Reset any state carried over from a previous channel before subscribing fresh.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMembers([]);
     setStandings([]);
     setLastMilestone(null);

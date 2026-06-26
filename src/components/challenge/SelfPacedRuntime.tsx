@@ -27,7 +27,7 @@ export function SelfPacedRuntime({ code, token, snapshot, standings, lastMilesto
   const [index, setIndex] = useState(firstUnanswered === -1 ? order.length : firstUnanswered);
   const [selected, setSelected] = useState<AnswerKey | null>(null);
   const [feedback, setFeedback] = useState(false);
-  const startRef = useRef<number>(Date.now());
+  const startRef = useRef<number>(0);
   const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => { startRef.current = Date.now(); setSelected(null); setFeedback(false); }, [index]);
@@ -50,6 +50,7 @@ export function SelfPacedRuntime({ code, token, snapshot, standings, lastMilesto
   async function submit(answer: AnswerKey) {
     if (selected) return;
     setSelected(answer);
+    // eslint-disable-next-line react-hooks/purity
     const timeMs = Date.now() - startRef.current;
     try {
       const res = await fetch("/api/challenge/answer", {
