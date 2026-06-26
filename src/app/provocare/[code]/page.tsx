@@ -45,15 +45,27 @@ export default function LobbyPage() {
 
   function onJoined(playerToken: string, name: string) {
     savePlayer(code, { playerToken, name });
-    setToken(playerToken); setNeedsJoin(false); refetch();
+    setToken(playerToken);
+    setNeedsJoin(false);
+    // Fetch with the fresh token directly - refetch() would capture the pre-join
+    // null token and exit early, leaving the joiner stuck on the loading screen.
+    fetch(`/api/challenge/state?code=${code}&token=${encodeURIComponent(playerToken)}`)
+      .then((r) => r.json())
+      .then((d) => { if (!d.error) setSnapshot(d); });
   }
 
   async function onStart() {
     setStarting(true);
     try {
-      await fetch("/api/challenge/start", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ code, hostToken }) });
-      refetch();
-    } finally { setStarting(false); }
+      const res = await fetch("/api/challenge/start", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ code, hostToken }),
+      });
+      if (res.ok) refetch();
+    } finally {
+      setStarting(false);
+    }
   }
 
   if (needsJoin) return <JoinDialog code={code} onJoined={onJoined} />;

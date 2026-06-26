@@ -12,6 +12,7 @@ export function WaitingRoom({ code, members, isHost, capacity, onStart, starting
       <p className="text-sm text-[var(--color-text-tertiary)] mb-4">{members.length}/{capacity} jucători</p>
 
       <button onClick={() => navigator.clipboard?.writeText(shareUrl)}
+        aria-label="Copiază linkul provocării"
         className="w-full mb-5 px-3 py-2 rounded-md border border-dashed border-[var(--color-border-strong)] text-sm text-left truncate">
         {shareUrl} <span className="text-[var(--color-accent)]">(copiază)</span>
       </button>
