@@ -17,17 +17,20 @@ interface Props {
 }
 
 export function SelfPacedRuntime({ code, token, snapshot, standings, lastMilestone }: Props) {
-  const order = useMemo(() => snapshot.me.questionOrder ?? [], [snapshot.me.questionOrder]);
+  const order = useMemo(
+    () => (snapshot.me.questionOrder ?? []).filter((id) => !!getQuestion(id)),
+    [snapshot.me.questionOrder],
+  );
   const answered = useMemo(() => new Map(snapshot.me.answers.map((a) => [a.questionId, a])), [snapshot.me.answers]);
 
   const firstUnanswered = order.findIndex((id) => !answered.has(id));
   const [index, setIndex] = useState(firstUnanswered === -1 ? order.length : firstUnanswered);
   const [selected, setSelected] = useState<AnswerKey | null>(null);
-  const [feedback, setFeedback] = useState<{ correctAnswer?: string; explanation?: string | null } | null>(null);
+  const [feedback, setFeedback] = useState(false);
   const startRef = useRef<number>(Date.now());
   const [toast, setToast] = useState<string | null>(null);
 
-  useEffect(() => { startRef.current = Date.now(); setSelected(null); setFeedback(null); }, [index]);
+  useEffect(() => { startRef.current = Date.now(); setSelected(null); setFeedback(false); }, [index]);
   useEffect(() => { if (lastMilestone) { setToast(lastMilestone.text); const t = setTimeout(() => setToast(null), 3000); return () => clearTimeout(t); } }, [lastMilestone]);
 
   if (index >= order.length) {
@@ -41,21 +44,26 @@ export function SelfPacedRuntime({ code, token, snapshot, standings, lastMilesto
 
   const questionId = order[index];
   const question = getQuestion(questionId);
-  if (!question) { setIndex((i) => i + 1); return null; }
+  if (!question) return null;
   const optionOrder = (snapshot.me.optionOrder?.[questionId] as AnswerKey[] | undefined) ?? undefined;
 
   async function submit(answer: AnswerKey) {
     if (selected) return;
     setSelected(answer);
     const timeMs = Date.now() - startRef.current;
-    const res = await fetch("/api/challenge/answer", {
-      method: "POST", headers: { "content-type": "application/json" },
-      body: JSON.stringify({ code, token, questionId, selected: answer, timeMs }),
-    });
-    const data = await res.json();
-    if (snapshot.config.instantFeedback && data.recorded) {
-      setFeedback({ correctAnswer: data.correctAnswer, explanation: data.explanation });
-    } else {
+    try {
+      const res = await fetch("/api/challenge/answer", {
+        method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ code, token, questionId, selected: answer, timeMs }),
+      });
+      if (!res.ok) { advance(); return; }
+      const data = await res.json();
+      if (snapshot.config.instantFeedback && data.recorded) {
+        setFeedback(true);
+      } else {
+        advance();
+      }
+    } catch {
       advance();
     }
   }
@@ -71,7 +79,7 @@ export function SelfPacedRuntime({ code, token, snapshot, standings, lastMilesto
         questionNumber={index + 1}
         totalQuestions={order.length}
         selectedAnswer={selected}
-        showFeedback={!!feedback}
+        showFeedback={feedback}
         isBookmarked={false}
         onSelectAnswer={submit}
         optionOrder={optionOrder}
