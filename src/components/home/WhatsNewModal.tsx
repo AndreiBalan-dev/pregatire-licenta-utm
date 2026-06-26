@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Modal } from "@/components/ui/Modal";
-import { VOTE_EXPO_URL, VOTE_IMAGE, CONTACT_INSTAGRAM } from "@/lib/site-config";
+import { VOTE_EXPO_URL, VOTE_IMAGE } from "@/lib/site-config";
 
 interface WhatsNewModalProps {
   open: boolean;
@@ -11,46 +11,68 @@ interface WhatsNewModalProps {
   onSeeDetails: () => void;
 }
 
+// Releases since the last popup (v2.5.0), newest first, one line each.
+const RECAP: { version: string; text: string }[] = [
+  { version: "v2.5.5", text: "Numărătoare inversă pe prima pagină până la proba scrisă a licenței." },
+  { version: "v2.5.4", text: "Antrenamentul nu mai rămâne blocat pe loading când o întrebare a fost scoasă." },
+  { version: "v2.5.3", text: "Codul din întrebări se vede ca și cod peste tot: la Revizuire, în Căutare și în variante." },
+  { version: "v2.5.2", text: "Explicațiile „De ce e corect” rămân corecte și când amesteci răspunsurile." },
+  { version: "v2.5.1", text: "Codul din enunț apare cu font de cod (monospace), nu ca text simplu." },
+];
+
+function Key({ children, wide }: { children: React.ReactNode; wide?: boolean }) {
+  return (
+    <kbd
+      className={
+        "inline-flex items-center justify-center h-5 rounded border border-[var(--color-border-strong)] " +
+        "bg-[var(--color-bg-secondary)] text-[10px] font-semibold text-[var(--color-text-primary)] font-mono " +
+        (wide ? "px-1.5" : "w-5")
+      }
+    >
+      {children}
+    </kbd>
+  );
+}
+
 /**
- * One-time "what's new" popup. Leads with the latest release note (v2.5.0: answer options now
- * follow the official PDF order, plus a full audit of the correct answers), then (on scroll) a
- * personal thank-you for the Gen-E votes. Shown once per visitor who already has data; see
- * WhatsNewGate gating.
+ * One-time "what's new" popup. Leads with the latest release (v2.6.0: keyboard
+ * navigation), then a per-version recap of everything since the previous popup
+ * (v2.5.0), then (on scroll) a personal thank-you for the Gen-E votes. Shown once
+ * per visitor who already has data; see WhatsNewGate gating.
  */
 export function WhatsNewModal({ open, onClose, onSeeDetails }: WhatsNewModalProps) {
   return (
     <Modal open={open} onClose={onClose} title="Ce e nou pe UTMLearn" className="!max-w-lg">
       <div className="max-h-[68vh] overflow-y-auto pr-1 -mr-1 space-y-6">
-        {/* Section 0: v2.5.0 - confusable-question highlighter (newest) */}
+        {/* Section 0: v2.6.0 - keyboard navigation (newest, REPLACE per release) */}
         <section>
           <div className="flex items-center gap-2 mb-2.5">
             <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-30">
-              v2.5.0
+              v2.6.0
             </div>
             <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] bg-[rgba(52,211,153,0.12)] text-[#34D399] border border-[#34D399] border-opacity-30">
               Nou
             </div>
           </div>
           <h3 className="text-lg sm:text-xl font-bold text-[var(--color-text-primary)] mb-2" style={{ fontFamily: "var(--font-display)" }}>
-            Evidenţiator de întrebări-capcană
+            Control cu tastatura
           </h3>
           <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
-            Multe grile sunt aproape identice (un operator schimbat în cod, un cuvânt în enunţ) sau au două răspunsuri
-            care diferă printr-un detaliu mic (de ex. <span className="font-mono text-[var(--color-text-primary)]">{"<"}</span> faţă de{" "}
-            <span className="font-mono text-[var(--color-text-primary)]">{">"}</span>). Evidenţiatorul e activ din start:
-            după ce răspunzi, întrebările-capcană primesc un marcaj, iar diferenţa care contează e evidenţiată chiar în răspuns, ca să o reţii.
+            Pe desktop poți acum răspunde și naviga fără mouse. Te miști prin variante cu{" "}
+            <Key>↑</Key> <Key>↓</Key>, confirmi varianta cu <Key wide>Space</Key> și treci la
+            întrebarea următoare cu <Key>→</Key> (<Key>←</Key> pentru cea anterioară). Merge la
+            Practică, Antrenament și Simulator.
           </p>
           <div className="mt-3 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-3.5">
             <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
-              Apeşi pe marcajul <span className="font-bold text-[var(--color-accent)]">Capcană</span> de lângă enunţ şi vezi pe scurt ce
-              e diferit, cu un buton către întrebările similare. Marcajul apare doar după ce răspunzi (ca să nu îţi arate răspunsul) şi stă lângă enunţ,
-              nu lângă răspunsuri. Funcţionează la Practică şi în Căutare; îl poţi opri sau reaprinde din butonul cu marker{" "}
+              E pornit din start. Îl poți opri sau reaprinde oricând din butonul cu tastatură{" "}
               <span className="inline-flex items-center align-middle text-[var(--color-accent)]" aria-hidden="true">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="m9 11-6 6v3h9l3-3" /><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4" />
+                  <rect x="2" y="6" width="20" height="12" rx="2" />
+                  <path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10" />
                 </svg>
               </span>{" "}
-              din bara de sus.
+              din bara de sus. Pe telefon nu apare, fiindcă n-are sens fără tastatură.
             </p>
           </div>
           <Link
@@ -66,56 +88,32 @@ export function WhatsNewModal({ open, onClose, onSeeDetails }: WhatsNewModalProp
           </Link>
         </section>
 
-        {/* Section 1: v2.5.0 - answers in PDF order + full answer audit (REPLACE per release) */}
+        {/* Section 1: per-version recap since the previous popup (REPLACE per release) */}
         <section>
           <div className="flex items-center gap-2 mb-2.5">
-            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-30">
-              v2.5.0
-            </div>
-            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] bg-[rgba(239,68,68,0.12)] text-[#F87171] border border-[#F87171] border-opacity-30">
-              Important
+            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] bg-[var(--color-bg-hover)] text-[var(--color-text-secondary)] border border-[var(--color-border-strong)]">
+              Recap
             </div>
           </div>
           <h3 className="text-lg sm:text-xl font-bold text-[var(--color-text-primary)] mb-2" style={{ fontFamily: "var(--font-display)" }}>
-            Răspunsurile respectă acum ordinea din grila oficială
+            De la ultimul anunț
           </h3>
-          <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
-            Am așezat variantele de răspuns în aceeași ordine ca în PDF-ul oficial, așa că implicit arată exact ca grila.
-            Dacă vrei să le amesteci, activează opțiunea{" "}
-            <span className="font-semibold text-[var(--color-text-primary)]">Amestecă răspunsurile</span>;
-            doar ea mai schimbă ordinea acum.
+          <p className="text-sm leading-relaxed text-[var(--color-text-secondary)] mb-3">
+            De când n-ai mai văzut acest popup am tot lucrat la platformă. Pe scurt:
           </p>
-
-          <div className="mt-3 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-3.5">
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
-                </svg>
-              </span>
-              <p className="text-sm font-semibold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
-                Am verificat răspunsurile corecte față de grila oficială
-              </p>
-            </div>
-            <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
-              Am comparat răspunsurile cu PDF-ul oficial și am reparat o întrebare care apărea de două ori cu
-              răspunsuri diferite. Restul au ieșit bine. Dacă totuși observi vreo greșeală, scrie-mi pe{" "}
-              <a href={CONTACT_INSTAGRAM} target="_blank" rel="noopener noreferrer" className="font-semibold text-[var(--color-accent)] hover:underline">Instagram</a>{" "}
-              și o repar imediat ce ajunge la mine.
-            </p>
+          <div className="space-y-2">
+            {RECAP.map((item) => (
+              <div
+                key={item.version}
+                className="flex items-start gap-2.5 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-primary)] px-3 py-2.5"
+              >
+                <span className="flex-shrink-0 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold tracking-[0.08em] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-30">
+                  {item.version}
+                </span>
+                <span className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">{item.text}</span>
+              </div>
+            ))}
           </div>
-
-          <Link
-            href="/practica"
-            onClick={onClose}
-            className="mt-3 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-accent)] text-[#0C0C0E] font-bold text-sm transition-all duration-200 hover:bg-[var(--color-accent-hover)] active:scale-[0.98]"
-            style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}
-          >
-            Deschide Practica
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-            </svg>
-          </Link>
         </section>
 
         {/* Scroll hint / divider */}
