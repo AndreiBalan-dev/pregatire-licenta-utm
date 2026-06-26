@@ -40,6 +40,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Ai atins limita de camere create." }, { status: 429 });
   }
 
+  // Validate the host name before creating anything, so an invalid name cannot
+  // leave an orphan lobby that still counts against the per-IP quota.
+  let hostName: string | null = null;
+  if (cfg.config.hostPlays) {
+    const nameCheck = validateName(body.hostName);
+    if (!nameCheck.ok) return NextResponse.json({ error: nameCheck.error }, { status: 400 });
+    hostName = nameCheck.name;
+  }
+
   const code = generateSaveKey();
   const hostToken = generateToken();
 
@@ -54,14 +63,12 @@ export async function POST(request: NextRequest) {
     });
 
     let playerToken: string | null = null;
-    if (cfg.config.hostPlays) {
-      const nameCheck = validateName(body.hostName);
-      if (!nameCheck.ok) return NextResponse.json({ error: nameCheck.error }, { status: 400 });
+    if (hostName) {
       playerToken = generateToken();
       await db.insert(challengePlayers).values({
         lobbyCode: code,
         playerTokenHash: hashToken(playerToken),
-        name: nameCheck.name,
+        name: hostName,
         isHost: true,
       });
     }
