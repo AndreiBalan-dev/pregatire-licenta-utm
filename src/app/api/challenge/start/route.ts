@@ -33,6 +33,9 @@ export async function POST(request: NextRequest) {
 
   // Per-player order + option order.
   const players = await db.select().from(challengePlayers).where(eq(challengePlayers.lobbyCode, code));
+  if (players.length === 0) {
+    return NextResponse.json({ error: "Nu sunt jucători în cameră." }, { status: 400 });
+  }
   const setQuestions = questionIds.map((id) => getQuestion(id)!).filter(Boolean);
 
   // Neon's HTTP driver has no transaction support, so we write sequentially.

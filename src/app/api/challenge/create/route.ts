@@ -31,6 +31,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Modul live va fi disponibil în curând." }, { status: 400 });
   }
 
+  if (!cfg.config.hostPlays) {
+    return NextResponse.json({ error: "Gazda trebuie să participe la această versiune." }, { status: 400 });
+  }
+
   // Ensure the chosen subjects actually have enough questions for the count.
   const poolSize = cfg.config.subjectIds.reduce((n, s) => n + (questionsBySubject[s]?.length ?? 0), 0);
   if (poolSize === 0) return NextResponse.json({ error: "Materiile alese nu au întrebări." }, { status: 400 });

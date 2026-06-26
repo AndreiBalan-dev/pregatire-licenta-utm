@@ -40,10 +40,13 @@ export async function POST(request: NextRequest) {
       name: nameCheck.name,
     }).returning({ id: challengePlayers.id });
     playerId = inserted[0].id;
-  } catch (err) {
-    // Unique(lobbyCode, name) violation -> name already taken in this room.
+  } catch (err: unknown) {
+    if ((err as { code?: string })?.code === "23505") {
+      console.error("challenge join name conflict");
+      return NextResponse.json({ error: "Numele este deja folosit în această cameră." }, { status: 409 });
+    }
     console.error("challenge join error:", err instanceof Error ? err.message : "unknown");
-    return NextResponse.json({ error: "Numele este deja folosit în această cameră." }, { status: 409 });
+    throw err;
   }
 
   const snapshot = { status: lobby.status, mode: lobby.mode, config: lobby.config, standings: await buildStandings(code) };

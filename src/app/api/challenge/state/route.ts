@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
   const found = await loadPlayerByToken(code, token);
   if (!found) return NextResponse.json({ error: "Neautorizat." }, { status: 403 });
   const { lobby, player } = found;
-  await expireIfStale(lobby);
+  const expired = await expireIfStale(lobby);
 
   // Which questions this player already answered, and with what letter, so the UI
   // can render the locked state and resume at the first unanswered question.
@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
   }).from(challengeAnswers).where(eq(challengeAnswers.playerId, player.id));
 
   return NextResponse.json({
-    status: lobby.status,
+    status: expired ? "expired" : lobby.status,
     mode: lobby.mode,
     config: lobby.config,
     questionIds: lobby.questionIds ?? null,

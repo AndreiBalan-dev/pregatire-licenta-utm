@@ -32,7 +32,7 @@ export function ProvocareCTA() {
               Provocare <span className="text-[var(--color-accent)]">Multiplayer</span>
             </h2>
             <p className="text-sm sm:text-base text-[var(--color-text-secondary)] leading-relaxed max-w-md mb-5 sm:mb-6">
-              Creezi o sesiune, distribui linkul, jucați împreuna. Fara cont, fara instalare.
+              Creezi o sesiune, distribui linkul, jucați împreună. Fără cont, fără instalare.
             </p>
             <div
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-accent)] text-[#0C0C0E] font-semibold text-sm transition-all duration-200 group-hover:bg-[var(--color-accent-hover)] group-hover:shadow-[0_0_30px_rgba(232,166,49,0.3)] group-active:scale-[0.98]"

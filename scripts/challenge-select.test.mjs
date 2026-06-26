@@ -9,7 +9,6 @@ function check(name, fn) {
 }
 
 const pool = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
-const identity = (a) => a; // deterministic "shuffle" for testing
 
 check("picks exactly count ids, natural order when not shuffled", () => {
   assert.deepEqual(pickChallengeQuestionIds(pool, 3, false), [1, 2, 3]);

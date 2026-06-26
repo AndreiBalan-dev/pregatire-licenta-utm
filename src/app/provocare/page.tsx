@@ -13,7 +13,6 @@ export default function ProvocarePage() {
   const [shuffleOptions, setShuffleOptions] = useState(true);
   const [instantFeedback, setInstantFeedback] = useState(true);
   const [capacity, setCapacity] = useState(6);
-  const [hostPlays, setHostPlays] = useState(true);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,7 +21,7 @@ export default function ProvocarePage() {
 
   async function createLobby() {
     setError(null);
-    if (hostPlays && hostName.trim().length === 0) { setError("Introdu numele tău."); return; }
+    if (hostName.trim().length === 0) { setError("Introdu numele tău."); return; }
     if (subjectIds.length === 0) { setError("Alege cel puțin o materie."); return; }
     setBusy(true);
     try {
@@ -31,7 +30,7 @@ export default function ProvocarePage() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           hostName,
-          config: { mode: "self_paced", subjectIds, questionCount, shuffleOrder, shuffleOptions, instantFeedback, perQuestionSeconds: null, capacity, hostPlays },
+          config: { mode: "self_paced", subjectIds, questionCount, shuffleOrder, shuffleOptions, instantFeedback, perQuestionSeconds: null, capacity, hostPlays: true },
         }),
       });
       const data = await res.json();
@@ -93,7 +92,6 @@ export default function ProvocarePage() {
         <label className="flex items-center gap-2"><input type="checkbox" checked={shuffleOrder} onChange={(e) => setShuffleOrder(e.target.checked)} /> Amestecă ordinea întrebărilor</label>
         <label className="flex items-center gap-2"><input type="checkbox" checked={shuffleOptions} onChange={(e) => setShuffleOptions(e.target.checked)} /> Amestecă variantele de răspuns</label>
         <label className="flex items-center gap-2"><input type="checkbox" checked={instantFeedback} onChange={(e) => setInstantFeedback(e.target.checked)} /> Feedback instant după fiecare răspuns</label>
-        <label className="flex items-center gap-2"><input type="checkbox" checked={hostPlays} onChange={(e) => setHostPlays(e.target.checked)} /> Particip și eu</label>
       </div>
 
       {error && <p className="text-[var(--color-wrong)] text-sm mb-3">{error}</p>}

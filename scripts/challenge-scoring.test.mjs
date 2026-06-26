@@ -25,10 +25,11 @@ check("breaks ties by less total time", () => {
   assert.equal(s[0].playerId, 2); // faster wins the tie
 });
 
-check("equal score and time share a rank", () => {
-  const s = rankPlayers([p(1, "A", 3, 3, 200), p(2, "B", 3, 3, 200)], 5);
+check("equal score and time share a rank; next rank is skipped", () => {
+  const s = rankPlayers([p(1, "A", 3, 3, 200), p(2, "B", 3, 3, 200), p(3, "C", 1, 1, 100)], 5);
   assert.equal(s[0].rank, 1);
   assert.equal(s[1].rank, 1);
+  assert.equal(s[2].rank, 3);
 });
 
 check("computes progress and finished flags", () => {
