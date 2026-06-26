@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
 import { challengeAnswers, challengePlayers } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { checkRateLimit } from "@/lib/rate-limit";
+import { RATE_LIMITS } from "@/lib/constants";
+import { hashToken } from "@/lib/crypto";
 import { loadPlayerByToken, expireIfStale, maybeFinishRunning, buildStandings } from "@/lib/challenge/server";
 import { getTimer, totalRemainingSeconds } from "@/lib/challenge/timing";
 import type { TimerConfig } from "@/lib/challenge/types";
@@ -9,8 +12,14 @@ import type { TimerConfig } from "@/lib/challenge/types";
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const code = (url.searchParams.get("code") ?? "").trim();
-  const token = url.searchParams.get("token") ?? "";
+  // The token is a bearer credential - read it from a header, never the query
+  // string (URLs leak via history, Referer and proxy/edge logs). `code` is not
+  // a secret, so it stays in the query.
+  const token = request.headers.get("x-challenge-token") ?? "";
   if (!code || !token) return NextResponse.json({ error: "Cerere invalidă." }, { status: 400 });
+
+  const rl = checkRateLimit(`ch:state:${hashToken(token)}`, RATE_LIMITS.challengeState);
+  if (!rl.allowed) return NextResponse.json({ error: "Prea multe cereri." }, { status: 429 });
 
   const found = await loadPlayerByToken(code, token);
   if (!found) return NextResponse.json({ error: "Neautorizat." }, { status: 403 });

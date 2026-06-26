@@ -24,6 +24,18 @@ interface Snapshot {
   standings: Standing[];
 }
 
+// Fetch /state with the token in a header (never the URL query string, which
+// would leak the credential into history/Referer/proxy logs). Resolves to the
+// parsed body, or { error } on a network failure so callers handle both alike.
+function fetchState(code: string, token: string) {
+  return fetch(`/api/challenge/state?code=${encodeURIComponent(code)}`, {
+    headers: { "x-challenge-token": token },
+    cache: "no-store",
+  })
+    .then((r) => r.json())
+    .catch(() => ({ error: "network" }));
+}
+
 export default function LobbyPage() {
   const { code } = useParams<{ code: string }>();
   const [token, setToken] = useState<string | null>(null);
@@ -40,8 +52,7 @@ export default function LobbyPage() {
     setToken(id.playerToken ?? null);
     setHostToken(id.hostToken ?? null);
     const t = id.playerToken ?? id.hostToken!;
-    fetch(`/api/challenge/state?code=${code}&token=${encodeURIComponent(t)}`)
-      .then((r) => r.json()).then((data) => { if (!data.error) setSnapshot(data); else setNeedsJoin(true); });
+    fetchState(code, t).then((data) => { if (!data.error) setSnapshot(data); else setNeedsJoin(true); });
   }, [code]);
 
   // Freshly-created lobby (flagged by the create page): show the share overlay once.
@@ -64,7 +75,7 @@ export default function LobbyPage() {
   // When realtime says the round started/finished, refetch our snapshot.
   const refetch = useCallback(() => {
     const t = token ?? hostToken; if (!t) return;
-    fetch(`/api/challenge/state?code=${code}&token=${encodeURIComponent(t)}`).then((r) => r.json()).then((d) => !d.error && setSnapshot(d));
+    fetchState(code, t).then((d) => { if (!d.error) setSnapshot(d); });
   }, [code, token, hostToken]);
   useEffect(() => { if (status) refetch(); }, [status, refetch]);
 
@@ -76,10 +87,7 @@ export default function LobbyPage() {
     const t = token ?? hostToken;
     if (!t) return;
     const id = setInterval(() => {
-      fetch(`/api/challenge/state?code=${code}&token=${encodeURIComponent(t)}`)
-        .then((r) => r.json())
-        .then((d) => { if (!d.error) setSnapshot(d); })
-        .catch(() => { /* transient network blip - the next tick retries */ });
+      fetchState(code, t).then((d) => { if (!d.error) setSnapshot(d); });
     }, 15000);
     return () => clearInterval(id);
   }, [snapshot?.status, status, token, hostToken, code]);
@@ -94,10 +102,7 @@ export default function LobbyPage() {
     const t = token ?? hostToken;
     if (!t) return;
     const id = setInterval(() => {
-      fetch(`/api/challenge/state?code=${code}&token=${encodeURIComponent(t)}`)
-        .then((r) => r.json())
-        .then((d) => { if (!d.error) setSnapshot(d); })
-        .catch(() => { /* transient - the next tick retries */ });
+      fetchState(code, t).then((d) => { if (!d.error) setSnapshot(d); });
     }, 4000);
     return () => clearInterval(id);
   }, [snapshot?.status, token, hostToken, code]);
@@ -108,9 +113,7 @@ export default function LobbyPage() {
     setNeedsJoin(false);
     // Fetch with the fresh token directly - refetch() would capture the pre-join
     // null token and exit early, leaving the joiner stuck on the loading screen.
-    fetch(`/api/challenge/state?code=${code}&token=${encodeURIComponent(playerToken)}`)
-      .then((r) => r.json())
-      .then((d) => { if (!d.error) setSnapshot(d); });
+    fetchState(code, playerToken).then((d) => { if (!d.error) setSnapshot(d); });
   }
 
   async function onStart() {

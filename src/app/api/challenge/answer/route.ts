@@ -87,7 +87,9 @@ export async function POST(request: NextRequest) {
     answeredCount: afterAnswered,
     correctCount: newCorrect,
     score: String(newScore),
-    totalTimeMs: player.totalTimeMs + timeMs,
+    // Clamp to stay within the int4 column: many questions x the per-answer
+    // ms clamp could otherwise overflow and make the write fail.
+    totalTimeMs: Math.min(player.totalTimeMs + timeMs, 2_100_000_000),
     finishedAt: justFinished ? new Date() : player.finishedAt,
     lastSeenAt: new Date(),
   }).where(eq(challengePlayers.id, player.id));

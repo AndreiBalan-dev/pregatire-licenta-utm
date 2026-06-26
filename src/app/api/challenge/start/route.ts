@@ -2,16 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
 import { challengeLobbies, challengePlayers } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { hashToken } from "@/lib/crypto";
+import { hashToken, hashIp } from "@/lib/crypto";
+import { checkRateLimit } from "@/lib/rate-limit";
+import { RATE_LIMITS } from "@/lib/constants";
 import { questionsBySubject, getQuestion } from "@/data";
 import { buildOptionOrders } from "@/lib/practice";
 import { pickChallengeQuestionIds, buildPlayerOrder } from "@/lib/challenge/select";
-import { loadLobby } from "@/lib/challenge/server";
+import { loadLobby, getClientIp } from "@/lib/challenge/server";
 import { publishToLobby } from "@/lib/realtime/pusher-server";
 import { EVENTS, type RoundStartedPayload } from "@/lib/realtime/events";
 import type { ChallengeConfig } from "@/lib/challenge/types";
 
 export async function POST(request: NextRequest) {
+  const rl = checkRateLimit(`ch:start:${hashIp(getClientIp(request))}`, RATE_LIMITS.challengeStart);
+  if (!rl.allowed) return NextResponse.json({ error: "Prea multe cereri." }, { status: 429 });
+
   let body: { code?: unknown; hostToken?: unknown };
   try { body = await request.json(); } catch { return NextResponse.json({ error: "Date invalide." }, { status: 400 }); }
 

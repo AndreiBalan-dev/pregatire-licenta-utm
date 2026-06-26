@@ -14,6 +14,11 @@ export const RATE_LIMITS = {
   challengeCreate: { windowMs: 15 * 60 * 1000, maxRequests: 10 },
   challengeJoin: { windowMs: 5 * 60 * 1000, maxRequests: 30 },
   challengeAnswer: { windowMs: 60 * 1000, maxRequests: 120 },
+  // /state is polled (lobby + heartbeat) and does several DB ops per call, so it
+  // gets its own cap. Keyed by token, not IP, so classmates on one shared IP
+  // don't throttle each other; legit polling peaks well under this.
+  challengeState: { windowMs: 60 * 1000, maxRequests: 60 },
+  challengeStart: { windowMs: 60 * 1000, maxRequests: 10 },
 } as const;
 
 export const CHALLENGE = {
