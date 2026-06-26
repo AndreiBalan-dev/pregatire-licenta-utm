@@ -14,3 +14,18 @@ export function hashIp(ip: string): string {
   }
   return createHmac("sha256", salt).update(ip).digest("hex");
 }
+
+export function generateToken(): string {
+  return randomBytes(32).toString("base64url");
+}
+
+export function hashToken(token: string): string {
+  const salt = process.env.IP_HASH_SALT;
+  if (!salt) {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("IP_HASH_SALT environment variable is required in production");
+    }
+    return createHmac("sha256", "dev-salt").update(token).digest("hex");
+  }
+  return createHmac("sha256", salt).update(token).digest("hex");
+}
