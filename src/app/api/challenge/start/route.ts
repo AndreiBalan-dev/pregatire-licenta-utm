@@ -35,19 +35,21 @@ export async function POST(request: NextRequest) {
   const players = await db.select().from(challengePlayers).where(eq(challengePlayers.lobbyCode, code));
   const setQuestions = questionIds.map((id) => getQuestion(id)!).filter(Boolean);
 
-  await db.transaction(async (tx) => {
-    await tx.update(challengeLobbies)
-      .set({ questionIds, status: "running", startedAt: new Date(), updatedAt: new Date() })
-      .where(eq(challengeLobbies.code, code));
+  // Neon's HTTP driver has no transaction support, so we write sequentially.
+  // Players are updated first and the lobby is flipped to "running" last, so a
+  // partial failure leaves the lobby joinable (status stays "lobby") and the
+  // host can press Start again.
+  for (const p of players) {
+    const order = buildPlayerOrder(questionIds, config.shuffleOrder);
+    const optionOrder = config.shuffleOptions ? buildOptionOrders(setQuestions) : {};
+    await db.update(challengePlayers)
+      .set({ questionOrder: order, optionOrder })
+      .where(eq(challengePlayers.id, p.id));
+  }
 
-    for (const p of players) {
-      const order = buildPlayerOrder(questionIds, config.shuffleOrder);
-      const optionOrder = config.shuffleOptions ? buildOptionOrders(setQuestions) : {};
-      await tx.update(challengePlayers)
-        .set({ questionOrder: order, optionOrder })
-        .where(eq(challengePlayers.id, p.id));
-    }
-  });
+  await db.update(challengeLobbies)
+    .set({ questionIds, status: "running", startedAt: new Date(), updatedAt: new Date() })
+    .where(eq(challengeLobbies.code, code));
 
   const payload: RoundStartedPayload = { totalQuestions: questionIds.length };
   await publishToLobby(code, EVENTS.ROUND_STARTED, payload);
