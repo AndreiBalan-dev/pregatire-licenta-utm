@@ -21,6 +21,8 @@ const CAPACITY = 6;
 // Quick-pick minutes for the whole-game timer; the slider covers 1-120 in full.
 const TIMER_PRESETS = [5, 10, 20, 30, 60];
 const PER_Q_OPTIONS = [
+  { s: 15, label: "15 sec" },
+  { s: 30, label: "30 sec" },
   { s: 60, label: "1 min" },
   { s: 120, label: "2 min" },
   { s: 180, label: "3 min" },
@@ -296,7 +298,7 @@ export default function ProvocarePage() {
                     ) : (
                       <div className="mt-3">
                         <span className="block mb-2 text-xs text-[var(--color-text-tertiary)]">Timp pentru fiecare întrebare</span>
-                        <div className="grid grid-cols-4 gap-1.5">
+                        <div className="grid grid-cols-3 gap-1.5">
                           {PER_Q_OPTIONS.map((o) => (
                             <button
                               key={o.s}

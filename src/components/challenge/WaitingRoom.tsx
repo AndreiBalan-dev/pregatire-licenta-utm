@@ -77,7 +77,7 @@ export function WaitingRoom({
           </button>
         </div>
 
-        <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 mb-6">
+        <div className="grid grid-cols-3 gap-3 mb-6">
           {members.map((m) => {
             const mine = String(meId) === m.id;
             return (

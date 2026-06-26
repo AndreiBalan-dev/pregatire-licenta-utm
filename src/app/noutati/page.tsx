@@ -52,7 +52,7 @@ const changelog: Version[] = [
       { text: "Punctaj ca la Kahoot: cu cat raspunzi mai repede si corect, cu atat iei mai multe puncte; raspuns gresit sau timp expirat inseamna 0 puncte. Poti pune timp pe fiecare intrebare sau pentru tot testul (de la 1 la 120 de minute, implicit 10). La final vezi podiumul, timpul fiecaruia si cate a nimerit", type: "feature" },
       { text: "Daca cuiva ii pica netul, il vezi marcat cu cat timp mai are sa revina si jocul merge mai departe fara sa se strice; cand revine, continua de unde a ramas", type: "feature" },
       { text: "Poti porni provocarea cu toate intrebarile din materiile alese, nu doar pana la 50", type: "improvement" },
-      { text: "Pe prima pagina poti acum ascunde numaratoarea pana la examen dintr-un X, daca te distrage; alegerea se tine minte", type: "improvement" },
+      { text: "Pe prima pagina poti acum ascunde numaratoarea pana la examen daca te distrage, si o aduci inapoi oricand; alegerea se tine minte", type: "improvement" },
     ],
   },
   {

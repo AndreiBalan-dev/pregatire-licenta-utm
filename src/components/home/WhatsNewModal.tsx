@@ -82,8 +82,8 @@ export function WhatsNewModal({ open, onClose }: WhatsNewModalProps) {
             Și pe prima pagină
           </h4>
           <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
-            Poți acum ascunde numărătoarea până la examen dintr-un X, dacă te distrage. Alegerea se
-            ține minte.
+            Poți acum ascunde numărătoarea până la examen dacă te distrage, și o aduci înapoi
+            oricând. Alegerea se ține minte.
           </p>
         </section>
       </div>

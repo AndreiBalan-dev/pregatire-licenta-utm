@@ -75,6 +75,11 @@ check("accepts a per_question timer and keeps its seconds", () => {
   assert.equal(r.config.timer.perQuestionSeconds, 180);
 });
 
+check("accepts the short per_question options (15s / 30s)", () => {
+  assert.equal(validateCreateConfig({ ...goodCfg, timer: { mode: "per_question", totalSeconds: 600, perQuestionSeconds: 15 } }, subjects).ok, true);
+  assert.equal(validateCreateConfig({ ...goodCfg, timer: { mode: "per_question", totalSeconds: 600, perQuestionSeconds: 30 } }, subjects).ok, true);
+});
+
 check("keeps a total timer's seconds", () => {
   const r = validateCreateConfig({ ...goodCfg, timer: { mode: "total", totalSeconds: 1800, perQuestionSeconds: 120 } }, subjects);
   assert.equal(r.ok, true);
