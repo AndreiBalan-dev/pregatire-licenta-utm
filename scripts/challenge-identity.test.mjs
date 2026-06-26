@@ -32,5 +32,11 @@ check("isolates codes and returns null when absent", () => {
   assert.equal(loadIdentity(s, "XYZ"), null);
 });
 
+check("returns null on malformed JSON", () => {
+  const s = fakeStorage();
+  s.setItem("utm-provocare-BAD", "{not valid json");
+  assert.equal(loadIdentity(s, "BAD"), null);
+});
+
 if (failures > 0) { console.error(`\n${failures} test(s) failed`); process.exit(1); }
 console.log("\nAll tests passed");
