@@ -26,6 +26,7 @@ import { pickExamQuestions, computeScore } from "@/lib/exam";
 import { buildOptionOrders } from "@/lib/practice";
 import { initSchedule, pickNext, applyAnswer, masteredCount, interleave } from "@/lib/training";
 import { buildMergedAnswerMap } from "@/lib/answer-merge";
+import { sanitizeLoadedSession } from "@/lib/session-sanitize";
 import type { AnswerKey, Question } from "@/data/types";
 
 export interface StartPracticeOptions {
@@ -155,7 +156,7 @@ function loadSession(): LocalSession {
     const parsed = JSON.parse(raw);
     if (parsed.version !== 1) return createDefaultSession();
     const defaults = createDefaultSession();
-    return {
+    const merged = {
       ...defaults,
       ...parsed,
       answers: clampLoadedAnswers(parsed.answers),
@@ -169,6 +170,10 @@ function loadSession(): LocalSession {
           ? parsed.currentTraining
           : null,
     } as LocalSession;
+    // Prune references to questions that have since been removed from the data
+    // (e.g. a deleted duplicate). A dangling "current" id would otherwise hang
+    // the antrenament/practica runtimes on an infinite spinner.
+    return sanitizeLoadedSession(merged, (id) => getQuestion(id) !== undefined);
   } catch {
     return createDefaultSession();
   }

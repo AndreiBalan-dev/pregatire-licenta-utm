@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
+  "Antrenamentul nu mai ramane blocat pe cercul de incarcare daca o intrebare folosita a fost scoasa intre timp; referintele invechite sunt curatate automat la incarcare",
   "Codul din intrebari (font de cod si blocuri colorate) se vede acum peste tot, nu doar in sesiuni: si la Revizuire si in Cautare, inclusiv in variantele de raspuns",
   "Explicatiile \"De ce e corect\" raman corecte si cand amesteci raspunsurile; am scos referirile la raspuns prin litera (ex: \"varianta a\") si le-am pus pe continut",
-  "La intrebarile cu cod, SQL sau comenzi, codul din enunt apare acum scris cu font de cod (monospace), nu ca text simplu, ca sa se citeasca mai usor",
 ];
 
 export function ChangelogBanner() {

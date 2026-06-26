@@ -44,6 +44,14 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "2.5.4",
+    date: "26 Iunie 2026",
+    title: "Antrenamentul nu mai ramane blocat pe loading cand o intrebare a fost scoasa",
+    changes: [
+      { text: "Daca o intrebare era scoasa din baza (de exemplu un duplicat) iar tu aveai o sesiune de antrenament pornita chiar pe ea, pagina ramanea blocata la nesfarsit pe cercul de incarcare. Acum aplicatia curata automat, la incarcare, referintele catre intrebari care nu mai exista, asa ca antrenamentul, practica si simulatorul pornesc normal de unde ai ramas", type: "fix" },
+    ],
+  },
+  {
     version: "2.5.3",
     date: "26 Iunie 2026",
     title: "Codul din intrebari se vede ca si cod peste tot, nu doar in sesiuni",
