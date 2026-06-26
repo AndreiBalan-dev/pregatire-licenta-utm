@@ -179,6 +179,20 @@ body {
   100% { background-position: 200% 0; }
 }
 
+@keyframes hintDeplete {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+
+.hint-bar {
+  transform-origin: left;
+  animation: hintDeplete 5s linear forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hint-bar { animation: none; transform: scaleX(1); }
+}
+
 @keyframes correctFlash {
   0% { border-color: var(--color-correct); background-color: var(--color-correct-bg); }
   100% { border-color: var(--color-correct-border); background-color: transparent; }

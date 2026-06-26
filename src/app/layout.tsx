@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { WhatsNewGate } from "@/components/home/WhatsNewGate";
 import { HighlighterProvider } from "@/hooks/useHighlighter";
+import { KeyboardNavProvider } from "@/hooks/useKeyboardNav";
 import {
   SITE_URL,
   SITE_NAME,
@@ -184,7 +185,9 @@ export default function RootLayout({
         className={`${syne.variable} ${ibmPlexSans.variable} ${jetbrainsMono.variable}`}
       >
         <div className="noise-overlay" aria-hidden="true" />
-        <HighlighterProvider>{children}</HighlighterProvider>
+        <HighlighterProvider>
+          <KeyboardNavProvider>{children}</KeyboardNavProvider>
+        </HighlighterProvider>
         <WhatsNewGate />
         <SpeedInsights />
         <Analytics />

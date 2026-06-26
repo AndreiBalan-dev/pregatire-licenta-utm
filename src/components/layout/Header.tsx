@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { HighlighterToggle } from "@/components/ui/HighlighterToggle";
+import { KeyboardNavToggle } from "@/components/ui/KeyboardNavToggle";
 import { Container } from "./Container";
 import { APP_VERSION, EXAM_SESSION_YEAR, SITE_NAME_SHORT } from "@/lib/site-config";
 
@@ -92,6 +93,9 @@ export function Header() {
               </svg>
               Încarcă
             </Link>
+            <span className="hidden md:inline-flex">
+              <KeyboardNavToggle />
+            </span>
             <HighlighterToggle />
             <ThemeToggle />
           </div>
