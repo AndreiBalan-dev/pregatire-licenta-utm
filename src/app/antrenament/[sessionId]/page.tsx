@@ -10,6 +10,7 @@ import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
 import { useSession } from "@/hooks/useSession";
 import { useTimer } from "@/hooks/useTimer";
+import { useKeyboardNav } from "@/hooks/useKeyboardNav";
 import { getQuestion } from "@/data";
 import { modules } from "@/data/modules";
 import { cn, formatPercentage, formatTime } from "@/lib/utils";
@@ -41,6 +42,7 @@ export default function AntrenamentRuntime() {
     getTrainingProgress,
   } = useSession();
   const timer = useTimer();
+  const { on: keyboardOn } = useKeyboardNav();
 
   const training = session.currentTraining;
 
@@ -250,6 +252,9 @@ export default function AntrenamentRuntime() {
                 onSelectAnswer={reviewing ? () => {} : handleSelect}
                 onBookmark={() => toggleBookmark(shown.id)}
                 optionOrder={training.optionOrder?.[shown.id]}
+                keyboardActive={keyboardOn && !showSummary}
+                onNext={handleForward}
+                onPrev={handleBack}
               />
             </div>
           </div>

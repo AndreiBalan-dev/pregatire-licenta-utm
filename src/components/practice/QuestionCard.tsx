@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { cn, isCodeLike } from "@/lib/utils";
 import { remapExplanationForOrder } from "@/lib/explanation";
 import { CodeBlock } from "@/components/ui/CodeBlock";
@@ -9,6 +10,9 @@ import { ConfusableHint } from "./ConfusableHint";
 import { renderMarkedText } from "@/components/ui/InlineText";
 import { confusables } from "@/data/confusables";
 import { useHighlighter } from "@/hooks/useHighlighter";
+import { useKeyboardNav } from "@/hooks/useKeyboardNav";
+import { useQuestionKeyboard } from "@/hooks/useQuestionKeyboard";
+import { orderedOptionKeys } from "@/lib/options";
 import type { Question, AnswerKey } from "@/data/types";
 
 interface QuestionCardProps {
@@ -27,6 +31,11 @@ interface QuestionCardProps {
    * explanations and "Corect" feedback stay accurate. Defaults to a/b/c/d.
    */
   optionOrder?: AnswerKey[];
+  /** Enable desktop keyboard control (Up/Down focus, Space confirm) for this card. */
+  keyboardActive?: boolean;
+  /** ArrowRight / ArrowLeft handlers when keyboardActive. */
+  onNext?: () => void;
+  onPrev?: () => void;
 }
 
 // Options are labeled by on-screen position, so shuffled answers still read A, B, C, D
@@ -44,11 +53,45 @@ export function QuestionCard({
   onBookmark,
   onRetry,
   optionOrder,
+  keyboardActive = false,
+  onNext,
+  onPrev,
 }: QuestionCardProps) {
-  const orderedKeys =
-    optionOrder && optionOrder.length === 4
-      ? optionOrder
-      : (Object.keys(question.options) as AnswerKey[]);
+  const orderedKeys = orderedOptionKeys(question, optionOrder);
+
+  const { showHint } = useKeyboardNav();
+  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
+
+  // Reset the cursor on each new question; seed to the already-selected option (if
+  // any) so resuming an answered question continues from there.
+  useEffect(() => {
+    const seed = selectedAnswer ? orderedKeys.indexOf(selectedAnswer) : -1;
+    setFocusedIndex(seed >= 0 ? seed : null); // eslint-disable-line react-hooks/set-state-in-effect
+  }, [question.id]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Teach the shortcuts once per browser session when the feature is active.
+  useEffect(() => {
+    if (!keyboardActive) return;
+    try {
+      if (!sessionStorage.getItem("utm-kbd-hint-shown")) {
+        showHint();
+        sessionStorage.setItem("utm-kbd-hint-shown", "1");
+      }
+    } catch { /* ignore */ }
+  }, [keyboardActive, showHint]);
+
+  useQuestionKeyboard({
+    active: keyboardActive,
+    optionCount: orderedKeys.length,
+    focusedIndex,
+    onFocusChange: setFocusedIndex,
+    onConfirm: () => {
+      if (focusedIndex !== null) onSelectAnswer(orderedKeys[focusedIndex]);
+    },
+    confirmEnabled: !showFeedback,
+    onNext,
+    onPrev,
+  });
   // Keep the explanation's letter references in sync with the shuffled labels.
   const explanationText = remapExplanationForOrder(question.explanation ?? "", optionOrder);
 
@@ -135,7 +178,12 @@ export function QuestionCard({
       </div>
 
       {/* Options */}
-      <div className="space-y-2 sm:space-y-3" role="radiogroup" aria-label="Opțiuni de răspuns">
+      <div
+        className="space-y-2 sm:space-y-3"
+        role="radiogroup"
+        aria-label="Opțiuni de răspuns"
+        aria-activedescendant={focusedIndex !== null ? `q${question.id}-opt-${focusedIndex}` : undefined}
+      >
         {orderedKeys.map((key, index) => {
           const isSelected = selectedAnswer === key;
           const isCorrect = key === question.correctAnswer;
@@ -154,6 +202,7 @@ export function QuestionCard({
           return (
             <button
               key={key}
+              id={`q${question.id}-opt-${index}`}
               role="radio"
               aria-checked={isSelected}
               aria-label={`Opțiunea ${POSITION_LABELS[index]}: ${question.options[key]}${feedbackLabel}`}
@@ -164,6 +213,7 @@ export function QuestionCard({
                 "flex items-start gap-2.5 sm:gap-3 min-w-0 overflow-hidden",
                 "border sm:border-2 border-[var(--color-border)]",
                 "disabled:cursor-default",
+                !showFeedback && focusedIndex === index && "ring-2 ring-[var(--color-accent)] ring-offset-2 ring-offset-[var(--color-bg-secondary)]",
                 !showFeedback && isSelected && "selected !border-2",
                 showCorrect && "correct !border-2",
                 showWrong && "wrong !border-2",

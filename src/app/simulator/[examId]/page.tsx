@@ -21,6 +21,7 @@ import { ExamRepeatBadge } from "@/components/exam/ExamRepeatBadge";
 import { ExamHistoryButton } from "@/components/results/ExamHistoryButton";
 import { SubjectIcon } from "@/components/ui/SubjectIcon";
 import { useSession } from "@/hooks/useSession";
+import { useKeyboardNav } from "@/hooks/useKeyboardNav";
 import { getQuestion } from "@/data";
 import { modules } from "@/data/modules";
 import { cn } from "@/lib/utils";
@@ -86,6 +87,7 @@ export default function SimulatorExamPage() {
     clearExamHistory,
     toggleBookmark,
   } = useSession();
+  const { on: keyboardOn } = useKeyboardNav();
 
   const [submitOpen, setSubmitOpen] = useState(false);
   const [restartOpen, setRestartOpen] = useState(false);
@@ -288,6 +290,9 @@ export default function SimulatorExamPage() {
                   onSelectAnswer={handleSelectAnswer}
                   onBookmark={() => toggleBookmark(currentQuestion.id)}
                   optionOrder={exam.optionOrder?.[currentQuestion.id]}
+                  keyboardActive={keyboardOn && !submitOpen && !restartOpen && !redoOpen}
+                  onNext={isLast ? () => setSubmitOpen(true) : goToNext}
+                  onPrev={goToPrev}
                 />
               </div>
             </div>

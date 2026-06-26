@@ -13,6 +13,7 @@ import { ScopeSelector, OrderSelector, ShuffleAnswersToggle, type RedoScope, typ
 import { SubjectIcon } from "@/components/ui/SubjectIcon";
 import { useSession } from "@/hooks/useSession";
 import { useTimer } from "@/hooks/useTimer";
+import { useKeyboardNav } from "@/hooks/useKeyboardNav";
 import { getQuestion, questionsBySubject } from "@/data";
 import { modules } from "@/data/modules";
 import { cn, formatPercentage, formatTime } from "@/lib/utils";
@@ -36,6 +37,7 @@ export default function QuizPage() {
     endPractice,
   } = useSession();
   const timer = useTimer();
+  const { on: keyboardOn } = useKeyboardNav();
   const [selectedAnswer, setSelectedAnswer] = useState<AnswerKey | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
@@ -560,6 +562,9 @@ export default function QuizPage() {
                 onBookmark={handleBookmark}
                 onRetry={handleRetry}
                 optionOrder={practice.optionOrder?.[currentQuestion.id]}
+                keyboardActive={keyboardOn && !showSummary}
+                onNext={goToNext}
+                onPrev={goToPrev}
               />
             </div>
           </div>
