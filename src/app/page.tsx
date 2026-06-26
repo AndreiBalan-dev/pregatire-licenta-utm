@@ -3,6 +3,7 @@
 import { Header } from "@/components/layout/Header";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { HeroSection } from "@/components/home/HeroSection";
+import { ExamCountdown } from "@/components/home/ExamCountdown";
 import { VoteCTA } from "@/components/home/VoteCTA";
 import { ExamSimulatorCTA } from "@/components/home/ExamSimulatorCTA";
 import { TrainingCTA } from "@/components/home/TrainingCTA";
@@ -35,6 +36,7 @@ export default function HomePage() {
           totalAnswered={stats.totalAnswered}
           accuracy={stats.accuracy}
         />
+        <ExamCountdown />
         <VoteCTA />
         <ExamSimulatorCTA />
         <TrainingCTA />

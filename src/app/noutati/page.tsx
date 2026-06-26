@@ -44,6 +44,14 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "2.5.5",
+    date: "26 Iunie 2026",
+    title: "Numaratoare inversa pana la proba scrisa, pe prima pagina",
+    changes: [
+      { text: "Am pus pe prima pagina un cronometru live care arata cat mai e pana la Proba 1 (proba scrisa) a examenului de licenta: zile, ore, minute si secunde, cu data si intervalul exact (Marti, 30 Iunie 2026, orele 09:00-11:00). Cand proba incepe, se schimba intr-un mesaj de succes", type: "feature" },
+    ],
+  },
+  {
     version: "2.5.4",
     date: "26 Iunie 2026",
     title: "Antrenamentul nu mai ramane blocat pe loading cand o intrebare a fost scoasa",

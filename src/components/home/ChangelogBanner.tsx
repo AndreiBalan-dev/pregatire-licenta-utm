@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
+  "Numaratoare inversa pe prima pagina pana la Proba 1 (proba scrisa) a licentei: zile, ore, minute si secunde, cu data si ora exacta",
   "Antrenamentul nu mai ramane blocat pe cercul de incarcare daca o intrebare folosita a fost scoasa intre timp; referintele invechite sunt curatate automat la incarcare",
   "Codul din intrebari (font de cod si blocuri colorate) se vede acum peste tot, nu doar in sesiuni: si la Revizuire si in Cautare, inclusiv in variantele de raspuns",
-  "Explicatiile \"De ce e corect\" raman corecte si cand amesteci raspunsurile; am scos referirile la raspuns prin litera (ex: \"varianta a\") si le-am pus pe continut",
 ];
 
 export function ChangelogBanner() {

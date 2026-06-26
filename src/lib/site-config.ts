@@ -13,9 +13,15 @@
  * keep them in sync.
  */
 
-export const APP_VERSION = "2.5.4";
+export const APP_VERSION = "2.5.5";
 
 export const EXAM_SESSION_YEAR = "2026";
+
+// Proba 1 (proba scrisa) a examenului de licenta: 30.06.2026, 09:00-11:00.
+// Anchored to Bucharest exam-local time (EEST, UTC+3) so the countdown is the
+// same instant for every viewer regardless of their device timezone.
+export const EXAM_PROBA1_START = "2026-06-30T09:00:00+03:00";
+export const EXAM_PROBA1_END = "2026-06-30T11:00:00+03:00";
 
 export const SITE_URL = "https://utmlearn.com";
 export const SITE_DOMAIN = "utmlearn.com";
