@@ -7,7 +7,7 @@ import { checkRateLimit } from "@/lib/rate-limit";
 import { RATE_LIMITS, MAX_QUESTION_TIME_MS } from "@/lib/constants";
 import { getQuestion } from "@/data";
 import { loadPlayerByToken, getClientIp, buildStandings, isUniqueViolation, maybeFinishRunning } from "@/lib/challenge/server";
-import { getTimer, scoringBudgetMs, answerPoints, totalDeadlineMs } from "@/lib/challenge/timing";
+import { getTimer, scoringBudgetMs, answerPoints, simulareAnswerPoints, totalDeadlineMs } from "@/lib/challenge/timing";
 import { detectMilestones } from "@/lib/challenge/milestones";
 import { publishToLobby } from "@/lib/realtime/pusher-server";
 import { EVENTS } from "@/lib/realtime/events";
@@ -56,7 +56,13 @@ export async function POST(request: NextRequest) {
   if (!question) return NextResponse.json({ error: "Întrebare inexistentă." }, { status: 400 });
   const isCorrect = !timedOut && selected === question.correctAnswer;
   const total = order.length;
-  const points = answerPoints(isCorrect, timeMs, scoringBudgetMs(timer));
+  // Simulare grades like the exam: a flat point per correct answer (speed plays
+  // no part), so the player's score equals their correct count and the leaderboard
+  // ranks by nota with completion time as the tiebreak. Custom games use Kahoot points.
+  const isSimulare = (lobby.config as { preset?: string }).preset === "simulare";
+  const points = isSimulare
+    ? simulareAnswerPoints(isCorrect)
+    : answerPoints(isCorrect, timeMs, scoringBudgetMs(timer));
 
   const beforeAnswered = player.answeredCount;
 

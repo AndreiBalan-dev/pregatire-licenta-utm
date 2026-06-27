@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import { Leaderboard } from "./Leaderboard";
+import { Leaderboard, type ScoreMode } from "./Leaderboard";
 import { PlayerAvatar } from "./PlayerAvatar";
 import { Confetti } from "./Confetti";
 import { SoundToggle } from "./SoundToggle";
 import { useProvocareSound } from "@/hooks/useProvocareSound";
 import { formatClock } from "@/lib/challenge/timing";
+import { computeScore } from "@/lib/exam";
 import type { Standing } from "@/lib/realtime/events";
 import { cn } from "@/lib/utils";
 
@@ -17,11 +18,12 @@ const PODIUM_HEIGHT: Record<number, string> = {
   3: "h-16 sm:h-20",
 };
 
-export function ResultsScreen({ standings, meId }: { standings: Standing[]; meId?: number }) {
+export function ResultsScreen({ standings, meId, scoreMode = "points" }: { standings: Standing[]; meId?: number; scoreMode?: ScoreMode }) {
   const { play } = useProvocareSound();
   const winner = standings[0];
   const me = standings.find((s) => s.playerId === meId);
   const iWon = !!me && me.rank === 1;
+  const scoreLabel = (s: Standing) => (scoreMode === "nota" ? computeScore(s.correctCount).toFixed(2) : String(s.score));
 
   useEffect(() => {
     play(iWon ? "win" : "finish");
@@ -48,7 +50,7 @@ export function ResultsScreen({ standings, meId }: { standings: Standing[]; meId
         </h1>
         {winner && (
           <p className="text-sm text-[var(--color-text-secondary)] mb-8">
-            Câștigător: <span className="text-[var(--color-accent)] font-semibold">{winner.name}</span> cu {winner.score} {winner.score === 1 ? "punct" : "puncte"}
+            Câștigător: <span className="text-[var(--color-accent)] font-semibold">{winner.name}</span> {scoreMode === "nota" ? `cu nota ${scoreLabel(winner)}` : `cu ${winner.score} ${winner.score === 1 ? "punct" : "puncte"}`}
             <span className="text-[var(--color-text-tertiary)]"> · {winner.correctCount}/{winner.totalQuestions} corecte · {formatClock(Math.round(winner.totalTimeMs / 1000))}</span>
           </p>
         )}
@@ -59,7 +61,7 @@ export function ResultsScreen({ standings, meId }: { standings: Standing[]; meId
               <div key={s.playerId} className="flex flex-col items-center flex-1 max-w-[120px]">
                 <PlayerAvatar name={s.name} size={s.rank === 1 ? 56 : 44} className={s.rank === 1 ? "animate-roster-pop" : ""} />
                 <span className="mt-2 text-xs font-medium text-[var(--color-text-primary)] truncate max-w-full">{s.name}</span>
-                <span className="text-sm font-bold tabular-nums text-[var(--color-accent)]" style={{ fontFamily: "var(--font-display)" }}>{s.score}</span>
+                <span className="text-sm font-bold tabular-nums text-[var(--color-accent)]" style={{ fontFamily: "var(--font-display)" }}>{scoreLabel(s)}</span>
                 <span className="text-[10px] tabular-nums text-[var(--color-text-tertiary)]">⏱ {formatClock(Math.round(s.totalTimeMs / 1000))}</span>
                 <div
                   className={cn("w-full mt-2 rounded-t-[var(--radius-md)] border border-b-0 border-[var(--color-border)] animate-podium-rise flex items-start justify-center pt-1.5", PODIUM_HEIGHT[s.rank])}
@@ -73,7 +75,7 @@ export function ResultsScreen({ standings, meId }: { standings: Standing[]; meId
         )}
 
         <div className="mb-8">
-          <Leaderboard standings={standings} meId={meId} showStats />
+          <Leaderboard standings={standings} meId={meId} showStats scoreMode={scoreMode} />
         </div>
 
         <div className="flex gap-3">

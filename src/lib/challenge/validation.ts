@@ -20,6 +20,10 @@ export function validateCreateConfig(
 
   if (c.mode !== "self_paced" && c.mode !== "lockstep") return { ok: false, error: "Mod invalid." };
 
+  // Preset is optional for backward compatibility; absent means a plain custom game.
+  const preset = c.preset === undefined ? "custom" : c.preset;
+  if (preset !== "custom" && preset !== "simulare") return { ok: false, error: "Tip de provocare invalid." };
+
   if (!Array.isArray(c.subjectIds) || c.subjectIds.length === 0) return { ok: false, error: "Alege cel puțin o materie." };
   for (const s of c.subjectIds) {
     if (typeof s !== "string" || !validSubjectIds.has(s)) return { ok: false, error: "Materie invalidă." };
@@ -59,6 +63,8 @@ export function validateCreateConfig(
       return { ok: false, error: "Timpul pe întrebare este invalid." };
     }
     timerPerQuestion = pq;
+  } else if (tm.mode === "unlimited") {
+    // No clock: keep the default total/per-question seconds (unused at runtime).
   } else {
     return { ok: false, error: "Mod timer invalid." };
   }
@@ -74,6 +80,7 @@ export function validateCreateConfig(
     ok: true,
     config: {
       mode: c.mode,
+      preset,
       subjectIds: c.subjectIds as string[],
       questionCount: count,
       shuffleOrder: c.shuffleOrder as boolean,

@@ -99,5 +99,27 @@ check("rejects out-of-range total duration and bad per-question option", () => {
   assert.equal(validateCreateConfig({ ...goodCfg, timer: { mode: "per_question", totalSeconds: 600, perQuestionSeconds: 45 } }, subjects).ok, false);
 });
 
+check("defaults preset to 'custom' when omitted", () => {
+  const r = validateCreateConfig(goodCfg, subjects);
+  assert.equal(r.ok, true);
+  assert.equal(r.config.preset, "custom");
+});
+
+check("accepts and keeps preset 'simulare'", () => {
+  const r = validateCreateConfig({ ...goodCfg, preset: "simulare" }, subjects);
+  assert.equal(r.ok, true);
+  assert.equal(r.config.preset, "simulare");
+});
+
+check("rejects an invalid preset", () => {
+  assert.equal(validateCreateConfig({ ...goodCfg, preset: "nope" }, subjects).ok, false);
+});
+
+check("accepts an unlimited timer (no clock)", () => {
+  const r = validateCreateConfig({ ...goodCfg, timer: { mode: "unlimited", totalSeconds: 600, perQuestionSeconds: 120 } }, subjects);
+  assert.equal(r.ok, true);
+  assert.equal(r.config.timer.mode, "unlimited");
+});
+
 if (failures > 0) { console.error(`\n${failures} test(s) failed`); process.exit(1); }
 console.log("\nAll tests passed");

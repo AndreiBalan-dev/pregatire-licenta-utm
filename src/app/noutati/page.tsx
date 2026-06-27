@@ -44,6 +44,16 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "3.0.1",
+    date: "27 Iunie 2026",
+    title: "Simulare in Provocare, ca la examen",
+    changes: [
+      { text: "Pe langa numarul ales de intrebari, poti porni acum o Simulare in Provocare: 36 de grile ca la examen, cu acelasi echilibru pe module si materii ca la Simulator, trase din toate disciplinele. Sunt notate pe scala 1-10 (1 punct din oficiu + 0.25 pe raspuns corect), iar clasamentul merge pe nota; la nota egala conteaza cine a terminat mai repede", type: "feature" },
+      { text: "Simularea porneste implicit cu 2 ore, ca la proba scrisa, dar poti schimba timpul cum vrei inainte de start", type: "feature" },
+      { text: "Optiune noua de timp 'Fara limita' pentru orice provocare: jucati in ritmul vostru, fara ceas, iar provocarea se termina cand toata lumea a raspuns", type: "improvement" },
+    ],
+  },
+  {
     version: "3.0.0",
     date: "27 Iunie 2026",
     title: "Provocare: joaca grile cu prietenii, in timp real",

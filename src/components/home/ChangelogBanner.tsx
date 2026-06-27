@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Provocare, mod nou: joci grile multiplayer cu prietenii in timp real, cu clasament live si punctaj ca la Kahoot (mai repede si corect = mai multe puncte)",
-  "Pui timp pe fiecare intrebare sau pentru tot testul, pana la 6 jucatori fara cont, iar la final vezi podiumul si timpii; deconectarile nu mai strica jocul",
-  "Poti porni provocarea cu toate intrebarile alese, plus un buton sa ascunzi numaratoarea pana la examen de pe prima pagina",
+  "Simulare in Provocare: pornesti o provocare ca la examen, 36 de grile cu acelasi echilibru pe module si materii ca la Simulator, notate pe scala 1-10",
+  "Clasamentul simularii merge pe nota, iar la egalitate conteaza cine a terminat mai repede; porneste cu 2 ore ca la examen, dar poti schimba timpul",
+  "Optiune noua de timp 'Fara limita', cand vreti sa jucati fara presiune de ceas",
 ];
 
 export function ChangelogBanner() {

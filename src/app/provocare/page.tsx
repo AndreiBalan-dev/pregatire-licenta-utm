@@ -7,10 +7,14 @@ import { MobileNav } from "@/components/layout/MobileNav";
 import { Container } from "@/components/layout/Container";
 import { SubjectSelector } from "@/components/practice/SubjectSelector";
 import { ToggleRow } from "@/components/challenge/ToggleRow";
+import { TimerPicker, type TimerValue } from "@/components/challenge/TimerPicker";
 import { NameModal } from "@/components/challenge/NameModal";
 import { SoundToggle } from "@/components/challenge/SoundToggle";
 import { useProvocareSound } from "@/hooks/useProvocareSound";
 import { savePlayer } from "@/lib/challenge/identity";
+import type { ChallengePreset } from "@/lib/challenge/types";
+import { EXAM_TOTAL_QUESTIONS } from "@/lib/exam";
+import { CHALLENGE_TIMER } from "@/lib/constants";
 import { modules } from "@/data/modules";
 import { questionsBySubject } from "@/data";
 import { cn } from "@/lib/utils";
@@ -18,17 +22,8 @@ import { cn } from "@/lib/utils";
 const COUNT_OPTIONS = [5, 10, 20, 30, 50];
 const CAPACITY = 6;
 
-// Quick-pick minutes for the whole-game timer; the slider covers 1-120 in full.
-const TIMER_PRESETS = [5, 10, 20, 30, 60];
-const PER_Q_OPTIONS = [
-  { s: 15, label: "15 sec" },
-  { s: 30, label: "30 sec" },
-  { s: 60, label: "1 min" },
-  { s: 120, label: "2 min" },
-  { s: 180, label: "3 min" },
-  { s: 300, label: "5 min" },
-];
-type TimerMode = "total" | "per_question";
+const ALL_SUBJECT_IDS = modules.flatMap((m) => m.subjects.map((s) => s.id));
+const SIMULARE_DEFAULT_MINUTES = CHALLENGE_TIMER.SIMULARE_TOTAL_DEFAULT_SECONDS / 60;
 
 export default function ProvocarePage() {
   const router = useRouter();
@@ -40,10 +35,10 @@ export default function ProvocarePage() {
   const [shuffleOrder, setShuffleOrder] = useState(true);
   const [shuffleOptions, setShuffleOptions] = useState(true);
   const [instantFeedback, setInstantFeedback] = useState(true);
-  const [timerMode, setTimerMode] = useState<TimerMode>("total");
-  const [totalMinutes, setTotalMinutes] = useState(10);
-  const [perQuestionSeconds, setPerQuestionSeconds] = useState(120);
+  const [customTimer, setCustomTimer] = useState<TimerValue>({ mode: "total", totalMinutes: 10, perQuestionSeconds: 120 });
+  const [simulareTimer, setSimulareTimer] = useState<TimerValue>({ mode: "total", totalMinutes: SIMULARE_DEFAULT_MINUTES, perQuestionSeconds: 120 });
 
+  const [pendingPreset, setPendingPreset] = useState<ChallengePreset>("custom");
   const [nameOpen, setNameOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -70,9 +65,17 @@ export default function ProvocarePage() {
   const effective = useAll ? pool : pool > 0 ? Math.min(questionCount, pool) : questionCount;
   const hasSubjects = subjectIds.length > 0;
 
+  function openCreate(preset: ChallengePreset) {
+    setPendingPreset(preset);
+    setError(null);
+    setNameOpen(true);
+  }
+
   async function createLobby(hostName: string) {
     setBusy(true);
     setError(null);
+    const isSimulare = pendingPreset === "simulare";
+    const timer = isSimulare ? simulareTimer : customTimer;
     try {
       const res = await fetch("/api/challenge/create", {
         method: "POST",
@@ -81,18 +84,21 @@ export default function ProvocarePage() {
           hostName,
           config: {
             mode: "self_paced",
-            subjectIds,
-            questionCount: effective,
-            shuffleOrder,
-            shuffleOptions,
-            instantFeedback,
+            preset: pendingPreset,
+            // Simulare always runs the full balanced exam, so it ignores the
+            // custom subject/count selection and uses every subject + 36 grile.
+            subjectIds: isSimulare ? ALL_SUBJECT_IDS : subjectIds,
+            questionCount: isSimulare ? EXAM_TOTAL_QUESTIONS : effective,
+            shuffleOrder: isSimulare ? true : shuffleOrder,
+            shuffleOptions: isSimulare ? true : shuffleOptions,
+            instantFeedback: isSimulare ? false : instantFeedback,
             perQuestionSeconds: null,
             capacity: CAPACITY,
             hostPlays: true,
             timer: {
-              mode: timerMode,
-              totalSeconds: totalMinutes * 60,
-              perQuestionSeconds,
+              mode: timer.mode,
+              totalSeconds: timer.totalMinutes * 60,
+              perQuestionSeconds: timer.perQuestionSeconds,
             },
           },
         }),
@@ -143,8 +149,73 @@ export default function ProvocarePage() {
               Creează o provocare
             </h1>
             <p className="mt-2 text-[var(--color-text-secondary)] animate-fade-in stagger-1">
-              Alege materiile, invită-ți colegii printr-un link și vedeți cine punctează mai mult. Fără cont, până la {CAPACITY} jucători.
+              Invită-ți colegii printr-un link și vedeți cine punctează mai mult. Fără cont, până la {CAPACITY} jucători.
             </p>
+          </div>
+
+          {/* Simulare preset: one-tap multiplayer exam, graded on the 1-10 nota. */}
+          <div className="mb-6 animate-slide-up">
+            <div
+              className="relative rounded-[var(--radius-xl)] border overflow-hidden"
+              style={{
+                borderColor: "rgba(232, 166, 49, 0.4)",
+                background: "linear-gradient(180deg, var(--color-bg-tertiary) 0%, var(--color-bg-secondary) 45%, var(--color-bg-secondary) 100%)",
+              }}
+            >
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{ background: "radial-gradient(ellipse 70% 50% at 50% 0%, var(--color-accent), transparent)", opacity: 0.08 }}
+              />
+              <div className="relative p-5 sm:p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--color-accent)" stroke="var(--color-accent)" strokeWidth="1.5" strokeLinejoin="round" aria-hidden="true">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <span
+                    className="text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--color-accent)]"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    Simulare
+                  </span>
+                </div>
+                <h2 className="text-xl font-bold text-[var(--color-text-primary)]" style={{ fontFamily: "var(--font-display)" }}>
+                  Provocare ca la examen
+                </h2>
+                <p className="mt-1.5 text-sm text-[var(--color-text-secondary)]">
+                  36 de grile din toate materiile, cu același echilibru pe module ca la Simulator. Notate pe scala 1-10, iar clasamentul merge pe notă.
+                </p>
+                <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-[var(--color-text-tertiary)]">
+                  <span>36 de grile</span>
+                  <span className="w-px h-3 bg-[var(--color-border)]" />
+                  <span>toate materiile</span>
+                  <span className="w-px h-3 bg-[var(--color-border)]" />
+                  <span>notă pe 1-10</span>
+                  <span className="w-px h-3 bg-[var(--color-border)]" />
+                  <span>simulare reală</span>
+                </div>
+
+                <div className="mt-5">
+                  <TimerPicker value={simulareTimer} onChange={setSimulareTimer} />
+                </div>
+
+                <button
+                  onClick={() => openCreate("simulare")}
+                  className="mt-5 w-full py-3.5 rounded-[var(--radius-lg)] text-base font-bold transition-all cursor-pointer flex items-center justify-center gap-2.5 bg-[var(--color-accent)] text-[#0C0C0E] hover:bg-[var(--color-accent-hover)] shadow-[0_0_30px_rgba(232,166,49,0.15)] hover:shadow-[0_0_40px_rgba(232,166,49,0.25)] active:scale-[0.98]"
+                  style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}
+                >
+                  Creează simularea
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="my-7 flex items-center gap-3">
+            <div className="h-px flex-1 bg-[var(--color-border)]" />
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--color-text-tertiary)]">
+              sau personalizează
+            </span>
+            <div className="h-px flex-1 bg-[var(--color-border)]" />
           </div>
 
           <SubjectSelector
@@ -232,99 +303,7 @@ export default function ProvocarePage() {
                     </button>
                   </div>
 
-                  <div>
-                    <span className="block mb-2 text-[11px] font-semibold uppercase tracking-wider text-[var(--color-text-tertiary)]">
-                      Timp
-                    </span>
-                    <div className="grid grid-cols-2 gap-1.5">
-                      {([
-                        { key: "total", label: "Timp total" },
-                        { key: "per_question", label: "Pe întrebare" },
-                      ] as const).map((m) => (
-                        <button
-                          key={m.key}
-                          type="button"
-                          onClick={() => setTimerMode(m.key)}
-                          className={cn(
-                            "py-2.5 rounded-[var(--radius-md)] text-sm font-bold border transition-all cursor-pointer",
-                            timerMode === m.key
-                              ? "bg-[var(--color-accent)] text-[#0C0C0E] border-[var(--color-accent)]"
-                              : "bg-[var(--color-bg-primary)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-[var(--color-border-strong)]",
-                          )}
-                          style={{ fontFamily: "var(--font-display)" }}
-                        >
-                          {m.label}
-                        </button>
-                      ))}
-                    </div>
-
-                    {timerMode === "total" ? (
-                      <div className="mt-3">
-                        <div className="flex items-baseline justify-between mb-2">
-                          <span className="text-xs text-[var(--color-text-tertiary)]">Durata întregului joc</span>
-                          <span className="text-sm font-bold tabular-nums text-[var(--color-accent)]" style={{ fontFamily: "var(--font-display)" }}>
-                            {totalMinutes} min
-                          </span>
-                        </div>
-                        <input
-                          type="range"
-                          min={1}
-                          max={120}
-                          step={1}
-                          value={totalMinutes}
-                          onChange={(e) => setTotalMinutes(Number(e.target.value))}
-                          className="w-full cursor-pointer"
-                          style={{ accentColor: "var(--color-accent)" }}
-                          aria-label="Durata totală în minute"
-                        />
-                        <div className="mt-2.5 grid grid-cols-5 gap-1.5">
-                          {TIMER_PRESETS.map((m) => (
-                            <button
-                              key={m}
-                              type="button"
-                              onClick={() => setTotalMinutes(m)}
-                              className={cn(
-                                "py-1.5 rounded-[var(--radius-md)] text-xs font-bold tabular-nums border transition-all cursor-pointer",
-                                totalMinutes === m
-                                  ? "border-[var(--color-accent)] text-[var(--color-accent)] bg-[var(--color-accent-muted)]"
-                                  : "bg-[var(--color-bg-primary)] border-[var(--color-border)] text-[var(--color-text-tertiary)] hover:border-[var(--color-border-strong)]",
-                              )}
-                            >
-                              {m}m
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="mt-3">
-                        <span className="block mb-2 text-xs text-[var(--color-text-tertiary)]">Timp pentru fiecare întrebare</span>
-                        <div className="grid grid-cols-3 gap-1.5">
-                          {PER_Q_OPTIONS.map((o) => (
-                            <button
-                              key={o.s}
-                              type="button"
-                              onClick={() => setPerQuestionSeconds(o.s)}
-                              className={cn(
-                                "py-2.5 rounded-[var(--radius-md)] text-sm font-bold tabular-nums border transition-all cursor-pointer",
-                                perQuestionSeconds === o.s
-                                  ? "bg-[var(--color-accent)] text-[#0C0C0E] border-[var(--color-accent)]"
-                                  : "bg-[var(--color-bg-primary)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-[var(--color-border-strong)]",
-                              )}
-                              style={{ fontFamily: "var(--font-display)" }}
-                            >
-                              {o.label}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    <p className="mt-2.5 text-[11px] leading-relaxed text-[var(--color-text-tertiary)]">
-                      {timerMode === "total"
-                        ? "Toți au același timp pentru tot testul. Răspunzi corect și rapid = mai multe puncte."
-                        : "Fiecare întrebare are limita ei. Când timpul expiră, treci automat mai departe."}
-                    </p>
-                  </div>
+                  <TimerPicker value={customTimer} onChange={setCustomTimer} />
 
                   <div className="space-y-2.5">
                     <ToggleRow checked={shuffleOrder} onChange={setShuffleOrder} label="Amestecă ordinea" description="Întrebările apar în altă ordine pentru fiecare" />
@@ -333,7 +312,7 @@ export default function ProvocarePage() {
                   </div>
 
                   <button
-                    onClick={() => { setError(null); setNameOpen(true); }}
+                    onClick={() => openCreate("custom")}
                     className="w-full py-4 rounded-[var(--radius-lg)] text-base font-bold transition-all cursor-pointer flex items-center justify-center gap-2.5 bg-[var(--color-accent)] text-[#0C0C0E] hover:bg-[var(--color-accent-hover)] shadow-[0_0_30px_rgba(232,166,49,0.15)] hover:shadow-[0_0_40px_rgba(232,166,49,0.25)] active:scale-[0.98]"
                     style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}
                   >
@@ -352,7 +331,7 @@ export default function ProvocarePage() {
         open={nameOpen}
         title="Cum te numești?"
         subtitle="Așa te vor vedea ceilalți în clasament."
-        submitLabel="Creează provocarea"
+        submitLabel={pendingPreset === "simulare" ? "Creează simularea" : "Creează provocarea"}
         busy={busy}
         error={error}
         onSubmit={createLobby}

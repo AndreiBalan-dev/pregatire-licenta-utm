@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   getTimer,
   answerPoints,
+  simulareAnswerPoints,
   scoringBudgetMs,
   totalDeadlineMs,
   totalRemainingSeconds,
@@ -17,6 +18,7 @@ function check(name, fn) {
 
 const total = { mode: "total", totalSeconds: 600, perQuestionSeconds: 120 };
 const perQ = { mode: "per_question", totalSeconds: 600, perQuestionSeconds: 120 };
+const unlimited = { mode: "unlimited", totalSeconds: 600, perQuestionSeconds: 120 };
 
 check("getTimer falls back to a default for an old config without a timer", () => {
   const t = getTimer({});
@@ -48,6 +50,18 @@ check("answerPoints: halfway through the budget is about halfway down the range"
 check("scoringBudgetMs: per-question uses its own seconds, total uses the reference", () => {
   assert.equal(scoringBudgetMs(perQ), 120000);
   assert.equal(scoringBudgetMs(total), 30000);
+});
+
+check("simulareAnswerPoints: flat 1 per correct, 0 otherwise (speed-independent)", () => {
+  assert.equal(simulareAnswerPoints(true), 1);
+  assert.equal(simulareAnswerPoints(false), 0);
+});
+
+check("unlimited timer: no deadline, no remaining, scores off the reference budget", () => {
+  const start = new Date(1_000_000);
+  assert.equal(totalDeadlineMs(unlimited, start), null);
+  assert.equal(totalRemainingSeconds(unlimited, start, 1_000_000), null);
+  assert.equal(scoringBudgetMs(unlimited), 30000);
 });
 
 check("totalDeadlineMs: only total mode with a start has a deadline", () => {

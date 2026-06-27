@@ -1,5 +1,5 @@
 import type { Module, Question } from "@/data/types";
-import { shuffleArray } from "./utils";
+import { shuffleArray } from "@/lib/utils";
 
 export const EXAM_QUESTIONS_PER_MODULE = 9;
 export const OFFICIO_POINTS = 1.0;

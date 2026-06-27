@@ -4,7 +4,10 @@ import type { Standing } from "@/lib/realtime/events";
 import type { GraceState } from "@/hooks/usePresenceGrace";
 import { PlayerAvatar } from "./PlayerAvatar";
 import { formatClock } from "@/lib/challenge/timing";
+import { computeScore } from "@/lib/exam";
 import { cn } from "@/lib/utils";
+
+export type ScoreMode = "points" | "nota";
 
 // Gold / silver / bronze for ranks 1-3; everyone else gets the muted text colour.
 const MEDAL = ["#FFD24A", "#C9D1DA", "#E0935A"];
@@ -14,6 +17,7 @@ export function Leaderboard({
   meId,
   dense = false,
   showStats = false,
+  scoreMode = "points",
   connection,
 }: {
   standings: Standing[];
@@ -21,6 +25,8 @@ export function Leaderboard({
   dense?: boolean;
   /** Final-results mode: show correct count + completion time instead of the live progress bar. */
   showStats?: boolean;
+  /** "nota" (Simulare) shows the 1-10 grade derived from the correct count; "points" shows raw Kahoot score. */
+  scoreMode?: ScoreMode;
   /** Per-player connection state; disconnected players are greyed with a reconnect countdown. */
   connection?: Map<number, GraceState>;
 }) {
@@ -84,7 +90,7 @@ export function Leaderboard({
               className={cn("text-base font-bold tabular-nums flex-shrink-0 text-[var(--color-text-primary)]", away && "opacity-50")}
               style={{ fontFamily: "var(--font-display)" }}
             >
-              {s.score}
+              {scoreMode === "nota" ? computeScore(s.correctCount).toFixed(2) : s.score}
             </span>
           </li>
         );

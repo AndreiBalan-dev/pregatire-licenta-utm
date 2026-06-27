@@ -36,6 +36,7 @@ export const CHALLENGE_TIMER = {
   TOTAL_MIN_SECONDS: 60, // 1 min
   TOTAL_MAX_SECONDS: 7200, // 120 min
   TOTAL_DEFAULT_SECONDS: 600, // 10 min
+  SIMULARE_TOTAL_DEFAULT_SECONDS: 7200, // 2h, like the real licenta written exam
   PER_QUESTION_OPTIONS: [15, 30, 60, 120, 180, 300], // 15s, 30s, 1, 2, 3, 5 min
   PER_QUESTION_DEFAULT: 120, // 2 min
   GRACE_MS: 60_000, // a disconnected player keeps their seat this long

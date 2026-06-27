@@ -24,6 +24,15 @@ export function answerPoints(correct: boolean, responseMs: number, budgetMs: num
   return Math.round((CHALLENGE_TIMER.MAX_POINTS - span * ratio) / 10) * 10;
 }
 
+/** Simulare scoring: a flat point per correct answer, 0 otherwise. Speed plays
+ *  no part, so a player's accumulated score equals their correct count, and the
+ *  generic rank (score desc, total time asc) becomes "nota, faster breaks ties"
+ *  - exactly the solo Simulator's grading. The 1-10 nota is derived for display
+ *  from the correct count via computeScore() in lib/exam. */
+export function simulareAnswerPoints(correct: boolean): number {
+  return correct ? 1 : 0;
+}
+
 /** Per-question time budget used for scoring (ms). */
 export function scoringBudgetMs(timer: TimerConfig): number {
   return timer.mode === "per_question"

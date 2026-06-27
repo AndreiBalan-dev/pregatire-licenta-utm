@@ -6,7 +6,9 @@ import { hashToken, hashIp } from "@/lib/crypto";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { RATE_LIMITS } from "@/lib/constants";
 import { questionsBySubject, getQuestion } from "@/data";
+import { modules } from "@/data/modules";
 import { buildOptionOrders } from "@/lib/practice";
+import { pickExamQuestions } from "@/lib/exam";
 import { pickChallengeQuestionIds, buildPlayerOrder } from "@/lib/challenge/select";
 import { loadLobby, getClientIp } from "@/lib/challenge/server";
 import { publishToLobby } from "@/lib/realtime/pusher-server";
@@ -31,9 +33,17 @@ export async function POST(request: NextRequest) {
 
   const config = lobby.config as ChallengeConfig;
 
-  // Build the canonical question set from the chosen subjects.
-  const pool = config.subjectIds.flatMap((s) => questionsBySubject[s] ?? []);
-  const questionIds = pickChallengeQuestionIds(pool, config.questionCount, config.shuffleOrder);
+  // Build the canonical question set. The "simulare" preset mirrors the solo
+  // Simulator: 36 balanced grile (9 per module, distributed across subjects),
+  // ignoring the picked subjects. Custom games slice the chosen subjects' pool.
+  const questionIds =
+    config.preset === "simulare"
+      ? pickExamQuestions(modules, questionsBySubject)
+      : pickChallengeQuestionIds(
+          config.subjectIds.flatMap((s) => questionsBySubject[s] ?? []),
+          config.questionCount,
+          config.shuffleOrder,
+        );
   if (questionIds.length === 0) return NextResponse.json({ error: "Nu există întrebări." }, { status: 400 });
 
   // Per-player order + option order.

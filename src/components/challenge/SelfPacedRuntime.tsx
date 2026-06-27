@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getQuestion } from "@/data";
 import { QuestionCard } from "@/components/practice/QuestionCard";
-import { Leaderboard } from "./Leaderboard";
+import { Leaderboard, type ScoreMode } from "./Leaderboard";
 import { SoundToggle } from "./SoundToggle";
 import { CountdownTimer } from "./CountdownTimer";
 import { useProvocareSound } from "@/hooks/useProvocareSound";
@@ -25,7 +25,7 @@ interface Props {
   code: string;
   token: string;
   snapshot: {
-    config: { instantFeedback: boolean };
+    config: { instantFeedback: boolean; preset?: string };
     me: {
       playerId: number;
       questionOrder: number[] | null;
@@ -50,6 +50,9 @@ export function SelfPacedRuntime({ code, token, snapshot, standings, lastMilesto
 
   const isTotal = timer.mode === "total";
   const isPerQuestion = timer.mode === "per_question";
+  const isUnlimited = timer.mode === "unlimited";
+  // Simulare grades on the 1-10 nota; the leaderboard renders that instead of points.
+  const scoreMode: ScoreMode = snapshot.config.preset === "simulare" ? "nota" : "points";
 
   const order = useMemo(
     () => (snapshot.me.questionOrder ?? []).filter((id) => !!getQuestion(id)),
@@ -311,7 +314,7 @@ export function SelfPacedRuntime({ code, token, snapshot, standings, lastMilesto
             <CountdownTimer secondsLeft={display.secondsLeft} totalSeconds={timer.totalSeconds} danger={display.danger} label="Jocul se termină în" />
           </div>
         )}
-        <Leaderboard standings={standings} meId={snapshot.me.playerId} connection={connection} />
+        <Leaderboard standings={standings} meId={snapshot.me.playerId} connection={connection} scoreMode={scoreMode} />
       </main>
     );
   }
@@ -352,14 +355,20 @@ export function SelfPacedRuntime({ code, token, snapshot, standings, lastMilesto
         </div>
       </div>
 
-      <div className="mb-4">
-        <CountdownTimer
-          secondsLeft={display.secondsLeft}
-          totalSeconds={isTotal ? timer.totalSeconds : timer.perQuestionSeconds}
-          danger={display.danger}
-          label={isTotal ? "Timp rămas" : "Timp"}
-        />
-      </div>
+      {isUnlimited ? (
+        <div className="mb-4 text-center text-[11px] font-semibold uppercase tracking-wider text-[var(--color-text-tertiary)]">
+          Fără limită de timp
+        </div>
+      ) : (
+        <div className="mb-4">
+          <CountdownTimer
+            secondsLeft={display.secondsLeft}
+            totalSeconds={isTotal ? timer.totalSeconds : timer.perQuestionSeconds}
+            danger={display.danger}
+            label={isTotal ? "Timp rămas" : "Timp"}
+          />
+        </div>
+      )}
 
       <div className={cn("relative", timeoutAnim && "animate-timeout-shake")}>
         <QuestionCard
@@ -419,7 +428,7 @@ export function SelfPacedRuntime({ code, token, snapshot, standings, lastMilesto
         <h2 className="text-[11px] font-semibold uppercase tracking-wider text-[var(--color-text-tertiary)] mb-2">
           Clasament live
         </h2>
-        <Leaderboard standings={standings} meId={snapshot.me.playerId} connection={connection} />
+        <Leaderboard standings={standings} meId={snapshot.me.playerId} connection={connection} scoreMode={scoreMode} />
       </section>
     </main>
   );
