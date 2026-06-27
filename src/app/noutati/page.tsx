@@ -50,6 +50,7 @@ const changelog: Version[] = [
     changes: [
       { text: "Pe langa numarul ales de intrebari, poti porni acum o Simulare in Provocare: 36 de grile ca la examen, cu acelasi echilibru pe module si materii ca la Simulator, trase din toate disciplinele. Sunt notate pe scala 1-10 (1 punct din oficiu + 0.25 pe raspuns corect), iar clasamentul merge pe nota; la nota egala conteaza cine a terminat mai repede", type: "feature" },
       { text: "Simularea porneste implicit cu 2 ore, ca la proba scrisa, dar poti schimba timpul cum vrei inainte de start", type: "feature" },
+      { text: "La Simulare poti alege acum daca amesteci ordinea intrebarilor si a variantelor de raspuns si daca vrei feedback instant (pornit din start). Cu feedback oprit, in timpul jocului vezi doar la ce intrebare esti, nu nota; nota apare abia la final, ca la un examen real", type: "improvement" },
       { text: "Optiune noua de timp 'Fara limita' pentru orice provocare: jucati in ritmul vostru, fara ceas, iar provocarea se termina cand toata lumea a raspuns", type: "improvement" },
     ],
   },

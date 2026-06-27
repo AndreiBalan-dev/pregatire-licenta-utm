@@ -51,8 +51,19 @@ export function SelfPacedRuntime({ code, token, snapshot, standings, lastMilesto
   const isTotal = timer.mode === "total";
   const isPerQuestion = timer.mode === "per_question";
   const isUnlimited = timer.mode === "unlimited";
-  // Simulare grades on the 1-10 nota; the leaderboard renders that instead of points.
-  const scoreMode: ScoreMode = snapshot.config.preset === "simulare" ? "nota" : "points";
+  // Simulare shows the 1-10 nota live ONLY with instant feedback on. With it off
+  // (a "real exam"), the running grade is itself feedback, so the board hides it
+  // and shows each player's progress instead; the nota is revealed only at the end.
+  const isSimulare = snapshot.config.preset === "simulare";
+  const scoreMode: ScoreMode = isSimulare
+    ? (snapshot.config.instantFeedback ? "nota" : "progress")
+    : "points";
+  // In progress mode, also drop the grade-based ordering: rank the board by who
+  // has answered the most (faster breaks ties), so the standings can't leak grade.
+  const boardStandings =
+    scoreMode === "progress"
+      ? [...standings].sort((a, b) => b.answeredCount - a.answeredCount || a.totalTimeMs - b.totalTimeMs)
+      : standings;
 
   const order = useMemo(
     () => (snapshot.me.questionOrder ?? []).filter((id) => !!getQuestion(id)),
@@ -314,7 +325,7 @@ export function SelfPacedRuntime({ code, token, snapshot, standings, lastMilesto
             <CountdownTimer secondsLeft={display.secondsLeft} totalSeconds={timer.totalSeconds} danger={display.danger} label="Jocul se termină în" />
           </div>
         )}
-        <Leaderboard standings={standings} meId={snapshot.me.playerId} connection={connection} scoreMode={scoreMode} />
+        <Leaderboard standings={boardStandings} meId={snapshot.me.playerId} connection={connection} scoreMode={scoreMode} />
       </main>
     );
   }
@@ -337,7 +348,13 @@ export function SelfPacedRuntime({ code, token, snapshot, standings, lastMilesto
       )}
 
       <div className="flex items-center justify-between mb-4">
-        {me ? (
+        {scoreMode === "progress" ? (
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--color-bg-secondary)] border border-[var(--color-border)]">
+            <span className="text-[11px] text-[var(--color-text-tertiary)] uppercase tracking-wider">Întrebarea</span>
+            <span className="text-sm font-bold text-[var(--color-accent)]" style={{ fontFamily: "var(--font-display)" }}>{Math.min(index + 1, order.length)}</span>
+            <span className="text-[11px] text-[var(--color-text-tertiary)]">din {order.length}</span>
+          </div>
+        ) : me ? (
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--color-bg-secondary)] border border-[var(--color-border)]">
             <span className="text-[11px] text-[var(--color-text-tertiary)] uppercase tracking-wider">Locul</span>
             <span className="text-sm font-bold text-[var(--color-accent)]" style={{ fontFamily: "var(--font-display)" }}>{me.rank}</span>
@@ -428,7 +445,7 @@ export function SelfPacedRuntime({ code, token, snapshot, standings, lastMilesto
         <h2 className="text-[11px] font-semibold uppercase tracking-wider text-[var(--color-text-tertiary)] mb-2">
           Clasament live
         </h2>
-        <Leaderboard standings={standings} meId={snapshot.me.playerId} connection={connection} scoreMode={scoreMode} />
+        <Leaderboard standings={boardStandings} meId={snapshot.me.playerId} connection={connection} scoreMode={scoreMode} />
       </section>
     </main>
   );

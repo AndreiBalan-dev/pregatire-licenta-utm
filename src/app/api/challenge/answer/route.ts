@@ -59,7 +59,11 @@ export async function POST(request: NextRequest) {
   // Simulare grades like the exam: a flat point per correct answer (speed plays
   // no part), so the player's score equals their correct count and the leaderboard
   // ranks by nota with completion time as the tiebreak. Custom games use Kahoot points.
-  const isSimulare = (lobby.config as { preset?: string }).preset === "simulare";
+  const cfg = lobby.config as { preset?: string; instantFeedback?: boolean };
+  const isSimulare = cfg.preset === "simulare";
+  // A Simulare without instant feedback keeps the grade hidden during play, so the
+  // "took the lead" toast (which would reveal who's scoring best) is suppressed.
+  const gradeHidden = isSimulare && cfg.instantFeedback === false;
   const points = isSimulare
     ? simulareAnswerPoints(isCorrect)
     : answerPoints(isCorrect, timeMs, scoringBudgetMs(timer));
@@ -114,7 +118,8 @@ export async function POST(request: NextRequest) {
 
   const milestones = detectMilestones({
     playerId: player.id, name: player.name, total,
-    beforeAnswered, afterAnswered, justFinished, anyoneFinishedBefore, becameLeader,
+    beforeAnswered, afterAnswered, justFinished, anyoneFinishedBefore,
+    becameLeader: gradeHidden ? false : becameLeader,
   });
 
   // Publish: leaderboard first, then any milestones.
@@ -124,8 +129,7 @@ export async function POST(request: NextRequest) {
   // End the round if everyone is now finished or gone (publishes the podium).
   await maybeFinishRunning(lobby);
 
-  const config = lobby.config as { instantFeedback: boolean };
-  if (config.instantFeedback) {
+  if (cfg.instantFeedback) {
     return NextResponse.json({ recorded: true, isCorrect, points, correctAnswer: question.correctAnswer, explanation: question.explanation ?? null });
   }
   return NextResponse.json({ recorded: true, points });

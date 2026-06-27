@@ -7,7 +7,7 @@ import { formatClock } from "@/lib/challenge/timing";
 import { computeScore } from "@/lib/exam";
 import { cn } from "@/lib/utils";
 
-export type ScoreMode = "points" | "nota";
+export type ScoreMode = "points" | "nota" | "progress";
 
 // Gold / silver / bronze for ranks 1-3; everyone else gets the muted text colour.
 const MEDAL = ["#FFD24A", "#C9D1DA", "#E0935A"];
@@ -32,9 +32,12 @@ export function Leaderboard({
 }) {
   return (
     <ol className="space-y-1.5">
-      {standings.map((s) => {
+      {standings.map((s, i) => {
         const isMe = s.playerId === meId;
-        const medal = s.rank <= 3 ? MEDAL[s.rank - 1] : null;
+        // Progress mode hides the grade, so the caller pre-sorts by progress and
+        // the shown position follows that order; otherwise use the ranked position.
+        const position = scoreMode === "progress" ? i + 1 : s.rank;
+        const medal = position <= 3 ? MEDAL[position - 1] : null;
         const conn = connection?.get(s.playerId);
         const away = !!conn && !conn.connected;
         return (
@@ -51,7 +54,7 @@ export function Leaderboard({
               className="w-5 sm:w-6 text-center font-bold tabular-nums flex-shrink-0 text-sm"
               style={{ fontFamily: "var(--font-display)", color: medal ?? "var(--color-text-tertiary)" }}
             >
-              {s.rank}
+              {position}
             </span>
             {!dense && <PlayerAvatar name={s.name} size={30} className={cn(away && "opacity-40 grayscale")} />}
             <div className={cn("min-w-0 flex-1", away && "opacity-50")}>
@@ -90,7 +93,11 @@ export function Leaderboard({
               className={cn("text-base font-bold tabular-nums flex-shrink-0 text-[var(--color-text-primary)]", away && "opacity-50")}
               style={{ fontFamily: "var(--font-display)" }}
             >
-              {scoreMode === "nota" ? computeScore(s.correctCount).toFixed(2) : s.score}
+              {scoreMode === "progress"
+                ? `${s.answeredCount}/${s.totalQuestions}`
+                : scoreMode === "nota"
+                  ? computeScore(s.correctCount).toFixed(2)
+                  : s.score}
             </span>
           </li>
         );

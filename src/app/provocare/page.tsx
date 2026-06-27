@@ -37,6 +37,12 @@ export default function ProvocarePage() {
   const [instantFeedback, setInstantFeedback] = useState(true);
   const [customTimer, setCustomTimer] = useState<TimerValue>({ mode: "total", totalMinutes: 10, perQuestionSeconds: 120 });
   const [simulareTimer, setSimulareTimer] = useState<TimerValue>({ mode: "total", totalMinutes: SIMULARE_DEFAULT_MINUTES, perQuestionSeconds: 120 });
+  // Simulare has its own toggles (own state so they don't bleed into the custom card).
+  // Feedback defaults on: we compute a grade, so showing correct/wrong as you go is
+  // the realistic default. Turning it off hides the grade live (see SelfPacedRuntime).
+  const [simShuffleOrder, setSimShuffleOrder] = useState(true);
+  const [simShuffleOptions, setSimShuffleOptions] = useState(true);
+  const [simInstantFeedback, setSimInstantFeedback] = useState(true);
 
   const [pendingPreset, setPendingPreset] = useState<ChallengePreset>("custom");
   const [nameOpen, setNameOpen] = useState(false);
@@ -89,9 +95,9 @@ export default function ProvocarePage() {
             // custom subject/count selection and uses every subject + 36 grile.
             subjectIds: isSimulare ? ALL_SUBJECT_IDS : subjectIds,
             questionCount: isSimulare ? EXAM_TOTAL_QUESTIONS : effective,
-            shuffleOrder: isSimulare ? true : shuffleOrder,
-            shuffleOptions: isSimulare ? true : shuffleOptions,
-            instantFeedback: isSimulare ? false : instantFeedback,
+            shuffleOrder: isSimulare ? simShuffleOrder : shuffleOrder,
+            shuffleOptions: isSimulare ? simShuffleOptions : shuffleOptions,
+            instantFeedback: isSimulare ? simInstantFeedback : instantFeedback,
             perQuestionSeconds: null,
             capacity: CAPACITY,
             hostPlays: true,
@@ -190,12 +196,16 @@ export default function ProvocarePage() {
                   <span>toate materiile</span>
                   <span className="w-px h-3 bg-[var(--color-border)]" />
                   <span>notă pe 1-10</span>
-                  <span className="w-px h-3 bg-[var(--color-border)]" />
-                  <span>simulare reală</span>
                 </div>
 
                 <div className="mt-5">
                   <TimerPicker value={simulareTimer} onChange={setSimulareTimer} />
+                </div>
+
+                <div className="mt-5 space-y-2.5">
+                  <ToggleRow checked={simShuffleOrder} onChange={setSimShuffleOrder} label="Amestecă ordinea" description="Întrebările apar în altă ordine pentru fiecare" />
+                  <ToggleRow checked={simShuffleOptions} onChange={setSimShuffleOptions} label="Amestecă variantele" description="Răspunsurile A-D sunt amestecate la fiecare" />
+                  <ToggleRow checked={simInstantFeedback} onChange={setSimInstantFeedback} label="Feedback instant" description="Arată corect/greșit pe loc. Oprit, afli nota abia la final, ca la examen" />
                 </div>
 
                 <button
