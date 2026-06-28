@@ -29,7 +29,7 @@ export function ExamHistoryButton({ history, onClear, subtitle, className }: Exa
     <>
       Ai dat{" "}
       <span className="font-semibold text-[var(--color-text-secondary)] tabular-nums">{count}</span>{" "}
-      {count === 1 ? "examen" : "examene"} înainte. Vezi cum ai stat.
+      {count === 1 ? "examen" : "examene"}. Vezi cum ai stat.
     </>
   );
 

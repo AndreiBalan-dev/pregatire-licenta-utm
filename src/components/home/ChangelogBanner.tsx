@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
+  "Simulator: ultimul examen dat apare acum imediat in istoric, iar la 20 de examene cel mai vechi se sterge automat",
   "Chat in sala de asteptare din Provocare: vorbesti cu ceilalti pana porneste gazda",
   "La provocarea personalizata alegi clasamentul pe puncte sau pe raspunsuri corecte",
-  "Pe raspunsuri corecte cu feedback oprit, numarul se vede abia la final, ca la simulare",
 ];
 
 export function ChangelogBanner() {

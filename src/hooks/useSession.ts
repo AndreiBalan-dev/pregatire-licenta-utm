@@ -17,7 +17,7 @@ import {
   type TrainingState,
   type TrainingSummary,
 } from "@/lib/session-types";
-import { computePracticeSummary, computeTrainingSummary, sortSessionHistory, type SessionHistoryEntry } from "@/lib/session-history";
+import { computePracticeSummary, computeTrainingSummary, finishedExams, sortSessionHistory, type SessionHistoryEntry } from "@/lib/session-history";
 import { STORAGE_KEY, MAX_QUESTION_TIME_MS } from "@/lib/constants";
 import { shuffleArray } from "@/lib/utils";
 import { questionsBySubject, getQuestion } from "@/data";
@@ -734,10 +734,17 @@ export function useSession() {
   }, [persistSession]);
 
   const getExamHistorySummaries = useCallback((): ExamSummaryData[] => {
-    return (session.examHistory ?? []).map((e) => computeExamSummary(e));
-  }, [session.examHistory]);
+    // Include the just-submitted current exam: it isn't archived into
+    // examHistory until the next exam starts, so without this the latest result
+    // is missing from the list (and at the cap the list looks frozen at 20).
+    return finishedExams(session.currentExam, session.examHistory).map((e) => computeExamSummary(e));
+  }, [session.currentExam, session.examHistory]);
 
   const getSessionHistory = useCallback((): SessionHistoryEntry[] => {
+    // Deliberately only the archived history here (not the current exam): the
+    // Rezultate page renders the current exam as a hero card directly above this
+    // timeline, so including it would show it twice. The simulator's own history
+    // modal (getExamHistorySummaries) does include it - it has no such hero.
     const exams = (session.examHistory ?? []).map((e) => ({
       kind: "exam" as const,
       date: e.submittedAt ?? e.startedAt,

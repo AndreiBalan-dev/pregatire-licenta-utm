@@ -1,6 +1,6 @@
 import process from "node:process";
 import assert from "node:assert/strict";
-import { computePracticeSummary, computeTrainingSummary, sortSessionHistory } from "../src/lib/session-history.ts";
+import { computePracticeSummary, computeTrainingSummary, sortSessionHistory, finishedExams } from "../src/lib/session-history.ts";
 
 let failures = 0;
 function check(name, fn) {
@@ -58,6 +58,44 @@ check("sortSessionHistory: newest first across all three types", () => {
     { kind: "training", date: "2026-06-21T11:00:00.000Z", training: {} },
   ];
   assert.deepEqual(sortSessionHistory(entries).map((e) => e.kind), ["exam", "training", "practice"]);
+});
+
+// finishedExams: unify the just-submitted current exam with the archived
+// history (current is not archived until the NEXT exam starts).
+const EX = (examId, submittedAt) => ({ examId, submittedAt, questionIds: [], answers: {}, currentIndex: 0, startedAt: "2026-06-21T09:00:00.000Z", durationMs: null, showFeedback: false, isRepeat: false });
+
+check("finishedExams: no current + empty history -> []", () => {
+  assert.deepEqual(finishedExams(null, []), []);
+  assert.deepEqual(finishedExams(null, undefined), []);
+});
+
+check("finishedExams: submitted current is prepended to history", () => {
+  const hist = [EX("h1", "2026-06-21T10:00:00.000Z")];
+  const cur = EX("cur", "2026-06-21T11:00:00.000Z");
+  assert.deepEqual(finishedExams(cur, hist).map((e) => e.examId), ["cur", "h1"]);
+});
+
+check("finishedExams: in-progress current (submittedAt null) is excluded", () => {
+  const hist = [EX("h1", "2026-06-21T10:00:00.000Z")];
+  const cur = EX("cur", null);
+  assert.deepEqual(finishedExams(cur, hist).map((e) => e.examId), ["h1"]);
+});
+
+check("finishedExams: already-archived current is not duplicated", () => {
+  const dup = EX("same", "2026-06-21T10:00:00.000Z");
+  const hist = [dup, EX("h2", "2026-06-21T09:30:00.000Z")];
+  assert.deepEqual(finishedExams(dup, hist).map((e) => e.examId), ["same", "h2"]);
+});
+
+check("finishedExams: at the cap, submitted current is added and the oldest drops", () => {
+  // 20 archived exams h0 (newest) .. h19 (oldest), plus a fresh submitted current.
+  const hist = Array.from({ length: 20 }, (_, i) => EX(`h${i}`, `2026-06-21T10:00:00.000Z`));
+  const cur = EX("cur", "2026-06-21T12:00:00.000Z");
+  const out = finishedExams(cur, hist);
+  assert.equal(out.length, 20); // still capped at 20
+  assert.equal(out[0].examId, "cur"); // newest result is present
+  assert.equal(out.at(-1).examId, "h18"); // h19 (the oldest) was evicted, not the new one
+  assert.ok(!out.some((e) => e.examId === "h19"));
 });
 
 if (failures > 0) { console.error(`\n${failures} test(s) failed`); process.exit(1); }

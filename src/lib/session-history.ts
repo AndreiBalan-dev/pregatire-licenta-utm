@@ -1,5 +1,7 @@
+import { MAX_EXAM_HISTORY } from "@/lib/session-types";
 import type {
   AnswerRecord,
+  ExamState,
   ExamSummaryData,
   PracticeState,
   PracticeSummary,
@@ -75,4 +77,25 @@ export function computeTrainingSummary(
 /** Merge the three histories newest-first by their date field. Pure. */
 export function sortSessionHistory(entries: SessionHistoryEntry[]): SessionHistoryEntry[] {
   return [...entries].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+}
+
+/**
+ * The full list of finished exams, newest first: a just-submitted current exam
+ * (which is not archived into examHistory until the NEXT exam starts) prepended
+ * to the archived history, deduped by examId and capped at `max`. Without this,
+ * the most recent result is missing from the history views and, at the cap, the
+ * list looks frozen at 20 instead of rotating in the newest and dropping the
+ * oldest. Pure.
+ */
+export function finishedExams(
+  currentExam: ExamState | null,
+  examHistory: ExamState[] | undefined,
+  max: number = MAX_EXAM_HISTORY,
+): ExamState[] {
+  const archived = examHistory ?? [];
+  const includeCurrent =
+    !!currentExam?.submittedAt &&
+    !archived.some((e) => e.examId === currentExam.examId);
+  const all = includeCurrent ? [currentExam, ...archived] : archived;
+  return all.slice(0, max);
 }

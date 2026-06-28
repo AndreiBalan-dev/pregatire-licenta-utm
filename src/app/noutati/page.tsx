@@ -51,6 +51,8 @@ const changelog: Version[] = [
       { text: "Sala de asteptare din Provocare are acum un chat: cat astepti gazda sa porneasca, poti vorbi cu ceilalti jucatori. Mesajele apar pe loc pentru toata lumea din camera. Chatul e doar in sala de asteptare si dispare cand incepe provocarea", type: "feature" },
       { text: "La o provocare personalizata poti alege cum se face clasamentul: pe puncte (stil Kahoot, mai rapid inseamna mai multe puncte) sau pe numarul de raspunsuri corecte. La raspunsuri corecte conteaza cate ai nimerit, iar timpul departajeaza la egalitate", type: "feature" },
       { text: "Daca alegi clasamentul pe raspunsuri corecte si lasi feedbackul instant oprit, numarul ramane ascuns in timpul jocului si se vede abia la final, ca la simulare", type: "improvement" },
+      { text: "Simulator reparat: ultimul examen dat apare acum imediat in istoricul de examene (inainte ultimul rezultat nu se mai adauga in lista)", type: "fix" },
+      { text: "Simulator: cand ai 20 de examene salvate (maximul), urmatorul examen il sterge automat pe cel mai vechi si il adauga pe cel nou, in loc sa nu mai adauge nimic", type: "fix" },
     ],
   },
   {
