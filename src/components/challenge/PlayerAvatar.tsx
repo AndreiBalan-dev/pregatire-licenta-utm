@@ -28,11 +28,15 @@ export function PlayerAvatar({
   name,
   size = 44,
   isHost = false,
+  glow = 14,
   className,
 }: {
   name: string;
   size?: number;
   isHost?: boolean;
+  /** Glow blur radius in px. Use a smaller value inside clipped/scroll
+   *  containers (e.g. the chat) so the shadow doesn't get cut at the edge. */
+  glow?: number;
   className?: string;
 }) {
   const color = avatarColor(name);
@@ -48,7 +52,7 @@ export function PlayerAvatar({
         color,
         background: `radial-gradient(circle at 30% 25%, ${color}38, ${color}12)`,
         border: `1.5px solid ${color}66`,
-        boxShadow: `0 0 14px ${color}22`,
+        boxShadow: glow > 0 ? `0 0 ${glow}px ${color}22` : undefined,
       }}
       aria-hidden="true"
     >

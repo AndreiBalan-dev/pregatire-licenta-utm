@@ -16,7 +16,9 @@ export type Cue =
   | "win"
   | "finish"
   | "tick"
-  | "timeout";
+  | "timeout"
+  | "send"
+  | "message";
 
 let ctx: AudioContext | null = null;
 let master: GainNode | null = null;
@@ -87,6 +89,8 @@ const HAPTICS: Record<Cue, number | number[]> = {
   finish: 18,
   tick: 5,
   timeout: [40, 30, 40, 30, 90],
+  send: 6,
+  message: 8,
 };
 
 function synth(cue: Cue) {
@@ -135,6 +139,16 @@ function synth(cue: Cue) {
       // Descending "time's up" buzz, distinct from a wrong answer.
       tone(c, out, t, { freq: 440, to: 165, type: "sawtooth", dur: 0.32, gain: 0.1 });
       tone(c, out, t, { freq: 150, type: "sine", start: 0.06, dur: 0.3, gain: 0.08 });
+      break;
+    case "send":
+      // Your own outgoing message: a light, quick upward blip.
+      tone(c, out, t, { freq: 480, to: 760, type: "sine", dur: 0.06, gain: 0.08 });
+      break;
+    case "message":
+      // Incoming message from someone else: a soft two-note pop, quieter than
+      // send and clearly distinct so you can tell it apart from your own.
+      tone(c, out, t, { freq: 620, type: "sine", dur: 0.05, gain: 0.06 });
+      tone(c, out, t, { freq: 740, type: "sine", start: 0.05, dur: 0.07, gain: 0.05 });
       break;
   }
 }

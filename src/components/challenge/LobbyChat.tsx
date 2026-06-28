@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { PlayerAvatar } from "./PlayerAvatar";
 import { cn } from "@/lib/utils";
 import { CHALLENGE } from "@/lib/constants";
+import { cue } from "@/lib/challenge/sound";
 import type { ChatMessage } from "@/lib/realtime/events";
 
 // Auto-scroll to the newest message only when the user is already pinned near the
@@ -24,6 +25,7 @@ export function LobbyChat({
   const [error, setError] = useState<string | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const nearBottomRef = useRef(true);
+  const prevCountRef = useRef(messages.length);
 
   const onScroll = () => {
     const el = listRef.current;
@@ -36,6 +38,16 @@ export function LobbyChat({
     if (el && nearBottomRef.current) el.scrollTop = el.scrollHeight;
   }, [messages.length]);
 
+  // Soft chime when a NEW message arrives from someone else (your own messages
+  // already chime on send). Skips the initial mount and any list reset.
+  useEffect(() => {
+    const prev = prevCountRef.current;
+    prevCountRef.current = messages.length;
+    if (messages.length <= prev) return;
+    const latest = messages[messages.length - 1];
+    if (latest && meId != null && latest.playerId !== meId) cue("message");
+  }, [messages, meId]);
+
   async function submit(e: FormEvent) {
     e.preventDefault();
     const value = text.trim();
@@ -47,6 +59,7 @@ export function LobbyChat({
       if (res.ok) {
         setText("");                  // the Pusher echo will render the message
         nearBottomRef.current = true; // make sure our own message scrolls into view
+        cue("send");                  // light blip to confirm it went out
       } else {
         setError(res.error ?? "Eroare."); // keep the typed text so they can retry
       }
@@ -71,7 +84,9 @@ export function LobbyChat({
         ref={listRef}
         onScroll={onScroll}
         aria-live="polite"
-        className="mt-3 max-h-[40vh] min-h-[88px] overflow-y-auto pr-1"
+        // -mx-2 px-2 widens the clip box into the card's padding so the avatar
+        // glow isn't cut at the edge; py keeps the first/last glow off the rim.
+        className="mt-3 max-h-[40vh] min-h-[88px] overflow-y-auto -mx-2 px-2 py-1.5"
       >
         {messages.length === 0 ? (
           <div className="py-6 text-center">
@@ -86,7 +101,7 @@ export function LobbyChat({
               <div key={m.id} className={cn("flex gap-2.5", grouped ? "mt-0.5" : "mt-2.5 first:mt-0")}>
                 <div className="w-7 flex-shrink-0">
                   {!grouped && (
-                    <PlayerAvatar name={m.name} size={28} className={mine ? "ring-2 ring-[var(--color-accent)]" : undefined} />
+                    <PlayerAvatar name={m.name} size={28} glow={6} className={mine ? "ring-2 ring-[var(--color-accent)]" : undefined} />
                   )}
                 </div>
                 <div className="min-w-0 flex-1">
