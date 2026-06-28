@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Blocurile de cod Java sunt acum colorate corect, nu mai raman text alb ca pana acum",
-  "Aceeasi evidentiere si pentru PHP: cuvinte cheie, variabile, siruri si comentarii",
-  "Restul limbajelor (C, C++, Python, SQL) raman neschimbate",
+  "Chat in sala de asteptare din Provocare: vorbesti cu ceilalti pana porneste gazda",
+  "La provocarea personalizata alegi clasamentul pe puncte sau pe raspunsuri corecte",
+  "Pe raspunsuri corecte cu feedback oprit, numarul se vede abia la final, ca la simulare",
 ];
 
 export function ChangelogBanner() {

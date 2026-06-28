@@ -44,6 +44,16 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "3.1.0",
+    date: "28 Iunie 2026",
+    title: "Chat in sala de asteptare si clasament pe raspunsuri corecte",
+    changes: [
+      { text: "Sala de asteptare din Provocare are acum un chat: cat astepti gazda sa porneasca, poti vorbi cu ceilalti jucatori. Mesajele apar pe loc pentru toata lumea din camera. Chatul e doar in sala de asteptare si dispare cand incepe provocarea", type: "feature" },
+      { text: "La o provocare personalizata poti alege cum se face clasamentul: pe puncte (stil Kahoot, mai rapid inseamna mai multe puncte) sau pe numarul de raspunsuri corecte. La raspunsuri corecte conteaza cate ai nimerit, iar timpul departajeaza la egalitate", type: "feature" },
+      { text: "Daca alegi clasamentul pe raspunsuri corecte si lasi feedbackul instant oprit, numarul ramane ascuns in timpul jocului si se vede abia la final, ca la simulare", type: "improvement" },
+    ],
+  },
+  {
     version: "3.0.2",
     date: "28 Iunie 2026",
     title: "Cod Java si PHP, colorat corect",
