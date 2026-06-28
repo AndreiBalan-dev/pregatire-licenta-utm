@@ -42,13 +42,17 @@ export function LobbyChat({
     if (!value || sending) return;
     setSending(true);
     setError(null);
-    const res = await onSend(value);
-    setSending(false);
-    if (res.ok) {
-      setText("");                  // the Pusher echo will render the message
-      nearBottomRef.current = true; // make sure our own message scrolls into view
-    } else {
-      setError(res.error ?? "Eroare."); // keep the typed text so they can retry
+    try {
+      const res = await onSend(value);
+      if (res.ok) {
+        setText("");                  // the Pusher echo will render the message
+        nearBottomRef.current = true; // make sure our own message scrolls into view
+      } else {
+        setError(res.error ?? "Eroare."); // keep the typed text so they can retry
+      }
+    } finally {
+      // Always re-enable the input, even if onSend rejects unexpectedly.
+      setSending(false);
     }
   }
 
