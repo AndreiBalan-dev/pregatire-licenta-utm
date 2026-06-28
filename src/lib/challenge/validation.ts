@@ -11,6 +11,19 @@ export function validateName(raw: unknown): { ok: true; name: string } | { ok: f
   return { ok: true, name };
 }
 
+export function validateChatMessage(raw: unknown): { ok: true; text: string } | { ok: false; error: string } {
+  if (typeof raw !== "string") return { ok: false, error: "Mesaj invalid." };
+  // Collapse all whitespace runs (incl. pasted newlines/tabs) to single spaces so a
+  // multi-line paste becomes a normal one-line message instead of tripping the
+  // control-char check below.
+  const text = raw.replace(/\s+/g, " ").trim();
+  if (text.length === 0) return { ok: false, error: "Mesaj gol." };
+  if (text.length > CHALLENGE.MAX_MESSAGE_LENGTH) return { ok: false, error: `Mesaj prea lung (max ${CHALLENGE.MAX_MESSAGE_LENGTH}).` };
+  if (/[\x00-\x1f\x7f]/.test(text)) return { ok: false, error: "Mesaj invalid." };
+  if (/<[^>]*>/.test(text)) return { ok: false, error: "Mesaj invalid." };
+  return { ok: true, text };
+}
+
 export function validateCreateConfig(
   raw: unknown,
   validSubjectIds: Set<string>,

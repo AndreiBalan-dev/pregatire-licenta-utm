@@ -1,6 +1,6 @@
 import process from "node:process";
 import assert from "node:assert/strict";
-import { validateName, validateCreateConfig } from "../src/lib/challenge/validation.ts";
+import { validateName, validateCreateConfig, validateChatMessage } from "../src/lib/challenge/validation.ts";
 
 let failures = 0;
 function check(name, fn) {
@@ -119,6 +119,39 @@ check("accepts an unlimited timer (no clock)", () => {
   const r = validateCreateConfig({ ...goodCfg, timer: { mode: "unlimited", totalSeconds: 600, perQuestionSeconds: 120 } }, subjects);
   assert.equal(r.ok, true);
   assert.equal(r.config.timer.mode, "unlimited");
+});
+
+check("chat: trims and accepts a normal message", () => {
+  const r = validateChatMessage("  hai mai repede ");
+  assert.equal(r.ok, true);
+  assert.equal(r.text, "hai mai repede");
+});
+
+check("chat: collapses internal whitespace and newlines to single spaces", () => {
+  const r = validateChatMessage("gata\n\n  acum");
+  assert.equal(r.ok, true);
+  assert.equal(r.text, "gata acum");
+});
+
+check("chat: rejects empty and whitespace-only messages", () => {
+  assert.equal(validateChatMessage("").ok, false);
+  assert.equal(validateChatMessage("    ").ok, false);
+  assert.equal(validateChatMessage("\n\t").ok, false);
+});
+
+check("chat: accepts exactly 200 chars, rejects 201", () => {
+  assert.equal(validateChatMessage("x".repeat(200)).ok, true);
+  assert.equal(validateChatMessage("x".repeat(201)).ok, false);
+});
+
+check("chat: rejects angle brackets and control chars", () => {
+  assert.equal(validateChatMessage("<b>hi</b>").ok, false);
+  assert.equal(validateChatMessage("a\x00b").ok, false);
+});
+
+check("chat: rejects non-string input", () => {
+  assert.equal(validateChatMessage(123).ok, false);
+  assert.equal(validateChatMessage(null).ok, false);
 });
 
 if (failures > 0) { console.error(`\n${failures} test(s) failed`); process.exit(1); }
