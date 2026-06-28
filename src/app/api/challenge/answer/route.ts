@@ -59,12 +59,16 @@ export async function POST(request: NextRequest) {
   // Simulare grades like the exam: a flat point per correct answer (speed plays
   // no part), so the player's score equals their correct count and the leaderboard
   // ranks by nota with completion time as the tiebreak. Custom games use Kahoot points.
-  const cfg = lobby.config as { preset?: string; instantFeedback?: boolean };
+  const cfg = lobby.config as { preset?: string; instantFeedback?: boolean; scoring?: string };
   const isSimulare = cfg.preset === "simulare";
-  // A Simulare without instant feedback keeps the grade hidden during play, so the
-  // "took the lead" toast (which would reveal who's scoring best) is suppressed.
-  const gradeHidden = isSimulare && cfg.instantFeedback === false;
-  const points = isSimulare
+  // Flat-scored games (Simulare's nota, or a custom game set to rank by correct
+  // answers) award a flat point per correct answer; only Kahoot "points" games
+  // weight by speed.
+  const flatScored = isSimulare || cfg.scoring === "correct";
+  // A flat-scored game without instant feedback keeps the score hidden during play,
+  // so the "took the lead" toast (which would reveal who's scoring best) is suppressed.
+  const gradeHidden = flatScored && cfg.instantFeedback === false;
+  const points = flatScored
     ? simulareAnswerPoints(isCorrect)
     : answerPoints(isCorrect, timeMs, scoringBudgetMs(timer));
 

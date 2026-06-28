@@ -35,6 +35,8 @@ export default function ProvocarePage() {
   const [shuffleOrder, setShuffleOrder] = useState(true);
   const [shuffleOptions, setShuffleOptions] = useState(true);
   const [instantFeedback, setInstantFeedback] = useState(true);
+  // Custom-game result system: Kahoot points (default) or raw correct-answer count.
+  const [scoring, setScoring] = useState<"points" | "correct">("points");
   const [customTimer, setCustomTimer] = useState<TimerValue>({ mode: "total", totalMinutes: 10, perQuestionSeconds: 120 });
   const [simulareTimer, setSimulareTimer] = useState<TimerValue>({ mode: "total", totalMinutes: SIMULARE_DEFAULT_MINUTES, perQuestionSeconds: 120 });
   // Simulare has its own toggles (own state so they don't bleed into the custom card).
@@ -98,6 +100,7 @@ export default function ProvocarePage() {
             shuffleOrder: isSimulare ? simShuffleOrder : shuffleOrder,
             shuffleOptions: isSimulare ? simShuffleOptions : shuffleOptions,
             instantFeedback: isSimulare ? simInstantFeedback : instantFeedback,
+            scoring: isSimulare ? "points" : scoring,
             perQuestionSeconds: null,
             capacity: CAPACITY,
             hostPlays: true,
@@ -314,6 +317,38 @@ export default function ProvocarePage() {
                   </div>
 
                   <TimerPicker value={customTimer} onChange={setCustomTimer} />
+
+                  <div>
+                    <span className="block mb-2 text-[11px] font-semibold uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                      Rezultat
+                    </span>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {([
+                        { id: "points", label: "Puncte" },
+                        { id: "correct", label: "Răspunsuri corecte" },
+                      ] as const).map((opt) => (
+                        <button
+                          key={opt.id}
+                          type="button"
+                          onClick={() => setScoring(opt.id)}
+                          className={cn(
+                            "py-2.5 rounded-[var(--radius-md)] text-sm font-bold border transition-all cursor-pointer",
+                            scoring === opt.id
+                              ? "bg-[var(--color-accent)] text-[#0C0C0E] border-[var(--color-accent)]"
+                              : "bg-[var(--color-bg-primary)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-[var(--color-border-strong)]",
+                          )}
+                          style={{ fontFamily: "var(--font-display)" }}
+                        >
+                          {opt.label}
+                        </button>
+                      ))}
+                    </div>
+                    <p className="mt-1.5 text-[11px] text-[var(--color-text-tertiary)]">
+                      {scoring === "points"
+                        ? "Punctaj stil Kahoot: cine răspunde mai repede ia mai multe puncte."
+                        : "Clasament după numărul de răspunsuri corecte, timpul departajează."}
+                    </p>
+                  </div>
 
                   <div className="space-y-2.5">
                     <ToggleRow checked={shuffleOrder} onChange={setShuffleOrder} label="Amestecă ordinea" description="Întrebările apar în altă ordine pentru fiecare" />

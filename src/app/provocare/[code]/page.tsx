@@ -17,7 +17,7 @@ import type { TimerConfig } from "@/lib/challenge/types";
 interface Snapshot {
   status: string;
   mode: string;
-  config: { capacity: number; instantFeedback: boolean; preset?: string; timer?: TimerConfig };
+  config: { capacity: number; instantFeedback: boolean; preset?: string; scoring?: string; timer?: TimerConfig };
   questionIds: number[] | null;
   totalRemainingSeconds?: number | null;
   me: { playerId: number; name: string; isHost: boolean; questionOrder: number[] | null; optionOrder: Record<number, string[]> | null; answers: { questionId: number; selected: string; isCorrect: boolean }[] };
@@ -136,7 +136,7 @@ export default function LobbyPage() {
   const liveStandings = standings.length ? standings : snapshot.standings;
 
   if (snapshot.status === "finished" || status === "finished") {
-    return <ResultsScreen standings={liveStandings} meId={snapshot.me?.playerId} scoreMode={snapshot.config.preset === "simulare" ? "nota" : "points"} />;
+    return <ResultsScreen standings={liveStandings} meId={snapshot.me?.playerId} scoreMode={snapshot.config.preset === "simulare" ? "nota" : snapshot.config.scoring === "correct" ? "correct" : "points"} />;
   }
   if (snapshot.status === "running" || status === "started") {
     return (

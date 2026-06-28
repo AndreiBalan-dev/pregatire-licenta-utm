@@ -7,7 +7,7 @@ import { formatClock } from "@/lib/challenge/timing";
 import { computeScore } from "@/lib/exam";
 import { cn } from "@/lib/utils";
 
-export type ScoreMode = "points" | "nota" | "progress";
+export type ScoreMode = "points" | "nota" | "progress" | "correct";
 
 // Gold / silver / bronze for ranks 1-3; everyone else gets the muted text colour.
 const MEDAL = ["#FFD24A", "#C9D1DA", "#E0935A"];
@@ -97,7 +97,9 @@ export function Leaderboard({
                 ? `${s.answeredCount}/${s.totalQuestions}`
                 : scoreMode === "nota"
                   ? computeScore(s.correctCount).toFixed(2)
-                  : s.score}
+                  : scoreMode === "correct"
+                    ? s.correctCount
+                    : s.score}
             </span>
           </li>
         );

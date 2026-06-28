@@ -121,6 +121,22 @@ check("accepts an unlimited timer (no clock)", () => {
   assert.equal(r.config.timer.mode, "unlimited");
 });
 
+check("defaults scoring to 'points' when omitted", () => {
+  const r = validateCreateConfig(goodCfg, subjects);
+  assert.equal(r.ok, true);
+  assert.equal(r.config.scoring, "points");
+});
+
+check("accepts and keeps scoring 'correct'", () => {
+  const r = validateCreateConfig({ ...goodCfg, scoring: "correct" }, subjects);
+  assert.equal(r.ok, true);
+  assert.equal(r.config.scoring, "correct");
+});
+
+check("rejects an invalid scoring", () => {
+  assert.equal(validateCreateConfig({ ...goodCfg, scoring: "nope" }, subjects).ok, false);
+});
+
 check("chat: trims and accepts a normal message", () => {
   const r = validateChatMessage("  hai mai repede ");
   assert.equal(r.ok, true);

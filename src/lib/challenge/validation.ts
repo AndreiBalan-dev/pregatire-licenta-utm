@@ -37,6 +37,11 @@ export function validateCreateConfig(
   const preset = c.preset === undefined ? "custom" : c.preset;
   if (preset !== "custom" && preset !== "simulare") return { ok: false, error: "Tip de provocare invalid." };
 
+  // Result system for custom games (ignored for simulare, which always grades on
+  // the nota). Optional for backward compatibility; absent means Kahoot points.
+  const scoring = c.scoring === undefined ? "points" : c.scoring;
+  if (scoring !== "points" && scoring !== "correct") return { ok: false, error: "Tip de rezultat invalid." };
+
   if (!Array.isArray(c.subjectIds) || c.subjectIds.length === 0) return { ok: false, error: "Alege cel puțin o materie." };
   for (const s of c.subjectIds) {
     if (typeof s !== "string" || !validSubjectIds.has(s)) return { ok: false, error: "Materie invalidă." };
@@ -94,6 +99,7 @@ export function validateCreateConfig(
     config: {
       mode: c.mode,
       preset,
+      scoring,
       subjectIds: c.subjectIds as string[],
       questionCount: count,
       shuffleOrder: c.shuffleOrder as boolean,

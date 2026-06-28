@@ -50,8 +50,8 @@ export function ResultsScreen({ standings, meId, scoreMode = "points" }: { stand
         </h1>
         {winner && (
           <p className="text-sm text-[var(--color-text-secondary)] mb-8">
-            Câștigător: <span className="text-[var(--color-accent)] font-semibold">{winner.name}</span> {scoreMode === "nota" ? `cu nota ${scoreLabel(winner)}` : `cu ${winner.score} ${winner.score === 1 ? "punct" : "puncte"}`}
-            <span className="text-[var(--color-text-tertiary)]"> · {winner.correctCount}/{winner.totalQuestions} corecte · {formatClock(Math.round(winner.totalTimeMs / 1000))}</span>
+            Câștigător: <span className="text-[var(--color-accent)] font-semibold">{winner.name}</span> {scoreMode === "nota" ? `cu nota ${scoreLabel(winner)}` : scoreMode === "correct" ? `cu ${winner.correctCount}/${winner.totalQuestions} corecte` : `cu ${winner.score} ${winner.score === 1 ? "punct" : "puncte"}`}
+            <span className="text-[var(--color-text-tertiary)]"> · {scoreMode === "correct" ? "" : `${winner.correctCount}/${winner.totalQuestions} corecte · `}{formatClock(Math.round(winner.totalTimeMs / 1000))}</span>
           </p>
         )}
 

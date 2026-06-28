@@ -25,7 +25,7 @@ interface Props {
   code: string;
   token: string;
   snapshot: {
-    config: { instantFeedback: boolean; preset?: string };
+    config: { instantFeedback: boolean; preset?: string; scoring?: string };
     me: {
       playerId: number;
       questionOrder: number[] | null;
@@ -51,13 +51,17 @@ export function SelfPacedRuntime({ code, token, snapshot, standings, lastMilesto
   const isTotal = timer.mode === "total";
   const isPerQuestion = timer.mode === "per_question";
   const isUnlimited = timer.mode === "unlimited";
-  // Simulare shows the 1-10 nota live ONLY with instant feedback on. With it off
-  // (a "real exam"), the running grade is itself feedback, so the board hides it
-  // and shows each player's progress instead; the nota is revealed only at the end.
+  // Flat-scored games show their score (the 1-10 nota for Simulare, or the raw
+  // correct-answer count for a custom "correct" game) live ONLY with instant
+  // feedback on. With it off (a "real exam"), the running score is itself feedback,
+  // so the board hides it and shows each player's progress instead; the score is
+  // revealed only at the end.
   const isSimulare = snapshot.config.preset === "simulare";
-  const scoreMode: ScoreMode = isSimulare
-    ? (snapshot.config.instantFeedback ? "nota" : "progress")
+  const flatScore = isSimulare || snapshot.config.scoring === "correct";
+  const scoreMode: ScoreMode = flatScore
+    ? (snapshot.config.instantFeedback ? (isSimulare ? "nota" : "correct") : "progress")
     : "points";
+  const correctMode = scoreMode === "correct";
   // In progress mode, also drop the grade-based ordering: rank the board by who
   // has answered the most (faster breaks ties), so the standings can't leak grade.
   const boardStandings =
@@ -337,6 +341,17 @@ export function SelfPacedRuntime({ code, token, snapshot, standings, lastMilesto
   // The result panel shows after a normal answer (feedback) or a timeout.
   const showResultArea = feedback || timedOut;
 
+  // The per-answer pop normally shows Kahoot points; in "correct" mode (flat
+  // scoring) "+1 puncte" would misrepresent the game, so show the right/wrong
+  // outcome instead.
+  const answerWasWrong = !timedOut && (lastPoints ?? 0) === 0;
+  const popWrong = timedOut || (correctMode && answerWasWrong);
+  const popText = timedOut
+    ? (correctMode ? "Timp expirat" : "Timp expirat - 0 puncte")
+    : correctMode
+      ? (answerWasWrong ? "Răspuns greșit" : "Corect!")
+      : `+${lastPoints ?? 0} puncte`;
+
   return (
     <main className="relative max-w-2xl mx-auto px-4 py-6">
       {goOverlay}
@@ -414,15 +429,15 @@ export function SelfPacedRuntime({ code, token, snapshot, standings, lastMilesto
           <div
             className={cn(
               "flex items-center justify-center gap-2 px-4 py-2.5 rounded-[var(--radius-md)] text-sm font-bold animate-roster-pop",
-              !timedOut && "bg-[var(--color-accent-muted)] text-[var(--color-accent)]",
+              !popWrong && "bg-[var(--color-accent-muted)] text-[var(--color-accent)]",
             )}
             style={
-              timedOut
+              popWrong
                 ? { background: "color-mix(in srgb, var(--color-wrong) 14%, transparent)", color: "var(--color-wrong)", fontFamily: "var(--font-display)" }
                 : { fontFamily: "var(--font-display)" }
             }
           >
-            {timedOut ? "Timp expirat - 0 puncte" : `+${lastPoints ?? 0} puncte`}
+            {popText}
           </div>
           {autoAdvanceLeft !== null && (
             <p className="text-center text-xs text-[var(--color-text-tertiary)]">
