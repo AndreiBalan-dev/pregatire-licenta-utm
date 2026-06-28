@@ -65,7 +65,7 @@ export default function LobbyPage() {
     } catch { /* ignore */ }
   }, [code]);
 
-  const { members, standings, lastMilestone, status, connected } = useChallengeChannel(code, token ?? hostToken);
+  const { members, standings, lastMilestone, status, connected, messages, sendMessage } = useChallengeChannel(code, token ?? hostToken);
 
   // Cross-reference live presence (member ids == player ids) against the roster so
   // the leaderboard can grey out whoever dropped and count down their grace window.
@@ -166,7 +166,7 @@ export default function LobbyPage() {
   const shareUrl = typeof window !== "undefined" ? `${window.location.origin}/provocare/${code}` : "";
   return (
     <>
-      <WaitingRoom code={code} members={members} isHost={!!hostToken} capacity={snapshot.config.capacity} meId={snapshot.me?.playerId} onStart={onStart} starting={starting} />
+      <WaitingRoom code={code} members={members} isHost={!!hostToken} capacity={snapshot.config.capacity} meId={snapshot.me?.playerId} onStart={onStart} starting={starting} messages={messages} onSendMessage={sendMessage} />
       {showShare && <ShareModal open code={code} url={shareUrl} onEnter={() => setShowShare(false)} />}
     </>
   );

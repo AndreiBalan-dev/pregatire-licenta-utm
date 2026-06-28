@@ -5,6 +5,8 @@ import { PlayerAvatar } from "./PlayerAvatar";
 import { SoundToggle } from "./SoundToggle";
 import { useProvocareSound } from "@/hooks/useProvocareSound";
 import { cn } from "@/lib/utils";
+import { LobbyChat } from "./LobbyChat";
+import type { ChatMessage } from "@/lib/realtime/events";
 
 interface Member {
   id: string;
@@ -19,6 +21,8 @@ export function WaitingRoom({
   meId,
   onStart,
   starting,
+  messages,
+  onSendMessage,
 }: {
   code: string;
   members: Member[];
@@ -27,6 +31,8 @@ export function WaitingRoom({
   meId?: number;
   onStart: () => void;
   starting: boolean;
+  messages: ChatMessage[];
+  onSendMessage: (text: string) => Promise<{ ok: boolean; error?: string }>;
 }) {
   const { play } = useProvocareSound();
   const [copied, setCopied] = useState(false);
@@ -139,6 +145,7 @@ export function WaitingRoom({
             Așteptăm ca gazda să înceapă...
           </p>
         )}
+        <LobbyChat messages={messages} meId={meId} onSend={onSendMessage} />
       </div>
     </main>
   );
