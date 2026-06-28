@@ -11,6 +11,7 @@ export const EVENTS = {
   LEADERBOARD: "leaderboard",
   MILESTONE: "milestone",
   ROUND_FINISHED: "round-finished",
+  CHAT_MESSAGE: "chat-message",
 } as const;
 
 export interface Standing {
@@ -45,4 +46,14 @@ export interface LeaderboardPayload {
 
 export interface RoundFinishedPayload {
   standings: Standing[];
+}
+
+// A single lobby chat message. Ephemeral - never stored; the server stamps id/at
+// and the trusted playerId/name from the sender's token.
+export interface ChatMessage {
+  id: string;       // server-generated (crypto.randomUUID) - React key + dedupe
+  playerId: number;
+  name: string;
+  text: string;     // validated + whitespace-normalized
+  at: number;       // server epoch ms
 }

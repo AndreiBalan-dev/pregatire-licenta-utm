@@ -19,6 +19,9 @@ export const RATE_LIMITS = {
   // don't throttle each other; legit polling peaks well under this.
   challengeState: { windowMs: 60 * 1000, maxRequests: 60 },
   challengeStart: { windowMs: 60 * 1000, maxRequests: 10 },
+  // Lobby chat: keyed by token (like challengeState) so classmates on one IP
+  // don't throttle each other. 30/min is generous for banter, caps floods.
+  challengeChat: { windowMs: 60 * 1000, maxRequests: 30 },
 } as const;
 
 export const CHALLENGE = {
@@ -27,6 +30,7 @@ export const CHALLENGE = {
   MAX_QUESTIONS: 1000, // hard ceiling above the whole bank (~714); the "Toate" option uses the full selected pool
   MIN_QUESTIONS: 1,
   MAX_NAME_LENGTH: 20,
+  MAX_MESSAGE_LENGTH: 200,
   MAX_LOBBIES_PER_IP: 10,
   ABANDON_MS: 3 * 60 * 60 * 1000, // 3h with no Start -> expired
   RESULTS_TTL_MS: 7 * 24 * 60 * 60 * 1000, // results readable 7 days
