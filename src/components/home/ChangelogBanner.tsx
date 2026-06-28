@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Simulare in Provocare: pornesti o provocare ca la examen, 36 de grile cu acelasi echilibru pe module si materii ca la Simulator, notate pe scala 1-10",
-  "Clasamentul simularii merge pe nota, iar la egalitate conteaza cine a terminat mai repede; porneste cu 2 ore ca la examen, dar poti schimba timpul",
-  "Optiune noua de timp 'Fara limita', cand vreti sa jucati fara presiune de ceas",
+  "Blocurile de cod Java sunt acum colorate corect, nu mai raman text alb ca pana acum",
+  "Aceeasi evidentiere si pentru PHP: cuvinte cheie, variabile, siruri si comentarii",
+  "Restul limbajelor (C, C++, Python, SQL) raman neschimbate",
 ];
 
 export function ChangelogBanner() {

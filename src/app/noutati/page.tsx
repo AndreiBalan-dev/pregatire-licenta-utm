@@ -44,6 +44,14 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "3.0.2",
+    date: "28 Iunie 2026",
+    title: "Cod Java si PHP, colorat corect",
+    changes: [
+      { text: "Blocurile de cod scrise in Java si PHP sunt acum colorate corect (cuvinte cheie, siruri de caractere, numere, comentarii si tipuri). Pana acum ramaneau text alb, ca si cum limbajul nu era recunoscut", type: "fix" },
+    ],
+  },
+  {
     version: "3.0.1",
     date: "27 Iunie 2026",
     title: "Simulare in Provocare, ca la examen",
