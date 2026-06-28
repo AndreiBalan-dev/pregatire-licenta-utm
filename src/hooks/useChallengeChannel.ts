@@ -1,7 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { createPusherClient } from "@/lib/realtime/pusher-client";
-import { CHANNELS, EVENTS, type Standing, type MilestoneEvent } from "@/lib/realtime/events";
+import { CHANNELS, EVENTS, type Standing, type MilestoneEvent, type ChatMessage } from "@/lib/realtime/events";
 
 interface Member { id: string; name: string }
 
@@ -11,6 +11,7 @@ export function useChallengeChannel(code: string | null, token: string | null) {
   const [lastMilestone, setLastMilestone] = useState<MilestoneEvent | null>(null);
   const [status, setStatus] = useState<"started" | "finished" | null>(null);
   const [connected, setConnected] = useState(true);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
 
   useEffect(() => {
     if (!code || !token) return;
@@ -20,6 +21,7 @@ export function useChallengeChannel(code: string | null, token: string | null) {
     setStandings([]);
     setLastMilestone(null);
     setStatus(null);
+    setMessages([]);
     const pusher = createPusherClient(token, code);
     pusher.connection.bind("error", (err: unknown) => {
       console.error("[provocare] pusher connection error (check NEXT_PUBLIC_PUSHER_KEY/CLUSTER):", err);
@@ -49,6 +51,10 @@ export function useChallengeChannel(code: string | null, token: string | null) {
     channel.bind(EVENTS.LEADERBOARD, (p: { standings: Standing[] }) => setStandings(p.standings));
     channel.bind(EVENTS.MILESTONE, (m: MilestoneEvent) => setLastMilestone(m));
     channel.bind(EVENTS.ROUND_FINISHED, (p: { standings: Standing[] }) => { setStandings(p.standings); setStatus("finished"); });
+    channel.bind(EVENTS.CHAT_MESSAGE, (m: ChatMessage) => {
+      // Dedupe by server id (in case of redelivery) and cap memory at the last 100.
+      setMessages((prev) => (prev.some((x) => x.id === m.id) ? prev : [...prev, m].slice(-100)));
+    });
 
     return () => {
       channel.unbind_all();
@@ -57,5 +63,26 @@ export function useChallengeChannel(code: string | null, token: string | null) {
     };
   }, [code, token]);
 
-  return { members, standings, lastMilestone, status, connected };
+  const sendMessage = useCallback(
+    async (text: string): Promise<{ ok: boolean; error?: string }> => {
+      if (!code || !token) return { ok: false, error: "Indisponibil." };
+      try {
+        const res = await fetch("/api/challenge/chat", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ code, token, text }),
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          return { ok: false, error: data.error ?? "Eroare." };
+        }
+        return { ok: true };
+      } catch {
+        return { ok: false, error: "Conexiune eșuată." };
+      }
+    },
+    [code, token],
+  );
+
+  return { members, standings, lastMilestone, status, connected, messages, sendMessage };
 }
