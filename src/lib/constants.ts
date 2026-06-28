@@ -22,6 +22,11 @@ export const RATE_LIMITS = {
   // Lobby chat: keyed by token (like challengeState) so classmates on one IP
   // don't throttle each other. 30/min is generous for banter, caps floods.
   challengeChat: { windowMs: 60 * 1000, maxRequests: 30 },
+  // IP-keyed backstop for chat. The per-token limit above is keyed on a
+  // client-supplied token, so a flood can rotate tokens to dodge it; this
+  // can't be forged. Generous (well above a full lobby on one NAT) so it only
+  // ever bites a flood, never legit banter.
+  challengeChatIp: { windowMs: 60 * 1000, maxRequests: 120 },
 } as const;
 
 export const CHALLENGE = {

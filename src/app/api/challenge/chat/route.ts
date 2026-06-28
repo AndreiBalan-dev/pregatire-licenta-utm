@@ -1,14 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
-import { hashToken } from "@/lib/crypto";
+import { hashToken, hashIp } from "@/lib/crypto";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { RATE_LIMITS } from "@/lib/constants";
 import { validateChatMessage } from "@/lib/challenge/validation";
-import { loadPlayerByToken } from "@/lib/challenge/server";
+import { loadPlayerByToken, getClientIp } from "@/lib/challenge/server";
 import { publishToLobby } from "@/lib/realtime/pusher-server";
 import { EVENTS, type ChatMessage } from "@/lib/realtime/events";
 
 export async function POST(request: NextRequest) {
+  // IP-keyed backstop FIRST, before parsing the body or touching the DB. The
+  // per-token limit below is keyed on a client-supplied token, so a flood can
+  // rotate tokens to dodge it; the IP key cannot be forged.
+  const ipRl = checkRateLimit(`ch:chat-ip:${hashIp(getClientIp(request))}`, RATE_LIMITS.challengeChatIp);
+  if (!ipRl.allowed) return NextResponse.json({ error: "Prea multe mesaje. Așteaptă puțin." }, { status: 429 });
+
   let body: { code?: unknown; token?: unknown; text?: unknown };
   try { body = await request.json(); } catch { return NextResponse.json({ error: "Date invalide." }, { status: 400 }); }
 
