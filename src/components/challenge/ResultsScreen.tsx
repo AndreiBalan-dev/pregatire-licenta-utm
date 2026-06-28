@@ -23,7 +23,8 @@ export function ResultsScreen({ standings, meId, scoreMode = "points" }: { stand
   const winner = standings[0];
   const me = standings.find((s) => s.playerId === meId);
   const iWon = !!me && me.rank === 1;
-  const scoreLabel = (s: Standing) => (scoreMode === "nota" ? computeScore(s.correctCount).toFixed(2) : String(s.score));
+  const scoreLabel = (s: Standing) =>
+    scoreMode === "nota" ? computeScore(s.correctCount).toFixed(2) : scoreMode === "correct" ? String(s.correctCount) : String(s.score);
 
   useEffect(() => {
     play(iWon ? "win" : "finish");

@@ -347,7 +347,7 @@ export function SelfPacedRuntime({ code, token, snapshot, standings, lastMilesto
   const answerWasWrong = !timedOut && (lastPoints ?? 0) === 0;
   const popWrong = timedOut || (correctMode && answerWasWrong);
   const popText = timedOut
-    ? (correctMode ? "Timp expirat" : "Timp expirat - 0 puncte")
+    ? (scoreMode === "points" ? "Timp expirat - 0 puncte" : "Timp expirat")
     : correctMode
       ? (answerWasWrong ? "Răspuns greșit" : "Corect!")
       : `+${lastPoints ?? 0} puncte`;

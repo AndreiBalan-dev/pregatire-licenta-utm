@@ -163,6 +163,7 @@ check("chat: accepts exactly 200 chars, rejects 201", () => {
 check("chat: rejects angle brackets and control chars", () => {
   assert.equal(validateChatMessage("<b>hi</b>").ok, false);
   assert.equal(validateChatMessage("a\x00b").ok, false);
+  assert.equal(validateChatMessage("a\x1bb").ok, false);
 });
 
 check("chat: rejects non-string input", () => {
