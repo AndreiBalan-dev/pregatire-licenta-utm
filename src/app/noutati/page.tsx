@@ -44,6 +44,17 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "3.1.2",
+    date: "29 Iunie 2026",
+    title: "Provocare: istoric, revizuire si refacerea greselilor",
+    changes: [
+      { text: "Dupa o provocare, jocul se salveaza in istoricul tau de pe pagina Rezultate: poti vedea oricand ce ai raspuns la fiecare intrebare, corect sau gresit", type: "feature" },
+      { text: "Poti reface greselile dintr-o provocare cu un singur buton, ca o sesiune de practica, fie imediat dupa joc, fie mai tarziu din istoric", type: "feature" },
+      { text: "Poti marca intrebari direct din revizuirea provocarii; le regasesti la Marcate, ca peste tot", type: "feature" },
+      { text: "Raspunsurile din Provocare conteaza acum la progresul tau general, ca la Simulator", type: "improvement" },
+    ],
+  },
+  {
     version: "3.1.1",
     date: "29 Iunie 2026",
     title: "Provocare: poti crea din nou camere",

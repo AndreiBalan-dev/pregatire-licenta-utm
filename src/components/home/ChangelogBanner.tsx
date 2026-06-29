@@ -5,9 +5,9 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Provocare: nu mai ramai blocat la 'limita de camere create' - camerele terminate elibereaza locul",
-  "Chat in sala de asteptare din Provocare: vorbesti cu ceilalti pana porneste gazda",
-  "La provocarea personalizata alegi clasamentul pe puncte sau pe raspunsuri corecte",
+  "Provocare: jocul se salveaza in istoric si poti vedea ce ai raspuns corect sau gresit",
+  "Refa greselile dintr-o provocare cu un buton, imediat sau mai tarziu din istoric",
+  "Poti marca intrebari din revizuirea unei provocari, le gasesti la Marcate",
 ];
 
 export function ChangelogBanner() {
