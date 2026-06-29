@@ -85,5 +85,21 @@ check("foldChallengeAnswers: lenient upgrade, never downgrade, skip null + unkno
   assert.equal(merged.has(5), false);
 });
 
+check("foldChallengeAnswers: wrong answer on a new key records isCorrect:false", () => {
+  const merged = new Map();
+  foldChallengeAnswers(merged, [{ code: "C", answers: [{ questionId: 6, selected: "b", isCorrect: false }] }], (id) => (id === 6 ? "a" : undefined));
+  assert.equal(merged.get(6).isCorrect, false);
+});
+
+check("buildChallengeSummary: served id with no answer -> null / false", () => {
+  const s = buildChallengeSummary({
+    code: "C", questionOrder: [7], answers: [],
+    preset: "custom", scoring: "points", rank: null, players: 1, durationMs: null,
+    id: "x", playedAt: "2026-06-29T10:00:00.000Z", exists: () => true,
+  });
+  assert.deepEqual(s.answers, [{ questionId: 7, selected: null, isCorrect: false }]);
+  assert.equal(s.correctCount, 0);
+});
+
 if (failures > 0) { console.error(`\n${failures} test(s) failed`); process.exit(1); }
 console.log("\nAll tests passed");

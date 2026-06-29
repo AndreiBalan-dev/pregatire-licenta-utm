@@ -6,10 +6,11 @@ import { formatPercentage, timeAgo } from "@/lib/utils";
 import type { SessionHistoryEntry } from "@/lib/session-history";
 import type { PracticeSummary } from "@/lib/session-types";
 
-const TYPE_META: Record<string, { label: string }> = {
+const TYPE_META: Record<SessionHistoryEntry["kind"], { label: string }> = {
   exam: { label: "Simulare" },
   practice: { label: "Practică" },
   training: { label: "Antrenament" },
+  challenge: { label: "Provocare" },
 };
 
 interface SessionHistoryProps {
