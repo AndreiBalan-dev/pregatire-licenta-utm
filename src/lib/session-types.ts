@@ -14,7 +14,7 @@ export interface AnswerRecord {
  */
 export interface RedoLineage {
   origin: {
-    kind: "exam" | "practice";
+    kind: "exam" | "practice" | "challenge";
     /** Full question set of the original session (to repeat it). */
     questionIds: number[];
     /** Practice origin only: enables "next batch" continuation. */
@@ -164,6 +164,27 @@ export interface TrainingSummary {
   poolSize: number;
 }
 
+export interface ChallengeAnswerRecord {
+  questionId: number;
+  selected: AnswerKey | null;   // null = timed out / never answered
+  isCorrect: boolean;           // play-time snapshot (server-computed during the game)
+}
+
+export interface ChallengeSummary {
+  id: string;                   // crypto.randomUUID() at record time
+  code: string;                 // lobby code: idempotency key + display
+  playedAt: string;             // ISO
+  preset: "custom" | "simulare";
+  scoring: "points" | "correct" | "nota";
+  questionIds: number[];        // the player's served order (existing questions only)
+  answers: ChallengeAnswerRecord[];
+  correctCount: number;
+  total: number;
+  rank: number | null;
+  players: number;
+  durationMs: number | null;
+}
+
 export interface LocalSession {
   version: 1;
   startedAt: string;
@@ -175,6 +196,8 @@ export interface LocalSession {
   examHistory: ExamState[];
   practiceHistory?: PracticeSummary[];
   trainingHistory?: TrainingSummary[];
+  /** Finished Provocare games (this device's own results). Optional/additive. */
+  challengeHistory?: ChallengeSummary[];
   subjectStats: Record<string, SubjectStat>;
   settings: SessionSettings;
   savedKey: string | null;
@@ -187,6 +210,7 @@ export interface LocalSession {
 export const MAX_EXAM_HISTORY = 20;
 export const MAX_PRACTICE_HISTORY = 20;
 export const MAX_TRAINING_HISTORY = 20;
+export const MAX_CHALLENGE_HISTORY = 20;
 
 export function createDefaultSession(): LocalSession {
   return {

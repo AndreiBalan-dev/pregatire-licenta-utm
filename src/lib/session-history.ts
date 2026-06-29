@@ -1,4 +1,5 @@
 import { MAX_EXAM_HISTORY } from "@/lib/session-types";
+import type { AnswerKey } from "@/data/types";
 import type {
   AnswerRecord,
   ExamState,
@@ -7,12 +8,15 @@ import type {
   PracticeSummary,
   TrainingState,
   TrainingSummary,
+  ChallengeSummary,
+  ChallengeAnswerRecord,
 } from "./session-types";
 
 export type SessionHistoryEntry =
   | { kind: "exam"; date: string; exam: ExamSummaryData; questionIds: number[] }
   | { kind: "practice"; date: string; practice: PracticeSummary }
-  | { kind: "training"; date: string; training: TrainingSummary };
+  | { kind: "training"; date: string; training: TrainingSummary }
+  | { kind: "challenge"; date: string; challenge: ChallengeSummary };
 
 /** Stats for one practice session, snapshotted from the answers it produced. */
 export function computePracticeSummary(
@@ -72,6 +76,54 @@ export function computeTrainingSummary(
     masteredAtEnd,
     poolSize: training.pool.length,
   };
+}
+
+/** Build a ChallengeSummary from the local player's /state snapshot at finish. Pure. */
+export function buildChallengeSummary(args: {
+  code: string;
+  questionOrder: number[];
+  answers: { questionId: number; selected: string; isCorrect: boolean }[];
+  preset: "custom" | "simulare";
+  scoring: "points" | "correct" | "nota";
+  rank: number | null;
+  players: number;
+  durationMs: number | null;
+  id: string;
+  playedAt: string;
+  exists: (id: number) => boolean;
+}): ChallengeSummary {
+  const byId = new Map(args.answers.map((a) => [a.questionId, a]));
+  const ids = args.questionOrder.filter((id) => args.exists(id));
+  const answers: ChallengeAnswerRecord[] = ids.map((id) => {
+    const a = byId.get(id);
+    const selected = a && a.selected ? (a.selected as AnswerKey) : null;
+    return { questionId: id, selected, isCorrect: !!a && a.isCorrect };
+  });
+  return {
+    id: args.id,
+    code: args.code,
+    playedAt: args.playedAt,
+    preset: args.preset,
+    scoring: args.scoring,
+    questionIds: ids,
+    answers,
+    correctCount: answers.filter((a) => a.isCorrect).length,
+    total: ids.length,
+    rank: args.rank,
+    players: args.players,
+    durationMs: args.durationMs,
+  };
+}
+
+/** Prepend a challenge summary, idempotent by code, newest-first, capped. Pure. */
+export function addChallengeToHistory(
+  history: ChallengeSummary[] | undefined,
+  summary: ChallengeSummary,
+  max: number,
+): ChallengeSummary[] {
+  const hist = history ?? [];
+  if (hist.some((c) => c.code === summary.code)) return hist;
+  return [summary, ...hist].slice(0, max);
 }
 
 /** Merge the three histories newest-first by their date field. Pure. */

@@ -1,8 +1,32 @@
 import { getQuestion } from "@/data";
-import type { LocalSession, ExamState } from "./session-types";
+import type { AnswerKey } from "@/data/types";
+import type { LocalSession, ExamState, ChallengeSummary } from "./session-types";
 
 export interface MergedAnswer {
   isCorrect: boolean;
+}
+
+/**
+ * Fold finished-challenge answers into a merged map, leniently (a correct answer
+ * upgrades, a wrong one never downgrades), like exams. Correctness is recomputed
+ * via `correctOf`. Unanswered (null) and unknown questions are skipped. Pure.
+ */
+export function foldChallengeAnswers(
+  merged: Map<number, MergedAnswer>,
+  challengeHistory: ChallengeSummary[] | undefined,
+  correctOf: (id: number) => AnswerKey | undefined,
+): void {
+  for (const ch of challengeHistory ?? []) {
+    for (const a of ch.answers) {
+      if (a.selected === null) continue;
+      const correct = correctOf(a.questionId);
+      if (correct === undefined) continue;
+      const isCorrect = a.selected === correct;
+      const existing = merged.get(a.questionId);
+      if (!existing) merged.set(a.questionId, { isCorrect });
+      else if (isCorrect && !existing.isCorrect) merged.set(a.questionId, { isCorrect: true });
+    }
+  }
 }
 
 /**
@@ -37,6 +61,8 @@ export function buildMergedAnswerMap(session: LocalSession): Map<number, MergedA
 
   if (session.currentExam) addExam(session.currentExam);
   for (const hist of session.examHistory ?? []) addExam(hist);
+
+  foldChallengeAnswers(merged, session.challengeHistory, (id) => getQuestion(id)?.correctAnswer);
 
   return merged;
 }

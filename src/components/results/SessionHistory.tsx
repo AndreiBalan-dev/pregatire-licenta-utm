@@ -45,7 +45,7 @@ export function SessionHistory({ entries, onRetryExam, onRetryPractice, onRetryT
         {visible.map((entry) => {
           const meta = TYPE_META[entry.kind];
           return (
-            <div key={`${entry.kind}-${entry.kind === "exam" ? entry.exam.examId : entry.kind === "practice" ? entry.practice.id : entry.training.id}`} className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-3.5">
+            <div key={`${entry.kind}-${entry.kind === "exam" ? entry.exam.examId : entry.kind === "practice" ? entry.practice.id : entry.kind === "training" ? entry.training.id : entry.challenge.id}`} className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-3.5">
               <div className="flex items-center gap-3">
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-[0.12em] bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-30 flex-shrink-0">
                   {meta.label}
@@ -85,7 +85,9 @@ export function SessionHistory({ entries, onRetryExam, onRetryPractice, onRetryT
                         ? onRetryExam(entry.questionIds)
                         : entry.kind === "practice"
                           ? onRetryPractice(entry.practice)
-                          : onRetryTraining(entry.training.subjectIds)
+                          : entry.kind === "training"
+                            ? onRetryTraining(entry.training.subjectIds)
+                            : undefined
                     }
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[var(--radius-md)] text-xs font-semibold bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-40 hover:bg-[var(--color-accent)] hover:text-[#0C0C0E] transition-colors cursor-pointer"
                   >
