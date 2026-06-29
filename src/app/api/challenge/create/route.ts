@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
 import { challengeLobbies, challengePlayers } from "@/db/schema";
-import { eq, count } from "drizzle-orm";
+import { eq, count, and, gt, inArray } from "drizzle-orm";
 import { generateChallengeCode, generateToken, hashToken, hashIp } from "@/lib/crypto";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { RATE_LIMITS, CHALLENGE } from "@/lib/constants";
@@ -39,7 +39,24 @@ export async function POST(request: NextRequest) {
   const poolSize = cfg.config.subjectIds.reduce((n, s) => n + (questionsBySubject[s]?.length ?? 0), 0);
   if (poolSize === 0) return NextResponse.json({ error: "Materiile alese nu au întrebări." }, { status: 400 });
 
-  const [{ n }] = await db.select({ n: count() }).from(challengeLobbies).where(eq(challengeLobbies.ipHash, ipHashed));
+  // Only lobbies that still occupy a slot count against the per-IP cap: active
+  // ones (still gathering or mid-game) created within the abandon window. Games
+  // naturally free the slot once they end - finished/expired lobbies, plus
+  // never-revisited ones whose lazy expiry never fired (expireIfStale only runs
+  // on access), are excluded by the status + age filter. Counting every lobby
+  // ever created would permanently lock an IP after MAX_LOBBIES_PER_IP lifetime
+  // games (and brick a whole shared/NAT IP for everyone behind it).
+  const activeSince = new Date(Date.now() - CHALLENGE.ABANDON_MS);
+  const [{ n }] = await db
+    .select({ n: count() })
+    .from(challengeLobbies)
+    .where(
+      and(
+        eq(challengeLobbies.ipHash, ipHashed),
+        inArray(challengeLobbies.status, ["lobby", "running"]),
+        gt(challengeLobbies.createdAt, activeSince),
+      ),
+    );
   if (n >= CHALLENGE.MAX_LOBBIES_PER_IP) {
     return NextResponse.json({ error: "Ai atins limita de camere create." }, { status: 429 });
   }

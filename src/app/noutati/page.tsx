@@ -44,6 +44,15 @@ const typeConfig: Record<ChangeType, { label: string; color: string; bg: string 
 
 const changelog: Version[] = [
   {
+    version: "3.1.1",
+    date: "29 Iunie 2026",
+    title: "Provocare: poti crea din nou camere",
+    changes: [
+      { text: "Reparat: la Provocare puteai ramane blocat cu mesajul 'Ai atins limita de camere create' si nu mai puteai porni o camera noua. Se numarau toate camerele facute vreodata; acum conteaza doar cele active, iar provocarile terminate sau parasite elibereaza locul", type: "fix" },
+      { text: "Daca mai multi sunteti pe aceeasi retea (acelasi wifi), nu va mai blocati unii pe altii: o camera ocupa loc doar cat timp e activa", type: "fix" },
+    ],
+  },
+  {
     version: "3.1.0",
     date: "28 Iunie 2026",
     title: "Chat in sala de asteptare si clasament pe raspunsuri corecte",

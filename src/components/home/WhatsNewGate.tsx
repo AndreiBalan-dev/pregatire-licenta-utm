@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "@/hooks/useSession";
 import { WhatsNewModal } from "./WhatsNewModal";
 
-const WHATSNEW_KEY = "utm-whatsnew-v310-chat";
+const WHATSNEW_KEY = "utm-whatsnew-v311-camere";
 
 /**
  * Shows the one-time "what's new" popup to returning users (those with saved

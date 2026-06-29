@@ -5,7 +5,7 @@ import { Container } from "@/components/layout/Container";
 import { APP_VERSION } from "@/lib/site-config";
 
 const recentChanges = [
-  "Simulator: ultimul examen dat apare acum imediat in istoric, iar la 20 de examene cel mai vechi se sterge automat",
+  "Provocare: nu mai ramai blocat la 'limita de camere create' - camerele terminate elibereaza locul",
   "Chat in sala de asteptare din Provocare: vorbesti cu ceilalti pana porneste gazda",
   "La provocarea personalizata alegi clasamentul pe puncte sau pe raspunsuri corecte",
 ];
