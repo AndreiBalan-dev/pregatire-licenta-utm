@@ -7,7 +7,9 @@ import {
   MAX_EXAM_HISTORY,
   MAX_PRACTICE_HISTORY,
   MAX_TRAINING_HISTORY,
+  MAX_CHALLENGE_HISTORY,
   type AnswerRecord,
+  type ChallengeSummary,
   type ExamState,
   type ExamSummaryData,
   type PracticeState,
@@ -17,7 +19,7 @@ import {
   type TrainingState,
   type TrainingSummary,
 } from "@/lib/session-types";
-import { computePracticeSummary, computeTrainingSummary, finishedExams, sortSessionHistory, type SessionHistoryEntry } from "@/lib/session-history";
+import { addChallengeToHistory, computePracticeSummary, computeTrainingSummary, finishedExams, sortSessionHistory, type SessionHistoryEntry } from "@/lib/session-history";
 import { STORAGE_KEY, MAX_QUESTION_TIME_MS } from "@/lib/constants";
 import { shuffleArray } from "@/lib/utils";
 import { questionsBySubject, getQuestion } from "@/data";
@@ -164,6 +166,7 @@ function loadSession(): LocalSession {
       examHistory: Array.isArray(parsed.examHistory) ? parsed.examHistory : [],
       practiceHistory: Array.isArray(parsed.practiceHistory) ? parsed.practiceHistory : [],
       trainingHistory: Array.isArray(parsed.trainingHistory) ? parsed.trainingHistory : [],
+      challengeHistory: Array.isArray(parsed.challengeHistory) ? parsed.challengeHistory : [],
       trainingBoxes: clampLoadedBoxes(parsed.trainingBoxes),
       currentTraining:
         parsed.currentTraining && Array.isArray(parsed.currentTraining.pool)
@@ -341,6 +344,16 @@ export function useSession() {
     },
     [persistSession]
   );
+
+  const recordChallenge = useCallback((summary: ChallengeSummary) => {
+    setSession((prev) => {
+      const hist = prev.challengeHistory ?? [];
+      if (hist.some((c) => c.code === summary.code)) return prev; // already recorded
+      const updated = { ...prev, challengeHistory: addChallengeToHistory(hist, summary, MAX_CHALLENGE_HISTORY) };
+      persistSession(updated);
+      return updated;
+    });
+  }, [persistSession]);
 
   const startPractice = useCallback(
     (subjectIds: string[], questionIds: number[], options: StartPracticeOptions = {}): string => {
@@ -761,8 +774,13 @@ export function useSession() {
       date: t.endedAt,
       training: t,
     }));
-    return sortSessionHistory([...exams, ...practices, ...trainings]);
-  }, [session.examHistory, session.practiceHistory, session.trainingHistory]);
+    const challenges = (session.challengeHistory ?? []).map((c) => ({
+      kind: "challenge" as const,
+      date: c.playedAt,
+      challenge: c,
+    }));
+    return sortSessionHistory([...exams, ...practices, ...trainings, ...challenges]);
+  }, [session.examHistory, session.practiceHistory, session.trainingHistory, session.challengeHistory]);
 
   const clearSessionHistory = useCallback(() => {
     setSession((prev) => {
@@ -823,6 +841,7 @@ export function useSession() {
     retryQuestion,
     resetSubject,
     toggleBookmark,
+    recordChallenge,
     startPractice,
     updatePracticeIndex,
     endPractice,
