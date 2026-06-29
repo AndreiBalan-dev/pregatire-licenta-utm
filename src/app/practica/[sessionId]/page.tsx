@@ -411,7 +411,7 @@ export default function QuizPage() {
                   <polyline points="1 4 1 10 7 10" />
                   <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
                 </svg>
-                {lineage?.origin.kind === "exam" ? "Reluare din simulare" : "Reluare din sesiune"}
+                {lineage?.origin.kind === "exam" ? "Reluare din simulare" : lineage?.origin.kind === "challenge" ? "Reluare din provocare" : "Reluare din sesiune"}
               </span>
             </div>
           )}

@@ -18,7 +18,7 @@ const PODIUM_HEIGHT: Record<number, string> = {
   3: "h-16 sm:h-20",
 };
 
-export function ResultsScreen({ standings, meId, scoreMode = "points" }: { standings: Standing[]; meId?: number; scoreMode?: ScoreMode }) {
+export function ResultsScreen({ standings, meId, scoreMode = "points", onReview }: { standings: Standing[]; meId?: number; scoreMode?: ScoreMode; onReview?: () => void }) {
   const { play } = useProvocareSound();
   const winner = standings[0];
   const me = standings.find((s) => s.playerId === meId);
@@ -79,20 +79,31 @@ export function ResultsScreen({ standings, meId, scoreMode = "points" }: { stand
           <Leaderboard standings={standings} meId={meId} showStats scoreMode={scoreMode} />
         </div>
 
-        <div className="flex gap-3">
-          <Link
-            href="/provocare"
-            className="flex-1 text-center px-5 py-3 rounded-[var(--radius-md)] bg-[var(--color-accent)] text-[#0C0C0E] font-semibold transition-colors hover:bg-[var(--color-accent-hover)]"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Provocare nouă
-          </Link>
-          <Link
-            href="/"
-            className="flex-1 text-center px-5 py-3 rounded-[var(--radius-md)] bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] text-[var(--color-text-primary)] font-medium transition-colors hover:bg-[var(--color-bg-hover)]"
-          >
-            Acasă
-          </Link>
+        <div className="space-y-3">
+          {onReview && (
+            <button
+              onClick={onReview}
+              className="w-full text-center px-5 py-3 rounded-[var(--radius-md)] bg-[var(--color-bg-secondary)] border border-[var(--color-accent)] border-opacity-40 text-[var(--color-accent)] font-semibold transition-colors hover:bg-[var(--color-accent-muted)] cursor-pointer"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Vezi răspunsurile
+            </button>
+          )}
+          <div className="flex gap-3">
+            <Link
+              href="/provocare"
+              className="flex-1 text-center px-5 py-3 rounded-[var(--radius-md)] bg-[var(--color-accent)] text-[#0C0C0E] font-semibold transition-colors hover:bg-[var(--color-accent-hover)]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Provocare nouă
+            </Link>
+            <Link
+              href="/"
+              className="flex-1 text-center px-5 py-3 rounded-[var(--radius-md)] bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] text-[var(--color-text-primary)] font-medium transition-colors hover:bg-[var(--color-bg-hover)]"
+            >
+              Acasă
+            </Link>
+          </div>
         </div>
       </div>
     </main>

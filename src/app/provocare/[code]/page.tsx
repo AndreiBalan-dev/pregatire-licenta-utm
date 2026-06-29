@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useParams } from "next/navigation";
 import { getIdentity, savePlayer } from "@/lib/challenge/identity";
 import { useChallengeChannel } from "@/hooks/useChallengeChannel";
@@ -13,6 +13,13 @@ import { usePresenceGrace } from "@/hooks/usePresenceGrace";
 import { CHALLENGE_TIMER } from "@/lib/constants";
 import type { Standing } from "@/lib/realtime/events";
 import type { TimerConfig } from "@/lib/challenge/types";
+import { useRouter } from "next/navigation";
+import { getQuestion } from "@/data";
+import { useSession } from "@/hooks/useSession";
+import { buildChallengeSummary } from "@/lib/session-history";
+import { wrongIdsInChallenge } from "@/lib/redo";
+import { ChallengeReview } from "@/components/challenge/ChallengeReview";
+import type { ChallengeSummary } from "@/lib/session-types";
 
 interface Snapshot {
   status: string;
@@ -44,6 +51,11 @@ export default function LobbyPage() {
   const [needsJoin, setNeedsJoin] = useState(false);
   const [starting, setStarting] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const router = useRouter();
+  const { recordChallenge, startPractice, toggleBookmark, session } = useSession();
+  const [summary, setSummary] = useState<ChallengeSummary | null>(null);
+  const [reviewing, setReviewing] = useState(false);
+  const recordedRef = useRef(false);
 
   // Hydrate identity + state on mount.
   useEffect(() => {
@@ -107,6 +119,30 @@ export default function LobbyPage() {
     return () => clearInterval(id);
   }, [snapshot?.status, token, hostToken, code]);
 
+  useEffect(() => {
+    const snap = snapshot;
+    const finished = snap?.status === "finished" || status === "finished";
+    if (!finished || recordedRef.current || !snap?.me) return;
+    const rows = standings.length ? standings : (snap.standings ?? []);
+    const me = rows.find((s) => s.playerId === snap.me.playerId);
+    const built = buildChallengeSummary({
+      code,
+      questionOrder: snap.me.questionOrder ?? snap.questionIds ?? [],
+      answers: snap.me.answers,
+      preset: snap.config.preset === "simulare" ? "simulare" : "custom",
+      scoring: snap.config.preset === "simulare" ? "nota" : snap.config.scoring === "correct" ? "correct" : "points",
+      rank: me?.rank ?? null,
+      players: rows.length,
+      durationMs: me?.totalTimeMs ?? null,
+      id: crypto.randomUUID(),
+      playedAt: new Date().toISOString(),
+      exists: (qid) => !!getQuestion(qid),
+    });
+    recordedRef.current = true;
+    setSummary(built);
+    recordChallenge(built);
+  }, [snapshot, status, standings, code, recordChallenge]);
+
   function onJoined(playerToken: string, name: string) {
     savePlayer(code, { playerToken, name });
     setToken(playerToken);
@@ -130,13 +166,41 @@ export default function LobbyPage() {
     }
   }
 
+  function startChallengeRedo(s: ChallengeSummary) {
+    const wrongIds = wrongIdsInChallenge(s, (id) => getQuestion(id)?.correctAnswer);
+    if (!wrongIds.length) return;
+    const newId = startPractice([], wrongIds, {
+      mode: "practice",
+      redoLineage: { origin: { kind: "challenge", questionIds: s.questionIds }, firstWrong: wrongIds },
+    });
+    router.push(`/practica/${newId}`);
+  }
+
   if (needsJoin) return <JoinDialog code={code} onJoined={onJoined} />;
   if (!snapshot) return <main className="p-8 text-center text-sm text-[var(--color-text-tertiary)]">Se încarcă...</main>;
 
   const liveStandings = standings.length ? standings : snapshot.standings;
 
   if (snapshot.status === "finished" || status === "finished") {
-    return <ResultsScreen standings={liveStandings} meId={snapshot.me?.playerId} scoreMode={snapshot.config.preset === "simulare" ? "nota" : snapshot.config.scoring === "correct" ? "correct" : "points"} />;
+    if (reviewing && summary) {
+      return (
+        <ChallengeReview
+          summary={summary}
+          bookmarks={session.bookmarks}
+          onToggleBookmark={toggleBookmark}
+          onRedo={() => startChallengeRedo(summary)}
+          onBack={() => setReviewing(false)}
+        />
+      );
+    }
+    return (
+      <ResultsScreen
+        standings={liveStandings}
+        meId={snapshot.me?.playerId}
+        scoreMode={snapshot.config.preset === "simulare" ? "nota" : snapshot.config.scoring === "correct" ? "correct" : "points"}
+        onReview={summary ? () => setReviewing(true) : undefined}
+      />
+    );
   }
   if (snapshot.status === "running" || status === "started") {
     return (
