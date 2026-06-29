@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import type React from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "@/components/layout/Header";
@@ -9,17 +9,20 @@ import { Container } from "@/components/layout/Container";
 import { ProgressRing } from "@/components/results/ProgressRing";
 import { SimulatorResultCard } from "@/components/results/SimulatorResultCard";
 import { SessionHistory } from "@/components/results/SessionHistory";
+import { ChallengeReview } from "@/components/challenge/ChallengeReview";
 import { SubjectIcon } from "@/components/ui/SubjectIcon";
 import { useSession } from "@/hooks/useSession";
 import { modules } from "@/data/modules";
 import { questionsBySubject, allQuestions, getQuestion } from "@/data";
 import { buildMergedAnswerMap } from "@/lib/answer-merge";
+import { wrongIdsInChallenge } from "@/lib/redo";
 import { cn, formatPercentage, formatTime } from "@/lib/utils";
-import type { PracticeSummary } from "@/lib/session-types";
+import type { PracticeSummary, ChallengeSummary } from "@/lib/session-types";
 
 export default function RezultatePage() {
-  const { session, isLoaded, getOverallStats, getExamSummary, getSessionHistory, clearSessionHistory, startPractice, startTraining, repeatExamFromIds } = useSession();
+  const { session, isLoaded, getOverallStats, getExamSummary, getSessionHistory, clearSessionHistory, startPractice, startTraining, repeatExamFromIds, toggleBookmark } = useSession();
   const router = useRouter();
+  const [reviewChallenge, setReviewChallenge] = useState<ChallengeSummary | null>(null);
   const stats = getOverallStats();
   const exam = session.currentExam;
   const examSummary = exam && exam.submittedAt ? getExamSummary() : null;
@@ -39,6 +42,15 @@ export default function RezultatePage() {
   const handleRetryTraining = (subjectIds: string[]) => {
     const newId = startTraining(subjectIds);
     if (newId) router.push(`/antrenament/${newId}`);
+  };
+  const handleRedoChallenge = (c: ChallengeSummary) => {
+    const wrongIds = wrongIdsInChallenge(c, (id) => getQuestion(id)?.correctAnswer);
+    if (!wrongIds.length) return;
+    const newId = startPractice([], wrongIds, {
+      mode: "practice",
+      redoLineage: { origin: { kind: "challenge", questionIds: c.questionIds }, firstWrong: wrongIds },
+    });
+    router.push(`/practica/${newId}`);
   };
 
   if (!isLoaded) {
@@ -81,6 +93,8 @@ export default function RezultatePage() {
             onRetryExam={handleRetryExam}
             onRetryPractice={handleRetryPractice}
             onRetryTraining={handleRetryTraining}
+            onReviewChallenge={setReviewChallenge}
+            onRedoChallenge={handleRedoChallenge}
             onClear={clearSessionHistory}
             className="mb-10 sm:mb-12 animate-fade-in stagger-1"
           />
@@ -288,6 +302,17 @@ export default function RezultatePage() {
         </Container>
       </main>
       <MobileNav />
+      {reviewChallenge && (
+        <div className="fixed inset-0 z-[100] overflow-y-auto bg-[var(--color-bg-primary)]">
+          <ChallengeReview
+            summary={reviewChallenge}
+            bookmarks={session.bookmarks}
+            onToggleBookmark={toggleBookmark}
+            onRedo={() => handleRedoChallenge(reviewChallenge)}
+            onBack={() => setReviewChallenge(null)}
+          />
+        </div>
+      )}
     </>
   );
 }

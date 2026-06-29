@@ -3,8 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { formatPercentage, timeAgo } from "@/lib/utils";
+import { computeScore } from "@/lib/exam";
 import type { SessionHistoryEntry } from "@/lib/session-history";
-import type { PracticeSummary } from "@/lib/session-types";
+import type { PracticeSummary, ChallengeSummary } from "@/lib/session-types";
 
 const TYPE_META: Record<SessionHistoryEntry["kind"], { label: string }> = {
   exam: { label: "Simulare" },
@@ -18,13 +19,15 @@ interface SessionHistoryProps {
   onRetryExam: (questionIds: number[]) => void;
   onRetryPractice: (practice: PracticeSummary) => void;
   onRetryTraining: (subjectIds: string[]) => void;
+  onReviewChallenge?: (c: ChallengeSummary) => void;
+  onRedoChallenge?: (c: ChallengeSummary) => void;
   onClear?: () => void;
   className?: string;
 }
 
 const INITIAL_VISIBLE = 15;
 
-export function SessionHistory({ entries, onRetryExam, onRetryPractice, onRetryTraining, onClear, className }: SessionHistoryProps) {
+export function SessionHistory({ entries, onRetryExam, onRetryPractice, onRetryTraining, onReviewChallenge, onRedoChallenge, onClear, className }: SessionHistoryProps) {
   const [showAll, setShowAll] = useState(false);
   if (entries.length === 0) return null;
   const visible = showAll ? entries : entries.slice(0, INITIAL_VISIBLE);
@@ -71,6 +74,16 @@ export function SessionHistory({ entries, onRetryExam, onRetryPractice, onRetryT
                       <span className="text-[var(--color-text-tertiary)]"> văzute · {entry.training.masteredAtEnd}/{entry.training.poolSize} stăpânite</span>
                     </div>
                   )}
+                  {entry.kind === "challenge" && (
+                    <div className="text-sm text-[var(--color-text-primary)]">
+                      <span className="font-bold tabular-nums">
+                        {entry.challenge.scoring === "nota" ? computeScore(entry.challenge.correctCount).toFixed(2) : `${entry.challenge.correctCount}/${entry.challenge.total}`}
+                      </span>
+                      <span className="text-[var(--color-text-tertiary)]">
+                        {entry.challenge.scoring === "nota" ? ` · ${entry.challenge.correctCount}/${entry.challenge.total} corecte` : " corecte"}{entry.challenge.rank ? ` · Locul ${entry.challenge.rank}/${entry.challenge.players}` : ""}
+                      </span>
+                    </div>
+                  )}
                   <div className="text-[11px] text-[var(--color-text-tertiary)] mt-0.5">{timeAgo(entry.date)}</div>
                 </div>
 
@@ -80,24 +93,39 @@ export function SessionHistory({ entries, onRetryExam, onRetryPractice, onRetryT
                       Vezi
                     </Link>
                   )}
-                  <button
-                    onClick={() =>
-                      entry.kind === "exam"
-                        ? onRetryExam(entry.questionIds)
-                        : entry.kind === "practice"
-                          ? onRetryPractice(entry.practice)
-                          : entry.kind === "training"
-                            ? onRetryTraining(entry.training.subjectIds)
-                            : undefined
-                    }
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[var(--radius-md)] text-xs font-semibold bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-40 hover:bg-[var(--color-accent)] hover:text-[#0C0C0E] transition-colors cursor-pointer"
-                  >
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <polyline points="1 4 1 10 7 10" />
-                      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
-                    </svg>
-                    Reia
-                  </button>
+                  {entry.kind === "challenge" ? (
+                    <>
+                      <button
+                        onClick={() => onReviewChallenge?.(entry.challenge)}
+                        className="text-xs font-medium text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] transition-colors cursor-pointer"
+                      >
+                        Vezi
+                      </button>
+                      <button
+                        onClick={() => onRedoChallenge?.(entry.challenge)}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[var(--radius-md)] text-xs font-semibold bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-40 hover:bg-[var(--color-accent)] hover:text-[#0C0C0E] transition-colors cursor-pointer"
+                      >
+                        Refă greșitele
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      onClick={() =>
+                        entry.kind === "exam"
+                          ? onRetryExam(entry.questionIds)
+                          : entry.kind === "practice"
+                            ? onRetryPractice(entry.practice)
+                            : onRetryTraining(entry.training.subjectIds)
+                      }
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[var(--radius-md)] text-xs font-semibold bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)] border-opacity-40 hover:bg-[var(--color-accent)] hover:text-[#0C0C0E] transition-colors cursor-pointer"
+                    >
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <polyline points="1 4 1 10 7 10" />
+                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                      </svg>
+                      Reia
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
