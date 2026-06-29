@@ -784,7 +784,7 @@ export function useSession() {
 
   const clearSessionHistory = useCallback(() => {
     setSession((prev) => {
-      const updated = { ...prev, examHistory: [], practiceHistory: [], trainingHistory: [] };
+      const updated = { ...prev, examHistory: [], practiceHistory: [], trainingHistory: [], challengeHistory: [] };
       persistSession(updated);
       return updated;
     });

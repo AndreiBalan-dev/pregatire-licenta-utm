@@ -6,7 +6,7 @@ import { QuestionCard } from "@/components/practice/QuestionCard";
 import { computeScore } from "@/lib/exam";
 import { wrongIdsInChallenge } from "@/lib/redo";
 import type { ChallengeSummary } from "@/lib/session-types";
-import type { AnswerKey } from "@/data/types";
+
 
 interface ChallengeReviewProps {
   summary: ChallengeSummary;
@@ -59,7 +59,7 @@ export function ChallengeReview({ summary, bookmarks, onToggleBookmark, onRedo, 
         {summary.questionIds.map((id, i) => {
           const q = getQuestion(id);
           if (!q) return null;
-          const selected = (byId.get(id)?.selected ?? null) as AnswerKey | null;
+          const selected = byId.get(id)?.selected ?? null;
           return (
             <div key={id}>
               <QuestionCard

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useCallback, useRef } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { getIdentity, savePlayer } from "@/lib/challenge/identity";
 import { useChallengeChannel } from "@/hooks/useChallengeChannel";
 import { JoinDialog } from "@/components/challenge/JoinDialog";
@@ -13,7 +13,7 @@ import { usePresenceGrace } from "@/hooks/usePresenceGrace";
 import { CHALLENGE_TIMER } from "@/lib/constants";
 import type { Standing } from "@/lib/realtime/events";
 import type { TimerConfig } from "@/lib/challenge/types";
-import { useRouter } from "next/navigation";
+
 import { getQuestion } from "@/data";
 import { useSession } from "@/hooks/useSession";
 import { buildChallengeSummary } from "@/lib/session-history";
@@ -121,8 +121,12 @@ export default function LobbyPage() {
 
   useEffect(() => {
     const snap = snapshot;
-    const finished = snap?.status === "finished" || status === "finished";
-    if (!finished || recordedRef.current || !snap?.me) return;
+    // Record only from the server-confirmed snapshot (status "finished"). When the
+    // channel status flips, the refetch-on-status effect brings a fresh snapshot with
+    // the player's final answers; gating on snap.status (not the ephemeral `status`)
+    // avoids snapshotting a stale (up to 15s old) answer set. The server persists
+    // finished state, so recording still fires across remounts.
+    if (snap?.status !== "finished" || recordedRef.current || !snap?.me) return;
     const rows = standings.length ? standings : (snap.standings ?? []);
     const me = rows.find((s) => s.playerId === snap.me.playerId);
     const built = buildChallengeSummary({
